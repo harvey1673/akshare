@@ -198,6 +198,7 @@ market_exchange_symbols = {
         "SP",
         "SS",
         "LU",
+        "BC",
     ],
 }
 
@@ -267,6 +268,9 @@ SHFE_RECEIPT_URL_2 = "http://www.shfe.com.cn/data/dailydata/%sdailystock.dat"
 CZCE_RECEIPT_URL_1 = "http://www.czce.com.cn/cn/exchange/jyxx/sheet/sheet%s.html"
 CZCE_RECEIPT_URL_2 = "http://www.czce.com.cn/cn/exchange/%s/datawhsheet/%s.htm"
 CZCE_RECEIPT_URL_3 = "http://www.czce.com.cn/cn/DFSStaticFiles/Future/%s/%s/FutureDataWhsheet.htm"
+
+SHFE_INV_URL_1 = "http://www.shfe.com.cn/data/dailydata/%sweeklystock.html"
+SHFE_INV_URL_2 = "http://www.shfe.com.cn/data/dailydata/%sweeklystock.dat"
 
 CFFEX_DAILY_URL = "http://www.cffex.com.cn/fzjy/mrhq/{}/{}/{}_1.csv"
 SHFE_DAILY_URL = "http://www.shfe.com.cn/data/dailydata/kx/kx%s.dat"

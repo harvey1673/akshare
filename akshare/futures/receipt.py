@@ -18,8 +18,10 @@ from akshare.futures.symbol_var import chinese_to_english
 
 calendar = cons.get_calendar()
 shfe_20100126 = pd.DataFrame({'var': ['CU', 'AL', 'ZN', 'RU', 'FU', 'AU', 'RB', 'WR'],
+                              'var_label': ["铜", "铝", "锌", "橡胶", "燃料油", "黄金", "螺纹钢", "线材"],
                               'receipt': [29783, 285396, 187713, 116435, 376200, 12, 145648, 0]})
 shfe_20101029 = pd.DataFrame({'var': ['CU', 'AL', 'ZN', 'RU', 'FU', 'AU', 'RB', 'WR'],
+                              'var_label': ["铜", "铝", "锌", "橡胶", "燃料油", "黄金", "螺纹钢", "线材"],
                               'receipt': [39214, 359729, 182562, 25990, 313600, 27, 36789, 0]})
 
 
@@ -52,7 +54,8 @@ def get_dce_receipt(date: str = None, symbol_list: List = cons.contract_symbols)
         if isinstance(x['品种'], str):
             if x['品种'][-2:] == '小计':
                 var = x['品种'][:-2]
-                temp_data = {'var': chinese_to_english(var), 'receipt': int(x['今日仓单量']), 'receipt_chg': int(x['增减']),
+                temp_data = {'var': chinese_to_english(var), 'var_label': var,
+                             'receipt': int(x['今日仓单量']), 'receipt_chg': int(x['增减']),
                              'date': date.strftime('%Y%m%d')}
                 records = records.append(pd.DataFrame(temp_data, index=[0]))
     if len(records.index) != 0:
@@ -100,14 +103,15 @@ def get_shfe_receipt_1(date: str = None, vars_list: List = cons.contract_symbols
                 data_cut = data_cut.fillna(method='pad')
             data_dict = dict()
             data_dict['var'] = chinese_to_english(data_cut[0].tolist()[0])
+            data_dict['var_label'] = data_cut[0].tolist()[0]
             data_dict['receipt'] = int(data_cut[2].tolist()[-1])
             data_dict['receipt_chg'] = int(data_cut[3].tolist()[-1])
             data_dict['date'] = date
             records = records.append(pd.DataFrame(data_dict, index=[0]))
-    if len(records.index) != 0:
-        records.index = records['var']
-        vars_in_market = [i for i in vars_list if i in records.index]
-        records = records.loc[vars_in_market, :]
+    # if len(records.index) != 0:
+    #     records.index = records['var']
+    #     vars_in_market = [i for i in vars_list if i in records.index]
+    #     records = records.loc[vars_in_market, :]
     return records.reset_index(drop=True)
 
 
@@ -143,15 +147,17 @@ def get_shfe_receipt_2(date: str = None, vars_list: List = cons.contract_symbols
     records = pd.DataFrame()
     for var in set(data['VARNAME'].tolist()):
         data_cut = data[data['VARNAME'] == var]
-        data_dict = {'var': chinese_to_english(re.sub(r"\W|[a-zA-Z]", "", var)),
+        prod_key = var.split('$$')[0]
+        data_dict = {'var': chinese_to_english(prod_key), 'var_label': prod_key, \
+                     # chinese_to_english(re.sub(r"\W|[a-zA-Z]", "", var)),
                      'receipt': int(data_cut['WRTWGHTS'].tolist()[-1]),
                      'receipt_chg': int(data_cut['WRTCHANGE'].tolist()[-1]),
                      'date': date}
         records = records.append(pd.DataFrame(data_dict, index=[0]))
-    if len(records.index) != 0:
-        records.index = records['var']
-        vars_in_market = [i for i in vars_list if i in records.index]
-        records = records.loc[vars_in_market, :]
+    # if len(records.index) != 0:
+    #     records.index = records['var']
+    #     vars_in_market = [i for i in vars_list if i in records.index]
+    #     records = records.loc[vars_in_market, :]
     return records.reset_index(drop=True)
 
 
@@ -189,17 +195,19 @@ def get_czce_receipt_1(date: str = None, vars_list: List = cons.contract_symbols
         else:
             data_cut = data.loc[indexes[i]:, :]
             data_cut = data_cut.fillna(method='pad')
-        if 'PTA' in data_cut[0].tolist()[0]:
+        prod_key = data_cut[0].tolist()[0][3:]
+        if 'PTA' in prod_key:
             var = 'TA'
         else:
-            var = chinese_to_english(re.sub(r'[A-Z]+', '', data_cut[0].tolist()[0][3:]))
+            var = chinese_to_english(re.sub(r'[A-Z]+', '', prod_key))
         if var == 'CF':
             receipt = data_cut[6].tolist()[-1]
             receipt_chg = data_cut[7].tolist()[-1]
         else:
             receipt = data_cut[5].tolist()[-1]
             receipt_chg = data_cut[6].tolist()[-1]
-        data_dict = {'var': var, 'receipt': int(receipt), 'receipt_chg': int(receipt_chg), 'date': date}
+        data_dict = {'var': var, 'var_label': prod_key, 
+                     'receipt': int(receipt), 'receipt_chg': int(receipt_chg), 'date': date}
         records = records.append(pd.DataFrame(data_dict, index=[0]))
     if len(records.index) != 0:
         records.index = records['var']
@@ -241,14 +249,16 @@ def get_czce_receipt_2(date: str = None, vars_list: List = cons.contract_symbols
                 data_cut = data_cut.loc[:last_index, :]
             if 'PTA' in data_cut[0].tolist()[0]:
                 var = 'TA'
+                prod_key = 'PTA'
             else:
                 strings = data_cut[0].tolist()[0]
-                string = strings.split(' ')[0][3:]
-                var = chinese_to_english(re.sub(r'[A-Z]+', '', string))
+                prod_key = strings.split(' ')[0][3:]
+                var = chinese_to_english(re.sub(r'[A-Z]+', '', prod_key))
             data_cut.columns = data_cut.T[1].tolist()
             receipt = data_cut['仓单数量'].tolist()[-1]
             receipt_chg = data_cut['当日增减'].tolist()[-1]
-            data_dict = {'var': var, 'receipt': int(receipt), 'receipt_chg': int(receipt_chg), 'date': date}
+            data_dict = {'var': var, 'var_label': prod_key, 
+                         'receipt': int(receipt), 'receipt_chg': int(receipt_chg), 'date': date}
             records = records.append(pd.DataFrame(data_dict, index=[0]))
     if len(records.index) != 0:
         records.index = records['var']
@@ -294,21 +304,24 @@ def get_czce_receipt_3(date: str = None, vars_list: List = cons.contract_symbols
                 data_cut = data_cut.loc[:last_index, :]
             if 'PTA' in data_cut[0].tolist()[0]:
                 var = 'TA'
+                prod_key = 'PTA'
             else:
                 strings = data_cut[0].tolist()[0]
-                string = strings.split(' ')[0][3:]
-                if len(string) > 7:
-                    continue
-                print(string)
-                var = chinese_to_english(re.sub('[A-Z]+', '', string))
+                prod_key = strings.split(' ')[0][3:]
+                if len(prod_key) > 7:
+                    continue                
+                var = chinese_to_english(re.sub('[A-Z]+', '', prod_key))
             data_cut.columns = data_cut.loc[1, :]
             data_cut = data_cut.fillna(method='pad')
             try:
                 receipt = data_cut.loc[:, '仓单数量'].tolist()[-1]
             except:
                 receipt = data_cut.loc[:, '仓单数量(保税)'].tolist()[-1]
+            if ' ' in receipt:
+                receipt = receipt.split(' ')[-1]
             receipt_chg = data_cut.loc[:, '当日增减'].tolist()[-1]
-            data_dict = {'var': var, 'receipt': int(receipt), 'receipt_chg': int(receipt_chg), 'date': date}
+            data_dict = {'var': var, 'var_label': prod_key, 
+                         'receipt': int(receipt), 'receipt_chg': int(receipt_chg), 'date': date}
             records = records.append(pd.DataFrame(data_dict, index=[0]))
     if len(records.index) != 0:
         records.index = records['var']
