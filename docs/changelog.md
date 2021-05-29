@@ -2124,4 +2124,24 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 0.9.36: fix: fix stock_zh_a_daily hfq and qfq interface
 
 0.9.37: fix: fix stock_wc_hot_rank interface
+
+0.9.38: add: add stock_em_zt_pool interface
+
+0.9.39: fix: fix stock_us_daily interface
+
+0.9.40: fix: fix bond_cov_comparison interface
+
+0.9.41: fix: fix stock_em_zt_pool_previous interface
+
+0.9.42: add: add stock_em_zt_pool_strong interface
+
+0.9.43: fix: fix stock_em_zt_pool_strong interface
+
+0.9.44: fix: fix stock_em_zt_pool_sub_new interface
+
+0.9.45: fix: fix stock_em_zt_pool interface
+
+0.9.46: fix: fix spot_goods interface
+
+0.9.47: fix: fix futures_comex_inventory interface
 ```

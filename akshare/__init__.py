@@ -1354,9 +1354,19 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 0.9.35: fix: fix stock_zh_a_daily interface
 0.9.36: fix: fix stock_zh_a_daily hfq and qfq interface
 0.9.37: fix: fix stock_wc_hot_rank interface
+0.9.38: add: add stock_em_zt_pool interface
+0.9.39: fix: fix stock_us_daily interface
+0.9.40: fix: fix bond_cov_comparison interface
+0.9.41: fix: fix stock_em_zt_pool_previous interface
+0.9.42: add: add stock_em_zt_pool_strong interface
+0.9.43: fix: fix stock_em_zt_pool_strong interface
+0.9.44: fix: fix stock_em_zt_pool_sub_new interface
+0.9.45: fix: fix stock_em_zt_pool interface
+0.9.46: fix: fix spot_goods interface
+0.9.47: fix: fix futures_comex_inventory interface
 """
 
-__version__ = "0.9.37"
+__version__ = "0.9.47"
 __author__ = "Albert King"
 
 import sys
@@ -1366,6 +1376,18 @@ if sys.version_info < (3, 7):
     sys.exit(1)
 
 del sys
+
+"""
+涨停板行情
+"""
+from akshare.stock_feature.stock_em_ztb import (
+    stock_em_zt_pool,
+    stock_em_zt_pool_previous,
+    stock_em_zt_pool_dtgc,
+    stock_em_zt_pool_zbgc,
+    stock_em_zt_pool_strong,
+    stock_em_zt_pool_sub_new,
+)
 
 """
 中国-香港-宏观
