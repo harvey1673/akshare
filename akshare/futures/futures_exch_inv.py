@@ -33,47 +33,51 @@ def get_shfe_inv_1(date: str = None, vars_list: List = cons.contract_symbols):
     if date not in calendar:
         warnings.warn(f"{date.strftime('%Y%m%d')}非交易日")
         return None
-    if date in ['20100416', '20130821']:
-        return warnings.warn('20100416、20130821日期交易所数据丢失')
-    else:
-        var_list = ['天然橡胶', '沥青仓库', '沥青厂库', '热轧卷板', '燃料油', '白银', '线材', '螺纹钢', '铅', '铜', '铝', '锌', '黄金', '锡', '镍']
-        url = cons.SHFE_INV_URL_1 % date
-        data = pandas_read_html_link(url)[0]
-        indexes = []
-        last_indexes = []
-        data_list = data[0].tolist()
-        for x in data.index:
-            prod_key = str(data_list[x]).split('：')[-1]
-            if prod_key in var_list:                    
-                indexes.append(x)
-                continue
-            if ('总 计' in str(data_list[x])):
+    var_list = ['天然橡胶', '沥青仓库', '沥青厂库', '热轧卷板', '燃料油', '白银', '线材', '螺纹钢', '铅', '铜', '铝', '锌', '黄金', '锡', '镍']
+    url = cons.SHFE_INV_URL_1 % date
+    data = pandas_read_html_link(url)[0]
+    indexes = []
+    last_indexes = []
+    data_list = data[0].tolist()
+    end_flag = False
+    for x in data.index:
+        prod_key = str(data_list[x]).split('：')[-1]
+        if prod_key in var_list:                                    
+            if end_flag:
+                last_indexes.append(x-1)
+            indexes.append(x)
+            end_flag = True
+            continue
+        if end_flag:
+            if ('总 计' in str(data_list[x])) or ('总  计' in str(data_list[x])):
                 last_indexes.append(x)
+                end_flag = False
             elif ('注:' in str(data_list[x])):
                 if x-1 not in last_indexes:
                     last_indexes.append(x-1) 
-        records = pd.DataFrame()
-        for i in list(range(len(indexes))):
-            data_cut = data.loc[indexes[i]:last_indexes[i], :]
-            data_dict = dict()
-            prod_key = data_cut[0].tolist()[0].split('：')[-1]
-            prod_key = prod_key = prod_key.replace("(", "").replace(")", "")
-            data_dict['var'] = chinese_to_english(prod_key)
-            data_dict['var_label'] = prod_key
-            if prod_key in ['沥青仓库', '燃料油', '天然橡胶', '铅', '铜', '铝', '锌', '锡', '镍']:
-                data_dict['spot_inventory'] = int(data_cut[4].tolist()[-1])
-                data_dict['warrant_inventory'] = int(data_cut[5].tolist()[-1])
-                data_dict['warehouse_stocks'] = int(data_cut[9].tolist()[-1])
-            elif prod_key in ['沥青厂库', '热轧卷板', '白银', '线材', '螺纹钢']: 
-                data_dict['spot_inventory'] = 0
-                data_dict['warrant_inventory'] = int(data_cut[3].tolist()[-1])
-                data_dict['warehouse_stocks'] = int(data_cut[6].tolist()[-1]) 
-            elif prod_key in ['黄金']:                        
-                data_dict['spot_inventory'] = 0
-                data_dict['warrant_inventory'] = int(data_cut[1].tolist()[-1])
-                data_dict['warehouse_stocks'] = 0
-            data_dict['date'] = date
-            records = records.append(pd.DataFrame(data_dict, index=[1]))
+                    end_flag = False
+    records = pd.DataFrame()
+    for i in list(range(len(indexes))):
+        data_cut = data.loc[indexes[i]:last_indexes[i], :]
+        data_dict = dict()
+        prod_key = data_cut[0].tolist()[0].split('：')[-1]
+        prod_key = prod_key = prod_key.replace("(", "").replace(")", "")
+        data_dict['var'] = chinese_to_english(prod_key)
+        data_dict['var_label'] = prod_key
+        if prod_key in ['沥青仓库', '燃料油', '天然橡胶', '铅', '铜', '铝', '锌', '锡', '镍']:
+            data_dict['spot_inventory'] = int(data_cut[4].tolist()[-1])
+            data_dict['warrant_inventory'] = int(data_cut[5].tolist()[-1])
+            data_dict['warehouse_stocks'] = int(data_cut[9].tolist()[-1])
+        elif prod_key in ['沥青厂库', '热轧卷板', '白银', '线材', '螺纹钢']: 
+            data_dict['spot_inventory'] = 0
+            data_dict['warrant_inventory'] = int(data_cut[3].tolist()[-1])
+            data_dict['warehouse_stocks'] = int(data_cut[6].tolist()[-1]) 
+        elif prod_key in ['黄金']:                        
+            data_dict['spot_inventory'] = 0
+            data_dict['warrant_inventory'] = int(data_cut[1].tolist()[-1])
+            data_dict['warehouse_stocks'] = 0
+        data_dict['date'] = date
+        records = records.append(pd.DataFrame(data_dict, index=[1]))
     # if len(records.index) != 0:
     #     records.index = records['var']
     #     vars_in_market = [i for i in vars_list if i in records.index]
@@ -81,7 +85,7 @@ def get_shfe_inv_1(date: str = None, vars_list: List = cons.contract_symbols):
     return records.reset_index(drop=True)
 
 
-def get_shfe_inv_2(date: str = None, vars_list: List = cons.contract_symbols):
+def get_shfe_inv_2(date: str = None):
     """
         抓取上海商品交易所注册仓单数据
         适用20140519(包括)至今
@@ -140,7 +144,7 @@ def get_shfe_inv_2(date: str = None, vars_list: List = cons.contract_symbols):
     #     records = records.loc[vars_in_market, :]
     return records.reset_index(drop=True)
 
-def get_shfe_inv(start_day: str = None, end_day: str = None, vars_list: List = cons.contract_symbols):
+def get_shfe_inv(start_day: str = None, end_day: str = None):
     """
     大宗商品注册仓单数量
     :param start_day: 开始日期 format：YYYY-MM-DD 或 YYYYMMDD 或 datetime.date对象 为空时为当天
@@ -155,23 +159,22 @@ def get_shfe_inv(start_day: str = None, end_day: str = None, vars_list: List = c
     start_day = cons.convert_date(start_day) if start_day is not None else datetime.date.today()
     end_day = cons.convert_date(end_day) if end_day is not None else cons.convert_date(
         cons.get_latest_data_date(datetime.datetime.now()))
-    records = pd.DataFrame()
-    while start_day <= end_day:
-        if start_day.strftime('%Y%m%d') not in calendar:
-            warnings.warn(f"{start_day.strftime('%Y%m%d')}非交易日")
-        else:
-            print(start_day)            
-            if datetime.date(2008, 10, 6) <= start_day <= datetime.date(2014, 5, 16):
-                f = get_shfe_inv_1
-            elif start_day > datetime.date(2014, 5, 16):
+    records = pd.DataFrame()    
+    s_date = end_day - datetime.timedelta(days = end_day.weekday())        
+    while s_date >= start_day - datetime.timedelta(days = start_day.weekday()):
+        wkdays = [s_date + datetime.timedelta(days = k) for k in range(5)]
+        bzdays = [d for d in wkdays if d.strftime('%Y%m%d') in calendar]
+        if len(bzdays) > 0:
+            rpt_d = bzdays[-1]        
+            if rpt_d > datetime.date.today():
+                f = None
+                print('report date is after today')            
+            elif rpt_d > datetime.date(2014, 5, 16):
                 f = get_shfe_inv_2
             else:
-                f = None
-                print('20081006起，shfe每交易日更新仓单数据')            
-            get_vars = [var for var in vars_list if var in cons.market_exchange_symbols['shfe']]
-            if get_vars != []:
-                if f is not None:
-                    records = records.append(f(start_day, get_vars))
-        start_day += datetime.timedelta(days=1)
+                f = get_shfe_inv_1                                
+            if f is not None:
+                records = records.append(f(rpt_d)) 
+        s_date -= datetime.timedelta(days=7)
     records.reset_index(drop=True, inplace=True)
     return records

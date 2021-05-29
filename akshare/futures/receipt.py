@@ -209,10 +209,10 @@ def get_czce_receipt_1(date: str = None, vars_list: List = cons.contract_symbols
         data_dict = {'var': var, 'var_label': prod_key, 
                      'receipt': int(receipt), 'receipt_chg': int(receipt_chg), 'date': date}
         records = records.append(pd.DataFrame(data_dict, index=[0]))
-    if len(records.index) != 0:
-        records.index = records['var']
-        vars_in_market = [i for i in vars_list if i in records.index]
-        records = records.loc[vars_in_market, :]
+    # if len(records.index) != 0:
+    #     records.index = records['var']
+    #     vars_in_market = [i for i in vars_list if i in records.index]
+    #     records = records.loc[vars_in_market, :]
     return records.reset_index(drop=True)
 
 
@@ -260,10 +260,10 @@ def get_czce_receipt_2(date: str = None, vars_list: List = cons.contract_symbols
             data_dict = {'var': var, 'var_label': prod_key, 
                          'receipt': int(receipt), 'receipt_chg': int(receipt_chg), 'date': date}
             records = records.append(pd.DataFrame(data_dict, index=[0]))
-    if len(records.index) != 0:
-        records.index = records['var']
-        vars_in_market = [i for i in vars_list if i in records.index]
-        records = records.loc[vars_in_market, :]
+    # if len(records.index) != 0:
+    #     records.index = records['var']
+    #     vars_in_market = [i for i in vars_list if i in records.index]
+    #     records = records.loc[vars_in_market, :]
     return records.reset_index(drop=True)
 
 
@@ -317,9 +317,11 @@ def get_czce_receipt_3(date: str = None, vars_list: List = cons.contract_symbols
                 receipt = data_cut.loc[:, '仓单数量'].tolist()[-1]
             except:
                 receipt = data_cut.loc[:, '仓单数量(保税)'].tolist()[-1]
-            if ' ' in receipt:
-                receipt = receipt.split(' ')[-1]
             receipt_chg = data_cut.loc[:, '当日增减'].tolist()[-1]
+            if var == 'MA':                
+                receipt_str = str(receipt)
+                if len(receipt_str)>=3:
+                    receipt = receipt_str[:(len(receipt_str)-1)//2]
             data_dict = {'var': var, 'var_label': prod_key, 
                          'receipt': int(receipt), 'receipt_chg': int(receipt_chg), 'date': date}
             records = records.append(pd.DataFrame(data_dict, index=[0]))
@@ -352,7 +354,6 @@ def get_receipt(start_day: str = None, end_day: str = None, vars_list: List = co
         else:
             print(start_day)
             for market, market_vars in cons.market_exchange_symbols.items():
-
                 if market == 'dce':
                     if start_day >= datetime.date(2009, 4, 7):
                         f = get_dce_receipt
@@ -380,15 +381,18 @@ def get_receipt(start_day: str = None, end_day: str = None, vars_list: List = co
                 get_vars = [var for var in vars_list if var in market_vars]
                 if market != 'cffex' and get_vars != []:
                     if f is not None:
-                        records = records.append(f(start_day, get_vars))
-
+                        adf = f(start_day, get_vars)
+                        if (adf is not None) and (len(adf) > 0):
+                            adf['exch'] = market.upper()
+                            if market in ['dce', 'shfe']:
+                                adf['prod'] = adf['var'].str.lower()
+                            else:
+                                adf['prod'] = adf['var']
+                            records = records.append(adf)
         start_day += datetime.timedelta(days=1)
     records.reset_index(drop=True, inplace=True)
     if records.empty:
         return records
-    if "MA" in records["var"].to_list():
-        replace_index = records[records["var"] == "MA"]["receipt"].astype(str).str.split("0", expand=True)[0].index
-        records.loc[replace_index, "receipt"] = records[records["var"] == "MA"]["receipt"].astype(str).str.split("0", expand=True)[0]
     return records
 
 
