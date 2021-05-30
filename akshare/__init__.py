@@ -2902,6 +2902,7 @@ from akshare.futures.cot import (
 大宗商品仓单数据
 """
 from akshare.futures.receipt import get_receipt
+from akshare.futures.futures_exch_inv import get_shfe_inv
 
 """
 大宗商品展期收益率数据
