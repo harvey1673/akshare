@@ -2,7 +2,7 @@
 # /usr/bin/env python
 """
 Date: 2021/5/7 16:58
-Desc: AkShare's pypi info file
+Desc: AKShare's pypi info file
 """
 import re
 import ast
@@ -32,7 +32,7 @@ setuptools.setup(
     author="Albert King",
     author_email="jindaxiang@163.com",
     license="MIT",
-    description="AkShare is an elegant and simple financial data interface library for Python, built for human beings!",
+    description="AKShare is an elegant and simple financial data interface library for Python, built for human beings!",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/jindaxiang/akshare",
@@ -50,12 +50,13 @@ setuptools.setup(
         "websocket-client>=0.56.0",
         "html5lib>=1.0.1",
         "xlrd==1.2.0",
+        "urllib3==1.26.5",
         "tqdm>=4.43.0",
         "openpyxl>=3.0.3",
         "jsonpath>=0.82",
         "tabulate>=0.8.6",
         "decorator>=4.4.2",
-        "py_mini_racer>=0.4.0",
+        "py_mini_racer>=0.6.0",
     ],
     package_data={"": ["*.py", "*.json", "*.pk", "*.js"]},
     keywords=[

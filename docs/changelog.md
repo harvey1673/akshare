@@ -274,7 +274,7 @@ PCE物价指数年率报告
 增加加密货币行情接口
 
 0.2.5
-增加 AkShare 接口导图
+增加 AKShare 接口导图
 
 0.2.6
 更新港股数据接口和说明文档
@@ -2148,4 +2148,92 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 0.9.48: fix: fix stock_em_zcfz interface
 
 0.9.49: fix: fix stock_hk_daily interface
+
+0.9.50: fix: fix futures_spot_stock interface
+
+0.9.51: fix: fix stock_hk_daily interface
+
+0.9.52: fix: remove internal_flow_history interface
+
+0.9.53: add: add stock_zh_a_alerts_cls interface
+
+0.9.54: fix: fix bond_zh_us_rate interface
+
+0.9.55: fix: fix index_vix interface
+
+0.9.56: fix: fix macro_fx_sentiment interface
+
+0.9.57: fix: fix stock_zh_a_alerts_cls interface
+
+0.9.58: add: add stock_staq_net_stop interface
+
+0.9.59: fix: fix covid_19_baidu interface
+
+0.9.60: fix: fix currency_convert interface
+
+0.9.61: fix: fix stock_info_sz_name_code interface
+
+0.9.62: add: add stock_zh_a_gdhs interface
+
+0.9.63: fix: fix stock_zh_a_gdhs interface
+
+0.9.64: add: add futures_sina_hold_pos interface
+
+0.9.65: fix: fix bond_zh_us_rate interface
+
+0.9.66: fix: fix set urllib3==1.25.11
+
+0.9.67: fix: fix stock_em_hsgt_hold_stock interface
+
+0.9.68: fix: fix stock_zh_a_tick_tx interface
+
+0.9.69: add: add currency_boc_sina interface
+
+0.9.70: add: add stock_zh_a_hist interface
+
+0.9.71: fix: fix stock_zh_a_hist interface
+
+0.9.72: fix: fix stock_zh_a_hist interface
+
+0.9.73: fix: fix stock_zh_a_tick_tx_js interface
+
+0.9.74: add: add stock_changes_em interface
+
+0.9.75: add: add stock_hk_spot_em, stock_hk_hist interface
+
+0.9.76: add: add stock_us_spot_em, stock_us_hist interface
+
+0.9.77: fix: fix stock_us_hist interface
+
+0.9.78: fix: fix rename python file name interface
+
+0.9.79: add: add crypto_bitcoin_cme interface
+
+0.9.80: fix: fix futures_display_main_sina interface
+
+0.9.81: add: add crypto_crix interface
+
+0.9.82: fix: fix crypto_crix interface
+
+0.9.83: fix: fix crypto_crix interface
+
+0.9.84: fix: fix rename futures_hq_spot to futures_foreign_commodity_realtime interface
+
+0.9.85: fix: fix rate_interbank interface
+
+0.9.86: add: add fund_em_aum interface
+
+0.9.87: fix: fix death_company interface
+
+0.9.88: fix: fix stock_financial_analysis_indicator interface
+
+0.9.89: fix: fix fund_manager interface
+
+0.9.90: fix: fix stock_a_below_net_asset_statistics interface
+
+0.9.91: fix: fix stock_em_yjbb interface
+
+0.9.92: fix: fix stock_em_tfp interface
+
+0.9.93: fix: fix stock_zh_a_gdhs interface
 ```

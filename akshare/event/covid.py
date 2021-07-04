@@ -1,14 +1,13 @@
 # -*- coding:utf-8 -*-
 # /usr/bin/env python
 """
-Date: 2021/1/12 14:07
+Date: 2021/7/1 16:07
 Desc: COVID-19
 COVID-19-网易
 COVID-19-丁香园
 COVID-19-百度
 COVID-19-GitHub
 """
-import datetime
 import json
 import time
 
@@ -356,30 +355,6 @@ def covid_19_baidu(indicator: str = "浙江") -> pd.DataFrame:
     :return: 指定 indicator 的数据
     :rtype: pandas.DataFrame
     """
-    url = "https://huiyan.baidu.com/migration/cityrank.jsonp"
-    params = {
-        'dt': 'country',
-        'id': '0',
-        'type': 'move_in',
-        'date': str(int(datetime.datetime.today().date().isoformat().replace("-", ""))-1),
-    }
-    r = requests.get(url, params=params)
-    data_text = r.text
-    data_json = demjson.decode(data_text[data_text.find("(")+1:-1])
-    move_in_df = pd.DataFrame(data_json['data']['list'])
-    move_in_df['date'] = str(int(datetime.datetime.today().date().isoformat().replace("-", ""))-1)
-    params = {
-        'dt': 'country',
-        'id': '0',
-        'type': 'move_out',
-        'date': str(int(datetime.datetime.today().date().isoformat().replace("-", ""))-1),
-    }
-    r = requests.get(url, params=params)
-    data_text = r.text
-    data_json = demjson.decode(data_text[data_text.find("(")+1:-1])
-    move_out_df = pd.DataFrame(data_json['data']['list'])
-    move_out_df['date'] = str(int(datetime.datetime.today().date().isoformat().replace("-", ""))-1)
-
     # domestic-city
     url = "https://voice.baidu.com/act/newpneumonia/newpneumonia/?from=osari_pc_1"
     r = requests.get(url)
@@ -436,11 +411,7 @@ def covid_19_baidu(indicator: str = "浙江") -> pd.DataFrame:
         ["area", "died", "crued", "confirmed", "confirmedRelative"]
     ]
 
-    if indicator == "热门迁入地":
-        return move_in_df
-    elif indicator == "热门迁出地":
-        return move_out_df
-    elif indicator == "中国分省份详情":
+    if indicator == "中国分省份详情":
         return domestic_province_df
     elif indicator == "中国分城市详情":
         return domestic_city_df
@@ -480,45 +451,16 @@ def migration_area_baidu(
     else:
         dt_flag = "city"
     url = "https://huiyan.baidu.com/migration/cityrank.jsonp"
-    payload = {
+    params = {
         "dt": dt_flag,
         "id": inner_dict[area],
         "type": indicator,
         "date": date,
     }
-    r = requests.get(url, params=payload)
-    json_data = json.loads(r.text[r.text.find("({") + 1 : r.text.rfind(");")])
-    return pd.DataFrame(json_data["data"]["list"])
-
-
-def internal_flow_history(area: str = "北京市", date: str = "20200412") -> pd.DataFrame:
-    """
-    百度地图慧眼-百度迁徙-城内出行强度
-    * 城内出行强度: 该城市有出行的人数与该城市居住人口比值的指数化结果.
-    * 当前数据更新于可能有延迟, 具体延迟请看相关页面提示.
-    * 2019年城内出行强度指数将于2020年3月15日停止更新.
-    https://qianxi.baidu.com/
-    :param area: 可以输入 "省份" 或者 "具体城市" 但是需要用全称, 如: 北京市
-    :type area: str
-    :param date: 查询的日期 20200101以后的时间
-    :type date: str
-    :return: 2019-2020 的城市出行强度数据
-    :rtype: pandas.DataFrame
-    """
-    city_dict.update(province_dict)
-    inner_dict = dict(zip(city_dict.values(), city_dict.keys()))
-    url = "https://huiyan.baidu.com/migration/internalflowhistory.jsonp"
-    payload = {
-        "dt": "city",
-        "id": inner_dict[area],
-        "date": date,
-    }
-    r = requests.get(url, params=payload)
-    json_data = json.loads(r.text[r.text.find("({") + 1 : r.text.rfind(");")])
-    temp_df = pd.DataFrame.from_dict(
-        json_data["data"]["list"], orient="index"
-    ).sort_index()
-    temp_df.columns = ["value"]
+    r = requests.get(url, params=params)
+    data_text = r.text[r.text.find("({") + 1: r.text.rfind(");")]
+    data_json = json.loads(data_text)
+    temp_df = pd.DataFrame(data_json["data"]["list"])
     return temp_df
 
 
@@ -563,7 +505,8 @@ def migration_scale_baidu(
     temp_df = pd.DataFrame.from_dict(json_data["data"]["list"], orient="index")
     temp_df.index = pd.to_datetime(temp_df.index)
     temp_df.columns = ["迁徙规模指数"]
-    return temp_df[start_date:end_date]
+    temp_df = temp_df[start_date:end_date]
+    return temp_df
 
 
 def covid_19_trip() -> pd.DataFrame:
@@ -675,7 +618,7 @@ def covid_19_hist_province(province: str = "湖北省") -> pd.DataFrame:
 
 def covid_19_history() -> pd.DataFrame:
     """
-    接口最好用代理速度比较快, 2019-12-01 开始
+    接口最好用代理速度比较快, 2019-12-01 开始 2020-12-08
     https://github.com/canghailan/Wuhan-2019-nCoV
     :return: 疫情数据
     :rtype: pandas.DataFrame
@@ -807,8 +750,6 @@ if __name__ == "__main__":
 
     # baidu
     indicator_list = [
-        "热门迁入地",
-        "热门迁出地",
         "中国分省份详情",
         "中国分城市详情",
         "国外分国详情",
@@ -826,9 +767,6 @@ if __name__ == "__main__":
         area="上海市", indicator="move_in", date="20201112"
     )
     print(migration_area_baidu_df)
-
-    internal_flow_history_df = internal_flow_history(area="北京市", date="20200405")
-    print(internal_flow_history_df)
 
     migration_scale_baidu_df = migration_scale_baidu(
         area="上海市", indicator="move_in", start_date="20200110", end_date="20200315"

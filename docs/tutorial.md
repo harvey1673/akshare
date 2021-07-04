@@ -75,7 +75,7 @@
  "get_receipt_date"  # 期货仓单有效期数据
  # 新浪财经-期货
  "futures_zh_spot"  # 获取新浪-国内期货实时行情数据
- "futures_hq_spot"  # 获取新浪-外盘期货实时行情数据
+ "futures_foreign_commodity_realtime"  # 获取新浪-外盘期货实时行情数据
  "futures_foreign_hist"  # 获取新浪-外盘期货历史行情数据
  "futures_foreign_detail"  # 获取新浪-外盘期货合约详情
  "futures_zh_minute_sina"  # 获取新浪-内盘分时数据
@@ -395,7 +395,6 @@
  # 百度迁徙地图接口
  "migration_area_baidu"  # 百度迁徙地图-迁入/出地详情
  "migration_scale_baidu"  # 百度迁徙地图-迁徙规模
- "internal_flow_history"  # 百度迁徙地图-城内出行强度
  # 新型肺炎-小区查询
  "covid_19_area_search"  # 具体小区查询
  "covid_19_area_all"  # 提供可查询的省份-城市-区一览表
@@ -784,6 +783,23 @@
  "stock_em_zt_pool_sub_new"  # 涨停板行情-次新股池
  "stock_em_zt_pool_zbgc"  # 涨停板行情-炸板股池
  "stock_em_zt_pool_dtgc"  # 涨停板行情-跌停股池
+ # 两网及退市
+ "stock_staq_net_stop"  # 两网及退市
+ # 股东户数
+ "stock_zh_a_gdhs"  # 股东户数
+ # 中行人民币牌价历史数据查询
+ "currency_boc_sina"  # 中行人民币牌价历史数据查询
+ # A 股日频率数据-东方财富
+ "stock_zh_a_hist"  # A 股日频率数据-东方财富
+ # 盘口异动
+ "stock_changes_em"  # 盘口异动
+ # CME 比特币成交量
+ "crypto_bitcoin_cme"  # CME 比特币成交量
+ # 加密货币全球市场指数
+ "crypto_crix"  # 加密货币全球市场指数
+ # 基金规模和规模趋势
+ "fund_em_aum"  # 基金公司规模排名列表
+ "fund_em_aum_trend"  # 基金市场管理规模走势图
 ```
 
 ## 案例演示

@@ -1,4 +1,7 @@
-"""AkShare 是基于 Python 的开源财经数据接口库, 实现对股票, 期货, 期权, 基金, 债券, 外汇等金融产品的量价数据, 基本面数据和另类数据从数据采集, 数据清洗到数据下载的工具, 满足金融数据科学家, 数据科学爱好者在数据获取方面的需求. 它的特点是利用 AkShare 获取的是基于可信任数据源发布的原始数据, 广大数据科学家可以利用原始数据进行再加工, 从而得出科学的结论."""
+"""AKShare 是基于 Python 的开源财经数据接口库, 实现对股票, 期货, 期权, 基金, 债券, 外汇等金
+融产品的量价数据, 基本面数据和另类数据从数据采集, 数据清洗到数据下载的工具, 满足金融数据科学
+家, 数据科学爱好者在数据获取方面的需求. 它的特点是利用 AKShare 获取的是基于可信任数据源
+发布的原始数据, 广大数据科学家可以利用原始数据进行再加工, 从而得出科学的结论."""
 
 """
 版本更新记录:
@@ -229,7 +232,7 @@ https://cn.investing.com/rates-bonds/
 0.2.4
 增加加密货币行情接口
 0.2.5
-增加 AkShare 接口导图
+增加 AKShare 接口导图
 0.2.6
 更新港股数据接口和说明文档
 0.2.7
@@ -874,7 +877,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 0.4.50: fix: stock_em_sy_yq_list
 0.4.51: add: stock_em_tfp
 0.4.52: fix: covid.py
-0.4.53: fix: hf_futures_sina.py
+0.4.53: fix: futures_hq_sina.py
 0.4.54: add: futures_foreign
 0.4.55: fix: macro_constitute.py
 0.4.56: add: index_vix
@@ -926,7 +929,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 0.5.3: add: add two fields into covid_163
 0.5.4: fix: fix request_fun timeout and error type
 0.5.5: fix: fund_em_graded_fund_daily return fields
-0.5.6: fix: us_stock_sina.py rename columns
+0.5.6: fix: stock_us_sina.py rename columns
 0.5.7: fix: import akshare only load functions
 0.5.8: add: macro_china_money_supply
 0.5.9: add: macro_china_new_house_price, macro_china_enterprise_boom_index, macro_china_national_tax_receipts
@@ -1366,9 +1369,53 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 0.9.47: fix: fix futures_comex_inventory interface
 0.9.48: fix: fix stock_em_zcfz interface
 0.9.49: fix: fix stock_hk_daily interface
+0.9.50: fix: fix futures_spot_stock interface
+0.9.51: fix: fix stock_hk_daily interface
+0.9.52: fix: remove internal_flow_history interface
+0.9.53: add: add stock_zh_a_alerts_cls interface
+0.9.54: fix: fix bond_zh_us_rate interface
+0.9.55: fix: fix index_vix interface
+0.9.56: fix: fix macro_fx_sentiment interface
+0.9.57: fix: fix stock_zh_a_alerts_cls interface
+0.9.58: add: add stock_staq_net_stop interface
+0.9.59: fix: fix covid_19_baidu interface
+0.9.60: fix: fix currency_convert interface
+0.9.61: fix: fix stock_info_sz_name_code interface
+0.9.62: add: add stock_zh_a_gdhs interface
+0.9.63: fix: fix stock_zh_a_gdhs interface
+0.9.64: add: add futures_sina_hold_pos interface
+0.9.65: fix: fix bond_zh_us_rate interface
+0.9.66: fix: fix set urllib3==1.25.11
+0.9.67: fix: fix stock_em_hsgt_hold_stock interface
+0.9.68: fix: fix stock_zh_a_tick_tx interface
+0.9.69: add: add currency_boc_sina interface
+0.9.70: add: add stock_zh_a_hist interface
+0.9.71: fix: fix stock_zh_a_hist interface
+0.9.72: fix: fix stock_zh_a_hist interface
+0.9.73: fix: fix stock_zh_a_tick_tx_js interface
+0.9.74: add: add stock_changes_em interface
+0.9.75: add: add stock_hk_spot_em, stock_hk_hist interface
+0.9.76: add: add stock_us_spot_em, stock_us_hist interface
+0.9.77: fix: fix stock_us_hist interface
+0.9.78: fix: fix rename python file name interface
+0.9.79: add: add crypto_bitcoin_cme interface
+0.9.80: fix: fix futures_display_main_sina interface
+0.9.81: add: add crypto_crix interface
+0.9.82: fix: fix crypto_crix interface
+0.9.83: fix: fix crypto_crix interface
+0.9.84: fix: fix rename futures_hq_spot to futures_foreign_commodity_realtime interface
+0.9.85: fix: fix rate_interbank interface
+0.9.86: add: add fund_em_aum interface
+0.9.87: fix: fix death_company interface
+0.9.88: fix: fix stock_financial_analysis_indicator interface
+0.9.89: fix: fix fund_manager interface
+0.9.90: fix: fix stock_a_below_net_asset_statistics interface
+0.9.91: fix: fix stock_em_yjbb interface
+0.9.92: fix: fix stock_em_tfp interface
+0.9.93: fix: fix stock_zh_a_gdhs interface
 """
 
-__version__ = "0.9.49"
+__version__ = "0.9.93"
 __author__ = "Albert King"
 
 import sys
@@ -1378,6 +1425,63 @@ if sys.version_info < (3, 7):
     sys.exit(1)
 
 del sys
+
+"""
+基金规模和规模趋势
+"""
+from akshare.fund.fund_em_aum import fund_em_aum, fund_em_aum_trend
+
+"""
+CRIX 数据
+"""
+from akshare.crypto.crypto_crix import crypto_crix
+
+"""
+CME 比特币成交量
+"""
+from akshare.crypto.crypto_bitcoin_cme import crypto_bitcoin_cme
+
+"""
+盘口异动
+"""
+from akshare.stock_feature.stock_pankou import stock_changes_em
+
+"""
+A 股东方财富
+"""
+from akshare.stock_feature.stock_em_hist import (
+    stock_zh_a_spot_em,
+    stock_zh_a_hist,
+    stock_hk_spot_em,
+    stock_hk_hist,
+    stock_us_spot_em,
+    stock_us_hist,
+)
+
+"""
+中行人民币牌价历史数据查询
+"""
+from akshare.currency.currency_sina_china_bank import currency_boc_sina
+
+"""
+期货持仓
+"""
+from akshare.futures_derivative.futures_sina_cot import futures_sina_hold_pos
+
+"""
+股东户数
+"""
+from akshare.stock_feature.stock_gdhs import stock_zh_a_gdhs
+
+"""
+两网及退市
+"""
+from akshare.stock.stock_stop import stock_staq_net_stop
+
+"""
+每日快讯数据
+"""
+from akshare.stock_feature.stock_cls_alerts import stock_zh_a_alerts_cls
 
 """
 涨停板行情
@@ -1602,7 +1706,7 @@ from akshare.bond.bond_summary import bond_deal_summary_sse
 """
 新闻-个股新闻
 """
-from akshare.news.stock_news import stock_news_em
+from akshare.news.news_stock import stock_news_em
 
 """
 股票数据-一致行动人
@@ -1645,7 +1749,7 @@ from akshare.option.option_em import option_current_em
 """
 科创板报告
 """
-from akshare.stock.zh_stock_kcb_report import zh_stock_kcb_report
+from akshare.stock.stock_zh_kcb_report import zh_stock_kcb_report
 
 """
 期货合约详情
@@ -1655,17 +1759,17 @@ from akshare.futures.futures_contract_detail import futures_contract_detail
 """
 胡润排行榜
 """
-from akshare.fortune.hurun import hurun_rank
+from akshare.fortune.fortune_hurun import hurun_rank
 
 """
 新财富富豪榜
 """
-from akshare.fortune.xincaifu_500 import xincaifu_rank
+from akshare.fortune.fortune_xincaifu_500 import xincaifu_rank
 
 """
 福布斯中国榜单
 """
-from akshare.fortune.forbes_500 import forbes_rank
+from akshare.fortune.fortune_forbes_500 import forbes_rank
 
 """
 回购定盘利率
@@ -1705,7 +1809,7 @@ from akshare.movie.movie_yien import (
 """
 新闻联播文字稿
 """
-from akshare.news.cctv_news import news_cctv
+from akshare.news.news_cctv import news_cctv
 
 """
 债券收盘收益率曲线历史数据
@@ -2142,7 +2246,6 @@ from akshare.fund.fund_em import (
 from akshare.event.covid import (
     migration_area_baidu,
     migration_scale_baidu,
-    internal_flow_history,
 )
 
 """
@@ -2374,7 +2477,7 @@ from akshare.stock_feature.stock_em_jgdy import stock_em_jgdy_tj, stock_em_jgdy_
 """
 IT桔子
 """
-from akshare.fortune.it_juzi import death_company, maxima_company, nicorn_company
+from akshare.fortune.fortune_it_juzi import death_company, maxima_company, nicorn_company
 
 """
 新浪主力连续接口
@@ -2524,11 +2627,11 @@ from akshare.ws.js_ws_quotes import watch_jinshi_quotes
 """
 新浪-指数实时行情和历史行情
 """
-from akshare.stock.zh_stock_a_tick_tx_163 import (
+from akshare.stock.stock_zh_a_tick_tx_163 import (
     stock_zh_a_tick_tx,
+    stock_zh_a_tick_tx_js,
     stock_zh_a_tick_163,
     stock_zh_a_tick_163_now,
-    stock_zh_a_tick_tx_js,
 )
 
 """
@@ -2544,9 +2647,9 @@ from akshare.index.zh_stock_index_sina import (
 """
 外盘期货实时行情
 """
-from akshare.futures.hf_futures_sina import (
-    futures_hq_spot,
-    hq_subscribe_exchange_symbol,
+from akshare.futures.futures_hq_sina import (
+    futures_foreign_commodity_realtime,
+    futures_foreign_commodity_subscribe_exchange_symbol,
 )
 
 """
@@ -2571,12 +2674,12 @@ from akshare.bank.bank_cbirc_2020 import bank_fjcf_table_detail
 """
 科创板股票
 """
-from akshare.stock.zh_stock_kcb_sina import stock_zh_kcb_spot, stock_zh_kcb_daily
+from akshare.stock.stock_zh_kcb_sina import stock_zh_kcb_spot, stock_zh_kcb_daily
 
 """
 A股
 """
-from akshare.stock.zh_stock_a_sina import (
+from akshare.stock.stock_zh_a_sina import (
     stock_zh_a_spot,
     stock_zh_a_daily,
     stock_zh_a_minute,
@@ -2586,7 +2689,7 @@ from akshare.stock.zh_stock_a_sina import (
 """
 A+H股
 """
-from akshare.stock.zh_stock_ah_tx import (
+from akshare.stock.stock_zh_ah_tx import (
     stock_zh_ah_spot,
     stock_zh_ah_daily,
     stock_zh_ah_name,
@@ -2608,7 +2711,7 @@ from akshare.option.option_finance import (
 """
 新浪-美股实时行情数据和历史行情数据(前复权)
 """
-from akshare.stock.us_stock_sina import (
+from akshare.stock.stock_us_sina import (
     stock_us_daily,
     stock_us_spot,
     get_us_stock_name,
@@ -2618,7 +2721,7 @@ from akshare.stock.us_stock_sina import (
 """
 新浪-港股实时行情数据和历史数据(前复权和后复权因子)
 """
-from akshare.stock.hk_stock_sina import stock_hk_daily, stock_hk_spot
+from akshare.stock.stock_hk_sina import stock_hk_daily, stock_hk_spot
 
 """
 新浪-期货实时数据
@@ -2650,12 +2753,12 @@ from akshare.futures_derivative.jyfm_tools_func import (
 """
 和讯财经-行情及历史数据
 """
-from akshare.stock.us_zh_stock_hx import stock_us_zh_spot, stock_us_zh_daily
+from akshare.stock.stock_us_zh_hx import stock_us_zh_spot, stock_us_zh_daily
 
 """
 和讯财经-企业社会责任
 """
-from akshare.stock.zh_stock_zrbg_hx import stock_zh_a_scr_report
+from akshare.stock.stock_zh_zrbg_hx import stock_zh_a_scr_report
 
 """
 期货-仓单有效期
@@ -2797,7 +2900,7 @@ from akshare.economic.macro_china import (
 """
 全球期货
 """
-from akshare.futures.international_futures import (
+from akshare.futures.futures_international import (
     futures_global_commodity_hist,
     futures_global_commodity_name_url_map,
 )

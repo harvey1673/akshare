@@ -127,9 +127,9 @@ Pay attention to **数据科学实战** WeChat Official Accounts to get the [AKS
     <img src="https://github.com/jindaxiang/akshare/blob/master/example/images/ds.png">
 </div>
 
-Application to add **AKShare-官方** QQ group and talk about [AKShare](https://github.com/jindaxiang/akshare) issues, QQ group number: 444233982
+Application to add **AKShare-官方** QQ group and talk about [AKShare](https://github.com/jindaxiang/akshare) issues, QQ group number: 922305679
 <div align=center>
-    <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=M50z_7n-XXg8PHRz_482NysL2ihMBKyK&jump_from=webapi"><img border="0" src="https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/qr_code_444233982.png" alt="AKShare-官方" title="AKShare-官方"></a>
+    <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=WQIFmUrIUy1LU444r1NToHMlmzWwirSQ&jump_from=webapi"><img border="0" src="https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/qr_code_922305679.png" alt="AKShare-官方" title="AKShare-官方"></a>
 </div>
 
 ## Features
@@ -160,16 +160,11 @@ Application to add **AKShare-官方** QQ group and talk about [AKShare](https://
 ## Statement
 
 1. All data provided by [AKShare](https://github.com/jindaxiang/akshare) is just for academic research purpose;
-
 2. The data provided by [AKShare](https://github.com/jindaxiang/akshare) is for reference only and does not constitute any investment proposal;
-
 3. Any investor based on [AKShare](https://github.com/jindaxiang/akshare) research should pay more attention to data risk;
-
 4. [AKShare](https://github.com/jindaxiang/akshare) will insist on providing open-source financial data;
-
 5. Based on some uncontrollable factors, some data interfaces in [AKShare](https://github.com/jindaxiang/akshare) may be removed;
-
-6. Please follow the relevant open-source protocol used by [AKShare](https://github.com/jindaxiang/akshare)
+6. Please follow the relevant open-source protocol used by [AKShare](https://github.com/jindaxiang/akshare).
 
 ## Show your style
 
@@ -200,7 +195,7 @@ Please use this **bibtex** if you want to cite this repository in your publicati
     title = {AKShare},
     year = {2019},
     publisher = {GitHub},
-    journal = {GitHub repository},
+    journal = {GitHub Repository},
     howpublished = {\url{https://github.com/jindaxiang/akshare}},
 }
 ```

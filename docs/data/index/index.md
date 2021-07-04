@@ -236,7 +236,7 @@ print(stock_zh_index_daily_em_df)
 | -------- | ---- | ---- | --- |
 | index | str  | Y    |   index="000300", 获取沪深 300 最新成份股, 指数代码见 **股票指数信息一览表**|
 
-股票指数信息一览表(可以在 AkShare 中通过如下代码获取本表)
+股票指数信息一览表(可以在 AKShare 中通过如下代码获取本表)
 
 ```python
 import akshare as ak
@@ -1344,7 +1344,7 @@ print(index_cni_detail_hist_adjust_df)
 1. 先查询指数所在的国家名称;
 2. 复制网页上国家名称(推荐复制), 如 **美国**;
 3. 复制所显示的具体指数名称(推荐复制, 如果英文中间有空格, 也需要保留空格), 如 **美元指数**; 也可以调用 **ak.index_investing_global_country_name_url("美国")** 获取需要国家的具体指数名称
-4. 在安装 [AkShare](https://github.com/jindaxiang/akshare) 后输入, 如 **ak.index_investing_global(country="美国", index_name="VIX恐慌指数", period="每月", start_date="2005-01-01", end_date="2020-06-05")**;
+4. 在安装 [AKShare](https://github.com/jindaxiang/akshare) 后输入, 如 **ak.index_investing_global(country="美国", index_name="VIX恐慌指数", period="每月", start_date="2005-01-01", end_date="2020-06-05")**;
 5. 稍后就可以获得所需数据.
 
 限量: 单次返回某一个国家的具体某一个指数, 建议用 for 循环获取多个国家的多个指数, 注意不要大量获取, 以免给对方服务器造成压力!
@@ -2577,12 +2577,14 @@ print(index_cflp_volume_df)
 
 描述: 获取恐慌指数-芝加哥期权交易所 VIX 指数(CBOE Volatility Index)的分钟级别数据
 
+限量: 只能获取近期的数据; 目前该接口数据源暂未更新
+
 输入参数
 
 | 名称   | 类型 | 必选 | 描述                                                                              |
 | -------- | ---- | ---- | --- |
-| start_date | str  | Y   |   start_date="2020-03-20"; 注意开始和结束之间的时间跨度不能太长, 只能获取当前交易日近一个月内的数据 |
-| end_date | str  | Y   |   end_date="2020-03-27"; 只能获取当前交易日近一个月内的数据 |
+| start_date | str  | Y   |   start_date="20200320"; 注意开始和结束之间的时间跨度不能太长, 只能获取当前交易日近一个月内的数据 |
+| end_date | str  | Y   |   end_date="20200327"; 只能获取当前交易日近一个月内的数据 |
 
 输出参数
 
@@ -2596,7 +2598,12 @@ print(index_cflp_volume_df)
 
 数据解释
 
-VIX全名是芝加哥期权交易所波动率指数（Chicago Board Options Exchange Volatility Index），用以反映S&P 500指数期货的波动程度，测量未来30天市场预期的波动程度，通常用来评估未来风险，因此它被称作“恐慌指数”。VIX指数虽然是反映未来30天的波动程度，却是以年化百分比表示，并且以常态分布的机率出现。 举个例子，假设VIX指数为15，表示未来30天预期的年化波动率为15%，因此可以推断指数期权市场预期未来30天标准普尔500指数向上或向下波动15%/√12 = 4.33% 。也就是，指数期权的定价假设是：标准普尔500指数未来30天的波动率在正负4.33%以内的几率为68%。
+VIX全名是芝加哥期权交易所波动率指数（Chicago Board Options Exchange Volatility Index），用以反映S&P 500指数期货的
+波动程度，测量未来30天市场预期的波动程度，通常用来评估未来风险，因此它被称作“恐慌指数”。VIX指数虽
+然是反映未来30天的波动程度，却是以年化百分比表示，并且以常态分布的机率出现。 举个
+例子，假设VIX指数为15，表示未来30天预期的年化波动率为15%，因此可以推断指数期权市场预期
+未来30天标准普尔500指数向上或向下波动15%/√12 = 4.33% 。也就是，指数期权的定
+价假设是：标准普尔500指数未来30天的波动率在正负4.33%以内的几率为68%。
 
 数据解读
 
@@ -2608,7 +2615,7 @@ VIX全名是芝加哥期权交易所波动率指数（Chicago Board Options Exch
 
 ```python
 import akshare as ak
-index_vix_df = ak.index_vix(start_date="2020-06-11", end_date="2020-06-11")  # 只能获取当前交易日近一个月内的数据
+index_vix_df = ak.index_vix(start_date="20200611", end_date="20200611")  # 只能获取当前交易日近一个月内的数据
 print(index_vix_df)
 ```
 
