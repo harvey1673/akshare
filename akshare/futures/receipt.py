@@ -289,7 +289,8 @@ def get_czce_receipt_3(date: str = None, vars_list: List = cons.contract_symbols
         return None
     url = cons.CZCE_RECEIPT_URL_3 % (date[:4], date)
     r = requests_link(url, encoding='utf-8')
-    r.encoding = 'utf-8'
+    r.encoding = 'utf-8'    
+    print(url)
     data = pd.read_html(r.text, encoding='gb2312')
     records = pd.DataFrame()
     if len(data) < 4:

@@ -43,6 +43,7 @@ def stock_em_hsgt_north_net_flow_in(indicator: str = "沪股通") -> pd.DataFram
             .str.split(",", expand=True)
         )
         temp_df.columns = ["date", "value"]
+        temp_df['value'] = pd.to_numeric(temp_df['value'])
         return temp_df
     if indicator == "深股通":
         temp_df = (
@@ -51,6 +52,7 @@ def stock_em_hsgt_north_net_flow_in(indicator: str = "沪股通") -> pd.DataFram
             .str.split(",", expand=True)
         )
         temp_df.columns = ["date", "value"]
+        temp_df['value'] = pd.to_numeric(temp_df['value'])
         return temp_df
     if indicator == "北上":
         temp_df = (
@@ -59,6 +61,7 @@ def stock_em_hsgt_north_net_flow_in(indicator: str = "沪股通") -> pd.DataFram
             .str.split(",", expand=True)
         )
         temp_df.columns = ["date", "value"]
+        temp_df['value'] = pd.to_numeric(temp_df['value'])
         return temp_df
 
 
@@ -990,16 +993,20 @@ def stock_em_hsgt_board_rank(symbol: str = "北向资金增持行业板块排行
 
 
 if __name__ == "__main__":
-    stock_em_hsgt_north_net_flow_in_df = stock_em_hsgt_north_net_flow_in(
-        indicator="沪股通"
-    )
+    stock_em_hsgt_north_net_flow_in_df = stock_em_hsgt_north_net_flow_in(indicator="沪股通")
+    print(stock_em_hsgt_north_net_flow_in_df)
+
+    stock_em_hsgt_north_net_flow_in_df = stock_em_hsgt_north_net_flow_in(indicator="深股通")
+    print(stock_em_hsgt_north_net_flow_in_df)
+
+    stock_em_hsgt_north_net_flow_in_df = stock_em_hsgt_north_net_flow_in(indicator="北上")
     print(stock_em_hsgt_north_net_flow_in_df)
 
     stock_em_hsgt_north_cash_df = stock_em_hsgt_north_cash(indicator="沪股通")
     print(stock_em_hsgt_north_cash_df)
 
     stock_em_hsgt_north_acc_flow_in_df = stock_em_hsgt_north_acc_flow_in(
-        indicator="沪股通"
+        indicator="北上"
     )
     print(stock_em_hsgt_north_acc_flow_in_df)
 
@@ -1032,42 +1039,42 @@ if __name__ == "__main__":
     print(stock_em_hsgt_hold_stock_df)
 
     stock_em_hsgt_stock_statistics_df = stock_em_hsgt_stock_statistics(
-        symbol="南向持股", start_date="20210601", end_date="20210612"
+        symbol="南向持股", start_date="20210801", end_date="20210812"
     )
     print(stock_em_hsgt_stock_statistics_df)
 
     stock_em_hsgt_stock_statistics_df = stock_em_hsgt_stock_statistics(
-        symbol="北向持股", start_date="20210601", end_date="20210612"
+        symbol="北向持股", start_date="20210801", end_date="20210812"
     )
     print(stock_em_hsgt_stock_statistics_df)
 
     stock_em_hsgt_stock_statistics_df = stock_em_hsgt_stock_statistics(
-        symbol="沪股通持股", start_date="20210601", end_date="20210612"
+        symbol="沪股通持股", start_date="20210801", end_date="20210812"
     )
     print(stock_em_hsgt_stock_statistics_df)
 
     stock_em_hsgt_stock_statistics_df = stock_em_hsgt_stock_statistics(
-        symbol="深股通持股", start_date="20210601", end_date="20210612"
+        symbol="深股通持股", start_date="20210801", end_date="20210812"
     )
     print(stock_em_hsgt_stock_statistics_df)
 
     stock_em_hsgt_institution_statistics_df = stock_em_hsgt_institution_statistics(
-        market="北向持股", start_date="20210601", end_date="20210612"
+        market="北向持股", start_date="20210801", end_date="20210812"
     )
     print(stock_em_hsgt_institution_statistics_df)
 
     stock_em_hsgt_institution_statistics_df = stock_em_hsgt_institution_statistics(
-        market="南向持股", start_date="20210601", end_date="20210612"
+        market="南向持股", start_date="20210801", end_date="20210812"
     )
     print(stock_em_hsgt_institution_statistics_df)
 
     stock_em_hsgt_institution_statistics_df = stock_em_hsgt_institution_statistics(
-        market="沪股通持股", start_date="20210601", end_date="20210612"
+        market="沪股通持股", start_date="20210801", end_date="20210812"
     )
     print(stock_em_hsgt_institution_statistics_df)
 
     stock_em_hsgt_institution_statistics_df = stock_em_hsgt_institution_statistics(
-        market="深股通持股", start_date="20210601", end_date="20210612"
+        market="深股通持股", start_date="20210801", end_date="20210812"
     )
     print(stock_em_hsgt_institution_statistics_df)
 

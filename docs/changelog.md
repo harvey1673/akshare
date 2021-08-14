@@ -2236,4 +2236,134 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 0.9.92: fix: fix stock_em_tfp interface
 
 0.9.93: fix: fix stock_zh_a_gdhs interface
+
+0.9.94: add: add macro_china_qyspjg, macro_china_fdi interface
+
+0.9.95: fix: fix stock_board_concept_index_ths interface
+
+0.9.96: fix: fix stock_info_sz_name_code interface
+
+0.9.97: fix: fix urllib3 version at 1.25.8
+
+0.9.98: fix: fix js_news interface
+
+0.9.99: fix: fix news_cctv interface
+
+1.0.1: add: add macro_usa_phs interface
+
+1.0.2: fix: fix macro_usa_phs interface
+
+1.0.3: add: add macro_germany interface
+
+1.0.4: fix: fix macro_china interface
+
+1.0.5: add: add macro_china_gyzjz interface
+
+1.0.6: fix: fix get_receipt interface
+
+1.0.7: fix: fix get_ine_daily interface
+
+1.0.8: fix: fix macro_china_cpi interface
+
+1.0.9: fix: fix stock_zh_a_gdhs interface
+
+1.0.10: fix: fix stock_zh_a_spot_em interface
+
+1.0.11: fix: fix stock_board_industry_name_ths interface
+
+1.0.12: fix: fix macro_china_money_supply interface
+
+1.0.13: fix: fix rename stock_board_concept_index_ths to stock_board_concept_hist_ths interface
+
+1.0.14: add: add stock_board_concept_cons_em and stock_board_concept_hist_em interface
+
+1.0.15: fix: fix stock_hk_hist interface
+
+1.0.16: fix: fix tool_trade_date_hist_sina interface
+
+1.0.17: fix: fix calendar.json interface
+
+1.0.18: fix: fix reformat macro_china_national_tax_receipts, macro_china_hgjck, macro_china_stock_market_cap interface
+
+1.0.19: fix: fix marco_china_hk interface
+
+1.0.20: fix: fix bond_zh_hs_cov_daily interface
+
+1.0.21: fix: fix charity_china interface
+
+1.0.22: fix: fix stock_em_xgsglb interface
+
+1.0.23: fix: fix stock_em_dxsyl interface
+
+1.0.24: fix: fix stock_board_concept_hist_em interface
+
+1.0.25: fix: fix get_receipt interface
+
+1.0.26: add: add energy_carbon_domestic interface
+
+1.0.27: fix: fix get_roll_yield_bar interface
+
+1.0.28: add: add covid_19_baidu interface
+
+1.0.29: fix: fix covid_19_baidu interface
+
+1.0.30: fix: fix option_czce_hist interface
+
+1.0.31: fix: fix futures_foreign_commodity_realtime interface
+
+1.0.32: fix: fix covid_19_baidu interface
+
+1.0.33: fix: fix bond_china_close_return interface
+
+1.0.34: fix: fix bond_china_close_return interface
+
+1.0.35: fix: fix bond_cov_jsl interface
+
+1.0.36: fix: fix stock_em_hsgt_north_net_flow_in interface
+
+1.0.37: add: add macro_swiss interface
+
+1.0.38: add: add macro_japan interface
+
+1.0.39: add: add macro_uk interface
+
+1.0.40: add: add stock_szse_margin interface
+
+1.0.41: add: add macro_australia interface
+
+1.0.42: fix: fix index_stock_hist interface
+
+1.0.43: fix: fix stock_margin_detail_szse interface
+
+1.0.44: fix: fix stock_margin_detail_szse interface
+
+1.0.45: fix: fix option_dce_daily interface and rename interface in option_commodity
+
+1.0.46: add: add futures_pig_info interface
+
+1.0.47: fix: fix futures_pig_info interface
+
+1.0.48: add: add macro_canada interface
+
+1.0.49: fix: fix stock_individual_fund_flow interface
+
+1.0.50: fix: fix stock_em_jgdy_tj interface
+
+1.0.51: add: add sport_olympic_hist interface
+
+1.0.52: add: add stock_financial_hk interface
+
+1.0.53: fix: fix tool_trade_date_hist_sina interface
+
+1.0.54: fix: fix macro_china_gdp_yearly interface
+
+1.0.55: fix: fix macro_china_freight_index interface
+
+1.0.56: add: add stock_a_ttm_lyr interface
+
+1.0.57: add: add stock_a_all_pb interface
+
+1.0.58: add: add futures_pig_rank interface
+
+1.0.59: fix: fix futures_zh_daily_sina interface
 ```

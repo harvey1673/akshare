@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 # /usr/bin/env python
 """
-Date: 2020/7/13 21:54
-Desc: A股市净率
-https://www.legulegu.com/stockdata/market_pb
+Date: 2021/8/12 15:57
+Desc: 全部A股-等权重市盈率、中位数市盈率
+https://www.legulegu.com/stockdata/a-ttm-lyr
 此网站需要 JS 逆向分析 token 代码，本项目分解 JS 加密部分，提取主要的加密参数后本地执行
 """
 from datetime import datetime
@@ -314,73 +314,31 @@ function E(n, e, t, r, o, f, i) {
     return A(t ^ (e | ~r), n, e, o, f, i)
 }
 """
-ctx = py_mini_racer.MiniRacer()
-ctx.eval(hash_code)
-token = ctx.call("hex", datetime.now().date().isoformat()).lower()
+js_functions = py_mini_racer.MiniRacer()
+js_functions.eval(hash_code)
+token = js_functions.call("hex", datetime.now().date().isoformat()).lower()
 
 
-def stock_a_pb(market: str = "sh") -> pd.DataFrame:
+def stock_a_ttm_lyr() -> pd.DataFrame:
     """
-    A 股市净率
-    https://www.legulegu.com/stockdata/market_pb
-    :param market: choice of {"sh", "sz", "cz", "zx", "000016.XSHG" ...}
-    :type market: str
-    :return: 指定市场的 A 股平均市盈率
+    全部 A 股-等权重市盈率、中位数市盈率
+    https://www.legulegu.com/stockdata/a-ttm-lyr
+    :return: 全部 A 股-等权重市盈率、中位数市盈率
     :rtype: pandas.DataFrame
     """
-    url = "https://www.legulegu.com/stockdata/market_pb/getmarket_pb"
+    url = "https://www.legulegu.com/api/stock-data/market-ttm-lyr"
     params = {
-        "token": token  # token should be get from js decode
+        'marketId': '5',
+        "token": token,
     }
     r = requests.get(url, params=params)
     data_json = r.json()
-    temp_df = pd.DataFrame(data_json["cySharesPBList"])
-    temp_df.index = pd.to_datetime(temp_df["date"], unit="ms").dt.date
-    cy_df = temp_df[["close", "pb"]]
-
-    temp_df = pd.DataFrame(data_json["shSharesPBList"])
-    temp_df.index = pd.to_datetime(temp_df["date"], unit="ms").dt.date
-    sh_df = temp_df[["close", "pb"]]
-
-    temp_df = pd.DataFrame(data_json["szSharesPBList"])
-    temp_df.index = pd.to_datetime(temp_df["date"], unit="ms").dt.date
-    sz_df = temp_df[["close", "pb"]]
-
-    temp_df = pd.DataFrame(data_json["zxSharesPBList"])
-    temp_df.index = pd.to_datetime(temp_df["date"], unit="ms").dt.date
-    zx_df = temp_df[["close", "pb"]]
-
-    if market in ["000300.XSHG",
-                  "000016.XSHG",
-                  "000010.XSHG",
-                  "000009.XSHG",
-                  "000902.XSHG",
-                  "000903.XSHG",
-                  "000905.XSHG",
-                  "000906.XSHG",
-                  "000852.XSHG"]:
-        url = "https://www.legulegu.com/api/stockdata/market-index-pb/get-data"
-        params = {
-            "token": token,
-            "marketId": market
-        }
-        r = requests.get(url, params=params)
-        data_json = r.json()
-        temp_df = pd.DataFrame(data_json)
-        temp_df.index = pd.to_datetime(temp_df["date"], unit="ms").dt.date
-        index_df = temp_df[["equalWeightAveragePB", "middlePB", "weightingAveragePB", "close"]]
-        return index_df
-
-    if market == "sh":
-        return sh_df
-    elif market == "sz":
-        return sz_df
-    elif market == "cy":
-        return cy_df
-    elif market == "zx":
-        return zx_df
+    temp_df = pd.DataFrame(data_json["data"])
+    temp_df['date'] = pd.to_datetime(temp_df["date"], unit="ms").dt.date
+    del temp_df['marketId']
+    return temp_df
 
 
 if __name__ == '__main__':
-    stock_a_pb_df = stock_a_pb(market="sh")
-    print(stock_a_pb_df)
+    stock_a_ttm_lyr_df = stock_a_ttm_lyr()
+    print(stock_a_ttm_lyr_df)

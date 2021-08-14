@@ -1413,9 +1413,74 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 0.9.91: fix: fix stock_em_yjbb interface
 0.9.92: fix: fix stock_em_tfp interface
 0.9.93: fix: fix stock_zh_a_gdhs interface
+0.9.94: add: add macro_china_qyspjg, macro_china_fdi interface
+0.9.95: fix: fix stock_board_concept_index_ths interface
+0.9.96: fix: fix stock_info_sz_name_code interface
+0.9.97: fix: fix urllib3 version at 1.25.8
+0.9.98: fix: fix js_news interface
+0.9.99: fix: fix news_cctv interface
+1.0.1: add: add macro_usa_phs interface
+1.0.2: fix: fix macro_usa_phs interface
+1.0.3: add: add macro_germany interface
+1.0.4: fix: fix macro_china interface
+1.0.5: add: add macro_china_gyzjz interface
+1.0.6: fix: fix get_receipt interface
+1.0.7: fix: fix get_ine_daily interface
+1.0.8: fix: fix macro_china_cpi interface
+1.0.9: fix: fix stock_zh_a_gdhs interface
+1.0.10: fix: fix stock_zh_a_spot_em interface
+1.0.11: fix: fix stock_board_industry_name_ths interface
+1.0.12: fix: fix macro_china_money_supply interface
+1.0.13: fix: fix rename stock_board_concept_index_ths to stock_board_concept_hist_ths interface
+1.0.14: add: add stock_board_concept_cons_em and stock_board_concept_hist_em interface
+1.0.15: fix: fix stock_hk_hist interface
+1.0.16: fix: fix tool_trade_date_hist_sina interface
+1.0.17: fix: fix calendar.json interface
+1.0.18: fix: fix reformat macro_china_national_tax_receipts, macro_china_hgjck, macro_china_stock_market_cap interface
+1.0.19: fix: fix marco_china_hk interface
+1.0.20: fix: fix bond_zh_hs_cov_daily interface
+1.0.21: fix: fix charity_china interface
+1.0.22: fix: fix stock_em_xgsglb interface
+1.0.23: fix: fix stock_em_dxsyl interface
+1.0.24: fix: fix stock_board_concept_hist_em interface
+1.0.25: fix: fix get_receipt interface
+1.0.26: add: add energy_carbon_domestic interface
+1.0.27: fix: fix get_roll_yield_bar interface
+1.0.28: add: add covid_19_baidu interface
+1.0.29: fix: fix covid_19_baidu interface
+1.0.30: fix: fix option_czce_hist interface
+1.0.31: fix: fix futures_foreign_commodity_realtime interface
+1.0.32: fix: fix covid_19_baidu interface
+1.0.33: fix: fix bond_china_close_return interface
+1.0.34: fix: fix bond_china_close_return interface
+1.0.35: fix: fix bond_cov_jsl interface
+1.0.36: fix: fix stock_em_hsgt_north_net_flow_in interface
+1.0.37: add: add macro_swiss interface
+1.0.38: add: add macro_japan interface
+1.0.39: add: add macro_uk interface
+1.0.40: add: add stock_szse_margin interface
+1.0.41: add: add macro_australia interface
+1.0.42: fix: fix index_stock_hist interface
+1.0.43: fix: fix stock_margin_detail_szse interface
+1.0.44: fix: fix stock_margin_detail_szse interface
+1.0.45: fix: fix option_dce_daily interface and rename interface in option_commodity
+1.0.46: add: add futures_pig_info interface
+1.0.47: fix: fix futures_pig_info interface
+1.0.48: add: add macro_canada interface
+1.0.49: fix: fix stock_individual_fund_flow interface
+1.0.50: fix: fix stock_em_jgdy_tj interface
+1.0.51: add: add sport_olympic_hist interface
+1.0.52: add: add stock_financial_hk interface
+1.0.53: fix: fix tool_trade_date_hist_sina interface
+1.0.54: fix: fix macro_china_gdp_yearly interface
+1.0.55: fix: fix macro_china_freight_index interface
+1.0.56: add: add stock_a_ttm_lyr interface
+1.0.57: add: add stock_a_all_pb interface
+1.0.58: add: add futures_pig_rank interface
+1.0.59: fix: fix futures_zh_daily_sina interface
 """
 
-__version__ = "0.9.93"
+__version__ = "1.0.59"
 __author__ = "Albert King"
 
 import sys
@@ -1425,6 +1490,128 @@ if sys.version_info < (3, 7):
     sys.exit(1)
 
 del sys
+
+"""
+全部 A 股-等权重市盈率、中位数市盈率
+全部 A 股-等权重、中位数市净率
+"""
+from akshare.stock_feature.stock_ttm_lyr import stock_a_ttm_lyr
+from akshare.stock_feature.stock_all_pb import stock_a_all_pb
+
+"""
+奥运奖牌
+"""
+from akshare.sport.sport_olympic import sport_olympic_hist
+
+"""
+宏观-加拿大
+"""
+from akshare.economic.macro_canada import (
+    macro_canada_cpi_monthly,
+    macro_canada_core_cpi_monthly,
+    macro_canada_bank_rate,
+    macro_canada_core_cpi_yearly,
+    macro_canada_cpi_yearly,
+    macro_canada_gdp_monthly,
+    macro_canada_new_house_rate,
+    macro_canada_retail_rate_monthly,
+    macro_canada_trade,
+    macro_canada_unemployment_rate,
+)
+
+"""
+猪肉价格信息
+"""
+from akshare.futures_derivative.futures_pig import futures_pig_info, futures_pig_rank
+
+"""
+宏观-澳大利亚
+"""
+from akshare.economic.macro_australia import (
+    macro_australia_bank_rate,
+    macro_australia_unemployment_rate,
+    macro_australia_trade,
+    macro_australia_cpi_quarterly,
+    macro_australia_cpi_yearly,
+    macro_australia_ppi_quarterly,
+    macro_australia_retail_rate_monthly,
+)
+
+"""
+融资融券-深圳
+"""
+from akshare.stock_feature.stock_szse_margin import (
+    stock_margin_underlying_info_szse,
+    stock_margin_detail_szse,
+    stock_margin_szse,
+)
+
+"""
+英国-宏观
+"""
+from akshare.economic.macro_uk import (
+    macro_uk_gdp_yearly,
+    macro_uk_gdp_quarterly,
+    macro_uk_retail_yearly,
+    macro_uk_rightmove_monthly,
+    macro_uk_rightmove_yearly,
+    macro_uk_unemployment_rate,
+    macro_uk_halifax_monthly,
+    macro_uk_bank_rate,
+    macro_uk_core_cpi_monthly,
+    macro_uk_core_cpi_yearly,
+    macro_uk_cpi_monthly,
+    macro_uk_cpi_yearly,
+    macro_uk_halifax_yearly,
+    macro_uk_retail_monthly,
+    macro_uk_trade,
+)
+
+"""
+日本-宏观
+"""
+from akshare.economic.macro_japan import (
+    macro_japan_bank_rate,
+    macro_japan_core_cpi_yearly,
+    macro_japan_cpi_yearly,
+    macro_japan_head_indicator,
+    macro_japan_unemployment_rate,
+)
+
+"""
+瑞士-宏观
+"""
+from akshare.economic.macro_swiss import (
+    macro_swiss_trade,
+    macro_swiss_svme,
+    macro_swiss_cpi_yearly,
+    macro_swiss_gbd_yearly,
+    macro_swiss_gbd_bank_rate,
+    macro_swiss_gdp_quarterly,
+)
+
+"""
+东方财富-概念板块
+"""
+from akshare.stock.stock_board_concept_em import (
+    stock_board_concept_cons_em,
+    stock_board_concept_hist_em,
+    stock_board_concept_name_em,
+)
+
+"""
+德国-经济指标
+"""
+from akshare.economic.macro_germany import (
+    macro_germany_gdp,
+    macro_germany_ifo,
+    macro_germany_cpi_monthly,
+    macro_germany_retail_sale_monthly,
+    macro_germany_trade_adjusted,
+    macro_germany_retail_sale_yearly,
+    macro_germany_cpi_yearly,
+    macro_germany_zew,
+)
 
 """
 基金规模和规模趋势
@@ -1633,7 +1820,7 @@ from akshare.stock_feature.stock_board_concept_ths import (
     stock_board_concept_cons_ths,
     stock_board_concept_name_ths,
     stock_board_concept_info_ths,
-    stock_board_concept_index_ths,
+    stock_board_concept_hist_ths,
 )
 
 """
@@ -1998,6 +2185,14 @@ from akshare.stock_fundamental.stock_finance import (
 )
 
 """
+stock-HK-fundamental
+"""
+from akshare.stock_fundamental.stock_finance_hk import (
+    stock_financial_hk_analysis_indicator_em,
+    stock_financial_hk_report_em,
+)
+
+"""
 stock_fund
 """
 from akshare.stock.stock_fund import (
@@ -2271,7 +2466,7 @@ from akshare.fx.currency_investing import (
 """
 商品期权-郑州商品交易所-期权-历史数据
 """
-from akshare.option.czce_option import option_czce_hist
+from akshare.option.option_czce import option_czce_hist
 
 """
 宏观-经济数据-银行间拆借利率
@@ -2477,7 +2672,11 @@ from akshare.stock_feature.stock_em_jgdy import stock_em_jgdy_tj, stock_em_jgdy_
 """
 IT桔子
 """
-from akshare.fortune.fortune_it_juzi import death_company, maxima_company, nicorn_company
+from akshare.fortune.fortune_it_juzi import (
+    death_company,
+    maxima_company,
+    nicorn_company,
+)
 
 """
 新浪主力连续接口
@@ -2506,6 +2705,7 @@ from akshare.cost.cost_living import cost_living
 能源-碳排放权
 """
 from akshare.energy.energy_carbon import (
+    energy_carbon_domestic,
     energy_carbon_bj,
     energy_carbon_eu,
     energy_carbon_gz,
@@ -2828,6 +3028,7 @@ from akshare.economic.macro_usa import (
     macro_usa_cftc_c_holding,
     macro_usa_cftc_merchant_currency_holding,
     macro_usa_cftc_merchant_goods_holding,
+    macro_usa_phs,
 )
 
 """
@@ -2859,6 +3060,7 @@ from akshare.economic.macro_china import (
     macro_china_trade_balance,
     macro_china_shibor_all,
     macro_china_industrial_production_yoy,
+    macro_china_gyzjz,
     macro_china_lpr,
     macro_china_new_house_price,
     macro_china_enterprise_boom_index,
@@ -2895,6 +3097,8 @@ from akshare.economic.macro_china import (
     macro_china_foreign_exchange_gold,
     macro_china_retail_price_index,
     macro_china_real_estate,
+    macro_china_qyspjg,
+    macro_china_fdi,
 )
 
 """
@@ -2919,9 +3123,9 @@ from akshare.bond.china_bond import bond_spot_quote, bond_spot_deal, bond_china_
 商品期权
 """
 from akshare.option.option_commodity import (
-    get_dce_option_daily,
-    get_czce_option_daily,
-    get_shfe_option_daily,
+    option_dce_daily,
+    option_czce_daily,
+    option_shfe_daily,
 )
 
 """

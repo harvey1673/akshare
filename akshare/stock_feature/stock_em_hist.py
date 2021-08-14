@@ -2,7 +2,7 @@
 # /usr/bin/env python
 """
 Date: 2021/6/15 22:26
-Desc: 东方财富网-行情首页-上证A股-每日行情
+Desc: 东方财富网-行情首页-上证 A 股-每日行情
 """
 import requests
 import pandas as pd
@@ -86,6 +86,20 @@ def stock_zh_a_spot_em() -> pd.DataFrame:
         "市盈率-动态",
         "市净率",
     ]]
+    temp_df['最新价'] = pd.to_numeric(temp_df['最新价'], errors='coerce')
+    temp_df['涨跌幅'] = pd.to_numeric(temp_df['涨跌幅'], errors='coerce')
+    temp_df['涨跌额'] = pd.to_numeric(temp_df['涨跌额'], errors='coerce')
+    temp_df['成交量'] = pd.to_numeric(temp_df['成交量'], errors='coerce')
+    temp_df['成交额'] = pd.to_numeric(temp_df['成交额'], errors='coerce')
+    temp_df['振幅'] = pd.to_numeric(temp_df['振幅'], errors='coerce')
+    temp_df['最高'] = pd.to_numeric(temp_df['最高'], errors='coerce')
+    temp_df['最低'] = pd.to_numeric(temp_df['最低'], errors='coerce')
+    temp_df['今开'] = pd.to_numeric(temp_df['今开'], errors='coerce')
+    temp_df['昨收'] = pd.to_numeric(temp_df['昨收'], errors='coerce')
+    temp_df['量比'] = pd.to_numeric(temp_df['量比'], errors='coerce')
+    temp_df['换手率'] = pd.to_numeric(temp_df['换手率'], errors='coerce')
+    temp_df['市盈率-动态'] = pd.to_numeric(temp_df['市盈率-动态'], errors='coerce')
+    temp_df['市净率'] = pd.to_numeric(temp_df['市净率'], errors='coerce')
     return temp_df
 
 
@@ -144,7 +158,7 @@ def stock_zh_a_hist(
     adjust: str = "",
 ) -> pd.DataFrame:
     """
-    东方财富网-行情首页-上证A股-每日行情
+    东方财富网-行情首页-上证 A 股-每日行情
     http://quote.eastmoney.com/concept/sh603777.html?from=classic
     :param symbol: 股票代码
     :type symbol: str
@@ -336,20 +350,16 @@ def stock_hk_hist(
     temp_df.index = pd.to_datetime(temp_df["日期"])
     temp_df = temp_df[start_date:end_date]
     temp_df.reset_index(inplace=True, drop=True)
-    temp_df = temp_df.astype(
-        {
-            "开盘": float,
-            "收盘": float,
-            "最高": float,
-            "最低": float,
-            "成交量": int,
-            "成交额": float,
-            "振幅": float,
-            "涨跌幅": float,
-            "涨跌额": float,
-            "换手率": float,
-        }
-    )
+    temp_df['开盘'] = pd.to_numeric(temp_df['开盘'])
+    temp_df['收盘'] = pd.to_numeric(temp_df['收盘'])
+    temp_df['最高'] = pd.to_numeric(temp_df['最高'])
+    temp_df['最低'] = pd.to_numeric(temp_df['最低'])
+    temp_df['成交量'] = pd.to_numeric(temp_df['成交量'])
+    temp_df['成交额'] = pd.to_numeric(temp_df['成交额'])
+    temp_df['振幅'] = pd.to_numeric(temp_df['振幅'])
+    temp_df['涨跌幅'] = pd.to_numeric(temp_df['涨跌幅'])
+    temp_df['涨跌额'] = pd.to_numeric(temp_df['涨跌额'])
+    temp_df['换手率'] = pd.to_numeric(temp_df['换手率'])
     return temp_df
 
 
@@ -506,13 +516,13 @@ if __name__ == "__main__":
     stock_hk_spot_em_df = stock_hk_spot_em()
     print(stock_hk_spot_em_df)
 
-    stock_hk_hist_df = stock_hk_hist(symbol="00593", start_date="19700101", end_date="22220101", adjust="")
+    stock_hk_hist_df = stock_hk_hist(symbol="01246", start_date="19700101", end_date="22220101", adjust="")
     print(stock_hk_hist_df)
 
     stock_hk_hist_qfq_df = stock_hk_hist(symbol="00593", start_date="19700101", end_date="22220101", adjust="qfq")
     print(stock_hk_hist_qfq_df)
 
-    stock_hk_hist_hfq_df = stock_hk_hist(symbol="00593", start_date="19700101", end_date="22220101", adjust="hfq")
+    stock_hk_hist_hfq_df = stock_hk_hist(symbol="00326", start_date="19700101", end_date="22220101", adjust="hfq")
     print(stock_hk_hist_hfq_df)
 
     stock_us_spot_em_df = stock_us_spot_em()
@@ -524,5 +534,5 @@ if __name__ == "__main__":
     stock_zh_a_spot_em_df = stock_zh_a_spot_em()
     print(stock_zh_a_spot_em_df)
 
-    stock_zh_a_hist_df = stock_zh_a_hist(symbol="002415", start_date="20190301", end_date="20210616", adjust="hfq")
+    stock_zh_a_hist_df = stock_zh_a_hist(symbol="603777", start_date="20190301", end_date="20210812", adjust="hfq")
     print(stock_zh_a_hist_df)

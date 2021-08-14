@@ -48,9 +48,9 @@
  "index_investing_global"  # 提供英为财情-股票指数-全球股指与期货指数数据
  "bond_investing_global"  # 提供英为财情-债券数据-全球政府债券行情与收益率数据
  # 交易所商品期权数据
- "get_dce_option_daily"  # 提供大连商品交易所商品期权数据
- "get_czce_option_daily"  # 提供郑州商品交易所商品期权数据
- "get_shfe_option_daily"  # 提供上海期货交易所商品期权数据
+ "option_dce_daily"  # 提供大连商品交易所商品期权数据
+ "option_czce_daily"  # 提供郑州商品交易所商品期权数据
+ "option_shfe_daily"  # 提供上海期货交易所商品期权数据
  # 中国银行间市场债券行情数据
  "get_bond_market_quote"  # 债券市场行情-现券市场成交行情数据
  "get_bond_market_trade"  # 债券市场行情-现券市场做市报价数据
@@ -181,6 +181,7 @@
  "fx_swap_quote"  # 市场行情-债券市场行情-人民币外汇远掉报价
  "fx_pair_quote"  # 市场行情-债券市场行情-外币对即期报价
  # 能源-碳排放权
+ "energy_carbon_domestic"  # 碳排放权-国内
  "energy_carbon_bj"  # 碳排放权-北京
  "energy_carbon_sz"  # 碳排放权-深圳
  "energy_carbon_eu"  # 碳排放权-国际
@@ -591,6 +592,8 @@
  "futures_comex_inventory"  # COMEX库存数据
  # 消费者信心指数
  "macro_china_xfzxx"  # 消费者信心指数
+ # 工业增加值增长
+ "macro_china_gyzjz"  # 工业增加值增长
  # 存款准备金率
  "macro_china_reserve_requirement_ratio"  # 存款准备金率
  # 社会消费品零售总额
@@ -715,7 +718,7 @@
  "stock_em_yjkb"  # 业绩快报
  # 概念板块
  "stock_board_concept_cons_ths"  # 同花顺-成份股
- "stock_board_concept_index_ths"  # 同花顺-指数日频数据
+ "stock_board_concept_hist_ths"  # 同花顺-指数日频数据
  # 业绩报告
  "stock_em_yjbb"  # 业绩报告
  # 三大表报
@@ -800,6 +803,87 @@
  # 基金规模和规模趋势
  "fund_em_aum"  # 基金公司规模排名列表
  "fund_em_aum_trend"  # 基金市场管理规模走势图
+ # 企业商品价格指数
+ "macro_china_qyspjg"  # 企业商品价格指数
+ "macro_china_fdi"  # 外商直接投资数据
+ # 未决房屋销售月率
+ "macro_usa_phs"  # 未决房屋销售月率
+ # 德国经济指标
+ "macro_germany_ifo"  # ifo商业景气指数
+ "macro_germany_cpi_monthly"  # 消费者物价指数月率终值
+ "macro_germany_cpi_yearly"  # 消费者物价指数年率终值
+ "macro_germany_trade_adjusted"  # 贸易帐(季调后)
+ "macro_germany_gdp"  # GDP
+ "macro_germany_retail_sale_monthly"  # 实际零售销售月率
+ "macro_germany_retail_sale_yearly"  # 实际零售销售年率
+ "macro_germany_zew"  # ZEW经济景气指数
+ # 东方财富-概念板块
+ "stock_board_concept_name_em"  # 概念板块-名称
+ "stock_board_concept_hist_em"  # 概念板块-历史行情
+ "stock_board_concept_cons_em"  # 概念板块-板块成份
+ # 瑞士-宏观
+ "macro_swiss_svme"  # 瑞士-宏观-SVME采购经理人指数
+ "macro_swiss_trade"  # 瑞士-宏观-贸易帐
+ "macro_swiss_cpi_yearly"  # 瑞士-宏观-消费者物价指数年率
+ "macro_swiss_gdp_quarterly"  # 瑞士-宏观-GDP季率
+ "macro_swiss_gbd_yearly"  # 瑞士-宏观-GDP年率
+ "macro_swiss_gbd_bank_rate"  # 瑞士-宏观-央行公布利率决议
+ # 日本-宏观
+ "macro_japan_bank_rate"  # 日本-央行公布利率决议
+ "macro_japan_cpi_yearly"  # 日本-全国消费者物价指数年率
+ "macro_japan_core_cpi_yearly"  # 日本-全国核心消费者物价指数年率
+ "macro_japan_unemployment_rate"  # 日本-失业率
+ "macro_japan_head_indicator"  # 日本-领先指标终值
+ # 英国-宏观
+ "macro_uk_halifax_monthly"  # 英国-Halifax 房价指数月率
+ "macro_uk_halifax_yearly"  # 英国-Halifax 房价指数年率
+ "macro_uk_trade"  # 英国-贸易帐
+ "macro_uk_bank_rate"  # 英国-央行公布利率决议
+ "macro_uk_core_cpi_yearly"  # 英国-核心消费者物价指数年率
+ "macro_uk_core_cpi_monthly"  # 英国-核心消费者物价指数月率
+ "macro_uk_cpi_yearly"  # 英国-消费者物价指数年率
+ "macro_uk_cpi_monthly"  # 英国-消费者物价指数月率
+ "macro_uk_retail_monthly"  # 英国-零售销售月率
+ "macro_uk_retail_yearly"  # 英国-零售销售年率
+ "macro_uk_rightmove_yearly"  # 英国-Rightmove 房价指数年率
+ "macro_uk_rightmove_monthly"  # 英国-Rightmove 房价指数月率
+ "macro_uk_gdp_quarterly"  # 英国-GDP 季率初值
+ "macro_uk_gdp_yearly"  # 英国-GDP 年率初值
+ "macro_uk_unemployment_rate"  # 英国-失业率
+ # 融资融券-深圳
+ "stock_margin_underlying_info_szse"  # 标的证券信息
+ "stock_margin_detail_szse"  # 融资融券明细
+ "stock_margin_szse"  # 融资融券汇总
+ # 宏观-澳大利亚
+ "macro_australia_bank_rate"  # 央行公布利率决议
+ "macro_australia_unemployment_rate"  # 失业率
+ "macro_australia_trade"  # 贸易帐
+ "macro_australia_cpi_quarterly"  # 消费者物价指数季率
+ "macro_australia_cpi_yearly"  # 消费者物价指数年率
+ "macro_australia_ppi_quarterly"  # 生产者物价指数季率
+ "macro_australia_retail_rate_monthly"  # 零售销售月率
+ # 养猪数据中心
+ "futures_pig_info"  # 生猪信息
+ "futures_pig_rank"  # 生猪价格排行
+ # 宏观-加拿大
+ "macro_canada_new_house_rate"  # 新屋开工
+ "macro_canada_unemployment_rate"  # 失业率
+ "macro_canada_trade"  # 贸易帐
+ "macro_canada_retail_rate_monthly"  # 零售销售月率
+ "macro_canada_bank_rate"  # 央行公布利率决议
+ "macro_canada_core_cpi_yearly"  # 核心消费者物价指数年率
+ "macro_canada_core_cpi_monthly"  # 核心消费者物价指数月率
+ "macro_canada_cpi_yearly"  # 消费者物价指数年率
+ "macro_canada_cpi_monthly"  # 消费者物价指数月率
+ "macro_canada_gdp_monthly"  # GDP 月率
+ # 奥运奖牌
+ "sport_olympic_hist"  # 奥运奖牌
+ # 港股财报
+ "stock_financial_hk_report_em"  # 东方财富-港股-财务报表-三大报表
+ "stock_financial_hk_analysis_indicator_em"  # 东方财富-港股-财务分析-主要指标
+ # 全部 A 股-等权重市盈率、中位数市盈率
+ "stock_a_ttm_lyr"  # 全部 A 股-等权重市盈率、中位数市盈率
+ "stock_a_all_pb"  # 全部 A 股-等权重市净率、中位数市净率
 ```
 
 ## 案例演示
