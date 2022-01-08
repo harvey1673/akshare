@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
 Date: 2021/7/21 14:22
 Desc: 郑州商品交易所-交易数据-历史行情下载-期权历史行情下载
@@ -18,7 +18,6 @@ import warnings
 
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
 
 
 def option_czce_hist(symbol: str = "SR", year: str = "2021") -> pd.DataFrame:

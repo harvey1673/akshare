@@ -1,8 +1,8 @@
-# [AKShare](https://github.com/jindaxiang/akshare) 答疑专栏
+# [AKShare](https://github.com/akfamily/akshare) 答疑专栏
 
 ## 专栏介绍
 
-本专栏的主要目的是为了解决在使用 [AKShare](https://github.com/jindaxiang/akshare) 中遇到的各种问题，主题包括但不限于：环境配置、AKShare 安装和升级、数据接口请求、代理配置等等。
+本专栏的主要目的是为了解决在使用 [AKShare](https://github.com/akfamily/akshare) 中遇到的各种问题，主题包括但不限于：环境配置、AKShare 安装和升级、数据接口请求、代理配置等等。
 
 ## 常见问题
 
@@ -42,7 +42,7 @@
 
     1. 多运行几次，查看是否是网络不稳定造成的问题
     2. 切换 IP 后重试
-    3. 可以在 [GitHub Issues](https://github.com/jindaxiang/akshare/issues) 中反馈
+    3. 可以在 [GitHub Issues](https://github.com/akfamily/akshare/issues) 中反馈
 
 7. 全球疫情历史数据接口获取不到数据
     
@@ -90,3 +90,7 @@ print(stock_zh_index_daily_df)
     4. 修改 host
         1. 添加如下内容: ```199.232.28.133 raw.githubusercontent.com```
         2. 此处 ```199.232.28.133``` 为查找到的真实 IP
+
+13. 使用代理的时候报错 `check_hostname requires server_hostname`
+
+    1. 降低 urllib3 的版本到 1.25.8：`pip install urllib3==1.25.8`

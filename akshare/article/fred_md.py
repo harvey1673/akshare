@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
 Date: 2020/4/10 19:58
 Desc: Economic Research from Federal Reserve Bank of St. Louis

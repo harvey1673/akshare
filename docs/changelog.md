@@ -1,4 +1,4 @@
-# [AKShare](https://github.com/jindaxiang/akshare) 版本更新
+# [AKShare](https://github.com/akfamily/akshare) 版本更新
 
 ```
 0.1.25: 增加奇货可查指数接口 e.g. ak.get_qhkc_data("商品指数")
@@ -1161,7 +1161,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.4.50: fix: stock_em_sy_yq_list
 
-0.4.51: add: stock_em_tfp
+0.4.51: add: stock_tfp_em
 
 0.4.52: fix: covid.py
 
@@ -1311,7 +1311,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.5.26: add: stock_info
 
-0.5.27: add: stock_em_hsgt_hold_stock
+0.5.27: add: stock_hsgt_hold_stock_em
 
 0.5.28: add: stock_fund_stock_holder, stock_main_stock_holder
 
@@ -1433,7 +1433,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.5.87: fix: fix cot interface
 
-0.5.88: fix: fix stock_em_account interface
+0.5.88: fix: fix stock_account_statistics_em interface
 
 0.5.89: add: add macro_china_new_financial_credit interface
 
@@ -1449,7 +1449,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.5.95: fix: fix get_dce_option_daily interface
 
-0.5.96: add: add stock_em_hsgt_hist interface
+0.5.96: add: add stock_hsgt_hist_em interface
 
 0.5.97: fix: fix remove mplfinance package in requirements.txt
 
@@ -1597,7 +1597,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.6.70: fix: fix bond_investing_global interface
 
-0.6.71: fix: fix nh_return_index interface
+0.6.71: fix: fix futures_nh_return_index interface
 
 0.6.72: fix: fix get_receipt interface
 
@@ -1649,7 +1649,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.6.96: fix: fix stock_zh_a_daily interface
 
-0.6.97: add: add stock_em_hsgt_board_rank interface
+0.6.97: add: add stock_hsgt_board_rank_em interface
 
 0.6.98: fix: fix fortune_rank interface
 
@@ -1753,7 +1753,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.7.49: fix: fix stock_us_zh_spot interface
 
-0.7.50: fix: fix stock_em_hsgt_stock_statistics interface
+0.7.50: fix: fix stock_hsgt_stock_statistics_em interface
 
 0.7.51: fix: fix stock_us_daily interface
 
@@ -1839,7 +1839,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.7.92: add: add fund_em_hk_fund_hist interface
 
-0.7.93: add: add fund_em_portfolio_hold interface
+0.7.93: add: add fund_portfolio_hold_em interface
 
 0.7.94: fix: fix futures_spot_price_previous interface
 
@@ -1871,7 +1871,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.8.9: add: add futures delivery and spot interface
 
-0.8.10: fix: fix fund_em_portfolio_hold interface
+0.8.10: fix: fix fund_portfolio_hold_em interface
 
 0.8.11: add: add futures_to_spot_dce interface
 
@@ -1973,7 +1973,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.8.60: fix: fix currency_hist interface
 
-0.8.61: fix: fix stock_em_hsgt_hold_stock interface
+0.8.61: fix: fix stock_hsgt_hold_stock_em interface
 
 0.8.62: fix: fix stock_zh_a_tick_163 interface
 
@@ -2087,7 +2087,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.9.18: fix: fix stock_em_dxsyl interface
 
-0.9.19: add: add stock_legu_market_activity interface
+0.9.19: add: add stock_market_activity_legu interface
 
 0.9.20: fix: fix stock_individual_fund_flow_rank interface
 
@@ -2105,7 +2105,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.9.27: fix: fix stock_report_fund_hold interface
 
-0.9.28: add: add stock_legu_average_position interface
+0.9.28: add: add stock_average_position_legu interface
 
 0.9.29: add: add stock_em_qbzf interface
 
@@ -2183,7 +2183,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.9.66: fix: fix set urllib3==1.25.11
 
-0.9.67: fix: fix stock_em_hsgt_hold_stock interface
+0.9.67: fix: fix stock_hsgt_hold_stock_em interface
 
 0.9.68: fix: fix stock_zh_a_tick_tx interface
 
@@ -2233,7 +2233,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 0.9.91: fix: fix stock_em_yjbb interface
 
-0.9.92: fix: fix stock_em_tfp interface
+0.9.92: fix: fix stock_tfp_em interface
 
 0.9.93: fix: fix stock_zh_a_gdhs interface
 
@@ -2319,7 +2319,7 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 
 1.0.35: fix: fix bond_cov_jsl interface
 
-1.0.36: fix: fix stock_em_hsgt_north_net_flow_in interface
+1.0.36: fix: fix stock_hsgt_north_net_flow_in_em interface
 
 1.0.37: add: add macro_swiss interface
 
@@ -2366,4 +2366,571 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 1.0.58: add: add futures_pig_rank interface
 
 1.0.59: fix: fix futures_zh_daily_sina interface
+
+1.0.60: fix: fix futures_main_sina interface
+
+1.0.61: fix: fix stock_a_all_pb interface
+
+1.0.62: add: add futures_egg_price interface
+
+1.0.63: fix: fix remove jyfm interface
+    1. 移除交易法门相关数据接口
+    2. 只在更新记录中保存
+
+1.0.64: fix: fix rename zh_stock_kcb_report to stock_zh_kcb_report_em interface
+
+1.0.65: fix: fix stock_em_gpzy_pledge_ratio_detail interface
+
+1.0.66: fix: fix macro_cons_opec_month interface
+
+1.0.67: fix: fix futures_sgx_daily interface
+
+1.0.68: fix: remove agoyal_stock_return interface
+
+1.0.69: fix: remove bank_rank_banker interface
+
+1.0.70: fix: remove watch_jinshi_quotes interface
+
+1.0.71: fix: remove watch_argus interface
+
+1.0.72: fix: fix amac_fund_abs interface
+
+1.0.73: add: add bond_cash_summary_sse interface
+
+1.0.74: fix: fix bond_zh_hs_cov_spot interface
+
+1.0.75: fix: fix bond_futures_deliverable_coupons interface
+
+1.0.76: fix: fix stock_financial_hk_analysis_indicator_em interface
+
+1.0.77: fix: fix macro_china_m2_yearly interface
+
+1.0.78: add: add reits_realtime_em, reits_info_jsl interface
+
+1.0.79: fix: fix news_cctv interface
+
+1.0.80: add: add stock_zh_a_hist_min_em, stock_zh_a_hist_pre_min_em interface
+
+1.0.81: add: add stock_us_hist_min_em, stock_hk_hist_min_em interface
+
+1.0.82: fix: fix bond_zh_cov interface
+
+1.0.83: fix: fix macro_china interface
+    1. macro_china_trade_balance
+    2. macro_china_imports_yoy
+    3. macro_china_exports_yoy
+    4. macro_china_industrial_production_yoy
+    5. macro_china_pmi_yearly 
+    6. macro_china_cx_pmi_yearly
+    7. macro_china_cx_services_pmi_yearly
+    8. macro_china_non_man_pmi
+    9. macro_china_fx_reserves_yearly
+
+1.0.84: add: add bond_zh_cov_info interface
+
+1.0.85: fix: fix stock_report_fund_hold interface
+
+1.0.86: fix: fix stock_em_zt_pool_dtgc interface
+
+1.0.87: fix: fix macro_china_swap_rate interface
+
+1.0.88: fix: fix stock_zh_a_hist_min_em interface
+
+1.0.89: fix: fix stock_hk_hist_min_em interface
+
+1.0.90: fix: fix stock_us_hist_min_em interface
+
+1.0.91: fix: fix stock_zh_a_hist_min_em interface
+
+1.0.92: fix: fix stock_zh_a_hist interface
+
+1.0.93: fix: fix stock_hk_hist_min_em interface
+
+1.0.94: fix: fix stock_zh_a_new interface
+
+1.0.95: fix: fix stock_zh_a_daily interface
+
+1.0.96: add: add stock_zh_a_st_em interface
+
+1.0.97: fix: fix futures_spot_stock interface
+
+1.0.98: add: add stock_zh_a_new_em interface
+
+1.0.99: fix: fix stock_wc_hot_rank interface
+
+1.1.1: add: add index_investing_global_from_url interface
+
+1.1.2: add: add stock_us_pink_spot_em interface
+
+1.1.3: add: add stock_us_famous_spot_em interface
+
+1.1.4: fix: fix stock_average_position_legu interface
+
+1.1.5: add: add stock_rank_forecast_cninfo interface
+
+1.1.6: fix: fix futures_zh_minute_sina interface
+
+1.1.7: fix: fix covid_19_trace interface
+
+1.1.8: add: add stock_industry_pe_ratio_cninfo interface
+
+1.1.9: fix: fix stock_js_price interface
+
+1.1.10: fix: fix stock_hsgt_hold_stock_em interface
+
+1.1.11: fix: fix stock_fund_flow_concept interface
+
+1.1.12: fix: fix stock_fund_flow_industry interface
+
+1.1.13: add: add stock_dividents_cninfo interface
+
+1.1.14: fix: fix stock_fund_flow_concept interface
+
+1.1.15: add: add stock_new_gh_cninfo interface
+
+1.1.16: fix: fix stock_em_jgdy_detail interface
+
+1.1.17: fix: fix stock_em_jgdy_tj interface
+
+1.1.18: fix: fix stock_fund_flow_concept and stock_fund_flow_industry interface
+
+1.1.19: add: add stock_new_ipo_cninfo interface
+
+1.1.20: fix: fix stock_a_pe interface
+
+1.1.21 fix: fix setuptools==57.5.0 package
+
+1.1.22 fix: fix remove demjson package
+
+1.1.23 fix: fix update urllib3 package
+
+1.1.24 fix: fix email address
+
+1.1.25 add: add stock_hold_num_cninfo interface
+
+1.1.26 fix: fix stock_fund_flow_concept interface
+
+1.1.27 add: add stock_hold_control_cninfo interface
+
+1.1.28 fix: fix move project to AKFamily interface
+
+1.1.29 fix: fix urllib3>=1.25.8 package
+
+1.1.30 fix: fix stock_zh_index_hist_csindex interface
+
+1.1.31 add: add stock_hold_management_detail_cninfo interface
+
+1.1.32 add: add sw_index_representation_spot interface
+
+1.1.33 fix: fix sw_index_xxx interface
+
+1.1.34 fix: fix drewry_wci_index interface
+
+1.1.35 fix: fix fund_etf_category_sina interface
+
+1.1.36 fix: fix sw_index_daily_indicator interface
+
+1.1.37 fix: fix drewry_wci_index interface
+
+1.1.38 add: add futures_comm_info interface
+
+1.1.39 fix: fix futures_comm_info interface
+
+1.1.40 fix: fix remove covid_19_history interface
+
+1.1.41 add: add stock_zh_b_sina interface
+
+1.1.42 fix: fix stock_zh_a_minute interface
+
+1.1.43 add: add stock_cg_guarantee_cninfo interface
+
+1.1.44 fix: fix stock_zh_index_daily interface
+
+1.1.45 fix: fix stock_zh_index_daily_tx interface
+
+1.1.46 fix: fix remove watch_jinshi_fx interface
+
+1.1.47 fix: fix stock_em_jgdy_tj and stock_em_jgdy_detail interface
+
+1.1.48 fix: fix rename fund_em_portfolio_hold to fund_portfolio_hold_em interface
+
+1.1.49 fix: fix stock_em_jgdy_tj and stock_em_jgdy_detail interface
+
+1.1.50 add: add stock_cg_lawsuit_cninfo interface
+
+1.1.51 fix: fix stock_wc_hot_rank interface
+
+1.1.52 add: add stock_cg_equity_mortgage_cninfo interface
+
+1.1.53 fix: fix index_detail_hist_adjust_cni interface
+
+1.1.54 fix: fix stock_board_concept_hist_ths interface
+
+1.1.55 fix: fix stock_sina_lhb_ggtj and stock_sina_lhb_jgzz interface
+
+1.1.56 add: add fund_em_aum_hist interface
+
+1.1.57 fix: fix stock_sina_lhb_ggtj and stock_sina_lhb_jgzz interface
+
+1.1.58 add: add bond_treasure_issue_cninfo interface
+
+1.1.59 add: add bond_local_government_issue_cninfo interface
+
+1.1.60 add: add bond_corporate_issue_cninfo interface
+
+1.1.61 add: add bond_cov_issue_cninfo interface
+
+1.1.62 fix: fix bond_zh_us_rate interface
+
+1.1.63 add: add bond_cov_stock_issue_cninfo interface
+
+1.1.64 add: add fund_report_stock_cninfo interface
+
+1.1.65 fix: fix stock_notice_report interface
+
+1.1.66 add: add fund_report_industry_allocation_cninfo interface
+
+1.1.67 fix: fix stock_zh_index_hist_csindex interface
+
+1.1.68 fix: fix index_stock_cons_csindex interface
+
+1.1.69 add: add fund_scale_open_sina interface
+
+1.1.70 add: add fund_scale_close_sina interface
+
+1.1.71 add: add fund_scale_structured_sina interface
+
+1.1.72 add: add fund_report_asset_allocation_cninfo interface
+
+1.1.73 add: add stock_zh_index_value_csindex interface
+
+1.1.74 fix: fix fund_em_etf_fund_info interface
+
+1.1.75 add: add index_value_hist_funddb interface
+
+1.1.76 fix: fix amac_fund_info interface
+
+1.1.77 fix: fix stock_zh_a_tick_163_now interface
+
+1.1.78 add: add stock_hsgt_individual_em interface
+
+1.1.79 fix: fix stock_em_jgdy_tj interface
+
+1.1.80 add: add support for Python 3.10 interface
+
+1.1.81 add: add stock_hsgt_individual_detail_em interface
+
+1.1.82 fix: fix stock_tfp_em interface
+    1. rename stock_em_tfp to stock_tfp_em
+    2. reformat output data type
+
+1.1.83 add: add stock_ipo_benefit_ths interface
+
+1.1.84 fix: fix stock_board_industry_index_ths interface
+    1. add start_date and end_date parameters
+
+1.1.85 fix: fix stock_hsgt_stock_statistics_em interface
+
+1.1.86 fix: fix stock_hsgt_stock_statistics_em interface
+
+1.1.87 fix: fix stock_hsgt_hist_em interface
+
+1.1.88 fix: fix stock_sector_spot interface
+
+1.1.89 fix: fix stock_sector_detail interface
+
+1.1.90 fix: fix stock_board_concept_name_ths interface
+
+1.1.91 fix: fix stock_hsgt_individual_detail_em interface
+
+1.1.92 add: add stock_rank_cxg_ths interface
+
+1.1.93 add: add stock_rank_cxd_ths interface
+
+1.1.94 fix: fix fund_portfolio_hold_em interface
+
+1.1.95 fix: fix stock_board_concept_hist_ths interface
+
+1.1.96 add: add bond_zh_hs_cov_min interface
+
+1.1.97 add: add stock_rank_lxsz_ths interface
+
+1.1.98 add: add stock_rank_lxxd_ths interface
+
+1.1.99 add: add stock_rank_cxfl_ths interface
+
+1.2.1 add: add stock_rank_cxsl_ths interface
+
+1.2.2 fix: fix zh_subscribe_exchange_symbol interface
+    1. fix encoding
+
+1.2.3 add: add stock_rank_xstp_ths interface
+
+1.2.4 fix: fix fund_portfolio_hold_em interface
+
+1.2.5 fix: fix index_stock_hist interface
+
+1.2.6 add: add stock_rank_xxtp_ths interface
+
+1.2.7 add: add stock_rank_ljqd_ths interface
+
+1.2.8 add: add stock_rank_ljqs_ths interface
+
+1.2.9 fix: fix stock_zh_a_gdhs interface
+
+1.2.10 fix: fix bond_zh_hs_daily interface
+
+1.2.11 add: add stock_zh_a_gdhs_detail_em interface
+
+1.2.12 fix: fix stock_zh_a_gdhs interface
+
+1.2.13 add: add stock_rank_xzjp_ths interface
+
+1.2.14 add: add sw_index_second_spot interface
+
+1.2.15 fix: fix stock_board_industry_name_ths interface
+
+1.2.16 add: add stock_board_cons_ths interface
+
+1.2.17 fix: fix amac_fund_info interface
+
+1.2.18 fix: fix amac interface
+
+1.2.19 fix: fix amac cons.py interface
+
+1.2.20 fix: fix stock_zh_a_spot_em interface
+
+1.2.21 fix: fix stock_zh_a_hist interface
+
+1.2.22 fix: fix amac_fund_info interface
+
+1.2.23 add: add video_tv interface
+
+1.2.24 fix: fix car_gasgoo_sale_rank interface
+
+1.2.25 fix: fix amac_manager_classify_info interface
+
+1.2.26 fix: fix amac interface
+
+1.2.27 add: add online_value_artist interface
+
+1.2.28 add: add club_rank_game interface
+
+1.2.29 add: add player_rank_game interface
+
+1.2.30 add: add business_value_artist interface
+
+1.2.31 fix: fix stock_em_zt_pool interface
+
+1.2.32 add: add video_variety_show interface
+
+1.2.33 add: add fund_fh_em interface
+
+1.2.34 fix: fix fund_em_open_fund_info interface
+
+1.2.35 fix: fix fund_em_open_fund_info interface
+
+1.2.36 add: add stock_info_bj_name_code interface
+
+1.2.37 fix: fix stock_info_a_code_name interface
+
+1.2.38 fix: fix futures_foreign_commodity_realtime interface
+
+1.2.39 fix: fix stock_info_sh_delist interface
+
+1.2.40 add: add fund_scale_change_em interface
+
+1.2.41 add: add fund_hold_structure_em interface
+
+1.2.42 fix: fix fund_manager interface
+
+1.2.43 fix: fix get_czce_daily interface
+
+1.2.44 add: add futures_index_cscidx interface
+
+1.2.45 fix: fix stock_info_a_code_name interface
+
+1.2.46 add: add stock_board_industry_cons_em interface
+
+1.2.47 fix: fix covid_19_dxy interface
+
+1.2.48 fix: fix covid_19_dxy interface
+
+1.2.49 fix: fix rate_interbank interface
+
+1.2.50 fix: fix futures_nh_price_index interface
+
+1.2.51 add: add futures_hq_subscribe_exchange_symbol interface
+
+1.2.52 fix: fix futures_foreign_commodity_realtime interface
+
+1.2.53 add: add get_ine_daily interface
+
+1.2.54 fix: fix bond_zh_hs_cov_min interface
+
+1.2.55 add: add stock_repurchase_em interface
+
+1.2.56 fix: fix stock_zh_a_tick_163 interface
+
+1.2.57 add: add stock_us_hist_fu interface
+
+1.2.58 fix: fix stock_board_concept_hist_ths interface
+
+1.2.59 fix: fix macro_china_hk interface
+
+1.2.60 fix: fix macro_china_hk interface
+
+1.2.61 fix: fix stock_board_concept_hist_ths interface
+
+1.2.62 fix: fix stock_dzjy_sctj interface
+
+1.2.63 add: add spot_hist_sge interface
+
+1.2.64 add: add spot_silver_benchmark_sge interface
+
+1.2.65 remove: remove wdbank interface
+
+1.2.66 add: add spot_golden_benchmark_sge interface
+
+1.2.67 fix: fix air_quality_hebei interface
+
+1.2.68 fix: fix stock_financial_hk_analysis_indicator_em interface
+
+1.2.69 fix: fix get_futures_daily interface
+
+1.2.70 fix: fix sw_index_spot interface
+
+1.2.71 add: add sw_index_third_info interface
+
+1.2.72 add: add sw_index_third_cons interface
+
+1.2.73 fix: fix sw_index_third_cons interface
+
+1.2.74 fix: fix macro_australia and macro_canada interface
+
+1.2.75 fix: fix docs interface
+
+1.2.76 fix: fix amac_person_fund_org_list interface
+
+1.2.77 add: add bond_conv_adj_logs_jsl interface
+
+1.2.78 fix: fix amac_person_fund_org_list interface
+
+1.2.79 fix: fix amac_person_fund_org_list interface
+
+1.2.80 fix: fix sw_index_daily interface
+
+1.2.81 fix: fix stock_us_hist_fu interface
+
+1.2.82 fix: fix spot_symbol_table_sge interface
+
+1.2.83 fix: fix macro_bank interface
+
+1.2.84 fix: fix repo_rate_hist interface
+
+1.2.85 fix: fix repo_rate_hist interface
+
+1.2.86 add: add stock_a_pe_and_pb interface
+
+1.2.87 add: add stock_hk_ggt_components_em interface
+
+1.2.88 fix: fix futures_nh_index interface
+
+1.2.89 fix: fix futures_index_cscidx interface
+
+1.2.90 fix: fix stock_board_industry_index_ths interface
+
+1.2.91 fix: fix fund_etf_hist_sina interface
+
+1.2.92 fix: fix futures_zh_spot interface
+
+1.2.93 fix: fix fund_manager interface
+
+1.2.94 fix: fix fund_em_new_found interface
+
+1.2.95 add: add stock_individual_info_em interface
+
+1.2.96 add: add match_main_contract interface
+
+1.2.97 fix: fix stock_profit_forecast interface
+
+1.2.98 fix: fix futures_spot_stock interface
+
+1.2.99 fix: fix PYPI info
+
+1.3.1 fix: fix option_shfe_daily interface
+
+1.3.2 fix: remove github interface
+
+1.3.3 fix: fix stock_em_ztb interface
+
+1.3.4 fix: fix stock_hsgt_stock_statistics_em interface
+
+1.3.5 fix: update QQ info
+
+1.3.6 fix: fix stock_dzjy_sctj interface
+
+1.3.7 fix: fix stock_hsgt_north_xxxx interface
+
+1.3.8 fix: fix stock_info_change_name interface
+
+1.3.9 add: add index_sugar_msweet interface
+
+1.3.10 fix: fix index_sugar_msweet interface
+
+1.3.11 fix: fix index_cflp_price interface
+
+1.3.12 add: add index_inner_quote_sugar_msweet interface
+
+1.3.13 fix: fix stock_zh_a_tick_163 interface
+
+1.3.14 fix: fix stock_zh_a_scr_report interface
+
+1.3.15 fix: fix option_current_em interface
+
+1.3.16 fix: fix stock_account_statistics_em interface
+
+1.3.17 fix: fix stock_sse_deal_daily interface
+
+1.3.18 fix: fix stock_sse_summary interface
+
+1.3.19 add: add index_stock_cons_weight_csindex interface
+
+1.3.20 fix: fix index_cni_xx interface
+
+1.3.21 fix: fix index_detail_hist_adjust_cni interface
+
+1.3.22 fix: fix hf_sp_500 interface
+
+1.3.23 fix: fix macro_china_gksccz interface
+
+1.3.24 fix: fix macro_china_bond_public interface
+
+1.3.25 fix: fix stock_hk_hist interface
+
+1.3.26 fix: fix stock_us_spot_em interface
+
+1.3.27 fix: fix stock_us_hist interface
+
+1.3.28 fix: fix stock_zh_a_hist interface
+
+1.3.29 fix: fix update calendar.json to 2022
+
+1.3.30 fix: fix stock_zh_index_daily_em interface
+
+1.3.31 fix: fix stock_dzjy_mrmx interface
+
+1.3.32 fix: fix stock_dzjy_mrtj interface
+
+1.3.33 fix: fix stock_dzjy_yybph interface
+
+1.3.34 fix: fix stock_history_dividend interface
+
+1.3.35 add: add fund_purchase_em interface
+
+1.3.36 fix: fix futures_inventory_99 interface
+
+1.3.37 fix: fix stock_financial_analysis_indicator interface
+
+1.3.38 fix: fix index_value_name_funddb interface
 ```

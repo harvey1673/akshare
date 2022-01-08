@@ -1,27 +1,29 @@
-![](https://github.com/jindaxiang/akshare/blob/master/example/images/AKShare_logo.jpg)
+**本次发布 [AKTools](https://github.com/akfamily/aktools) 作为 AKShare 的 HTTP Server 版本，突破 Python 语言的限制，欢迎各位小伙伴试用并提出更好的意见或建议！ 点击 [AKTools](https://github.com/akfamily/aktools) 查看使用指南**
+
+![](https://github.com/akfamily/akshare/blob/master/example/images/AKShare_logo.jpg)
 
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/akshare.svg)](https://pypi.org/project/akshare/)
 [![PyPI](https://img.shields.io/pypi/v/akshare.svg)](https://pypi.org/project/akshare/)
 [![Downloads](https://pepy.tech/badge/akshare)](https://pepy.tech/project/akshare)
-[![Documentation Status](https://readthedocs.org/projects/akshare/badge/?version=latest)](https://akshare.readthedocs.io/zh_CN/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/akshare/badge/?version=latest)](https://akshare.readthedocs.io/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![akshare](https://img.shields.io/badge/Data%20Science-AKShare-green)](https://github.com/jindaxiang/akshare)
-[![Actions Status](https://github.com/jindaxiang/akshare/workflows/build/badge.svg)](https://github.com/jindaxiang/akshare/actions)
-[![MIT Licence](https://camo.githubusercontent.com/14a9abb7e83098f2949f26d2190e04fb1bd52c06/68747470733a2f2f626c61636b2e72656164746865646f63732e696f2f656e2f737461626c652f5f7374617469632f6c6963656e73652e737667)](https://github.com/jindaxiang/akshare/blob/master/LICENSE)
-[![](https://img.shields.io/github/forks/jindaxiang/akshare)](https://github.com/jindaxiang/akshare)
-[![](https://img.shields.io/github/stars/jindaxiang/akshare)](https://github.com/jindaxiang/akshare)
-[![](https://img.shields.io/github/issues/jindaxiang/akshare)](https://github.com/jindaxiang/akshare)
+[![akshare](https://img.shields.io/badge/Data%20Science-AKShare-green)](https://github.com/akfamily/akshare)
+[![Actions Status](https://github.com/akfamily/akshare/workflows/build/badge.svg)](https://github.com/akfamily/akshare/actions)
+[![MIT Licence](https://camo.githubusercontent.com/14a9abb7e83098f2949f26d2190e04fb1bd52c06/68747470733a2f2f626c61636b2e72656164746865646f63732e696f2f656e2f737461626c652f5f7374617469632f6c6963656e73652e737667)](https://github.com/akfamily/akshare/blob/master/LICENSE)
+[![](https://img.shields.io/github/forks/jindaxiang/akshare)](https://github.com/akfamily/akshare)
+[![](https://img.shields.io/github/stars/jindaxiang/akshare)](https://github.com/akfamily/akshare)
+[![](https://img.shields.io/github/issues/jindaxiang/akshare)](https://github.com/akfamily/akshare)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## Overview
 
-[AKShare](https://github.com/jindaxiang/akshare) requires Python(64 bit) 3.7 or greater, aims to make fetch financial data as convenient as possible.
+[AKShare](https://github.com/akfamily/akshare) requires Python(64 bit) 3.7 or greater, aims to make fetch financial data as convenient as possible.
 
 **Write less, get more!**
 
-- Documentation: [中文文档](https://akshare.readthedocs.io/zh_CN/latest/)
+- Documentation: [中文文档](https://www.akshare.xyz/)
 
-# ![](https://github.com/jindaxiang/akshare/blob/master/example/images/AKShare.svg)
+# ![](https://github.com/akfamily/akshare/blob/master/example/images/AKShare.svg)
 
 ## Installation
 
@@ -49,13 +51,13 @@ Please check out [documentation](https://www.akshare.xyz/zh_CN/latest/contributo
 docker pull registry.cn-hangzhou.aliyuncs.com/akshare/akdocker
 ```
 
-#### Run AkDocker
+#### Run AKDocker
 
 ```
 docker run -it registry.cn-hangzhou.aliyuncs.com/akshare/akdocker python
 ```
 
-#### Test AkDocker
+#### Test AKDocker
 
 ```python
 import akshare as ak
@@ -70,27 +72,27 @@ Code
 
 ```python
 import akshare as ak
-stock_us_daily_df = ak.stock_us_daily(symbol="AMZN")  # Get U.S. stock Amazon's price info
-print(stock_us_daily_df)
+
+stock_zh_a_hist_df = ak.stock_zh_a_hist(symbol="000001", period="daily", start_date="20170301", end_date='20210907', adjust="")
+print(stock_zh_a_hist_df)
 ```
 
 Output
 
 ```
-               open       high        low      close     volume
-date                                                           
-1997-05-15    29.25    30.0000    23.1300    23.5000  6013000.0
-1997-05-16    23.63    23.7500    20.5000    20.7500  1225000.0
-1997-05-19    21.13    21.2500    19.5000    20.5000   508900.0
-1997-05-20    20.75    21.0000    19.6300    19.6300   455600.0
-1997-05-21    19.63    19.7500    16.5000    17.1300  1571100.0
-             ...        ...        ...        ...        ...
-2021-01-04  3270.00  3272.0000  3144.0200  3186.6299  4205801.0
-2021-01-05  3166.01  3223.3799  3165.0601  3218.5100  2467255.0
-2021-01-06  3146.48  3197.5090  3131.1599  3138.3799  4065357.0
-2021-01-07  3157.00  3208.5420  3155.0000  3162.1599  3320882.0
-2021-01-08  3180.00  3190.6399  3142.2000  3182.7000  3410288.0
-[5951 rows x 5 columns]
+      日期          开盘   收盘    最高  ...  振幅   涨跌幅 涨跌额 换手率
+0     2017-03-01   9.49   9.49   9.55  ...  0.84  0.11  0.01  0.21
+1     2017-03-02   9.51   9.43   9.54  ...  1.26 -0.63 -0.06  0.24
+2     2017-03-03   9.41   9.40   9.43  ...  0.74 -0.32 -0.03  0.20
+3     2017-03-06   9.40   9.45   9.46  ...  0.74  0.53  0.05  0.24
+4     2017-03-07   9.44   9.45   9.46  ...  0.63  0.00  0.00  0.17
+          ...    ...    ...    ...  ...   ...   ...   ...   ...
+1100  2021-09-01  17.48  17.88  17.92  ...  5.11  0.45  0.08  1.19
+1101  2021-09-02  18.00  18.40  18.78  ...  5.48  2.91  0.52  1.25
+1102  2021-09-03  18.50  18.04  18.50  ...  4.35 -1.96 -0.36  0.72
+1103  2021-09-06  17.93  18.45  18.60  ...  4.55  2.27  0.41  0.78
+1104  2021-09-07  18.60  19.24  19.56  ...  6.56  4.28  0.79  0.84
+[1105 rows x 11 columns]
 ```
 
 ### Plot
@@ -117,20 +119,18 @@ Output
 
 Pay attention to **数据科学家** Official Accounts to get more information about Quant, ML, DS and so on.
 
-<div align=center>
+<div>
     <img src="https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/data_scientist.png">
 </div>
 
-Pay attention to **数据科学实战** WeChat Official Accounts to get the [AKShare](https://github.com/jindaxiang/akshare) updated info:
+Pay attention to **数据科学实战** WeChat Official Accounts to get the [AKShare](https://github.com/akfamily/akshare) updated info:
 
-<div align=center>
-    <img src="https://github.com/jindaxiang/akshare/blob/master/example/images/ds.png">
+<div>
+    <img src="https://github.com/akfamily/akshare/blob/master/example/images/ds.png">
 </div>
 
-Application to add **AKShare-VIP群** QQ group and talk about [AKShare](https://github.com/jindaxiang/akshare) issues, QQ group number: 943508707
-<div align=center>
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=5O49TwOftLcjRMZMtM1L0Q0wpF-OWI69&jump_from=webapi"><img border="0" src="https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/qr_code_943508707.png" alt="AKShare-VIP群" title="AKShare-VIP群" align="center"></a>
-</div>
+Application to add **AKShare-VIP QQ group** and talk about [AKShare](https://github.com/akfamily/akshare) issues, please contact **AKShare-小助手 QQ**: 1254836886
+![](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/qr_code_1254836886.jpg)
 
 ## Features
 
@@ -148,7 +148,7 @@ Application to add **AKShare-VIP群** QQ group and talk about [AKShare](https://
 
 ## Contribution
 
-[AKShare](https://github.com/jindaxiang/akshare) is still under developing, feel free to open issues and pull requests:
+[AKShare](https://github.com/akfamily/akshare) is still under developing, feel free to open issues and pull requests:
 
 - Report or fix bugs
 - Require or publish interface
@@ -159,31 +159,32 @@ Application to add **AKShare-VIP群** QQ group and talk about [AKShare](https://
 
 ## Statement
 
-1. All data provided by [AKShare](https://github.com/jindaxiang/akshare) is just for academic research purpose;
-2. The data provided by [AKShare](https://github.com/jindaxiang/akshare) is for reference only and does not constitute any investment proposal;
-3. Any investor based on [AKShare](https://github.com/jindaxiang/akshare) research should pay more attention to data risk;
-4. [AKShare](https://github.com/jindaxiang/akshare) will insist on providing open-source financial data;
-5. Based on some uncontrollable factors, some data interfaces in [AKShare](https://github.com/jindaxiang/akshare) may be removed;
-6. Please follow the relevant open-source protocol used by [AKShare](https://github.com/jindaxiang/akshare).
+1. All data provided by [AKShare](https://github.com/akfamily/akshare) is just for academic research purpose;
+2. The data provided by [AKShare](https://github.com/akfamily/akshare) is for reference only and does not constitute any investment proposal;
+3. Any investor based on [AKShare](https://github.com/akfamily/akshare) research should pay more attention to data risk;
+4. [AKShare](https://github.com/akfamily/akshare) will insist on providing open-source financial data;
+5. Based on some uncontrollable factors, some data interfaces in [AKShare](https://github.com/akfamily/akshare) may be removed;
+6. Please follow the relevant open-source protocol used by [AKShare](https://github.com/akfamily/akshare);
+7. Provide HTTP API for the person who uses other program language: [AKTools](https://aktools.readthedocs.io/).
 
 ## Show your style
 
 Use the badge in your project's README.md:
 
 ```markdown
-[![Data: akshare](https://img.shields.io/badge/Data%20Science-AKShare-green)](https://github.com/jindaxiang/akshare)
+[![Data: akshare](https://img.shields.io/badge/Data%20Science-AKShare-green)](https://github.com/akfamily/akshare)
 ```
 
 Using the badge in README.rst:
 
 ```
 .. image:: https://img.shields.io/badge/Data%20Science-AKShare-green
-    :target: https://github.com/jindaxiang/akshare
+    :target: https://github.com/akfamily/akshare
 ```
 
 Looks like this:
 
-[![Data: akshare](https://img.shields.io/badge/Data%20Science-AKShare-green)](https://github.com/jindaxiang/akshare)
+[![Data: akshare](https://img.shields.io/badge/Data%20Science-AKShare-green)](https://github.com/akfamily/akshare)
 
 ## Citation
 
@@ -196,7 +197,7 @@ Please use this **bibtex** if you want to cite this repository in your publicati
     year = {2019},
     publisher = {GitHub},
     journal = {GitHub repository},
-    howpublished = {\url{https://github.com/jindaxiang/akshare}},
+    howpublished = {\url{https://github.com/akfamily/akshare}},
 }
 ```
 
@@ -210,8 +211,6 @@ Thanks for the data provided by [生意社网站](http://www.100ppi.com/);
 
 Thanks for the data provided by [奇货可查网站](https://qhkch.com/);
 
-Thanks for the data provided by [智道智科网站](https://www.ziasset.com/);
-
 Thanks for the data provided by [中国银行间市场交易商协会网站](http://www.nafmii.org.cn/);
 
 Thanks for the data provided by [99期货网站](http://www.99qh.com/);
@@ -221,8 +220,6 @@ Thanks for the data provided by [英为财情网站](https://cn.investing.com/);
 Thanks for the data provided by [中国外汇交易中心暨全国银行间同业拆借中心网站](http://www.chinamoney.com.cn/chinese/);
 
 Thanks for the data provided by [金十数据网站](https://www.jin10.com/);
-
-Thanks for the data provided by [交易法门网站](https://www.jiaoyifamen.com/);
 
 Thanks for the data provided by [和讯财经网站](http://www.hexun.com/);
 
@@ -235,6 +232,8 @@ Thanks for the data provided by [DACHENG-XIU 网站](https://dachxiu.chicagoboot
 Thanks for the data provided by [上海证券交易所网站](http://www.sse.com.cn/assortment/options/price/);
 
 Thanks for the data provided by [深证证券交易所网站](http://www.szse.cn/);
+
+Thanks for the data provided by [北京证券交易所网站](http://www.bse.cn/);
 
 Thanks for the data provided by [中国金融期货交易所网站](http://www.cffex.com.cn/);
 
@@ -268,8 +267,6 @@ Thanks for the data provided by [财富网站](http://www.fortunechina.com/);
 
 Thanks for the data provided by [中国证券投资基金业协会网站](http://gs.amac.org.cn/);
 
-Thanks for the data provided by [猫眼电影网站](https://maoyan.com/board/1);
-
 Thanks for the data provided by [Expatistan 网站](https://www.expatistan.com/cost-of-living);
 
 Thanks for the data provided by [北京市碳排放权电子交易平台网站](https://www.bjets.com.cn/article/jyxx/);
@@ -302,18 +299,14 @@ Thanks for the data provided by [慈善中国网站](http://cishan.chinanpo.gov.
 
 Thanks for the data provided by [思知网站](https://www.ownthink.com/);
 
-Thanks for the data provided by [Currencyscoop网站](https://currencyscoop.com/);
+Thanks for the data provided by [Currencyscoop 网站](https://currencyscoop.com/);
 
 Thanks for the data provided by [新加坡交易所网站](https://www.sgx.com/zh-hans/research-education/derivatives);
-
-Thanks for the data provided by [中国期货市场监控中心](http://index.cfmmc.com/index/views/index.html);
-
-Thanks for the data provided by [宽客在线](https://www.quantinfo.com/Argus/);
 
 Thanks for the tutorials provided by [微信公众号: Python大咖谈](https://upload-images.jianshu.io/upload_images/3240514-61004f2c71be4a0b.png).
 
 ## Backer and Sponsor
 
 <a href="https://www.jetbrains.com/?from=jindaxiang/akshare" target="_blank">
-<img src="https://github.com/jindaxiang/akshare/blob/master/example/images/jetbrains.svg" width="100px" height="100px">
+<img src="https://github.com/akfamily/akshare/blob/master/example/images/jetbrains.svg" width="100px" height="100px">
 </a>

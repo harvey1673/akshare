@@ -1,16 +1,18 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
-Date: 2020/5/18 20:49
+Date: 2021/10/30 16:06
 Desc: 新浪行业-板块行情
 http://finance.sina.com.cn/stock/sl/
 """
 import json
 import math
 
-import demjson
 import pandas as pd
 import requests
+
+from akshare.utils import demjson
+from tqdm import tqdm
 
 
 def stock_sector_spot(indicator: str = "新浪行业") -> pd.DataFrame:
@@ -22,7 +24,6 @@ def stock_sector_spot(indicator: str = "新浪行业") -> pd.DataFrame:
     :return: 指定 indicator 的数据
     :rtype: pandas.DataFrame
     """
-
     if indicator == "新浪行业":
         url = "http://vip.stock.finance.sina.com.cn/q/view/newSinaHy.php"
         r = requests.get(url)
@@ -58,14 +59,23 @@ def stock_sector_spot(indicator: str = "新浪行业") -> pd.DataFrame:
         "平均价格",
         "涨跌额",
         "涨跌幅",
-        "总成交量(手)",
-        "总成交额(万元)",
+        "总成交量",
+        "总成交额",
         "股票代码",
-        "涨跌幅",
-        "当前价",
-        "涨跌额",
+        "个股-涨跌幅",
+        "个股-当前价",
+        "个股-涨跌额",
         "股票名称",
     ]
+    temp_df['公司家数'] = pd.to_numeric(temp_df['公司家数'])
+    temp_df['平均价格'] = pd.to_numeric(temp_df['平均价格'])
+    temp_df['涨跌额'] = pd.to_numeric(temp_df['涨跌额'])
+    temp_df['涨跌幅'] = pd.to_numeric(temp_df['涨跌幅'])
+    temp_df['总成交量'] = pd.to_numeric(temp_df['总成交量'])
+    temp_df['总成交额'] = pd.to_numeric(temp_df['总成交额'])
+    temp_df['个股-涨跌幅'] = pd.to_numeric(temp_df['个股-涨跌幅'])
+    temp_df['个股-当前价'] = pd.to_numeric(temp_df['个股-当前价'])
+    temp_df['个股-涨跌额'] = pd.to_numeric(temp_df['个股-涨跌额'])
     return temp_df
 
 
@@ -85,10 +95,9 @@ def stock_sector_detail(sector: str = "gn_gfgn") -> pd.DataFrame:
     r = requests.get(url, params=params)
     total_num = int(r.json())
     total_page_num = math.ceil(int(total_num) / 80)
-
     big_df = pd.DataFrame()
     url = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData"
-    for page in range(1, total_page_num+1):
+    for page in tqdm(range(1, total_page_num+1), leave=True):
         params = {
             "page": str(page),
             "num": "80",
@@ -99,22 +108,44 @@ def stock_sector_detail(sector: str = "gn_gfgn") -> pd.DataFrame:
             "_s_r_a": "page",
         }
         r = requests.get(url, params=params)
-        temp_df = pd.DataFrame(demjson.decode(r.text))
+        data_text = r.text
+        data_json = demjson.decode(data_text)
+        temp_df = pd.DataFrame(data_json)
         big_df = big_df.append(temp_df, ignore_index=True)
+    big_df['trade'] = pd.to_numeric(big_df['trade'])
+    big_df['pricechange'] = pd.to_numeric(big_df['pricechange'])
+    big_df['changepercent'] = pd.to_numeric(big_df['changepercent'])
+    big_df['buy'] = pd.to_numeric(big_df['buy'])
+    big_df['sell'] = pd.to_numeric(big_df['sell'])
+    big_df['settlement'] = pd.to_numeric(big_df['settlement'])
+    big_df['open'] = pd.to_numeric(big_df['open'])
+    big_df['high'] = pd.to_numeric(big_df['high'])
+    big_df['low'] = pd.to_numeric(big_df['low'])
+    big_df['volume'] = pd.to_numeric(big_df['volume'])
+    big_df['amount'] = pd.to_numeric(big_df['amount'])
+    big_df['per'] = pd.to_numeric(big_df['per'])
+    big_df['pb'] = pd.to_numeric(big_df['pb'])
+    big_df['mktcap'] = pd.to_numeric(big_df['mktcap'])
+    big_df['nmc'] = pd.to_numeric(big_df['nmc'])
+    big_df['turnoverratio'] = pd.to_numeric(big_df['turnoverratio'])
     return big_df
 
 
 if __name__ == '__main__':
     stock_industry_sina_df = stock_sector_spot(indicator="新浪行业")
     print(stock_industry_sina_df)
+
     stock_industry_con_df = stock_sector_spot(indicator="概念")
     print(stock_industry_con_df)
+
     stock_industry_area_df = stock_sector_spot(indicator="地域")
     print(stock_industry_area_df)
+
     stock_industry_ind_df = stock_sector_spot(indicator="行业")
     print(stock_industry_ind_df)
+
     stock_industry_star_df = stock_sector_spot(indicator="启明星行业")
     print(stock_industry_star_df)
 
     stock_sector_detail_df = stock_sector_detail(sector="hangye_ZC27")
-    print(stock_sector_detail_df)
+    print(stock_sector_detail_df.info())

@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
 Date: 2021/7/7 9:47
 Desc: 金十数据-市场快讯
@@ -60,5 +60,5 @@ def js_news(timestamp: str = "2021-06-05 20:50:18") -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    js_news_df = js_news(timestamp="2021-08-12 15:27:18")
+    js_news_df = js_news(timestamp="2021-12-08 16:21:18")
     print(js_news_df)

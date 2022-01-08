@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
 Date: 2019/9/30 13:58
 Desc: 奇货可查网站目前已经商业化运营, 特提供奇货可查-指数数据接口, 方便您程序化调用
@@ -190,5 +190,5 @@ if __name__ == "__main__":
     print(data)
     data = get_qhkc_index_trend("奇货贵金属")
     print(data)
-    data = get_qhkc_index_profit_loss("奇货贵金属", end_date="20190716")
+    data = get_qhkc_index_profit_loss("奇货贵金属", end_date="20211207")
     print(data)

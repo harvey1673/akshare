@@ -1,14 +1,14 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
-Date: 2021/5/20 16:28
-Desc: 新浪财经-A股-实时行情数据和历史行情数据(包含前复权和后复权因子)
+Date: 2021/11/15 19:28
+Desc: 新浪财经-A 股-实时行情数据和历史行情数据(包含前复权和后复权因子)
 https://finance.sina.com.cn/realstock/company/sh689009/nc.shtml
 """
 import re
 import json
 
-import demjson
+from akshare.utils import demjson
 from py_mini_racer import py_mini_racer
 import pandas as pd
 import requests
@@ -30,7 +30,7 @@ def _get_zh_a_page_count() -> int:
     """
     所有股票的总页数
     http://vip.stock.finance.sina.com.cn/mkt/#hs_a
-    :return: 需要抓取的股票总页数
+    :return: 需要采集的股票总页数
     :rtype: int
     """
     res = requests.get(zh_sina_a_stock_count_url)
@@ -43,10 +43,10 @@ def _get_zh_a_page_count() -> int:
 
 def stock_zh_a_spot() -> pd.DataFrame:
     """
-    新浪财经- A 股
-    获取所有 A 股的实时行情数据; 重复运行本函数会被新浪暂时封 IP
-    http://vip.stock.finance.sina.com.cn/mkt/#qbgg_hk
-    :return: pandas.DataFrame
+    新浪财经-所有 A 股的实时行情数据; 重复运行本函数会被新浪暂时封 IP
+    http://vip.stock.finance.sina.com.cn/mkt/#hs_a
+    :return: 所有股票的实时行情数据
+    :rtype: pandas.DataFrame
     """
     big_df = pd.DataFrame()
     page_count = _get_zh_a_page_count()
@@ -117,14 +117,14 @@ def stock_zh_a_spot() -> pd.DataFrame:
 
 
 def stock_zh_a_daily(
-    symbol: str = "sz000001",
+    symbol: str = "sh603843",
     start_date: str = "19900101",
     end_date: str = "21000118",
     adjust: str = "",
 ) -> pd.DataFrame:
     """
-    新浪财经-A股-个股的历史行情数据, 大量抓取容易封 IP
-    https://finance.sina.com.cn/realstock/company/sh689009/nc.shtml
+    新浪财经-A 股-个股的历史行情数据, 大量抓取容易封 IP
+    https://finance.sina.com.cn/realstock/company/sh603843/nc.shtml
     :param start_date: 20201103; 开始日期
     :type start_date: str
     :param end_date: 20201103; 结束日期
@@ -198,7 +198,7 @@ def stock_zh_a_daily(
     ]
     if adjust == "":
         temp_df = temp_df[start_date:end_date]
-        temp_df.drop_duplicates(subset=["open", "high", "low", "close"], inplace=True)
+        temp_df.drop_duplicates(subset=["open", "high", "low", "close", "volume"], inplace=True)
         temp_df["open"] = round(temp_df["open"], 2)
         temp_df["high"] = round(temp_df["high"], 2)
         temp_df["low"] = round(temp_df["low"], 2)
@@ -304,7 +304,7 @@ def stock_zh_a_cdr_daily(
 
 
 def stock_zh_a_minute(
-    symbol: str = "sh603087", period: str = "5", adjust: str = ""
+    symbol: str = "sh603087", period: str = "1", adjust: str = ""
 ) -> pd.DataFrame:
     """
     股票及股票指数历史行情数据-分钟数据
@@ -328,8 +328,7 @@ def stock_zh_a_minute(
     temp_df = pd.DataFrame(json.loads(r.text.split("=(")[1].split(");")[0])).iloc[:, :6]
     if temp_df.empty:
         print(f"{symbol} 股票数据不存在，请检查是否已退市")
-        return None
-
+        return
     try:
         stock_zh_a_daily(symbol=symbol, adjust="qfq")
     except:
@@ -340,7 +339,9 @@ def stock_zh_a_minute(
 
     if adjust == "qfq":
         temp_df[["date", "time"]] = temp_df["day"].str.split(" ", expand=True)
-        need_df = temp_df[temp_df["time"] == "15:00:00"]
+        # 处理没有最后一分钟的情况
+        need_df = temp_df[[True if "09:31:00" <= item <= "15:00:00" else False for item in temp_df["time"]]]
+        need_df.drop_duplicates(subset=['date'], keep='last', inplace=True)
         need_df.index = pd.to_datetime(need_df["date"])
         stock_zh_a_daily_qfq_df = stock_zh_a_daily(symbol=symbol, adjust="qfq")
         stock_zh_a_daily_qfq_df.index = pd.to_datetime(stock_zh_a_daily_qfq_df['date'])
@@ -356,7 +357,9 @@ def stock_zh_a_minute(
         return temp_df
     if adjust == "hfq":
         temp_df[["date", "time"]] = temp_df["day"].str.split(" ", expand=True)
-        need_df = temp_df[temp_df["time"] == "15:00:00"]
+        # 处理没有最后一分钟的情况
+        need_df = temp_df[[True if "09:31:00" <= item <= "15:00:00" else False for item in temp_df["time"]]]
+        need_df.drop_duplicates(subset=['date'], keep='last', inplace=True)
         need_df.index = pd.to_datetime(need_df["date"])
         stock_zh_a_daily_hfq_df = stock_zh_a_daily(symbol=symbol, adjust="hfq")
         stock_zh_a_daily_hfq_df.index = pd.to_datetime(stock_zh_a_daily_hfq_df['date'])
@@ -373,7 +376,7 @@ def stock_zh_a_minute(
 
 
 if __name__ == "__main__":
-    stock_zh_a_daily_hfq_df_one = stock_zh_a_daily(symbol="sz000002", start_date="20171103", end_date="20201104", adjust="qfq")
+    stock_zh_a_daily_hfq_df_one = stock_zh_a_daily(symbol="bj430047", start_date="20171103", end_date="20211115", adjust="qfq")
     print(stock_zh_a_daily_hfq_df_one)
 
     stock_zh_a_daily_hfq_df_three = stock_zh_a_daily(symbol="sz000001", start_date="19900103", end_date="20210118", adjust="qfq")
@@ -382,10 +385,10 @@ if __name__ == "__main__":
     stock_zh_a_daily_hfq_df_two = stock_zh_a_daily(symbol="sh000001", start_date="20101103", end_date="20210510")
     print(stock_zh_a_daily_hfq_df_two)
 
-    qfq_factor_df = stock_zh_a_daily(symbol="sz000002", adjust='qfq-factor')
+    qfq_factor_df = stock_zh_a_daily(symbol="bj430047", adjust='qfq-factor')
     print(qfq_factor_df)
 
-    hfq_factor_df = stock_zh_a_daily(symbol="sz000002", adjust='hfq-factor')
+    hfq_factor_df = stock_zh_a_daily(symbol="bj430047", adjust='hfq-factor')
     print(hfq_factor_df)
 
     stock_zh_a_daily_hfq_factor_df = stock_zh_a_daily(symbol="sz000002", adjust="hfq-factor")
@@ -402,10 +405,10 @@ if __name__ == "__main__":
     stock_zh_a_spot_df = stock_zh_a_spot()
     print(stock_zh_a_spot_df)
 
-    stock_zh_a_minute_df = stock_zh_a_minute(symbol="sh603087", period="5", adjust="")
+    stock_zh_a_minute_df = stock_zh_a_minute(symbol="bj430047", period="5", adjust="")
     print(stock_zh_a_minute_df)
 
-    stock_zh_a_minute_df = stock_zh_a_minute(symbol="sh603087", period="1", adjust="")
+    stock_zh_a_minute_df = stock_zh_a_minute(symbol="bj430047", period="1", adjust="")
     print(stock_zh_a_minute_df)
 
     stock_zh_a_cdr_daily_df = stock_zh_a_cdr_daily(symbol="sh689009", start_date="19900101", end_date="22201116")

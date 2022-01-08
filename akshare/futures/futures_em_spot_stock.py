@@ -1,21 +1,22 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
-Date: 2021/7/20 21:00
+Date: 2021/12/23 15:23
 Desc: 东方财富网-数据中心-现货与股票
 http://data.eastmoney.com/ifdata/xhgp.html
 """
-import demjson
 import pandas as pd
 import requests
 
+from akshare.utils import demjson
 
-def futures_spot_stock(indicator: str = "能源") -> pd.DataFrame:
+
+def futures_spot_stock(symbol: str = "能源") -> pd.DataFrame:
     """
     东方财富网-数据中心-现货与股票
     http://data.eastmoney.com/ifdata/xhgp.html
-    :param indicator: choice of {'能源', '化工', '塑料', '纺织', '有色', '钢铁', '建材', '农副'}
-    :type indicator: str
+    :param symbol: choice of {'能源', '化工', '塑料', '纺织', '有色', '钢铁', '建材', '农副'}
+    :type symbol: str
     :return: 现货与股票上下游对应数据
     :rtype: pandas.DataFrame
     """
@@ -54,7 +55,7 @@ def futures_spot_stock(indicator: str = "能源") -> pd.DataFrame:
     )
     date_list = list(temp_json["dates"].values())
     temp_json = temp_json["datas"]
-    temp_df = temp_json[map_dict.get(indicator)]
+    temp_df = temp_json[map_dict.get(symbol)]
     temp_df = pd.DataFrame(temp_df["list"])
     xyyh_list = [
         "-" if item == [] else ", ".join([inner_item["name"] for inner_item in item])
@@ -78,10 +79,16 @@ def futures_spot_stock(indicator: str = "能源") -> pd.DataFrame:
         "生产商",
         "下游用户",
     ]
+    temp_df[date_list[0]] = pd.to_numeric(temp_df[date_list[0]])
+    temp_df[date_list[1]] = pd.to_numeric(temp_df[date_list[1]])
+    temp_df[date_list[2]] = pd.to_numeric(temp_df[date_list[2]])
+    temp_df[date_list[3]] = pd.to_numeric(temp_df[date_list[3]])
+    temp_df['最新价格'] = pd.to_numeric(temp_df['最新价格'])
+    temp_df['近半年涨跌幅'] = pd.to_numeric(temp_df['近半年涨跌幅'])
     return temp_df
 
 
 if __name__ == "__main__":
     for sector in ["能源", "化工", "塑料", "纺织", "有色", "钢铁", "建材", "农副"]:
-        futures_spot_stock_df = futures_spot_stock(indicator=sector)
+        futures_spot_stock_df = futures_spot_stock(symbol=sector)
         print(futures_spot_stock_df)

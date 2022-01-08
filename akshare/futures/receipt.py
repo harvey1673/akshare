@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
 Date: 2021/3/29 13:18
 Desc: 大连商品交易所, 上海期货交易所, 郑州商品交易所采集每日注册仓单数据

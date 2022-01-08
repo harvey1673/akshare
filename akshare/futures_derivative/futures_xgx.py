@@ -1,7 +1,7 @@
 # coding=utf-8
-# /usr/bin/env python
+#!/usr/bin/env python
 """
-Date: 2020/4/19 14:27
+Date: 2021/12/29 10:27
 Desc: 西本新干线-指数数据
 http://nanjing.96369.net/
 """
@@ -27,6 +27,11 @@ plt.rcParams["axes.unicode_minus"] = False
 
 
 def _get_code_pic():
+    """
+    显示验证码
+    :return:
+    :rtype:
+    """
     payload = {"": round(random.random(), 16)}
     session = requests.session()
     res = session.get(xgx_code_url, params=payload, headers=xgx_short_headers)
@@ -39,7 +44,7 @@ def futures_xgx_index(
     symbol: str = 67,
     start_date: str = "2000-10-01",
     end_date: str = "2020-04-17",
-    plot: bool = True,
+    plot: bool = False,
 ) -> pd.DataFrame:
     session = _get_code_pic()
     value = input()
@@ -68,7 +73,8 @@ if __name__ == "__main__":
     # 国内线材社会库存量 68
     symbol_dict_df = pd.DataFrame.from_dict(symbol_dict, orient="index")
     print(symbol_dict_df)
+
     futures_xgx_index_df = futures_xgx_index(
-        symbol=161, start_date="2000-10-01", end_date="2020-04-17", plot=True
+        symbol=161, start_date="2000-10-01", end_date="2021-11-17", plot=True
     )
     print(futures_xgx_index_df)

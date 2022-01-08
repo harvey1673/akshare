@@ -10,9 +10,9 @@ Welcome to AKShare's Online Documentation!
 
    Please visit `AKShare's Github`_ for source code or visit `Github Issues`_ if you have any question!
 
-.. _AkShare's Github: https://github.com/jindaxiang/akshare
+.. _AkShare's Github: https://github.com/akfamily/akshare
 
-.. _Github Issues: https://github.com/jindaxiang/akshare/issues
+.. _Github Issues: https://github.com/akfamily/akshare/issues
 
 .. toctree::
    :maxdepth: 2
@@ -21,17 +21,16 @@ Welcome to AKShare's Online Documentation!
 
    introduction
    installation
-   akdocker/akdocker
    contributor
    answer
    tutorial
    data/index
    anaconda
    special
-   strategy
    platform
    topic/index
    demo
    changelog
    dependency
-
+   deploy_http
+   akdocker/akdocker

@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
 Date: 2021/6/1 16:36
 Desc: 金十数据-其他-加密货币实时行情
@@ -127,5 +127,5 @@ if __name__ == "__main__":
     macro_fx_sentiment_df = macro_fx_sentiment(start_date=test_date, end_date=test_date)
     print(macro_fx_sentiment_df)
 
-    index_vix_df = index_vix(start_date=test_date, end_date=test_date)
+    index_vix_df = index_vix(start_date='20210811', end_date='20210816')
     print(index_vix_df)

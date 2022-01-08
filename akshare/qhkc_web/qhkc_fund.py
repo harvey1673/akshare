@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
 Date: 2019/9/30 13:58
 Desc: 奇货可查网站目前已经商业化运营, 特提供奇货可查-资金数据接口, 方便您程序化调用
@@ -417,5 +417,5 @@ if __name__ == "__main__":
     # print(df1)
     # print(df2)
 
-    df = get_qhkc_fund_money_change(20190925)
+    df = get_qhkc_fund_money_change(20211208)
     print(df)

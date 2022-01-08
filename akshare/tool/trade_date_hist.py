@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
 Date: 2021/7/12 19:27
 Desc: 新浪财经-交易日历
@@ -42,3 +42,4 @@ def tool_trade_date_hist_sina() -> pd.DataFrame:
 if __name__ == "__main__":
     tool_trade_date_hist_df = tool_trade_date_hist_sina()
     print(tool_trade_date_hist_df)
+    tool_trade_date_hist_df['trade_date'].to_clipboard()

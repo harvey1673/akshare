@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
 Date: 2021/6/18 19:50
 Desc: 真气网-空气质量
@@ -11,7 +11,7 @@ import json
 import os
 import re
 
-import demjson
+from akshare.utils import demjson
 from py_mini_racer import py_mini_racer
 import pandas as pd
 import requests
@@ -94,7 +94,6 @@ def air_quality_watch_point(
     :return: 指定城市指定日期区间的观测点空气质量
     :rtype: pandas.DataFrame
     """
-
     url = "https://www.zq12369.com/api/zhenqiapi.php"
     file_data = _get_file_content(file_name="crypto.js")
     ctx = py_mini_racer.MiniRacer()

@@ -1,4 +1,4 @@
-## [AKShare](https://github.com/jindaxiang/akshare) 宏观数据
+## [AKShare](https://github.com/akfamily/akshare) 宏观数据
 
 ### 中国宏观
 
@@ -14,28 +14,29 @@
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 年份      | str   | Y        | 日期, 年-月  |
-| 居民部门      | float   | Y        | -   |
-| 非金融企业部门      | float   | Y        | -   |
-| 政府部门      | float   | Y        | -   |
-| 中央政府      | float   | Y        | -   |
-| 地方政府      | float   | Y        | -   |
-| 实体经济部门      | float   | Y        | -   |
-| 金融部门资产方      | float   | Y        | -   |
-| 金融部门负债方      | float   | Y        | -   |
+| 名称      | 类型      | 描述      |
+|---------|---------|---------|
+| 年份      | object  | 日期, 年-月 |
+| 居民部门    | float64 | -       |
+| 非金融企业部门 | float64 | -       |
+| 政府部门    | float64 | -       |
+| 中央政府    | float64 | -       |
+| 地方政府    | float64 | -       |
+| 实体经济部门  | float64 | -       |
+| 金融部门资产方 | float64 | -       |
+| 金融部门负债方 | float64 | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_cnbs_df = ak.macro_cnbs()
 print(macro_cnbs_df)
 ```
@@ -67,38 +68,39 @@ print(macro_cnbs_df)
 
 目标地址: http://data.eastmoney.com/cjsj/qyspjg.html
 
-描述: 获取中国企业商品价格指数, 数据区间从20050101-至今
+描述: 中国企业商品价格指数, 数据区间从 20050101-至今
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 描述    |
-| -------- | ---- |  --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 描述           |
-| --------------- | ----- | ---------------- |
-| 月份      | object   |  -  |
-| 总指数-指数值      | float64   |  -   |
-| 总指数-同比增长      | float64   |  注意单位: %   |
-| 总指数-环比增长      | float64   |  注意单位: %   |
-| 农产品-指数值      | float64   |  -   |
-| 农产品-同比增长      | float64   |  注意单位: %   |
-| 农产品-环比增长      | float64   |  注意单位: %   |
-| 矿产品-指数值      | float64   |  -   |
-| 矿产品-同比增长      | float64   |  注意单位: %   |
-| 矿产品-环比增长      | float64   |  注意单位: %   |
-| 煤油电-指数值      | float64   |  -   |
-| 煤油电-同比增长      | float64   |  注意单位: %   |
-| 煤油电-环比增长      | float64   |  注意单位: %   |
+| 名称       | 类型      | 描述      |
+|----------|---------|---------|
+| 月份       | object  | -       |
+| 总指数-指数值  | float64 | -       |
+| 总指数-同比增长 | float64 | 注意单位: % |
+| 总指数-环比增长 | float64 | 注意单位: % |
+| 农产品-指数值  | float64 | -       |
+| 农产品-同比增长 | float64 | 注意单位: % |
+| 农产品-环比增长 | float64 | 注意单位: % |
+| 矿产品-指数值  | float64 | -       |
+| 矿产品-同比增长 | float64 | 注意单位: % |
+| 矿产品-环比增长 | float64 | 注意单位: % |
+| 煤油电-指数值  | float64 | -       |
+| 煤油电-同比增长 | float64 | 注意单位: % |
+| 煤油电-环比增长 | float64 | 注意单位: % |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_qyspjg_df = ak.macro_china_qyspjg()
 print(macro_china_qyspjg_df)
 ```
@@ -126,31 +128,32 @@ print(macro_china_qyspjg_df)
 
 目标地址: http://data.eastmoney.com/cjsj/qyspjg.html
 
-描述: 获取中国外商直接投资数据, 数据区间从200801-202012
+描述: 中国外商直接投资数据, 数据区间从 200801-202012
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 描述    |
-| -------- | ---- |  --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 描述           |
-| --------------- | ----- | ---------------- |
-| 月份      | object   |  -  |
-| 当月      | int64   |  -   |
-| 当月-同比增长      | float64   |  注意单位: 美元   |
-| 当月-环比增长      | float64   |  注意单位: %   |
-| 累计      | float64   |  注意单位: 美元   |
-| 累计-同比增长      | float64   |  注意单位: %   |
+| 名称      | 类型      | 描述       |
+|---------|---------|----------|
+| 月份      | object  | -        |
+| 当月      | int64   | -        |
+| 当月-同比增长 | float64 | 注意单位: 美元 |
+| 当月-环比增长 | float64 | 注意单位: %  |
+| 累计      | float64 | 注意单位: 美元 |
+| 累计-同比增长 | float64 | 注意单位: %  |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_fdi_df = ak.macro_china_fdi()
 print(macro_china_fdi_df)
 ```
@@ -178,30 +181,31 @@ print(macro_china_fdi_df)
 
 目标地址: http://data.eastmoney.com/cjsj/globalRateLPR.html
 
-描述: 获取中国LPR品种数据, 数据区间从19910421-至今
+描述: 中国LPR品种数据, 数据区间从 19910421-至今
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| TRADE_DATE      | str   | Y        | 日期  |
-| LPR1Y      | float   | Y        | LPR_1Y利率(%)   |
-| LPR5Y      | float   | Y        | LPR_5Y利率(%)   |
-| RATE_1      | float   | Y        | 短期贷款利率:6个月至1年(含)(%)   |
-| RATE_2      | float   | Y        | 中长期贷款利率:5年以上(%)   |
+| 名称         | 类型      | 描述                  |
+|------------|---------|---------------------|
+| TRADE_DATE | object  | 日期                  |
+| LPR1Y      | float64 | LPR_1Y利率(%)         |
+| LPR5Y      | float64 | LPR_5Y利率(%)         |
+| RATE_1     | float64 | 短期贷款利率:6个月至1年(含)(%) |
+| RATE_2     | float64 | 中长期贷款利率:5年以上(%)     |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_lpr_df = ak.macro_china_lpr()
 print(macro_china_lpr_df)
 ```
@@ -229,34 +233,35 @@ print(macro_china_lpr_df)
 
 目标地址: http://data.mofcom.gov.cn/gnmy/shrzgm.shtml
 
-描述: 获取社会融资规模增量统计的月份数据, 数据区间从 201501-至今
+描述: 社会融资规模增量统计的月份数据, 数据区间从 201501-至今
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 月份      | str   | Y        | 年月  |
-| 社会融资规模增量      | float   | Y        | 注意单位: 亿元   |
-| 其中-人民币贷款      | float   | Y        | 注意单位: 亿元   |
-| 其中-委托贷款外币贷款(折合人民币)      | float   | Y        | 注意单位: 亿元   |
-| 其中-委托贷款      | float   | Y        | 注意单位: 亿元   |
-| 其中-信托贷款      | float   | Y        | 注意单位: 亿元   |
-| 其中-未贴现银行承兑汇票      | float   | Y        | 注意单位: 亿元   |
-| 其中-企业债券      | float   | Y        | 注意单位: 亿元   |
-| 其中-非金融企业境内股票融资      | float   | Y        | 注意单位: 亿元   |
+| 名称                 | 类型      | 描述       |
+|--------------------|---------|----------|
+| 月份                 | object  | 年月       |
+| 社会融资规模增量           | float64 | 注意单位: 亿元 |
+| 其中-人民币贷款           | float64 | 注意单位: 亿元 |
+| 其中-委托贷款外币贷款(折合人民币) | float64 | 注意单位: 亿元 |
+| 其中-委托贷款            | float64 | 注意单位: 亿元 |
+| 其中-信托贷款            | float64 | 注意单位: 亿元 |
+| 其中-未贴现银行承兑汇票       | float64 | 注意单位: 亿元 |
+| 其中-企业债券            | float64 | 注意单位: 亿元 |
+| 其中-非金融企业境内股票融资     | float64 | 注意单位: 亿元 |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_shrzgm_df = ak.macro_china_shrzgm()
 print(macro_china_shrzgm_df)
 ```
@@ -290,21 +295,22 @@ print(macro_china_shrzgm_df)
 
 输入参数
 
-| 名称   | 类型 | 描述   |
-| -------- | ---- | --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 | 描述           |
-| --------------- | ----- | ---------------- |
-| index      | datetime64   |  日期-索引  |
-| value      | float64   |  年率   |
+| 名称    | 类型         | 描述    |
+|-------|------------|-------|
+| index | datetime64 | 日期-索引 |
+| value | float64    | 年率    |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_gdp_yearly_df = ak.macro_china_gdp_yearly()
 print(macro_china_gdp_yearly_df)
 print(macro_china_gdp_yearly_df.name)
@@ -362,6 +368,7 @@ macro_china_gdp_yearly_df:
 
 ```python
 import akshare as ak
+
 macro_china_cpi_yearly_df = ak.macro_china_cpi_yearly()
 print(macro_china_cpi_yearly_df)
 print(macro_china_cpi_yearly_df.name)
@@ -421,6 +428,7 @@ macro_china_cpi_yearly_df:
 
 ```python
 import akshare as ak
+
 macro_china_cpi_monthly_df = ak.macro_china_cpi_monthly()
 print(macro_china_cpi_monthly_df)
 print(macro_china_cpi_monthly_df.name)
@@ -462,21 +470,22 @@ macro_china_cpi_monthly_df:
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| index      | str   | Y        | 日期-索引  |
-| value      | float   | Y        | 年率   |
+| 名称    | 类型      | 描述    |
+|-------|---------|-------|
+| index | object  | 日期-索引 |
+| value | float64 | 年率    |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_ppi_yearly_df = ak.macro_china_ppi_yearly()
 print(macro_china_ppi_yearly_df)
 print(macro_china_ppi_yearly_df.name)
@@ -514,7 +523,7 @@ macro_china_ppi_yearly_df:
 
 目标地址: https://datacenter.jin10.com/reportType/dc_chinese_exports_yoy
 
-描述: 获取中国以美元计算出口年率报告, 数据区间从19820201-至今
+描述: 中国以美元计算出口年率报告, 数据区间从 19820201-至今
 
 限量: 单次返回所有历史数据
 
@@ -535,6 +544,7 @@ macro_china_ppi_yearly_df:
 
 ```python
 import akshare as ak
+
 macro_china_exports_yoy_df = ak.macro_china_exports_yoy()
 print(macro_china_exports_yoy_df)
 print(macro_china_exports_yoy_df.name)
@@ -596,6 +606,7 @@ macro_china_exports_yoy_df:
 
 ```python
 import akshare as ak
+
 macro_china_imports_yoy_df = ak.macro_china_imports_yoy()
 print(macro_china_imports_yoy_df)
 print(macro_china_imports_yoy_df.name)
@@ -654,6 +665,7 @@ macro_china_imports_yoy_df:
 
 ```python
 import akshare as ak
+
 macro_china_trade_balance_df = ak.macro_china_trade_balance()
 print(macro_china_trade_balance_df)
 print(macro_china_trade_balance_df.name)
@@ -711,6 +723,7 @@ macro_china_trade_balance_df:
 
 ```python
 import akshare as ak
+
 macro_china_gyzjz_df = ak.macro_china_gyzjz
 print(macro_china_gyzjz_df)
 ```
@@ -759,6 +772,7 @@ print(macro_china_gyzjz_df)
 
 ```python
 import akshare as ak
+
 macro_china_industrial_production_yoy_df = ak.macro_china_industrial_production_yoy()
 print(macro_china_industrial_production_yoy_df)
 print(macro_china_industrial_production_yoy_df.name)
@@ -815,6 +829,7 @@ macro_china_industrial_production_yoy_df:
 
 ```python
 import akshare as ak
+
 macro_china_pmi_yearly_df = ak.macro_china_pmi_yearly()
 print(macro_china_pmi_yearly_df)
 print(macro_china_pmi_yearly_df.name)
@@ -871,6 +886,7 @@ macro_china_pmi_yearly_df:
 
 ```python
 import akshare as ak
+
 macro_china_cx_pmi_yearly_df = ak.macro_china_cx_pmi_yearly()
 print(macro_china_cx_pmi_yearly_df)
 print(macro_china_cx_pmi_yearly_df.name)
@@ -927,6 +943,7 @@ macro_china_cx_pmi_yearly_df:
 
 ```python
 import akshare as ak
+
 macro_china_cx_services_pmi_yearly_df = ak.macro_china_cx_services_pmi_yearly()
 print(macro_china_cx_services_pmi_yearly_df)
 print(macro_china_cx_services_pmi_yearly_df.name)
@@ -983,6 +1000,7 @@ macro_china_cx_services_pmi_yearly_df:
 
 ```python
 import akshare as ak
+
 macro_china_non_man_pmi_df = ak.macro_china_non_man_pmi()
 print(macro_china_non_man_pmi_df)
 print(macro_china_non_man_pmi_df.name)
@@ -1041,6 +1059,7 @@ macro_china_non_man_pmi_df:
 
 ```python
 import akshare as ak
+
 macro_china_fx_reserves_yearly_df = ak.macro_china_fx_reserves_yearly()
 print(macro_china_fx_reserves_yearly_df)
 print(macro_china_fx_reserves_yearly_df.name)
@@ -1097,6 +1116,7 @@ macro_china_fx_reserves_yearly_df:
 
 ```python
 import akshare as ak
+
 macro_china_m2_yearly_df = ak.macro_china_m2_yearly()
 print(macro_china_m2_yearly_df)
 print(macro_china_m2_yearly_df.name)
@@ -1162,6 +1182,7 @@ macro_china_m2_yearly_df:
 
 ```python
 import akshare as ak
+
 macro_china_new_house_price_df = ak.macro_china_new_house_price()
 print(macro_china_new_house_price_df)
 ```
@@ -1215,6 +1236,7 @@ print(macro_china_new_house_price_df)
 
 ```python
 import akshare as ak
+
 macro_china_enterprise_boom_index_df = ak.macro_china_enterprise_boom_index()
 print(macro_china_enterprise_boom_index_df)
 ```
@@ -1265,6 +1287,7 @@ print(macro_china_enterprise_boom_index_df)
 
 ```python
 import akshare as ak
+
 macro_china_national_tax_receipts_df = ak.macro_china_national_tax_receipts()
 print(macro_china_national_tax_receipts_df)
 ```
@@ -1317,6 +1340,7 @@ print(macro_china_national_tax_receipts_df)
 
 ```python
 import akshare as ak
+
 macro_china_new_financial_credit_df = ak.macro_china_new_financial_credit()
 print(macro_china_new_financial_credit_df)
 ```
@@ -1376,6 +1400,7 @@ print(macro_china_new_financial_credit_df)
 
 ```python
 import akshare as ak
+
 macro_china_cpi_df = ak.macro_china_cpi()
 print(macro_china_cpi_df)
 ```
@@ -1431,6 +1456,7 @@ print(macro_china_cpi_df)
 
 ```python
 import akshare as ak
+
 macro_china_gdp_df = ak.macro_china_gdp()
 print(macro_china_gdp_df)
 ```
@@ -1481,6 +1507,7 @@ print(macro_china_gdp_df)
 
 ```python
 import akshare as ak
+
 macro_china_ppi_df = ak.macro_china_ppi()
 print(macro_china_ppi_df)
 ```
@@ -1532,6 +1559,7 @@ print(macro_china_ppi_df)
 
 ```python
 import akshare as ak
+
 macro_china_pmi_df = ak.macro_china_pmi()
 print(macro_china_pmi_df)
 ```
@@ -1583,6 +1611,7 @@ print(macro_china_pmi_df)
 
 ```python
 import akshare as ak
+
 macro_china_gdzctz_df = ak.macro_china_gdzctz()
 print(macro_china_gdzctz_df)
 ```
@@ -1640,6 +1669,7 @@ print(macro_china_gdzctz_df)
 
 ```python
 import akshare as ak
+
 macro_china_hgjck_df = ak.macro_china_hgjck()
 print(macro_china_hgjck_df)
 ```
@@ -1692,6 +1722,7 @@ print(macro_china_hgjck_df)
 
 ```python
 import akshare as ak
+
 macro_china_czsr_df = ak.macro_china_czsr()
 print(macro_china_czsr_df)
 ```
@@ -1743,6 +1774,7 @@ print(macro_china_czsr_df)
 
 ```python
 import akshare as ak
+
 macro_china_whxd_df = ak.macro_china_whxd()
 print(macro_china_whxd_df)
 ```
@@ -1794,6 +1826,7 @@ print(macro_china_whxd_df)
 
 ```python
 import akshare as ak
+
 macro_china_wbck_df = ak.macro_china_wbck()
 print(macro_china_wbck_df)
 ```
@@ -1846,6 +1879,7 @@ print(macro_china_wbck_df)
 
 ```python
 import akshare as ak
+
 macro_china_hb_df = ak.macro_china_hb()
 print(macro_china_hb_df)
 ```
@@ -1873,30 +1907,31 @@ print(macro_china_hb_df)
 
 目标地址: http://www.chinamoney.com.cn/chinese/yhgkscczh/
 
-描述: 央行公开市场操作, 数据区间从 20040116 至今, 周频率
+描述: 央行公开市场操作; 数据区间从 20040116 至今
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述   |
-| -------- | ---- | ---- | ---- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| rate      | str   | Y        | 中标利率(%)  |
-| trading_method      | str   | Y        | 正/逆回购   |
-| deal_amount      | str   | Y        |   交易量(亿) |
-| period     | str   | Y        |  期限(天) |
-| operation_from_date      | str   | Y        |  操作日期  |
+| 名称    | 类型      | 描述      |
+|-------|---------|---------|
+| 操作日期  | object  | -       |
+| 期限    | float64 | 注意单位: 天 |
+| 交易量   | float64 | 注意单位: 亿 |
+| 中标利率  | float64 | 注意单位: % |
+| 正/逆回购 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_gksccz_df = ak.macro_china_gksccz()
 print(macro_china_gksccz_df)
 ```
@@ -1904,58 +1939,54 @@ print(macro_china_gksccz_df)
 数据示例
 
 ```
-      rate trading_method deal_amount period operation_from_date
-0     2.82            逆回购         400     14          2004-01-16
-1     2.83            正回购          50     91          2004-05-13
-2     2.55            正回购         150     28          2004-05-13
-3     2.65            正回购         300     28          2004-05-20
-4     2.69            正回购         200     28          2004-05-27
-    ...            ...         ...    ...                 ...
-1955   2.2            逆回购         500      7          2020-08-17
-1956   2.2            逆回购        1000      7          2020-08-18
-1957   2.2            逆回购        1500      7          2020-08-19
-1958  2.35            逆回购         500     14          2020-08-21
-1959   2.2            逆回购        1500      7          2020-08-21
+      操作日期     期限 交易量  中标利率 正/逆回购
+0     2021-12-31   7  1000  2.20   逆回购
+1     2021-12-30   7  1000  2.20   逆回购
+2     2021-12-29   7  2000  2.20   逆回购
+3     2021-12-28   7  2000  2.20   逆回购
+4     2021-12-27   7   500  2.20   逆回购
+          ...  ..   ...   ...   ...
+2311  2004-05-27  28   200  2.69   正回购
+2312  2004-05-20  28   300  2.65   正回购
+2313  2004-05-13  28   150  2.55   正回购
+2314  2004-05-13  91    50  2.83   正回购
+2315  2004-01-16  14   400  2.82   逆回购
 ```
 
-##### 新债券发行
+##### 新债发行
 
 接口: macro_china_bond_public
 
 目标地址: http://www.chinamoney.com.cn/chinese/xzjfx/
 
-描述: 债券信息披露-新债券发行, 近期债券发行数据
+描述: 中国外汇交易中心暨全国银行间同业拆借中心-债券信息披露-新债发行; 近期债券发行数据
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述   |
-| -------- | ---- | ---- | ---- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| issue_price      | str   | Y        | -  |
-| emit_enty      | str   | Y        | -   |
-| coupon_type      | str   | Y        |  - |
-| plnd_issue_vlmn_str     | str   | Y        |  - |
-| issue_price_str      | str   | Y        |  -  |
-| issue_date      | str   | Y        |  -  |
-| bond_type      | str   | Y        |  -  |
-| plnd_issue_vlmn      | str   | Y        |  -  |
-| bond_name      | str   | Y        |  -  |
-| bond_code      | str   | Y        |  -  |
-| rtng_shrt      | str   | Y        |  -  |
-| bond_period      | str   | Y        |  -  |
-| defined_code      | str   | Y        |  -  |
+| 名称    | 类型      | 描述       |
+|-------|---------|----------|
+| 债券全称  | object  | -        |
+| 债券类型  | object  | -        |
+| 发行日期  | object  | -        |
+| 计息方式  | object  | -        |
+| 价格    | float64 | 注意单位: 元  |
+| 债券期限  | object  | -        |
+| 计划发行量 | float64 | 注意单位: 亿元 |
+| 债券评级  | object  | -        |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_bond_public_df = ak.macro_china_bond_public()
 print(macro_china_bond_public_df)
 ```
@@ -1963,18 +1994,18 @@ print(macro_china_bond_public_df)
 数据示例
 
 ```
-    issue_price emit_enty coupon_type  ... rtng_shrt bond_period defined_code
-0          None      None         未计息  ...      None        340日   eabej8aq8n
-1          None      None         零息式  ...       AAA        340日   eabeitsg7n
-2          None      None     附息式固定利率  ...       AAA         10年   eadgek956e
-3          None      None     附息式固定利率  ...       AAA         15年   eadgdm86f1
-4          None      None     附息式固定利率  ...       AAA          5年   eadgclnd8n
-..          ...       ...         ...  ...       ...         ...          ...
-410        None      None     附息式固定利率  ...       AAA          3年   digaam0gri
-411        None      None     附息式固定利率  ...       AAA          3年   31101hrowk
-412        None      None     附息式固定利率  ...       AA+          5年   277522ta3a
-413        None      None     附息式固定利率  ...       AA-          5年   djbgj9xcxt
-414        None      None     附息式固定利率  ...       AAA          3年   djaabv3nd8
+                                 债券全称    债券类型   发行日期  ...   债券期限  计划发行量  债券评级
+0    2022年杭州市临安区新锦产业发展集团有限公司公司债券(第一期)     企业债  01-07  ...   3+4年    7.0   AA+
+1      无锡市锡西新城产业发展集团有限公司2022年度第一期中期票据    中期票据  01-06  ...     3年    5.0  None
+2             宁波舜农集团有限公司2022年度第一期中期票据    中期票据  01-06  ...     3年   10.0  None
+3     2022年第一期淮北市建投控股集团有限公司小微企业增信集合债券     企业债  01-06  ...   3+1年   10.0   AAA
+4          融腾2022年第一期个人汽车贷款资产支持证券(次级)  资产支持证券  01-06  ...  1507日    5.7  None
+..                                ...     ...    ...  ...    ...    ...   ...
+229         山东高速集团有限公司2021年度第六期超短期融资券  超短期融资券  12-30  ...   269日   20.0  None
+230     浪潮电子信息产业股份有限公司2021年度第四期超短期融资券  超短期融资券  12-30  ...   268日   10.0  None
+231      陕西煤业化工集团有限责任公司2021年度第十二期中期票据    中期票据  12-30  ...     3年   20.0  None
+232     陕西延长石油(集团)有限责任公司2021年度第四期中期票据    中期票据  12-30  ...     3年   20.0  None
+233     昆明滇池投资有限责任公司2021年度第四期绿色超短期融资券  超短期融资券  12-29  ...   270日   10.0  None
 ```
 
 ##### 消费者信心指数
@@ -1983,35 +2014,36 @@ print(macro_china_bond_public_df)
 
 目标地址: https://data.eastmoney.com/cjsj/xfzxx.html
 
-描述: 东方财富-消费者信心指数
+描述: 东方财富网-消费者信心指数
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |描述   |
-| -------- | ---- | ---- |
-| 无 | 无 |无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 月份      | object   |  -  |
-| 消费者信心指数-指数值      | float64   |  -   |
-| 消费者信心指数-同比增长      | float64   |   注意单位: % |
-| 消费者信心指数-环比增长     | float64   | 注意单位: %  |
-| 消费者满意指数-指数值     | float64   | - |
-| 消费者满意指数-同比增长     | float64   | 注意单位: %  |
-| 消费者满意指数-环比增长     | float64   | 注意单位: %  |
-| 消费者预期指数-指数值     | float64   | - |
-| 消费者预期指数-同比增长     | float64   | 注意单位: %  |
-| 消费者预期指数-环比增长     | float64   | 注意单位: %  |
+| 名称           | 类型      | 描述      |
+|--------------|---------|---------|
+| 月份           | object  | -       |
+| 消费者信心指数-指数值  | float64 | -       |
+| 消费者信心指数-同比增长 | float64 | 注意单位: % |
+| 消费者信心指数-环比增长 | float64 | 注意单位: % |
+| 消费者满意指数-指数值  | float64 | -       |
+| 消费者满意指数-同比增长 | float64 | 注意单位: % |
+| 消费者满意指数-环比增长 | float64 | 注意单位: % |
+| 消费者预期指数-指数值  | float64 | -       |
+| 消费者预期指数-同比增长 | float64 | 注意单位: % |
+| 消费者预期指数-环比增长 | float64 | 注意单位: % |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_xfzxx_df = ak.macro_china_xfzxx()
 print(macro_china_xfzxx_df)
 ```
@@ -2045,22 +2077,23 @@ print(macro_china_xfzxx_df)
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述   |
-| -------- | ---- | ---- | ---- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 月份      | str   | Y        | -  |
-| 大型金融机构-调整后      | float   | Y        | -   |
-| 中小金融机构-调整后      | float   | Y        |  - |
+| 名称         | 类型      | 描述      |
+|------------|---------|---------|
+| 月份         | object  | XXXX年X月 |
+| 大型金融机构-调整后 | float64 | 注意单位: % |
+| 中小金融机构-调整后 | float64 | 注意单位: % |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_reserve_requirement_ratio_df = ak.macro_china_reserve_requirement_ratio()
 print(macro_china_reserve_requirement_ratio_df)
 ```
@@ -2068,7 +2101,7 @@ print(macro_china_reserve_requirement_ratio_df)
 数据示例
 
 ```
-          月份  大型金融机构-调整后  中小金融机构-调整后
+       月份  大型金融机构-调整后  中小金融机构-调整后
 0    2007年1月         9.5         9.5
 1    2007年2月        10.0        10.0
 2    2007年4月        10.5        10.5
@@ -2094,25 +2127,26 @@ print(macro_china_reserve_requirement_ratio_df)
 
 输入参数
 
-| 名称   | 类型 |  描述   |
-| -------- | ---- | ---- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- | ---------------- |
-| 月份      | object   |  -  |
-| 当月      | float64   | 注意单位: 亿元  |
-| 同比增长      | float64   | 注意单位: %  |
-| 环比增长      | float64   | 注意单位: %  |
-| 累计      | float64   | 注意单位: 亿元  |
-| 累计-同比增长      | float64   | 注意单位: %  |
+| 名称      | 类型      | 描述       |
+|---------|---------|----------|
+| 月份      | object  | -        |
+| 当月      | float64 | 注意单位: 亿元 |
+| 同比增长    | float64 | 注意单位: %  |
+| 环比增长    | float64 | 注意单位: %  |
+| 累计      | float64 | 注意单位: 亿元 |
+| 累计-同比增长 | float64 | 注意单位: %  |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_consumer_goods_retail_df = ak.macro_china_consumer_goods_retail()
 print(macro_china_consumer_goods_retail_df)
 ```
@@ -2146,36 +2180,37 @@ print(macro_china_consumer_goods_retail_df)
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述   |
-| -------- | ---- | ---- | ---- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 统计时间      | str   | Y        | -  |
-| 全社会用电量      | float   | Y        | 注意单位: 万千瓦时  |
-| 全社会用电量同比      | float   | Y        | 注意单位: %  |
-| 各行业用电量合计      | float   | Y        | 注意单位: 万千瓦时  |
-| 各行业用电量合计同比      | float   | Y        | 注意单位: %  |
-| 第一产业用电量      | float   | Y        | 注意单位: 万千瓦时  |
-| 第一产业用电量同比      | float   | Y        | 注意单位: %  |
-| 第二产业用电量      | float   | Y        | 注意单位: 万千瓦时  |
-| 第二产业用电量同比      | float   | Y        | 注意单位: %  |
-| 第三产业用电量      | float   | Y        | 注意单位: 万千瓦时  |
-| 第三产业用电量同比      | float   | Y        | 注意单位: %  |
-| 城乡居民生活用电量合计      | float   | Y        | 注意单位: 万千瓦时  |
-| 城乡居民生活用电量合计同比      | float   | Y        | 注意单位: %  |
-| 城镇居民用电量      | float   | Y        | 注意单位: 万千瓦时  |
-| 城镇居民用电量同比      | float   | Y        | 注意单位: %  |
-| 乡村居民用电量      | float   | Y        | 注意单位: 万千瓦时  |
-| 乡村居民用电量同比      | float   | Y        | 注意单位: %  |
-        
+| 名称            | 类型    | 默认显示 | 描述         |
+|---------------|-------|------|------------|
+| 统计时间          | str   | Y    | -          |
+| 全社会用电量        | float | Y    | 注意单位: 万千瓦时 |
+| 全社会用电量同比      | float | Y    | 注意单位: %    |
+| 各行业用电量合计      | float | Y    | 注意单位: 万千瓦时 |
+| 各行业用电量合计同比    | float | Y    | 注意单位: %    |
+| 第一产业用电量       | float | Y    | 注意单位: 万千瓦时 |
+| 第一产业用电量同比     | float | Y    | 注意单位: %    |
+| 第二产业用电量       | float | Y    | 注意单位: 万千瓦时 |
+| 第二产业用电量同比     | float | Y    | 注意单位: %    |
+| 第三产业用电量       | float | Y    | 注意单位: 万千瓦时 |
+| 第三产业用电量同比     | float | Y    | 注意单位: %    |
+| 城乡居民生活用电量合计   | float | Y    | 注意单位: 万千瓦时 |
+| 城乡居民生活用电量合计同比 | float | Y    | 注意单位: %    |
+| 城镇居民用电量       | float | Y    | 注意单位: 万千瓦时 |
+| 城镇居民用电量同比     | float | Y    | 注意单位: %    |
+| 乡村居民用电量       | float | Y    | 注意单位: 万千瓦时 |
+| 乡村居民用电量同比     | float | Y    | 注意单位: %    |
+
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_society_electricity_df = ak.macro_china_society_electricity()
 print(macro_china_society_electricity_df)
 ```
@@ -2209,35 +2244,36 @@ print(macro_china_society_electricity_df)
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述   |
-| -------- | ---- | ---- | ---- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 统计时间      | str   | Y        | 年月  |
-| 统计对象      | float   | Y        | -  |
-| 货运量      | float   | Y        | 注意单位: 亿吨  |
-| 货运量同比增长      | float   | Y        | 注意单位: %  |
-| 货物周转量      | float   | Y        | 注意单位: 亿  |
-| 公里货物周转量同比增长      | float   | Y        | 注意单位: %  |
-| 客运量      | float   | Y        | 注意单位: 亿人  |
-| 客运量同比增长      | float   | Y        | 注意单位: %  |
-| 旅客周转量      | float   | Y        | 注意单位: 亿  |
-| 公里旅客周转量同比增长      | float   | Y        | 注意单位: %  |
-| 沿海主要港口货物吞吐量      | float   | Y        | 注意单位: 亿吨  |
-| 沿海主要港口货物吞吐量同比增长      | float   | Y        | 注意单位: %  |
-| 其中:外贸货物吞吐量      | float   | Y        | 注意单位: 亿吨  |
-| 其中:外贸货物吞吐量同比增长      | float   | Y        | 注意单位: %  |
-| 民航总周转量      | float   | Y        | 注意单位: 亿  |
-| 公里民航总周转      | float   | Y        | 注意单位: %  |
+| 名称              | 类型    | 描述       |
+|-----------------|-------|----------|
+| 统计时间            | str   | 年月       |
+| 统计对象            | float | -        |
+| 货运量             | float | 注意单位: 亿吨 |
+| 货运量同比增长         | float | 注意单位: %  |
+| 货物周转量           | float | 注意单位: 亿  |
+| 公里货物周转量同比增长     | float | 注意单位: %  |
+| 客运量             | float | 注意单位: 亿人 |
+| 客运量同比增长         | float | 注意单位: %  |
+| 旅客周转量           | float | 注意单位: 亿  |
+| 公里旅客周转量同比增长     | float | 注意单位: %  |
+| 沿海主要港口货物吞吐量     | float | 注意单位: 亿吨 |
+| 沿海主要港口货物吞吐量同比增长 | float | 注意单位: %  |
+| 其中:外贸货物吞吐量      | float | 注意单位: 亿吨 |
+| 其中:外贸货物吞吐量同比增长  | float | 注意单位: %  |
+| 民航总周转量          | float | 注意单位: 亿  |
+| 公里民航总周转         | float | 注意单位: %  |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_society_traffic_volume_df = ak.macro_china_society_traffic_volume()
 print(macro_china_society_traffic_volume_df)
 ```
@@ -2271,60 +2307,61 @@ print(macro_china_society_traffic_volume_df)
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述   |
-| -------- | ---- | ---- | ---- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 统计时间      | str   | Y        | 年月  |
-| 邮电业务总量      | float   | Y        | 注意单位: 亿元  |
-| 邮电业务总量同比增长      | float   | Y        | 注意单位: %  |
-| 邮政业务总量      | float   | Y        | 注意单位: 亿元  |
-| 邮政业务总量同比增长      | float   | Y        | 注意单位: %  |
-| 电信业务总量      | float   | Y        | 注意单位: 亿元  |
-| 电信业务总量同比增长      | float   | Y        | 注意单位: %  |
-| 函件总数      | float   | Y        | 注意单位: 万件  |
-| 函件总数同比增长      | float   | Y        | 注意单位: %  |
-| 包件      | float   | Y        | 注意单位: 万件  |
-| 包件同比增长      | float   | Y        | 注意单位: %  |
-| 特快专递      | float   | Y        | 注意单位: 万件  |
-| 特快专递同比增长      | float   | Y        | 注意单位: %  |
-| 汇票      | float   | Y        | 注意单位: 万张  |
-| 汇票同比增长      | float   | Y        | 注意单位: %  |
-| 订销报纸累计数      | float   | Y        | 注意单位: 万份  |
-| 订销报纸累计数同比增长      | float   | Y        | 注意单位: %  |
-| 订销杂志累计数      | float   | Y        | 注意单位: 万份  |
-| 订销杂志累计数同比增长      | float   | Y        | 注意单位: %  |
-| 集邮业务      | float   | Y        | 注意单位: 万枚  |
-| 集邮业务同比增长      | float   | Y        | 注意单位: %  |
-| 邮政储蓄期末余额      | float   | Y        | 注意单位: 亿元  |
-| 邮政储蓄期末余额同比增长      | float   | Y        | 注意单位: %  |
-| 长途电话通话时长      | float   | Y        | 注意单位: 万  |
-| 钟长途电话通话时长同比增长      | float   | Y        | 注意单位: %  |
-| 本地电话期末用户数      | float   | Y        | 注意单位: %  |
-| 本地电话期末用户数同比增长      | float   | Y        | 注意单位: %  |
-| 城市电话用户数      | float   | Y        | 注意单位: 万户  |
-| 城市电话用户数同比增长      | float   | Y        | 注意单位: %  |
-| 乡村电话用户数      | float   | Y        | 注意单位: 万户  |
-| 乡村电话用户数同比增长      | float   | Y        | 注意单位: %  |
-| 无线寻呼用户数      | float   | Y        | 注意单位: 万户  |
-| 无线寻呼用户数同比增长      | float   | Y        | 注意单位: %  |
-| 移动电话用户数      | float   | Y        | 注意单位: 万户  |
-| 移动电话用户数同比增长      | float   | Y        | 注意单位: %  |
-| 固定电话用      | float   | Y        | 注意单位: 万户  |
-| 固定电话用户数同比增长      | float   | Y        | 注意单位: %  |
-| 城市住宅电话用户      | float   | Y        | 注意单位: 万户  |
-| 城市住宅电话用户同比增长      | float   | Y        | 注意单位: %  |
-| 乡村住宅电话用户      | float   | Y        | 注意单位: 万户  |
-| 乡村住宅电话用户同比增长      | float   | Y        | 注意单位: %  |
+| 名称            | 类型    | 描述       |
+|---------------|-------|----------|
+| 统计时间          | str   | 年月       |
+| 邮电业务总量        | float | 注意单位: 亿元 |
+| 邮电业务总量同比增长    | float | 注意单位: %  |
+| 邮政业务总量        | float | 注意单位: 亿元 |
+| 邮政业务总量同比增长    | float | 注意单位: %  |
+| 电信业务总量        | float | 注意单位: 亿元 |
+| 电信业务总量同比增长    | float | 注意单位: %  |
+| 函件总数          | float | 注意单位: 万件 |
+| 函件总数同比增长      | float | 注意单位: %  |
+| 包件            | float | 注意单位: 万件 |
+| 包件同比增长        | float | 注意单位: %  |
+| 特快专递          | float | 注意单位: 万件 |
+| 特快专递同比增长      | float | 注意单位: %  |
+| 汇票            | float | 注意单位: 万张 |
+| 汇票同比增长        | float | 注意单位: %  |
+| 订销报纸累计数       | float | 注意单位: 万份 |
+| 订销报纸累计数同比增长   | float | 注意单位: %  |
+| 订销杂志累计数       | float | 注意单位: 万份 |
+| 订销杂志累计数同比增长   | float | 注意单位: %  |
+| 集邮业务          | float | 注意单位: 万枚 |
+| 集邮业务同比增长      | float | 注意单位: %  |
+| 邮政储蓄期末余额      | float | 注意单位: 亿元 |
+| 邮政储蓄期末余额同比增长  | float | 注意单位: %  |
+| 长途电话通话时长      | float | 注意单位: 万  |
+| 钟长途电话通话时长同比增长 | float | 注意单位: %  |
+| 本地电话期末用户数     | float | 注意单位: %  |
+| 本地电话期末用户数同比增长 | float | 注意单位: %  |
+| 城市电话用户数       | float | 注意单位: 万户 |
+| 城市电话用户数同比增长   | float | 注意单位: %  |
+| 乡村电话用户数       | float | 注意单位: 万户 |
+| 乡村电话用户数同比增长   | float | 注意单位: %  |
+| 无线寻呼用户数       | float | 注意单位: 万户 |
+| 无线寻呼用户数同比增长   | float | 注意单位: %  |
+| 移动电话用户数       | float | 注意单位: 万户 |
+| 移动电话用户数同比增长   | float | 注意单位: %  |
+| 固定电话用         | float | 注意单位: 万户 |
+| 固定电话用户数同比增长   | float | 注意单位: %  |
+| 城市住宅电话用户      | float | 注意单位: 万户 |
+| 城市住宅电话用户同比增长  | float | 注意单位: %  |
+| 乡村住宅电话用户      | float | 注意单位: 万户 |
+| 乡村住宅电话用户同比增长  | float | 注意单位: %  |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_postal_telecommunicational_df = ak.macro_china_postal_telecommunicational()
 print(macro_china_postal_telecommunicational_df)
 ```
@@ -2375,6 +2412,7 @@ print(macro_china_postal_telecommunicational_df)
 
 ```python
 import akshare as ak
+
 macro_china_international_tourism_fx_df = ak.macro_china_international_tourism_fx()
 print(macro_china_international_tourism_fx_df)
 ```
@@ -2424,6 +2462,7 @@ print(macro_china_international_tourism_fx_df)
 
 ```python
 import akshare as ak
+
 macro_china_passenger_load_factor_df = ak.macro_china_passenger_load_factor()
 print(macro_china_passenger_load_factor_df)
 ```
@@ -2478,6 +2517,7 @@ print(macro_china_passenger_load_factor_df)
 
 ```python
 import akshare as ak
+
 macro_china_freight_index_df = ak.macro_china_freight_index()
 print(macro_china_freight_index_df)
 ```
@@ -2552,6 +2592,7 @@ print(macro_china_freight_index_df)
 
 ```python
 import akshare as ak
+
 macro_china_central_bank_balance_df = ak.macro_china_central_bank_balance()
 print(macro_china_central_bank_balance_df)
 ```
@@ -2619,6 +2660,7 @@ print(macro_china_central_bank_balance_df)
 
 ```python
 import akshare as ak
+
 macro_china_insurance_df = ak.macro_china_insurance()
 print(macro_china_insurance_df)
 ```
@@ -2682,6 +2724,7 @@ print(macro_china_insurance_df)
 
 ```python
 import akshare as ak
+
 macro_china_supply_of_money_df = ak.macro_china_supply_of_money()
 print(macro_china_supply_of_money_df)
 ```
@@ -2711,57 +2754,58 @@ print(macro_china_supply_of_money_df)
 
 描述: 国家统计局-FR007利率互换曲线历史数据
 
-限量: 单次返回所有历史数据
+限量: 单次返回所有历史数据, 该接口只能获取近一年的数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述   |
-| -------- | ---- | ---- | ---- |
-| 无 | 无 | 无 | 无 |
+| 名称   | 类型 | 描述   |
+| -------- | ---- |  ---- |
+| 无 | 无 |  无 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 日期      | str   | Y        | -  |
-| 曲线名称      | str   | Y        | -  |
-| 时刻      | str   | Y        | -  |
-| 价格类型      | str   | Y        | -  |
-| 1M      | float   | Y        | -  |
-| 3M      | float   | Y        | -  |
-| 6M      | float   | Y        | -  |
-| 9M      | float   | Y        | -  |
-| 1Y      | float   | Y        | -  |
-| 2Y      | float   | Y        | -  |
-| 3Y      | float   | Y        | -  |
-| 4Y      | float   | Y        | -  |
-| 5Y      | float   | Y        | -  |
-| 7Y      | float   | Y        | -  |
-| 10Y      | float   | Y        | -  |
+| 名称          | 类型 |  描述           |
+| --------------- | ----- |  ---------------- |
+| 日期      | str   |  -  |
+| 曲线名称      | str   |  -  |
+| 时刻      | str   |  -  |
+| 价格类型      | str   |  -  |
+| 1M      | float   | -  |
+| 3M      | float   | -  |
+| 6M      | float   | -  |
+| 9M      | float   | -  |
+| 1Y      | float   | -  |
+| 2Y      | float   | -  |
+| 3Y      | float   | -  |
+| 4Y      | float   | -  |
+| 5Y      | float   | -  |
+| 7Y      | float   | -  |
+| 10Y      | float   | -  |
 
 接口示例
 
 ```python
 import akshare as ak
-macro_china_swap_rate_df = ak.macro_china_swap_rate(start_date="2020-09-06", end_date="2020-10-06")
+
+macro_china_swap_rate_df = ak.macro_china_swap_rate(start_date="20210706", end_date="20210806")
 print(macro_china_swap_rate_df)
 ```
 
 数据示例
 
 ```
-     日期           曲线名称     时刻 价格类型  ...      4Y      5Y      7Y     10Y
-0    2020-09-30  FR007利率互换收盘曲线  16:30   报买  ...  2.7783  2.8538  2.9450  3.0800
-1    2020-09-30  FR007利率互换收盘曲线  16:30   均值  ...  2.7843  2.8561  2.9701  3.1126
-2    2020-09-30  FR007利率互换收盘曲线  16:30   报卖  ...  2.7903  2.8585  2.9952  3.1452
-3    2020-09-30  FR007利率互换行情曲线  16:00   报买  ...  2.7800  2.8575  2.9475  3.0775
-4    2020-09-30  FR007利率互换行情曲线  16:00   均值  ...  2.7871  2.8594  2.9725  3.1134
-..          ...            ...    ...  ...  ...     ...     ...     ...     ...
-841  2020-09-07  FR007利率互换行情曲线  10:00   均值  ...  2.8928  2.9587  3.0524  3.1900
-842  2020-09-07  FR007利率互换行情曲线  10:00   报卖  ...  2.9056  2.9605  3.0753  3.2298
-843  2020-09-07  FR007利率互换行情曲线   9:30   报买  ...  2.8618  2.9434  3.0160  3.1334
-844  2020-09-07  FR007利率互换行情曲线   9:30   均值  ...  2.8802  2.9462  3.0456  3.1721
-845  2020-09-07  FR007利率互换行情曲线   9:30   报卖  ...  2.8985  2.9490  3.0753  3.2107
+           日期           曲线名称     时刻 价格类型  ...      4Y      5Y      7Y     10Y
+0     2021-08-06  FR007利率互换收盘曲线  16:30   报买  ...  2.5700  2.6609  2.7800  2.9300
+1     2021-08-06  FR007利率互换收盘曲线  16:30   均值  ...  2.5750  2.6620  2.7938  2.9407
+2     2021-08-06  FR007利率互换收盘曲线  16:30   报卖  ...  2.5800  2.6631  2.8075  2.9514
+3     2021-08-06  FR007利率互换行情曲线  16:00   报买  ...  2.5675  2.6575  2.7756  2.9275
+4     2021-08-06  FR007利率互换行情曲线  16:00   均值  ...  2.5738  2.6579  2.7890  2.9363
+          ...            ...    ...  ...  ...     ...     ...     ...     ...
+1075  2021-07-06  FR007利率互换行情曲线  10:00   均值  ...  2.8078  2.8909  3.0238  3.1713
+1076  2021-07-06  FR007利率互换行情曲线  10:00   报卖  ...  2.8173  2.8921  3.0392  3.1900
+1077  2021-07-06  FR007利率互换行情曲线   9:30   报买  ...  2.7949  2.8875  3.0063  3.1486
+1078  2021-07-06  FR007利率互换行情曲线   9:30   均值  ...  2.8070  2.8895  3.0242  3.1717
+1079  2021-07-06  FR007利率互换行情曲线   9:30   报卖  ...  2.8192  2.8914  3.0420  3.1948
 ```
 
 ##### 央行黄金和外汇储备
@@ -2792,6 +2836,7 @@ print(macro_china_swap_rate_df)
 
 ```python
 import akshare as ak
+
 macro_china_foreign_exchange_gold_df = ak.macro_china_foreign_exchange_gold()
 print(macro_china_foreign_exchange_gold_df)
 ```
@@ -2841,6 +2886,7 @@ print(macro_china_foreign_exchange_gold_df)
 
 ```python
 import akshare as ak
+
 macro_china_retail_price_index_df = ak.macro_china_retail_price_index()
 print(macro_china_retail_price_index_df)
 ```
@@ -2888,6 +2934,7 @@ print(macro_china_retail_price_index_df)
 
 ```python
 import akshare as ak
+
 macro_china_real_estate_df = ak.macro_china_real_estate()
 print(macro_china_real_estate_df)
 ```
@@ -2941,6 +2988,7 @@ print(macro_china_real_estate_df)
 
 ```python
 import akshare as ak
+
 macro_china_fx_gold_df = ak.macro_china_fx_gold()
 print(macro_china_fx_gold_df)
 ```
@@ -2968,13 +3016,13 @@ print(macro_china_fx_gold_df)
 
 目标地址: http://data.eastmoney.com/cjsj/hbgyl.html
 
-描述: 东方财富-经济数据-中国宏观-中国货币供应量, 数据区间从 200801 至今, 月度数据
+描述: 东方财富-经济数据-中国宏观-中国货币供应量; 数据区间从 200801 至今, 月度数据
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |  描述                      |
+| 名称   | 类型 |  描述    |
 | -------- | ---- |  --- |
 | - | - |- |
 
@@ -2997,6 +3045,7 @@ print(macro_china_fx_gold_df)
 
 ```python
 import akshare as ak
+
 macro_china_money_supply_df = ak.macro_china_money_supply()
 print(macro_china_money_supply_df)
 ```
@@ -3056,6 +3105,7 @@ print(macro_china_money_supply_df)
 
 ```python
 import akshare as ak
+
 macro_china_stock_market_cap_df = ak.macro_china_stock_market_cap()
 print(macro_china_stock_market_cap_df)
 ```
@@ -3083,7 +3133,7 @@ print(macro_china_stock_market_cap_df)
 
 目标地址: https://datacenter.jin10.com/reportType/dc_shibor
 
-描述: 获取上海银行业同业拆借报告, 数据区间从20170317-至今
+描述: 上海银行业同业拆借报告, 数据区间从20170317-至今
 
 限量: 单次返回所有历史数据
 
@@ -3123,6 +3173,7 @@ print(macro_china_stock_market_cap_df)
 
 ```python
 import akshare as ak
+
 macro_china_shibor_all_df = ak.macro_china_shibor_all()
 print(macro_china_shibor_all_df)
 ```
@@ -3150,46 +3201,47 @@ print(macro_china_shibor_all_df)
 
 目标地址: https://datacenter.jin10.com/reportType/dc_hk_market_info
 
-描述: 获取香港同业拆借报告, 数据区间从20170320-至今
+描述: 香港同业拆借报告, 数据区间从 20170320-至今
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 日期      | str   | Y        | 日期-索引  |
-| O/N_定价      | float   | Y        | -   |
-| O/N_涨跌幅      | float   | Y        | 单位: 点   |
-| 1W_定价      | float   | Y        | -   |
-| 1W_涨跌幅      | float   | Y        | 单位: 点   |
-| 2W_定价      | float   | Y        | -   |
-| 2W_涨跌幅      | float   | Y        | 单位: 点   |
-| 1M_定价      | float   | Y        | -   |
-| 1M_涨跌幅      | float   | Y        | 单位: 点   |
-| 3M_定价      | float   | Y        | -   |
-| 3M_涨跌幅      | float   | Y        | 单位: 点   |
-| 6M_定价      | float   | Y        | -   |
-| 6M_涨跌幅      | float   | Y        | 单位: 点   |
-| 9M_定价      | float   | Y        | -   |
-| 9M_涨跌幅      | float   | Y        | 单位: 点   |
-| 1Y_定价     | float   | Y        | -   |
-| 1Y_涨跌幅     | float   | Y        | 单位: 点   |
-| ON_定价     | float   | Y        | -   |
-| ON_涨跌幅     | float   | Y        | 单位: 点   |
-|2M_定价     | float   | Y        | -   |
-|2M_涨跌幅     | float   | Y        | 单位: 点   |
+| 名称      | 类型      | 描述    |
+|---------|---------|-------|
+| 日期      | object  | 日期-索引 |
+| O/N_定价  | float64 | -     |
+| O/N_涨跌幅 | float64 | 单位: 点 |
+| 1W_定价   | float64 | -     |
+| 1W_涨跌幅  | float64 | 单位: 点 |
+| 2W_定价   | float64 | -     |
+| 2W_涨跌幅  | float64 | 单位: 点 |
+| 1M_定价   | float64 | -     |
+| 1M_涨跌幅  | float64 | 单位: 点 |
+| 3M_定价   | float64 | -     |
+| 3M_涨跌幅  | float64 | 单位: 点 |
+| 6M_定价   | float64 | -     |
+| 6M_涨跌幅  | float64 | 单位: 点 |
+| 9M_定价   | float64 | -     |
+| 9M_涨跌幅  | float64 | 单位: 点 |
+| 1Y_定价   | float64 | -     |
+| 1Y_涨跌幅  | float64 | 单位: 点 |
+| ON_定价   | float64 | -     |
+| ON_涨跌幅  | float64 | 单位: 点 |
+| 2M_定价   | float64 | -     |
+| 2M_涨跌幅  | float64 | 单位: 点 |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_hk_market_info_df = ak.macro_china_hk_market_info()
 print(macro_china_hk_market_info_df)
 ```
@@ -3240,6 +3292,7 @@ print(macro_china_hk_market_info_df)
 
 ```python
 import akshare as ak
+
 macro_china_daily_energy_df = ak.macro_china_daily_energy()
 print(macro_china_daily_energy_df)
 ```
@@ -3339,6 +3392,7 @@ macro_china_daily_energy_df:
 
 ```python
 import akshare as ak
+
 macro_china_rmb_df = ak.macro_china_rmb()
 print(macro_china_rmb_df)
 ```
@@ -3394,6 +3448,7 @@ macro_china_rmb_df:
 
 ```python
 import akshare as ak
+
 macro_china_market_margin_sz_df = ak.macro_china_market_margin_sz()
 print(macro_china_market_margin_sz_df)
 ```
@@ -3459,6 +3514,7 @@ print(macro_china_market_margin_sz_df)
 
 ```python
 import akshare as ak
+
 macro_china_market_margin_sh_df = ak.macro_china_market_margin_sh()
 print(macro_china_market_margin_sh_df)
 ```
@@ -3519,6 +3575,7 @@ print(macro_china_market_margin_sh_df)
 
 ```python
 import akshare as ak
+
 macro_china_au_report_df = ak.macro_china_au_report()
 print(macro_china_au_report_df)
 ```
@@ -3570,6 +3627,7 @@ print(macro_china_au_report_df)
 
 ```python
 import akshare as ak
+
 macro_china_ctci_df = ak.macro_china_ctci()
 print(macro_china_ctci_df)
 ```
@@ -3623,6 +3681,7 @@ print(macro_china_ctci_df)
 
 ```python
 import akshare as ak
+
 macro_china_ctci_detail_df = ak.macro_china_ctci_detail()
 print(macro_china_ctci_detail_df)
 ```
@@ -3690,11 +3749,11 @@ print(macro_china_ctci_detail_df)
 | ---     | ---   | ---        | -   |
 | 月份      | float   | Y        | -   |
 
-
 接口示例
 
 ```python
 import akshare as ak
+
 macro_china_ctci_detail_hist_df = ak.macro_china_ctci_detail_hist(year="2018")
 print(macro_china_ctci_detail_hist_df)
 ```
@@ -3774,452 +3833,590 @@ print(macro_china_ctci_detail_hist_df)
 
 #### 消费者物价指数
 
-接口: marco_china_hk_cpi
+接口: macro_china_hk_cpi
 
 目标地址: https://data.eastmoney.com/cjsj/foreign_8_0.html
 
-描述: 获取东方财富-经济数据一览-中国香港-消费者物价指数
+描述: 东方财富-经济数据一览-中国香港-消费者物价指数
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |  描述  |
-| -------- | ---- |  --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   | -  |
-| 前值      | object   |  -   |
-| 现值      | object   |  -   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述  |
+|------|---------|-----|
+| 时间   | object  | -   |
+| 前值   | float64 | -   |
+| 现值   | float64 | -   |
+| 发布日期 | object  | -   |
 
 接口示例
 
 ```python
 import akshare as ak
-marco_china_hk_cpi_df = ak.marco_china_hk_cpi()
-print(marco_china_hk_cpi_df)
+
+macro_china_hk_cpi_df = ak.macro_china_hk_cpi()
+print(macro_china_hk_cpi_df)
 ```
 
 数据示例
 
 ```
-     时间     前值     现值        发布日期
-0    2021-04-01  111.9         2021-05-21
-1    2021-03-01  111.9  111.9  2021-04-23
-2    2021-02-01  111.7  111.9  2021-03-22
-3    2021-01-01  110.7  111.7  2021-02-22
-4    2020-12-01  110.9  110.7  2021-01-21
+     时间         前值     现值  发布日期
+0    2021-11-01  102.0    NaN  2021-12-21
+1    2021-10-01   99.2  102.0  2021-11-22
+2    2021-09-01  101.5   99.2  2021-10-22
+3    2021-08-01  101.4  101.5  2021-09-20
+4    2021-07-01  101.3  101.4  2021-08-19
 ..          ...    ...    ...         ...
-154  2008-06-01   79.7   80.4            
-155  2008-05-01   79.5   79.7            
-156  2008-04-01     79   79.5            
-157  2008-03-01     79     79            
-158  2008-02-01   77.9     79            
+161  2008-06-01   79.7   80.4         NaN
+162  2008-05-01   79.5   79.7         NaN
+163  2008-04-01   79.0   79.5         NaN
+164  2008-03-01   79.0   79.0         NaN
+165  2008-02-01   77.9   79.0         NaN
 ```
 
 #### 消费者物价指数年率
 
-接口: marco_china_hk_cpi_ratio
+接口: macro_china_hk_cpi_ratio
 
 目标地址: https://data.eastmoney.com/cjsj/foreign_8_1.html
 
-描述: 获取东方财富-经济数据一览-中国香港-消费者物价指数年率
+描述: 东方财富-经济数据一览-中国香港-消费者物价指数年率
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 描述     |
-| -------- | ---- |  --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | object   |  -   |
-| 现值      | object   |  -   |
-| 发布日期      | object   | -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
-marco_china_hk_cpi_ratio_df = ak.marco_china_hk_cpi_ratio()
-print(marco_china_hk_cpi_ratio_df)
+
+macro_china_hk_cpi_ratio_df = ak.macro_china_hk_cpi_ratio()
+print(macro_china_hk_cpi_ratio_df)
 ```
 
 数据示例
 
 ```
-             时间    前值    现值        发布日期
-0    2021-04-01   0.5        2021-05-21
-1    2021-03-01   0.3   0.5  2021-04-23
-2    2021-02-01   1.9   0.3  2021-03-22
-3    2021-01-01  -0.7   1.9  2021-02-22
-4    2020-12-01  -0.2  -0.7  2021-01-21
-..          ...   ...   ...         ...
-154  2008-06-01   5.7   6.1            
-155  2008-05-01   5.4   5.7            
-156  2008-04-01   4.2   5.4            
-157  2008-03-01   6.3   4.2            
-158  2008-02-01   3.2   6.3            
+     时间         前值  现值        发布日期
+0    2021-11-01  1.7  NaN  2021-12-21
+1    2021-10-01  1.4  1.7  2021-11-22
+2    2021-09-01  1.6  1.4  2021-10-22
+3    2021-08-01  3.7  1.6  2021-09-20
+4    2021-07-01  0.7  3.7  2021-08-19
+..          ...  ...  ...         ...
+161  2008-06-01  5.7  6.1         NaN
+162  2008-05-01  5.4  5.7         NaN
+163  2008-04-01  4.2  5.4         NaN
+164  2008-03-01  6.3  4.2         NaN
+165  2008-02-01  3.2  6.3         NaN
 ```
 
 #### 失业率
 
-接口: marco_china_hk_rate_of_unemployment
+接口: macro_china_hk_rate_of_unemployment
 
 目标地址: https://data.eastmoney.com/cjsj/foreign_8_2.html
 
-描述: 获取东方财富-经济数据一览-中国香港-失业率
+描述: 东方财富-经济数据一览-中国香港-失业率
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |  描述    |
-| -------- | ---- |  --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 | 描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | object   |  -   |
-| 现值      | object   |  -   |
-| 发布日期      | object   | -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
-marco_china_hk_rate_of_unemployment_df = ak.marco_china_hk_rate_of_unemployment()
-print(marco_china_hk_rate_of_unemployment_df)
+
+macro_china_hk_rate_of_unemployment_df = ak.macro_china_hk_rate_of_unemployment()
+print(macro_china_hk_rate_of_unemployment_df)
 ```
 
 数据示例
 
 ```
-     时间   前值    现值        发布日期
-0    2021-04-01  6.8       2021-05-20
-1    2021-03-01  7.2  6.8  2021-04-22
-2    2021-02-01    7  7.2  2021-03-16
-3    2021-01-01  6.8    7  2021-02-18
-4    2020-12-01  6.3  6.8  2021-01-19
+      时间        前值 现值  发布日期
+0    2021-11-01  4.3  NaN  2021-12-16
+1    2021-10-01  4.5  4.3  2021-11-16
+2    2021-09-01  4.7  4.5  2021-10-21
+3    2021-08-01  5.0  4.7  2021-09-16
+4    2021-07-01  5.5  5.0  2021-08-18
 ..          ...  ...  ...         ...
-154  2008-06-01  3.3  3.2            
-155  2008-05-01  3.3  3.3            
-156  2008-04-01  3.3  3.3            
-157  2008-03-01  3.3  3.3            
-158  2008-02-01  3.4  3.3            
+161  2008-06-01  3.3  3.2         NaN
+162  2008-05-01  3.3  3.3         NaN
+163  2008-04-01  3.3  3.3         NaN
+164  2008-03-01  3.3  3.3         NaN
+165  2008-02-01  3.4  3.3         NaN
 ```
 
 #### GDP
 
-接口: marco_china_hk_gbp
+接口: macro_china_hk_gbp
 
 目标地址: https://data.eastmoney.com/cjsj/foreign_8_3.html
 
-描述: 获取东方财富-经济数据一览-中国香港-香港 GDP
+描述: 东方财富-经济数据一览-中国香港-香港 GDP
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |描述   |
-| -------- | ---- |  --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   | -  |
-| 前值      | object   |  -   |
-| 现值      | object   | -   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述        |
+|------|---------|-----------|
+| 时间   | object  | -         |
+| 前值   | float64 | 注意单位: 亿港元 |
+| 现值   | float64 | 注意单位: 亿港元 |
+| 发布日期 | object  | -         |
 
 接口示例
 
 ```python
 import akshare as ak
-marco_china_hk_gbp_df = ak.marco_china_hk_gbp()
-print(marco_china_hk_gbp_df)
+
+macro_china_hk_gbp_df = ak.macro_china_hk_gbp()
+print(macro_china_hk_gbp_df)
 ```
 
 数据示例
 
 ```
-            时间      前值      现值 发布日期
-0   2021-03-01                     
-1   2020-12-01                     
-2   2020-09-01                     
-3   2020-06-01                     
-4   2020-03-01                     
-5   2019-12-01                       
-46  2009-09-01  436706  467198     
-47  2009-06-01  426733  436706     
-48  2009-03-01  480614  426733     
-49  2008-12-01  475253  480614     
-50  2008-09-01  450564  475253     
-51  2008-06-01  462657  450564     
+        时间         前值     现值 发布日期
+0   2021-09-01      NaN      NaN  NaT
+1   2021-06-01      NaN      NaN  NaT
+2   2021-03-01      NaN      NaN  NaT
+3   2020-12-01      NaN      NaN  NaT
+4   2020-09-01      NaN      NaN  NaT
+5   2020-06-01      NaN      NaN  NaT
+6   2020-03-01      NaN      NaN  NaT
+7   2019-12-01      NaN      NaN  NaT
+8   2019-09-01      NaN      NaN  NaT
+9   2019-06-01  7140.39      NaN  NaT
+10  2019-03-01  7018.22  7140.39  NaT
+11  2018-12-01  6761.12  7018.22  NaT
+12  2018-09-01  6346.83  6761.12  NaT
+13  2018-06-01  6879.66  6346.83  NaT
+14  2018-03-01  7208.97  6879.66  NaT
+15  2017-12-01  6450.58  7208.97  NaT
+16  2017-09-01  6034.78  6450.58  NaT
+17  2017-06-01  6113.13  6034.78  NaT
+18  2017-03-01  6575.42  6113.13  NaT
+19  2016-12-01  6227.49  6575.42  NaT
+20  2016-09-01  5808.87  6227.49  NaT
+21  2016-06-01  5643.75  5808.87  NaT
+22  2016-03-01  6138.84  5643.75  NaT
+23  2015-12-01  5887.48  6138.84  NaT
+24  2015-09-01  5504.83  5887.48  NaT
+25  2015-06-01  5432.44  5504.83  NaT
+26  2015-03-01  5846.72  5432.44  NaT
+27  2014-12-01  5586.83  5846.72  NaT
+28  2014-09-01  5185.12  5586.83  NaT
+29  2014-06-01  5302.86  5185.12  NaT
+30  2014-03-01  5712.28  5302.86  NaT
+31  2013-12-01  5427.36  5712.28  NaT
+32  2013-09-01  5082.48  5427.36  NaT
+33  2013-06-01  5164.48  5082.48  NaT
+34  2013-03-01  5558.74  5164.48  NaT
+35  2012-12-01  5263.61  5558.74  NaT
+36  2012-09-01  4930.73  5263.61  NaT
+37  2012-06-01  4996.07  4930.73  NaT
+38  2012-03-01  5391.98  4996.07  NaT
+39  2011-12-01  5171.76  5391.98  NaT
+40  2011-09-01  4882.55  5171.76  NaT
+41  2011-06-01  4955.96  4882.55  NaT
+42  2011-03-01  5237.14  4955.96  NaT
+43  2010-12-01  4976.64  5237.14  NaT
+44  2010-09-01  4645.61  4976.64  NaT
+45  2010-06-01  4605.68  4645.61  NaT
+46  2010-03-01  4924.88  4605.68  NaT
+47  2009-12-01  4671.98  4924.88  NaT
+48  2009-09-01  4367.06  4671.98  NaT
+49  2009-06-01  4267.33  4367.06  NaT
+50  2009-03-01  4806.14  4267.33  NaT
+51  2008-12-01  4752.53  4806.14  NaT
+52  2008-09-01  4505.64  4752.53  NaT
+53  2008-06-01  4626.57  4505.64  NaT
 ```
 
 #### GDP 同比
 
-接口: marco_china_hk_gbp_ratio
+接口: macro_china_hk_gbp_ratio
 
 目标地址: https://data.eastmoney.com/cjsj/foreign_8_4.html
 
-描述: 获取东方财富-经济数据一览-中国香港-香港 GDP 同比
+描述: 东方财富-经济数据一览-中国香港-香港 GDP 同比
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |  描述   |
-| -------- | ---- |  --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | object   |  -   |
-| 现值      | object   |  -   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
-marco_china_hk_gbp_ratio_df = ak.marco_china_hk_gbp_ratio()
-print(marco_china_hk_gbp_ratio_df)
+
+macro_china_hk_gbp_ratio_df = ak.macro_china_hk_gbp_ratio()
+print(macro_china_hk_gbp_ratio_df)
 ```
 
 数据示例
 
 ```
-            时间    前值    现值        发布日期
-0   2021-03-01                        
-1   2020-12-01                        
-2   2020-09-01                        
-3   2020-06-01                        
-4   2020-03-01                        
-5   2019-12-01                        
-6   2019-09-01                           
-48  2009-03-01  -2.7  -7.8            
-49  2008-12-01   0.9  -2.7            
-50  2008-09-01     4   0.9            
-51  2008-06-01     7     4            
+    时间         前值  现值       发布日期
+0   2021-09-01  NaN  NaN         NaT
+1   2021-06-01  NaN  NaN         NaT
+2   2021-03-01  NaN  NaN         NaT
+3   2020-12-01  NaN  NaN         NaT
+4   2020-09-01  NaN  NaN         NaT
+5   2020-06-01  NaN  NaN         NaT
+6   2020-03-01  NaN  NaN         NaT
+7   2019-12-01  NaN  NaN         NaT
+8   2019-09-01  NaN  NaN         NaT
+9   2019-06-01  NaN  NaN         NaT
+10  2019-03-01  1.2  NaN         NaT
+11  2018-12-01  2.8  1.2         NaT
+12  2018-09-01  3.6  2.8  2018-11-16
+13  2018-06-01  4.6  3.6  2018-08-10
+14  2018-03-01  3.4  4.6  2018-05-11
+15  2017-12-01  3.6  3.4  2018-02-28
+16  2017-09-01  3.9  3.6  2017-11-10
+17  2017-06-01  4.3  3.9  2017-08-14
+18  2017-03-01  3.2  4.3  2017-06-19
+19  2016-12-01  2.0  3.2  2017-03-20
+20  2016-09-01  1.8  2.0  2016-11-11
+21  2016-06-01  0.8  1.8  2016-08-12
+22  2016-03-01  1.9  0.8  2016-05-13
+23  2015-12-01  2.3  1.9  2016-02-24
+24  2015-09-01  3.1  2.3  2015-11-13
+25  2015-06-01  2.4  3.1  2015-08-14
+26  2015-03-01  2.4  2.4  2015-05-15
+27  2014-12-01  2.9  2.4  2015-02-25
+28  2014-09-01  2.0  2.9  2014-11-14
+29  2014-06-01  2.7  2.0  2014-08-15
+30  2014-03-01  2.8  2.7  2014-05-16
+31  2013-12-01  3.1  2.8  2014-02-26
+32  2013-09-01  3.1  3.1  2013-11-15
+33  2013-06-01  3.4  3.1  2013-08-20
+34  2013-03-01  3.1  3.4         NaT
+35  2012-12-01  1.8  3.1         NaT
+36  2012-09-01  1.0  1.8         NaT
+37  2012-06-01  0.8  1.0         NaT
+38  2012-03-01  3.0  0.8         NaT
+39  2011-12-01  3.9  3.0         NaT
+40  2011-09-01  5.1  3.9         NaT
+41  2011-06-01  7.6  5.1         NaT
+42  2011-03-01  6.3  7.6         NaT
+43  2010-12-01  6.5  6.3         NaT
+44  2010-09-01  6.4  6.5         NaT
+45  2010-06-01  7.9  6.4         NaT
+46  2010-03-01  2.5  7.9         NaT
+47  2009-12-01 -1.7  2.5         NaT
+48  2009-09-01 -3.1 -1.7         NaT
+49  2009-06-01 -7.8 -3.1         NaT
+50  2009-03-01 -2.7 -7.8         NaT
+51  2008-12-01  0.9 -2.7         NaT
+52  2008-09-01  4.0  0.9         NaT
+53  2008-06-01  7.0  4.0         NaT
 ```
 
 #### 香港楼宇买卖合约数量
 
-接口: marco_china_hk_building_volume
+接口: macro_china_hk_building_volume
 
 目标地址: https://data.eastmoney.com/cjsj/foreign_8_5.html
 
-描述: 获取东方财富-经济数据一览-中国香港-香港楼宇买卖合约数量
+描述: 东方财富-经济数据一览-中国香港-香港楼宇买卖合约数量
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |  描述    |
-| -------- | ---- |  --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 | 描述           |
-| --------------- | ----- | ---------------- |
-| 时间      | object   |  -  |
-| 前值      | object   |  -   |
-| 现值      | object   |  -   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述  |
+|------|---------|-----|
+| 时间   | object  | -   |
+| 前值   | float64 | -   |
+| 现值   | float64 | -   |
+| 发布日期 | object  | -   |
 
 接口示例
 
 ```python
 import akshare as ak
-marco_china_hk_building_volume_df = ak.marco_china_hk_building_volume()
-print(marco_china_hk_building_volume_df)
+
+macro_china_hk_building_volume_df = ak.macro_china_hk_building_volume()
+print(macro_china_hk_building_volume_df)
 ```
 
 数据示例
 
 ```
-             时间     前值     现值        发布日期
-0    2021-04-01   9067   9150  2021-05-06
-1    2021-03-01   7561   9067  2021-04-05
-2    2021-02-01   6212   7561  2021-03-04
-3    2021-01-01   7596   6212  2021-02-04
-4    2020-12-01   7241   7596  2021-01-06
+     时间          前值    现值  发布日期
+0    2021-11-01   6250   7239  2021-12-03
+1    2021-10-01   7400   6250  2021-11-03
+2    2021-09-01   7875   7400  2021-10-06
+3    2021-08-01   9957   7875  2021-09-03
+4    2021-07-01   9381   9957  2021-08-05
 ..          ...    ...    ...         ...
-154  2008-06-01  10138  11876            
-155  2008-05-01  10945  10138            
-156  2008-04-01  10993  10945            
-157  2008-03-01  14384  10993            
-158  2008-02-01  16984  14384            
+161  2008-06-01  10138  11876         NaN
+162  2008-05-01  10945  10138         NaN
+163  2008-04-01  10993  10945         NaN
+164  2008-03-01  14384  10993         NaN
+165  2008-02-01  16984  14384         NaN
 ```
 
 #### 香港楼宇买卖合约成交金额
 
-接口: marco_china_hk_building_amount
+接口: macro_china_hk_building_amount
 
 目标地址: https://data.eastmoney.com/cjsj/foreign_8_6.html
 
-描述: 获取东方财富-经济数据一览-中国香港-香港楼宇买卖合约成交金额
+描述: 东方财富-经济数据一览-中国香港-香港楼宇买卖合约成交金额
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |  描述 |
-| -------- | ---- | --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- | ---------------- |
-| 时间      | object   |  -  |
-| 前值      | object   |  -   |
-| 现值      | object   |  -   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述        |
+|------|---------|-----------|
+| 时间   | object  | -         |
+| 前值   | float64 | 注意单位: 亿港元 |
+| 现值   | float64 | 注意单位: 亿港元 |
+| 发布日期 | object  | -         |
 
 接口示例
 
 ```python
 import akshare as ak
-marco_china_hk_building_amount_df = ak.marco_china_hk_building_amount()
-print(marco_china_hk_building_amount_df)
+
+macro_china_hk_building_amount_df = ak.macro_china_hk_building_amount()
+print(macro_china_hk_building_amount_df)
 ```
 
 数据示例
 
 ```
-             时间     前值     现值        发布日期
-0    2021-04-01  78025  85130  2021-05-06
-1    2021-03-01  64308  78025  2021-04-05
-2    2021-02-01  66810  64308  2021-03-04
-3    2021-01-01  70289  66810  2021-02-04
-4    2020-12-01  65951  70289  2021-01-06
-..          ...    ...    ...         ...
-154  2008-06-01  33972  57479            
-155  2008-05-01  33509  33972            
-156  2008-04-01  44017  33509            
-157  2008-03-01  51974  44017            
-158  2008-02-01  67774  51974            
+      时间      前值      现值        发布日期
+0    2021-11-01  613.64  629.98  2021-12-03
+1    2021-10-01  668.06  613.64  2021-11-03
+2    2021-09-01  704.48  668.06  2021-10-06
+3    2021-08-01  939.91  704.48  2021-09-03
+4    2021-07-01  925.60  939.91  2021-08-05
+..          ...     ...     ...         ...
+161  2008-06-01  339.72  574.79         NaN
+162  2008-05-01  335.09  339.72         NaN
+163  2008-04-01  440.17  335.09         NaN
+164  2008-03-01  519.74  440.17         NaN
+165  2008-02-01  677.74  519.74         NaN
 ```
 
 #### 香港商品贸易差额年率
 
-接口: marco_china_hk_trade_diff_ratio
+接口: macro_china_hk_trade_diff_ratio
 
 目标地址: https://data.eastmoney.com/cjsj/foreign_8_7.html
 
-描述: 获取东方财富-经济数据一览-中国香港-香港商品贸易差额年率
+描述: 东方财富-经济数据一览-中国香港-香港商品贸易差额年率
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |  描述 |
-| -------- | ---- | --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | object   |  -   |
-| 现值      | object   |  -   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
-marco_china_hk_trade_diff_ratio_df = ak.marco_china_hk_trade_diff_ratio()
-print(marco_china_hk_trade_diff_ratio_df)
+
+macro_china_hk_trade_diff_ratio_df = ak.macro_china_hk_trade_diff_ratio()
+print(macro_china_hk_trade_diff_ratio_df)
 ```
 
 数据示例
 
 ```
-             时间            前值            现值 发布日期
-0    2021-04-01  -22.30097675                   
-1    2021-03-01  -61.87128739  -22.30097675     
-2    2021-02-01  -17.54208204  -61.87128739     
-3    2021-01-01   40.72375912  -17.54208204     
-4    2020-12-01   -2.13619688   40.72375912     
-..          ...           ...           ...  ...
-154  2008-06-01   92.30230441   23.38771939     
-155  2008-05-01  -21.24963589   92.30230441     
-156  2008-04-01   -0.69912786  -21.24963589     
-157  2008-03-01  109.65946734   -0.69912786     
-158  2008-02-01   69.07029478  109.65946734     
+      时间          前值          现值 发布日期
+0    2021-11-01  -17.118294         NaN  NaT
+1    2021-10-01  233.945171  -17.118294  NaT
+2    2021-09-01   79.803090  233.945171  NaT
+3    2021-08-01   17.322914   79.803090  NaT
+4    2021-07-01   21.337092   17.322914  NaT
+..          ...         ...         ...  ...
+161  2008-06-01   92.302304   23.387719  NaT
+162  2008-05-01  -21.249636   92.302304  NaT
+163  2008-04-01   -0.699128  -21.249636  NaT
+164  2008-03-01  109.659467   -0.699128  NaT
+165  2008-02-01   69.070295  109.659467  NaT
 ```
 
 #### 香港制造业 PPI 年率
 
-接口: marco_china_hk_ppi
+接口: macro_china_hk_ppi
 
 目标地址: https://data.eastmoney.com/cjsj/foreign_8_8.html
 
-描述: 获取东方财富-经济数据一览-中国香港-香港制造业PPI年率
+描述: 东方财富-经济数据一览-中国香港-香港制造业PPI年率
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |  描述  |
-| -------- | ---- | --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   | -  |
-| 前值      | object   |  -   |
-| 现值      | object   | -   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
-marco_china_hk_ppi_df = ak.marco_china_hk_ppi()
-print(marco_china_hk_ppi_df)
+
+macro_china_hk_ppi_df = ak.macro_china_hk_ppi()
+print(macro_china_hk_ppi_df)
 ```
 
 数据示例
 
 ```
-      时间     前值     现值        发布日期
-0   2021-03-01    2.9                   
-1   2020-12-01    3.8    2.9  2021-03-12
-2   2020-09-01    1.3    3.8  2020-12-14
-3   2020-06-01    1.3    1.3  2020-09-14
-4   2020-03-01    1.1    1.3  2020-06-12
-47  2009-06-01   -1.4  -2.97  2009-09-14
-48  2009-03-01    3.9   -1.4  2009-06-12
-49  2008-12-01    5.8    3.9  2009-03-13
-50  2008-09-01    6.9    5.8  2008-12-12
-51  2008-06-01    5.9    6.9  2008-09-12
+     时间    前值    现值        发布日期
+0   2021-09-01  2.70   NaN  2021-12-13
+1   2021-06-01  1.70  2.70  2021-09-13
+2   2021-03-01  2.90  1.70  2021-06-15
+3   2020-12-01  3.80  2.90  2021-03-12
+4   2020-09-01  1.30  3.80  2020-12-14
+5   2020-06-01  1.30  1.30  2020-09-14
+6   2020-03-01  1.10  1.30  2020-06-12
+7   2019-12-01  1.40  1.10  2020-03-13
+8   2019-09-01  0.80  1.40         NaT
+9   2019-06-01  0.80  0.80  2019-09-12
+10  2019-03-01  0.30  0.80  2019-06-14
+11  2018-12-01  0.10  0.30  2019-03-14
+12  2018-09-01  3.80  0.10  2018-12-14
+13  2018-06-01  3.80  3.80  2018-09-13
+14  2018-03-01  3.50  3.80  2018-06-14
+15  2017-12-01  3.70  3.50  2018-03-13
+16  2017-09-01  3.70  3.70  2017-12-14
+17  2017-06-01  4.20  3.70  2017-09-14
+18  2017-03-01  4.00  4.20  2017-06-13
+19  2016-12-01  3.90  4.00  2017-03-13
+20  2016-09-01  0.40  3.90  2016-12-13
+21  2016-06-01 -2.80  0.40  2016-09-13
+22  2016-03-01 -3.20 -2.80  2016-06-14
+23  2015-12-01 -4.40 -3.20  2016-03-14
+24  2015-09-01 -2.80 -4.40  2015-12-14
+25  2015-06-01 -0.60 -2.80  2015-09-14
+26  2015-03-01 -1.20 -0.60  2015-06-12
+27  2014-12-01  1.30 -1.20  2015-03-13
+28  2014-09-01 -0.40  1.30  2014-12-12
+29  2014-06-01 -6.30 -0.40  2014-09-12
+30  2014-03-01 -5.50 -6.30  2014-06-20
+31  2013-12-01 -5.20 -5.50  2014-03-20
+32  2013-09-01 -2.40 -5.20  2013-12-12
+33  2013-06-01  0.60 -2.40  2013-11-20
+34  2013-03-01 -1.00  0.60  2013-08-20
+35  2012-12-01 -1.49 -1.00  2013-03-14
+36  2012-09-01 -0.62 -1.49  2012-12-13
+37  2012-06-01  3.64 -0.62  2012-09-13
+38  2012-03-01  6.61  3.64  2012-06-14
+39  2011-12-01  9.59  6.61  2012-03-12
+40  2011-09-01  8.97  9.59  2011-12-13
+41  2011-06-01  8.17  8.97  2011-09-15
+42  2011-03-01  7.62  8.17  2011-06-13
+43  2010-12-01  6.43  7.62  2011-03-11
+44  2010-09-01  5.92  6.43  2010-12-13
+45  2010-06-01  4.10  5.92  2010-09-13
+46  2010-03-01 -0.30  4.10  2010-06-14
+47  2009-12-01 -2.00 -0.30  2010-03-12
+48  2009-09-01 -2.97 -2.00  2009-12-14
+49  2009-06-01 -1.40 -2.97  2009-09-14
+50  2009-03-01  3.90 -1.40  2009-06-12
+51  2008-12-01  5.80  3.90  2009-03-13
+52  2008-09-01  6.90  5.80  2008-12-12
+53  2008-06-01  5.90  6.90  2008-09-12
 ```
 
 ### 美国宏观
@@ -4232,27 +4429,28 @@ print(marco_china_hk_ppi_df)
 
 目标地址: https://datacenter.jin10.com/reportType/dc_usa_gdp
 
-描述: 获取美国国内生产总值(GDP)报告, 数据区间从20080228-至今
+描述: 美国国内生产总值(GDP)报告, 数据区间从20080228-至今
 
 限量: 单次返回某一个所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 日期      | str   | Y        | 日期-索引  |
-| 值      | float   | Y        | -   |
+| 名称  | 类型    | 描述    |
+|-----|-------|-------|
+| 日期  | str   | 日期-索引 |
+| 值   | float | -     |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_usa_gdp_monthly_se = ak.macro_usa_gdp_monthly()
 print(macro_usa_gdp_monthly_se.name)
 print(macro_usa_gdp_monthly_se)
@@ -4288,27 +4486,28 @@ macro_usa_gdp_monthly_se: pandas.Series
 
 目标地址: https://datacenter.jin10.com/reportType/dc_usa_cpi
 
-描述: 获取美国CPI月率报告, 数据区间从19700101-至今
+描述: 美国CPI月率报告, 数据区间从19700101-至今
 
 限量: 单次返回某一个所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 日期      | str   | Y        | 日期-索引  |
-| 值      | float   | Y        | -   |
+| 名称  | 类型    | 描述    |
+|-----|-------|-------|
+| 日期  | str   | 日期-索引 |
+| 值   | float | -     |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_usa_cpi_monthly_se = ak.macro_usa_cpi_monthly()
 print(macro_usa_cpi_monthly_se.name)
 print(macro_usa_cpi_monthly_se)
@@ -4342,27 +4541,28 @@ macro_usa_cpi_monthly_se: pandas.Series
 
 目标地址: https://datacenter.jin10.com/reportType/dc_usa_core_cpi
 
-描述: 获取美国核心CPI月率报告, 数据区间从19700101-至今
+描述: 美国核心CPI月率报告, 数据区间从19700101-至今
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| 无   | 无   | 无   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 日期      | str   | Y        | 日期-索引  |
-| 值      | float   | Y        | -   |
+| 名称  | 类型    | 描述    |
+|-----|-------|-------|
+| 日期  | str   | 日期-索引 |
+| 值   | float | -     |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_usa_core_cpi_monthly_se = ak.macro_usa_core_cpi_monthly()
 print(macro_usa_core_cpi_monthly_se.name)
 print(macro_usa_core_cpi_monthly_se)
@@ -4419,6 +4619,7 @@ macro_usa_core_cpi_monthly_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_personal_spending_se = ak.macro_usa_personal_spending()
 print(macro_usa_personal_spending_se.name)
 print(macro_usa_personal_spending_se)
@@ -4475,6 +4676,7 @@ macro_usa_personal_spending_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_retail_sales_se = ak.macro_usa_retail_sales()
 print(macro_usa_retail_sales_se.name)
 print(macro_usa_retail_sales_se)
@@ -4531,6 +4733,7 @@ macro_usa_retail_sales_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_import_price_se = ak.macro_usa_import_price()
 print(macro_usa_import_price_se.name)
 print(macro_usa_import_price_se)
@@ -4587,6 +4790,7 @@ macro_usa_import_price_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_export_price_se = ak.macro_usa_export_price()
 print(macro_usa_export_price_se.name)
 print(macro_usa_export_price_se)
@@ -4645,6 +4849,7 @@ macro_usa_export_price_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_lmci_se = ak.macro_usa_lmci()
 print(macro_usa_lmci_se.name)
 print(macro_usa_lmci_se)
@@ -4703,6 +4908,7 @@ macro_usa_lmci_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_unemployment_rate_se = ak.macro_usa_unemployment_rate()
 print(macro_usa_unemployment_rate_se.name)
 print(macro_usa_unemployment_rate_se)
@@ -4759,6 +4965,7 @@ macro_usa_unemployment_rate_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_job_cuts_se = ak.macro_usa_job_cuts()
 print(macro_usa_job_cuts_se.name)
 print(macro_usa_job_cuts_se)
@@ -4817,6 +5024,7 @@ macro_usa_job_cuts_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_non_farm_se = ak.macro_usa_non_farm()
 print(macro_usa_non_farm_se.name)
 print(macro_usa_non_farm_se)
@@ -4871,6 +5079,7 @@ macro_usa_non_farm_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_adp_employment_se = ak.macro_usa_adp_employment()
 print(macro_usa_adp_employment_se.name)
 print(macro_usa_adp_employment_se)
@@ -4929,6 +5138,7 @@ macro_usa_adp_employment_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_core_pce_price_se = ak.macro_usa_core_pce_price()
 print(macro_usa_core_pce_price_se.name)
 print(macro_usa_core_pce_price_se)
@@ -4985,6 +5195,7 @@ macro_usa_core_pce_price_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_real_consumer_spending_se = ak.macro_usa_real_consumer_spending()
 print(macro_usa_real_consumer_spending_se.name)
 print(macro_usa_real_consumer_spending_se)
@@ -5043,6 +5254,7 @@ macro_usa_real_consumer_spending_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_trade_balance_se = ak.macro_usa_trade_balance()
 print(macro_usa_trade_balance_se.name)
 print(macro_usa_trade_balance_se)
@@ -5099,6 +5311,7 @@ macro_usa_trade_balance_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_current_account_se = ak.macro_usa_current_account()
 print(macro_usa_current_account_se.name)
 print(macro_usa_current_account_se)
@@ -5166,6 +5379,7 @@ macro_usa_current_account_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_rig_count_df = ak.macro_usa_rig_count()
 print(macro_usa_rig_count_df)
 ```
@@ -5214,6 +5428,7 @@ print(macro_usa_rig_count_df)
 
 ```python
 import akshare as ak
+
 macro_usa_ppi_se = ak.macro_usa_ppi()
 print(macro_usa_ppi_se.name)
 print(macro_usa_ppi_se)
@@ -5270,6 +5485,7 @@ macro_usa_ppi_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_core_ppi_se = ak.macro_usa_core_ppi()
 print(macro_usa_core_ppi_se.name)
 print(macro_usa_core_ppi_se)
@@ -5326,6 +5542,7 @@ macro_usa_core_ppi_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_api_crude_stock_se = ak.macro_usa_api_crude_stock()
 print(macro_usa_api_crude_stock_se.name)
 print(macro_usa_api_crude_stock_se)
@@ -5382,6 +5599,7 @@ macro_usa_api_crude_stock_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_pmi_se = ak.macro_usa_pmi()
 print(macro_usa_pmi_se.name)
 print(macro_usa_pmi_se)
@@ -5438,6 +5656,7 @@ macro_usa_pmi_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_ism_pmi_se = ak.macro_usa_ism_pmi()
 print(macro_usa_ism_pmi_se.name)
 print(macro_usa_ism_pmi_se)
@@ -5496,6 +5715,7 @@ macro_usa_ism_pmi_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_industrial_production_se = ak.macro_usa_industrial_production()
 print(macro_usa_industrial_production_se.name)
 print(macro_usa_industrial_production_se)
@@ -5552,6 +5772,7 @@ macro_usa_industrial_production_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_durable_goods_orders_se = ak.macro_usa_durable_goods_orders()
 print(macro_usa_durable_goods_orders_se.name)
 print(macro_usa_durable_goods_orders_se)
@@ -5608,6 +5829,7 @@ macro_usa_durable_goods_orders_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_factory_orders_se = ak.macro_usa_factory_orders()
 print(macro_usa_factory_orders_se.name)
 print(macro_usa_factory_orders_se)
@@ -5666,6 +5888,7 @@ macro_usa_factory_orders_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_services_pmi_se = ak.macro_usa_services_pmi()
 print(macro_usa_services_pmi_se.name)
 print(macro_usa_services_pmi_se)
@@ -5722,6 +5945,7 @@ macro_usa_services_pmi_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_business_inventories_se = ak.macro_usa_business_inventories()
 print(macro_usa_business_inventories_se.name)
 print(macro_usa_business_inventories_se)
@@ -5778,6 +6002,7 @@ macro_usa_business_inventories_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_ism_non_pmi_se = ak.macro_usa_ism_non_pmi()
 print(macro_usa_ism_non_pmi_se.name)
 print(macro_usa_ism_non_pmi_se)
@@ -5834,6 +6059,7 @@ macro_usa_ism_non_pmi_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_nahb_house_market_index_se = ak.macro_usa_nahb_house_market_index()
 print(macro_usa_nahb_house_market_index_se.name)
 print(macro_usa_nahb_house_market_index_se)
@@ -5892,6 +6118,7 @@ macro_usa_nahb_house_market_index_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_nahb_house_market_index_se = ak.macro_usa_nahb_house_market_index()
 print(macro_usa_nahb_house_market_index_se.name)
 print(macro_usa_nahb_house_market_index_se)
@@ -5948,6 +6175,7 @@ macro_usa_nahb_house_market_index_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_house_starts_se = ak.macro_usa_house_starts()
 print(macro_usa_house_starts_se.name)
 print(macro_usa_house_starts_se)
@@ -6004,6 +6232,7 @@ macro_usa_house_starts_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_new_home_sales_se = ak.macro_usa_new_home_sales()
 print(macro_usa_new_home_sales_se.name)
 print(macro_usa_new_home_sales_se)
@@ -6060,6 +6289,7 @@ macro_usa_new_home_sales_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_building_permits_se = ak.macro_usa_building_permits()
 print(macro_usa_building_permits_se.name)
 print(macro_usa_building_permits_se)
@@ -6116,6 +6346,7 @@ macro_usa_building_permits_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_exist_home_sales_se = ak.macro_usa_exist_home_sales()
 print(macro_usa_exist_home_sales_se.name)
 print(macro_usa_exist_home_sales_se)
@@ -6172,6 +6403,7 @@ macro_usa_exist_home_sales_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_house_price_index_se = ak.macro_usa_house_price_index()
 print(macro_usa_house_price_index_se.name)
 print(macro_usa_house_price_index_se)
@@ -6228,6 +6460,7 @@ macro_usa_house_price_index_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_spcs20_se = ak.macro_usa_spcs20()
 print(macro_usa_spcs20_se.name)
 print(macro_usa_spcs20_se)
@@ -6284,6 +6517,7 @@ macro_usa_spcs20_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_pending_home_sales_se = ak.macro_usa_pending_home_sales()
 print(macro_usa_pending_home_sales_se.name)
 print(macro_usa_pending_home_sales_se)
@@ -6321,29 +6555,30 @@ macro_usa_pending_home_sales_se: pandas.Series
 
 目标地址: http://data.eastmoney.com/cjsj/foreign_0_5.html
 
-描述: 获取美国谘商会消费者信心指数报告, 数据区间从19700101-至今
+描述: 东方财富-经济数据一览-美国-未决房屋销售月率, 数据区间从 20080201-至今
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 |  描述      |
-| -------- | ---- | --- |
-| 无 | 无 |  无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 描述           |
-| --------------- | ----- | ---------------- |
-| 时间      | object   |  -  |
-| 前值      | float64   | -   |
-| 现值      | float64   |  -   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述  |
+|------|---------|-----|
+| 时间   | object  | -   |
+| 前值   | float64 | -   |
+| 现值   | float64 | -   |
+| 发布日期 | object  | -   |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_usa_phs_df = ak.macro_usa_phs()
 print(macro_usa_phs_df)
 ```
@@ -6351,18 +6586,18 @@ print(macro_usa_phs_df)
 数据示例
 
 ```
-             时间   前值   现值        发布日期
-0    2021-06-01 -0.9  NaN  2021-07-22
-1    2021-05-01 -2.7 -0.9  2021-06-22
-2    2021-04-01 -3.7 -2.7  2021-05-22
-3    2021-03-01 -6.6 -3.7  2021-04-22
-4    2021-02-01  0.6 -6.6  2021-03-22
+      时间   前值   现值        发布日期
+0    2021-12-01  NaN  1.9  2021-12-22
+1    2021-11-01  0.8  NaN  2021-12-22
+2    2021-10-01  7.0  0.8  2021-11-22
+3    2021-09-01 -2.0  7.0  2021-10-21
+4    2021-08-01  2.0 -2.0  2021-09-22
 ..          ...  ...  ...         ...
-156  2008-06-01 -4.7  5.3  2008-08-07
-157  2008-05-01  6.3 -4.7  2008-07-08
-158  2008-04-01  NaN  6.3  2008-06-09
-159  2008-03-01  NaN  NaN            
-160  2008-02-01  0.0  NaN            
+162  2008-06-01 -4.7  5.3  2008-08-07
+163  2008-05-01  6.3 -4.7  2008-07-08
+164  2008-04-01  NaN  6.3  2008-06-09
+165  2008-03-01  NaN  NaN         NaT
+166  2008-02-01  0.0  NaN         NaT
 ```
 
 ##### 美国谘商会消费者信心指数报告
@@ -6371,27 +6606,28 @@ print(macro_usa_phs_df)
 
 目标地址: https://cdn.jin10.com/dc/reports/dc_usa_cb_consumer_confidence_all.js?v=1578576859
 
-描述: 获取美国谘商会消费者信心指数报告, 数据区间从19700101-至今
+描述: 美国谘商会消费者信心指数报告, 数据区间从 19700101-至今
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 日期      | str   | Y        | 日期-索引  |
-| 值      | float   | Y        | -   |
+| 名称  | 类型    | 描述    |
+|-----|-------|-------|
+| 日期  | str   | 日期-索引 |
+| 值   | float | -     |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_usa_cb_consumer_confidence_se = ak.macro_usa_cb_consumer_confidence()
 print(macro_usa_cb_consumer_confidence_se.name)
 print(macro_usa_cb_consumer_confidence_se)
@@ -6448,6 +6684,7 @@ macro_usa_cb_consumer_confidence_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_nfib_small_business_se = ak.macro_usa_nfib_small_business()
 print(macro_usa_nfib_small_business_se.name)
 print(macro_usa_nfib_small_business_se)
@@ -6504,6 +6741,7 @@ macro_usa_nfib_small_business_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_michigan_consumer_sentiment_se = ak.macro_usa_michigan_consumer_sentiment()
 print(macro_usa_michigan_consumer_sentiment_se.name)
 print(macro_usa_michigan_consumer_sentiment_se)
@@ -6562,6 +6800,7 @@ macro_usa_michigan_consumer_sentiment_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_eia_crude_rate_se = ak.macro_usa_eia_crude_rate()
 print(macro_usa_eia_crude_rate_se.name)
 print(macro_usa_eia_crude_rate_se)
@@ -6618,6 +6857,7 @@ macro_usa_eia_crude_rate_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_initial_jobless_se = ak.macro_usa_initial_jobless()
 print(macro_usa_initial_jobless_se.name)
 print(macro_usa_initial_jobless_se)
@@ -6657,10 +6897,8 @@ macro_usa_initial_jobless_se: pandas.Series
 
 限量: 单次返回所有历史数据
 
-报告内容: 美国能源信息署（EIA）在北京时间每周三晚公布EIA报告，除了公布美国原油库存、汽油库存等数据外，报告还包含美国上周国内原油产量的数据。
-报告组成：美国国内原油产量、美国本土48州原油产量和美国阿拉斯加州原油产量。
-数据关系：美国国内原油产量=美国本土48州原油产量+美国阿拉斯加州原油产量
-单位均为万桶/日。
+报告内容: 美国能源信息署（EIA）在北京时间每周三晚公布EIA报告，除了公布美国原油库存、汽油库存等数据外，报告还包含美国上周国内原油产量的数据。 报告组成：美国国内原油产量、美国本土48州原油产量和美国阿拉斯加州原油产量。
+数据关系：美国国内原油产量=美国本土48州原油产量+美国阿拉斯加州原油产量 单位均为万桶/日。
 
 数据解读: 该数据反映了美国原油供应侧的情况，理论而言，当美国国内原油产量录得增加，通常导致油价下跌；当产量减少，则通常导致油价上扬。
 
@@ -6686,6 +6924,7 @@ macro_usa_initial_jobless_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_usa_crude_inner_df = ak.macro_usa_crude_inner()
 print(macro_usa_crude_inner_df)
 ```
@@ -6740,6 +6979,7 @@ print(macro_usa_crude_inner_df)
 
 ```python
 import akshare as ak
+
 macro_euro_gdp_yoy_se = ak.macro_euro_gdp_yoy()
 print(macro_euro_gdp_yoy_se.name)
 print(macro_euro_gdp_yoy_se)
@@ -6798,6 +7038,7 @@ macro_euro_gdp_yoy_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_cpi_mom_se = ak.macro_euro_cpi_mom()
 print(macro_euro_cpi_mom_se.name)
 print(macro_euro_cpi_mom_se)
@@ -6854,6 +7095,7 @@ macro_euro_cpi_mom_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_cpi_yoy_se = ak.macro_euro_cpi_yoy()
 print(macro_euro_cpi_yoy_se.name)
 print(macro_euro_cpi_yoy_se)
@@ -6910,6 +7152,7 @@ macro_euro_cpi_yoy_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_ppi_mom_se = ak.macro_euro_ppi_mom()
 print(macro_euro_ppi_mom_se.name)
 print(macro_euro_ppi_mom_se)
@@ -6966,6 +7209,7 @@ macro_euro_ppi_mom_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_retail_sales_mom_se = ak.macro_euro_retail_sales_mom()
 print(macro_euro_retail_sales_mom_se.name)
 print(macro_euro_retail_sales_mom_se)
@@ -7024,6 +7268,7 @@ macro_euro_retail_sales_mom_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_employment_change_qoq_se = ak.macro_euro_employment_change_qoq()
 print(macro_euro_employment_change_qoq_se.name)
 print(macro_euro_employment_change_qoq_se)
@@ -7080,6 +7325,7 @@ macro_euro_employment_change_qoq_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_unemployment_rate_mom_se = ak.macro_euro_unemployment_rate_mom()
 print(macro_euro_unemployment_rate_mom_se.name)
 print(macro_euro_unemployment_rate_mom_se)
@@ -7109,7 +7355,7 @@ macro_euro_unemployment_rate_mom_se: pandas.Series
 2020-01-30       0
 ```
 
-#### 贸易状况 
+#### 贸易状况
 
 ##### 欧元区未季调贸易帐报告
 
@@ -7138,6 +7384,7 @@ macro_euro_unemployment_rate_mom_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_trade_balance_se = ak.macro_euro_trade_balance()
 print(macro_euro_trade_balance_se.name)
 print(macro_euro_trade_balance_se)
@@ -7194,6 +7441,7 @@ macro_euro_trade_balance_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_current_account_mom_se = ak.macro_euro_current_account_mom()
 print(macro_euro_current_account_mom_se.name)
 print(macro_euro_current_account_mom_se)
@@ -7252,6 +7500,7 @@ macro_euro_current_account_mom_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_industrial_production_mom_se = ak.macro_euro_industrial_production_mom()
 print(macro_euro_industrial_production_mom_se.name)
 print(macro_euro_industrial_production_mom_se)
@@ -7308,6 +7557,7 @@ macro_euro_industrial_production_mom_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_manufacturing_pmi_se = ak.macro_euro_manufacturing_pmi()
 print(macro_euro_manufacturing_pmi_se.name)
 print(macro_euro_manufacturing_pmi_se)
@@ -7364,6 +7614,7 @@ macro_euro_manufacturing_pmi_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_services_pmi_se = ak.macro_euro_services_pmi()
 print(macro_euro_services_pmi_se.name)
 print(macro_euro_services_pmi_se)
@@ -7422,6 +7673,7 @@ macro_euro_services_pmi_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_zew_economic_sentiment_se = ak.macro_euro_zew_economic_sentiment()
 print(macro_euro_zew_economic_sentiment_se.name)
 print(macro_euro_zew_economic_sentiment_se)
@@ -7478,6 +7730,7 @@ macro_euro_zew_economic_sentiment_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_euro_sentix_investor_confidence_se = ak.macro_euro_sentix_investor_confidence()
 print(macro_euro_sentix_investor_confidence_se.name)
 print(macro_euro_sentix_investor_confidence_se)
@@ -7538,6 +7791,7 @@ macro_euro_sentix_investor_confidence_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_germany_ifo_df = ak.macro_germany_ifo()
 print(macro_germany_ifo_df)
 ```
@@ -7588,6 +7842,7 @@ print(macro_germany_ifo_df)
 
 ```python
 import akshare as ak
+
 macro_germany_cpi_monthly_df = ak.macro_germany_cpi_monthly()
 print(macro_germany_cpi_monthly_df)
 ```
@@ -7638,6 +7893,7 @@ print(macro_germany_cpi_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_germany_cpi_yearly_df = ak.macro_germany_cpi_yearly()
 print(macro_germany_cpi_yearly_df)
 ```
@@ -7688,6 +7944,7 @@ print(macro_germany_cpi_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_germany_trade_adjusted_df = ak.macro_germany_trade_adjusted()
 print(macro_germany_trade_adjusted_df)
 ```
@@ -7738,6 +7995,7 @@ print(macro_germany_trade_adjusted_df)
 
 ```python
 import akshare as ak
+
 macro_germany_gdp_df = ak.macro_germany_gdp()
 print(macro_germany_gdp_df)
 ```
@@ -7801,6 +8059,7 @@ print(macro_germany_gdp_df)
 
 ```python
 import akshare as ak
+
 macro_germany_retail_sale_monthly_df = ak.macro_germany_retail_sale_monthly()
 print(macro_germany_retail_sale_monthly_df)
 ```
@@ -7851,6 +8110,7 @@ print(macro_germany_retail_sale_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_germany_retail_sale_yearly_df = ak.macro_germany_retail_sale_yearly()
 print(macro_germany_retail_sale_yearly_df)
 ```
@@ -7902,6 +8162,7 @@ print(macro_germany_retail_sale_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_germany_zew_df = ak.macro_germany_zew()
 print(macro_germany_zew_df)
 ```
@@ -7954,6 +8215,7 @@ print(macro_germany_zew_df)
 
 ```python
 import akshare as ak
+
 macro_swiss_svme_df = ak.macro_swiss_svme()
 print(macro_swiss_svme_df)
 ```
@@ -8004,6 +8266,7 @@ print(macro_swiss_svme_df)
 
 ```python
 import akshare as ak
+
 macro_swiss_trade_df = ak.macro_swiss_trade()
 print(macro_swiss_trade_df)
 ```
@@ -8067,6 +8330,7 @@ print(macro_swiss_trade_df)
 
 ```python
 import akshare as ak
+
 macro_swiss_cpi_yearly_df = ak.macro_swiss_cpi_yearly()
 print(macro_swiss_cpi_yearly_df)
 ```
@@ -8119,6 +8383,7 @@ print(macro_swiss_cpi_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_swiss_gdp_quarterly_df = ak.macro_swiss_gdp_quarterly()
 print(macro_swiss_gdp_quarterly_df)
 ```
@@ -8181,6 +8446,7 @@ print(macro_swiss_gdp_quarterly_df)
 
 ```python
 import akshare as ak
+
 macro_swiss_gbd_yearly_df = ak.macro_swiss_gbd_yearly()
 print(macro_swiss_gbd_yearly_df)
 ```
@@ -8233,6 +8499,7 @@ print(macro_swiss_gbd_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_swiss_gbd_bank_rate_df = ak.macro_swiss_gbd_bank_rate()
 print(macro_swiss_gbd_bank_rate_df)
 ```
@@ -8291,6 +8558,7 @@ print(macro_swiss_gbd_bank_rate_df)
 
 ```python
 import akshare as ak
+
 macro_japan_bank_rate_df = ak.macro_japan_bank_rate()
 print(macro_japan_bank_rate_df)
 ```
@@ -8341,6 +8609,7 @@ print(macro_japan_bank_rate_df)
 
 ```python
 import akshare as ak
+
 macro_japan_cpi_yearly_df = ak.macro_japan_cpi_yearly()
 print(macro_japan_cpi_yearly_df)
 ```
@@ -8391,6 +8660,7 @@ print(macro_japan_cpi_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_japan_core_cpi_yearly_df = ak.macro_japan_core_cpi_yearly()
 print(macro_japan_core_cpi_yearly_df)
 ```
@@ -8441,6 +8711,7 @@ print(macro_japan_core_cpi_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_japan_unemployment_rate_df = ak.macro_japan_unemployment_rate()
 print(macro_japan_unemployment_rate_df)
 ```
@@ -8491,6 +8762,7 @@ print(macro_japan_unemployment_rate_df)
 
 ```python
 import akshare as ak
+
 macro_japan_head_indicator_df = ak.macro_japan_head_indicator()
 print(macro_japan_head_indicator_df)
 ```
@@ -8543,6 +8815,7 @@ print(macro_japan_head_indicator_df)
 
 ```python
 import akshare as ak
+
 macro_uk_halifax_monthly_df = ak.macro_uk_halifax_monthly()
 print(macro_uk_halifax_monthly_df)
 ```
@@ -8593,6 +8866,7 @@ print(macro_uk_halifax_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_halifax_yearly_df = ak.macro_uk_halifax_yearly()
 print(macro_uk_halifax_yearly_df)
 ```
@@ -8643,6 +8917,7 @@ print(macro_uk_halifax_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_trade_df = ak.macro_uk_trade()
 print(macro_uk_trade_df)
 ```
@@ -8693,6 +8968,7 @@ print(macro_uk_trade_df)
 
 ```python
 import akshare as ak
+
 macro_uk_bank_rate_df = ak.macro_uk_bank_rate()
 print(macro_uk_bank_rate_df)
 ```
@@ -8743,6 +9019,7 @@ print(macro_uk_bank_rate_df)
 
 ```python
 import akshare as ak
+
 macro_uk_core_cpi_yearly_df = ak.macro_uk_core_cpi_yearly()
 print(macro_uk_core_cpi_yearly_df)
 ```
@@ -8793,6 +9070,7 @@ print(macro_uk_core_cpi_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_cpi_monthly_df = ak.macro_uk_cpi_monthly()
 print(macro_uk_cpi_monthly_df)
 ```
@@ -8843,6 +9121,7 @@ print(macro_uk_cpi_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_cpi_yearly_df = ak.macro_uk_cpi_yearly()
 print(macro_uk_cpi_yearly_df)
 ```
@@ -8893,6 +9172,7 @@ print(macro_uk_cpi_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_cpi_monthly_df = ak.macro_uk_cpi_monthly()
 print(macro_uk_cpi_monthly_df)
 ```
@@ -8943,6 +9223,7 @@ print(macro_uk_cpi_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_retail_monthly_df = ak.macro_uk_retail_monthly()
 print(macro_uk_retail_monthly_df)
 ```
@@ -8993,6 +9274,7 @@ print(macro_uk_retail_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_retail_yearly_df = ak.macro_uk_retail_yearly()
 print(macro_uk_retail_yearly_df)
 ```
@@ -9043,6 +9325,7 @@ print(macro_uk_retail_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_rightmove_yearly_df = ak.macro_uk_rightmove_yearly()
 print(macro_uk_rightmove_yearly_df)
 ```
@@ -9093,6 +9376,7 @@ print(macro_uk_rightmove_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_rightmove_monthly_df = ak.macro_uk_rightmove_monthly()
 print(macro_uk_rightmove_monthly_df)
 ```
@@ -9143,6 +9427,7 @@ print(macro_uk_rightmove_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_gdp_quarterly_df = ak.macro_uk_gdp_quarterly()
 print(macro_uk_gdp_quarterly_df)
 ```
@@ -9235,6 +9520,7 @@ print(macro_uk_gdp_quarterly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_gdp_yearly_df = ak.macro_uk_gdp_yearly()
 print(macro_uk_gdp_yearly_df)
 ```
@@ -9286,6 +9572,7 @@ print(macro_uk_gdp_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_uk_unemployment_rate_df = ak.macro_uk_unemployment_rate()
 print(macro_uk_unemployment_rate_df)
 ```
@@ -9321,23 +9608,24 @@ print(macro_uk_unemployment_rate_df)
 
 输入参数
 
-| 名称   | 类型 |  描述 |
-| -------- | ---- |  --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | float64   |  注意单位: %   |
-| 现值      | float64   |  注意单位: %   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_australia_retail_rate_monthly_df = ak.macro_australia_retail_rate_monthly()
 print(macro_australia_retail_rate_monthly_df)
 ```
@@ -9345,7 +9633,7 @@ print(macro_australia_retail_rate_monthly_df)
 数据示例
 
 ```
-     时间    前值    现值        发布日期
+      时间         前值  现值     发布日期
 0    2021-07-01   NaN   NaN  2021-09-03
 1    2021-06-01   3.2   NaN  2021-08-04
 2    2021-05-01  -3.5   3.2  2021-07-05
@@ -9371,23 +9659,24 @@ print(macro_australia_retail_rate_monthly_df)
 
 输入参数
 
-| 名称   | 类型 |  描述 |
-| -------- | ---- |  --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | float64   |  注意单位: 亿澳元   |
-| 现值      | float64   |  注意单位: 亿澳元   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述        |
+|------|---------|-----------|
+| 时间   | object  | -         |
+| 前值   | float64 | 注意单位: 亿澳元 |
+| 现值   | float64 | 注意单位: 亿澳元 |
+| 发布日期 | object  | -         |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_australia_trade_df = ak.macro_australia_trade()
 print(macro_australia_trade_df)
 ```
@@ -9421,23 +9710,24 @@ print(macro_australia_trade_df)
 
 输入参数
 
-| 名称   | 类型 |  描述 |
-| -------- | ---- |  --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | float64   |  注意单位: %   |
-| 现值      | float64   |  注意单位: %   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_australia_unemployment_rate_df = ak.macro_australia_unemployment_rate()
 print(macro_australia_unemployment_rate_df)
 ```
@@ -9471,23 +9761,24 @@ print(macro_australia_unemployment_rate_df)
 
 输入参数
 
-| 名称   | 类型 |  描述 |
-| -------- | ---- |  --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | float64   |  注意单位: %   |
-| 现值      | float64   |  注意单位: %   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_australia_ppi_quarterly_df = ak.macro_australia_ppi_quarterly()
 print(macro_australia_ppi_quarterly_df)
 ```
@@ -9495,7 +9786,7 @@ print(macro_australia_ppi_quarterly_df)
 数据示例
 
 ```
-            时间   前值   现值        发布日期
+    时间   前值   现值        发布日期
 0   2021-06-01  0.4  NaN  2021-07-30
 1   2021-03-01  0.5  0.4  2021-04-30
 2   2020-12-01  0.4  0.5  2021-01-29
@@ -9534,23 +9825,24 @@ print(macro_australia_ppi_quarterly_df)
 
 输入参数
 
-| 名称   | 类型 |  描述 |
-| -------- | ---- |  --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | float64   |  注意单位: %   |
-| 现值      | float64   |  注意单位: %   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_australia_cpi_quarterly_df = ak.macro_australia_cpi_quarterly()
 print(macro_australia_cpi_quarterly_df)
 ```
@@ -9586,23 +9878,24 @@ print(macro_australia_cpi_quarterly_df)
 
 输入参数
 
-| 名称   | 类型 |  描述 |
-| -------- | ---- |  --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | float64   |  注意单位: %   |
-| 现值      | float64   |  注意单位: %   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_australia_cpi_yearly_df = ak.macro_australia_cpi_yearly()
 print(macro_australia_cpi_yearly_df)
 ```
@@ -9643,23 +9936,24 @@ print(macro_australia_cpi_yearly_df)
 
 输入参数
 
-| 名称   | 类型 |  描述 |
-| -------- | ---- |  --- |
-| 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 时间      | object   |  -  |
-| 前值      | float64   |  注意单位: %   |
-| 现值      | float64   |  注意单位: %   |
-| 发布日期      | object   |  -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 时间   | object  | -       |
+| 前值   | float64 | 注意单位: % |
+| 现值   | float64 | 注意单位: % |
+| 发布日期 | object  | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_australia_bank_rate_df = ak.macro_australia_bank_rate()
 print(macro_australia_bank_rate_df)
 ```
@@ -9712,6 +10006,7 @@ print(macro_australia_bank_rate_df)
 
 ```python
 import akshare as ak
+
 macro_canada_new_house_rate_df = ak.macro_canada_new_house_rate()
 print(macro_canada_new_house_rate_df)
 ```
@@ -9762,6 +10057,7 @@ print(macro_canada_new_house_rate_df)
 
 ```python
 import akshare as ak
+
 macro_canada_unemployment_rate_df = ak.macro_canada_unemployment_rate()
 print(macro_canada_unemployment_rate_df)
 ```
@@ -9812,6 +10108,7 @@ print(macro_canada_unemployment_rate_df)
 
 ```python
 import akshare as ak
+
 macro_canada_trade_df = ak.macro_canada_trade()
 print(macro_canada_trade_df)
 ```
@@ -9862,6 +10159,7 @@ print(macro_canada_trade_df)
 
 ```python
 import akshare as ak
+
 macro_canada_retail_rate_monthly_df = ak.macro_canada_retail_rate_monthly()
 print(macro_canada_retail_rate_monthly_df)
 ```
@@ -9912,6 +10210,7 @@ print(macro_canada_retail_rate_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_canada_bank_rate_df = ak.macro_canada_bank_rate()
 print(macro_canada_bank_rate_df)
 ```
@@ -9962,6 +10261,7 @@ print(macro_canada_bank_rate_df)
 
 ```python
 import akshare as ak
+
 macro_canada_core_cpi_yearly_df = ak.macro_canada_core_cpi_yearly()
 print(macro_canada_core_cpi_yearly_df)
 ```
@@ -10012,6 +10312,7 @@ print(macro_canada_core_cpi_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_canada_core_cpi_monthly_df = ak.macro_canada_core_cpi_monthly()
 print(macro_canada_core_cpi_monthly_df)
 ```
@@ -10062,6 +10363,7 @@ print(macro_canada_core_cpi_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_canada_cpi_yearly_df = ak.macro_canada_cpi_yearly()
 print(macro_canada_cpi_yearly_df)
 ```
@@ -10112,6 +10414,7 @@ print(macro_canada_cpi_yearly_df)
 
 ```python
 import akshare as ak
+
 macro_canada_cpi_monthly_df = ak.macro_canada_cpi_monthly()
 print(macro_canada_cpi_monthly_df)
 ```
@@ -10162,6 +10465,7 @@ print(macro_canada_cpi_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_canada_gdp_monthly_df = ak.macro_canada_gdp_monthly()
 print(macro_canada_gdp_monthly_df)
 ```
@@ -10214,6 +10518,7 @@ print(macro_canada_gdp_monthly_df)
 
 ```python
 import akshare as ak
+
 macro_cons_gold_volume_se = ak.macro_cons_gold_volume()
 print(macro_cons_gold_volume_se.name)
 print(macro_cons_gold_volume_se)
@@ -10270,6 +10575,7 @@ macro_euro_sentix_investor_confidence_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_cons_gold_change_se = ak.macro_cons_gold_change()
 print(macro_cons_gold_change_se.name)
 print(macro_cons_gold_change_se)
@@ -10326,6 +10632,7 @@ macro_cons_gold_change_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_cons_gold_amount_se = ak.macro_cons_gold_amount()
 print(macro_cons_gold_amount_se.name)
 print(macro_cons_gold_amount_se)
@@ -10384,6 +10691,7 @@ macro_cons_gold_amount_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_cons_silver_volume_se = ak.macro_cons_silver_volume()
 print(macro_cons_silver_volume_se.name)
 print(macro_cons_silver_volume_se)
@@ -10440,6 +10748,7 @@ macro_cons_silver_volume_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_cons_silver_change_se = ak.macro_cons_silver_change()
 print(macro_cons_silver_change_se.name)
 print(macro_cons_silver_change_se)
@@ -10496,6 +10805,7 @@ macro_cons_silver_change_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_cons_silver_amount_se = ak.macro_cons_silver_amount()
 print(macro_cons_silver_amount_se.name)
 print(macro_cons_silver_amount_se)
@@ -10566,6 +10876,7 @@ macro_cons_silver_amount_se: pandas.Series
 
 ```python
 import akshare as ak
+
 macro_cons_opec_month_df = ak.macro_cons_opec_month()
 print(macro_cons_opec_month_df)
 ```
@@ -10629,6 +10940,7 @@ macro_cons_opec_month_df
 
 ```python
 import akshare as ak
+
 macro_euro_lme_holding_df = ak.macro_euro_lme_holding()
 print(macro_euro_lme_holding_df)
 ```
@@ -10676,6 +10988,7 @@ print(macro_euro_lme_holding_df)
 
 ```python
 import akshare as ak
+
 macro_euro_lme_stock_df = ak.macro_euro_lme_stock()
 print(macro_euro_lme_stock_df)
 ```
@@ -10725,6 +11038,7 @@ print(macro_euro_lme_stock_df)
 
 ```python
 import akshare as ak
+
 macro_usa_cftc_nc_holding_df = ak.macro_usa_cftc_nc_holding()
 print(macro_usa_cftc_nc_holding_df)
 ```
@@ -10772,6 +11086,7 @@ print(macro_usa_cftc_nc_holding_df)
 
 ```python
 import akshare as ak
+
 macro_usa_cftc_c_holding_df = ak.macro_usa_cftc_c_holding()
 print(macro_usa_cftc_c_holding_df)
 ```
@@ -10819,6 +11134,7 @@ print(macro_usa_cftc_c_holding_df)
 
 ```python
 import akshare as ak
+
 macro_usa_cftc_merchant_currency_holding_df = ak.macro_usa_cftc_merchant_currency_holding()
 print(macro_usa_cftc_merchant_currency_holding_df)
 ```
@@ -10846,26 +11162,27 @@ print(macro_usa_cftc_merchant_currency_holding_df)
 
 目标地址: https://datacenter.jin10.com/reportType/dc_cftc_merchant_goods
 
-描述: 获取美国商品期货交易委员会CFTC商品类商业持仓报告, 数据区间从 19860115-至今
+描述: 美国商品期货交易委员会 CFTC 商品类商业持仓报告, 数据区间从 19860115-至今
 
 限量: 单次返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| 无 | 无 | 无 | 无 |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| -      | -   | -        | 不同品种的多头仓位、空头仓位和净仓位  |
+| 名称  | 类型  | 描述                 |
+|-----|-----|--------------------|
+| -   | -   | 不同品种的多头仓位、空头仓位和净仓位 |
 
 接口示例
 
 ```python
 import akshare as ak
+
 macro_usa_cftc_merchant_goods_holding_df = ak.macro_usa_cftc_merchant_goods_holding()
 print(macro_usa_cftc_merchant_goods_holding_df)
 ```

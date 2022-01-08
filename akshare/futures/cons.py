@@ -1,7 +1,7 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
-Date: 2021/1/8 17:58
+Date: 2021/8/20 17:58
 Desc: 期货配置文件
 """
 import datetime
@@ -50,7 +50,7 @@ zh_sina_spot_headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
 }
 
-# 99期货
+# 99 期货
 inventory_temp_headers = {
     "Accept": "image/webp,image/apng,image/*,*/*;q=0.8",
     "Accept-Encoding": "gzip, deflate",
@@ -85,11 +85,7 @@ qh_headers = {
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36",
 }
-# 交易法门
-JYFM_TOOLS_RECEIPT_DATE_URL = (
-    "https://www.jiaoyifamen.com/tools/receipt-expire-info/all?page=1&limit=90"
-)
-#
+# 奇货可查
 QHKC_INDEX_URL = "https://www.qhkch.com/ajax/index_show.php"
 QHKC_INDEX_TREND_URL = "https://qhkch.com/ajax/indexes_trend.php"
 QHKC_INDEX_PROFIT_LOSS_URL = "https://qhkch.com/ajax/indexes_profit_loss.php"
@@ -477,12 +473,14 @@ def get_pk_data(file_name):
 
 def get_calendar():
     """
-    获取交易日历至 2019 年结束, 这里的交易日历需要按年更新
-    :return: json
+    获取交易日历, 这里的交易日历需要按年更新, 主要是从新浪获取的
+    :return: 交易日历
+    :rtype: json
     """
     setting_file_name = "calendar.json"
     setting_file_path = get_json_path(setting_file_name, __file__)
-    return json.load(open(setting_file_path, "r"))
+    data_json = json.load(open(setting_file_path, "r"))
+    return data_json
 
 
 def last_trading_day(day):

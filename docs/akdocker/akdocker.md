@@ -1,7 +1,7 @@
-# [AKShare](https://github.com/jindaxiang/akshare) Docker 部署
+# [AKShare](https://github.com/akfamily/akshare) Docker 部署
 
-目前 [AKShare](https://github.com/jindaxiang/akshare) 数据接口是基于 Python 开发的，鉴于部分其他语言的用户难以在短时间部署
-[AKShare](https://github.com/jindaxiang/akshare) 的 Python 使用环境，特此提供基于虚拟化容器技术 Docker 的使用教程。
+目前 [AKShare](https://github.com/akfamily/akshare) 数据接口是基于 Python 开发的，鉴于部分其他语言的用户难以在短时间部署
+[AKShare](https://github.com/akfamily/akshare) 的 Python 使用环境，特此提供基于虚拟化容器技术 Docker 的使用教程。
 
 ## 安装 Docker
 
@@ -28,13 +28,13 @@
 ### 拉取 AKDocker 镜像
 
 ```
-docker pull registry.cn-hangzhou.aliyuncs.com/akshare/akdocker
+docker pull registry.cn-beijing.aliyuncs.com/akshare/akdocker
 ```
 
 ### 运行 AKDocker 容器
 
 ```
-docker run -it registry.cn-hangzhou.aliyuncs.com/akshare/akdocker python
+docker run -it registry.cn-beijing.aliyuncs.com/akshare/akdocker
 ```
 
 ### 测试 AKDocker 容器

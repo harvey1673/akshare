@@ -1,7 +1,7 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# /usr/bin/env python
 """
-Date: 2020/7/13 22:32
+Date: 2021/12/19 13:15
 Desc: 市盈率, 市净率和股息率查询
 https://www.legulegu.com/stocklist
 https://www.legulegu.com/s/000001
@@ -11,15 +11,16 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def stock_a_lg_indicator(stock: str = "688388") -> pd.DataFrame:
+def stock_a_lg_indicator(symbol: str = "000001") -> pd.DataFrame:
     """
     市盈率, 市净率, 股息率数据接口
-    :param stock: 通过 stock_a_indicator(stock="all") 来获取所有股票的代码
-    :type stock: str
+    https://www.legulegu.com/stocklist
+    :param symbol: 通过 ak.stock_a_lg_indicator(stock="all") 来获取所有股票的代码
+    :type symbol: str
     :return: 市盈率, 市净率, 股息率查询
     :rtype: pandas.DataFrame
     """
-    if stock == "all":
+    if symbol == "all":
         url = "https://www.legulegu.com/stocklist"
         r = requests.get(url)
         soup = BeautifulSoup(r.text, "lxml")
@@ -33,18 +34,18 @@ def stock_a_lg_indicator(stock: str = "688388") -> pd.DataFrame:
         temp_df = temp_df[["code", "stock_name"]]
         return temp_df
     else:
-        url = f"https://www.legulegu.com/s/base-info/{stock}"
+        url = f"https://www.legulegu.com/s/base-info/{symbol}"
         r = requests.get(url)
         temp_json = r.json()
         temp_df = pd.DataFrame(temp_json["data"]["items"], columns=temp_json["data"]["fields"])
-        temp_df["trade_date"] = pd.to_datetime(temp_df["trade_date"])
+        temp_df["trade_date"] = pd.to_datetime(temp_df["trade_date"]).dt.date
         temp_df.iloc[:, 1:] = temp_df.iloc[:, 1:].astype(float)
         return temp_df
 
 
-def stock_hk_eniu_indicator(symbol="hk01093", indicator="市盈率"):
+def stock_hk_eniu_indicator(symbol: str = "hk01093", indicator: str = "市盈率") -> pd.DataFrame:
     """
-    港股指标
+    亿牛网-港股指标
     https://eniu.com/gu/hk01093/roe
     :param symbol: 港股代码
     :type symbol: str
@@ -76,9 +77,10 @@ def stock_hk_eniu_indicator(symbol="hk01093", indicator="市盈率"):
 
 
 if __name__ == '__main__':
-    stock_a_lg_indicator_all_df = stock_a_lg_indicator(stock="all")
+    stock_a_lg_indicator_all_df = stock_a_lg_indicator(symbol="000001")
     print(stock_a_lg_indicator_all_df)
-    stock_a_lg_indicator_df = stock_a_lg_indicator(stock="000001")
+
+    stock_a_lg_indicator_df = stock_a_lg_indicator(symbol="000001")
     print(stock_a_lg_indicator_df)
 
     stock_hk_eniu_indicator_df = stock_hk_eniu_indicator(symbol="hk01093", indicator="市净率")
