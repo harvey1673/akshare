@@ -212,13 +212,7 @@ def get_czce_daily(date: str = "20050525") -> pd.DataFrame:
             if i[0][0] != "小"
         ]
 
-<<<<<<< HEAD
-        if day > datetime.date(2015, 9, 19):
-            if len(html) <= 1  or len(html[1]) == 0:
-                return
-=======
         if day > datetime.date(2015, 11, 11):
->>>>>>> 0a9ca71b381a272e2f56211e455ff2493dfed17a
             if html[1][0] not in ["品种月份", "品种代码", "合约代码"]:
                 return
             dict_data = list()
