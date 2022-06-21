@@ -80,7 +80,7 @@ def index_stock_cons(symbol: str = "399639") -> pd.DataFrame:
     """
     最新股票指数的成份股目录
     http://vip.stock.finance.sina.com.cn/corp/view/vII_NewestComponent.php?page=1&indexid=399639
-    :param symbol: 指数代码, 可以通过 index_stock_info 函数获取
+    :param symbol: 指数代码, 可以通过 ak.index_stock_info() 函数获取
     :type symbol: str
     :return: 最新股票指数的成份股目录
     :rtype: pandas.DataFrame
@@ -212,7 +212,7 @@ def stock_a_code_to_symbol(symbol: str = "000300") -> str:
     :return: 股票市场
     :rtype: str
     """
-    if symbol.startswith("60") or symbol.startswith("900"):
+    if symbol.startswith("6") or symbol.startswith("900"):
         return f"sh{symbol}"
     else:
         return f"sz{symbol}"
@@ -228,7 +228,7 @@ if __name__ == "__main__":
     index_stock_cons_sina_df = index_stock_cons_sina(symbol="000300")
     print(index_stock_cons_sina_df)
 
-    index_stock_cons_df = index_stock_cons(symbol="399639")
+    index_stock_cons_df = index_stock_cons(symbol="000001")
     print(index_stock_cons_df)
 
     stock_index_hist_df = index_stock_hist(symbol="sh000300")

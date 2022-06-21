@@ -1,23 +1,96 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/12/31 17:07
-Desc: COVID-19
-COVID-19-网易
-COVID-19-丁香园
-COVID-19-百度
-COVID-19-GitHub
+Date: 2022/2/22 14:07
+Desc: COVID-19、COVID-19-网易、COVID-19-丁香园、COVID-19-百度、COVID-19-GitHub
 """
 import json
 import time
 
 import jsonpath
 import pandas as pd
+import py_mini_racer
 import requests
 from bs4 import BeautifulSoup
 
+from akshare.datasets import get_covid_js
 from akshare.event.cons import province_dict, city_dict
 from akshare.utils import demjson
+
+
+def _get_file_content(file: str = "covid.js") -> str:
+    """
+    获取 JS 文件的内容
+    :param file:  JS 文件名
+    :type file: str
+    :return: 文件内容
+    :rtype: str
+    """
+    setting_file_path = get_covid_js(file)
+    with open(setting_file_path) as f:
+        file_data = f.read()
+    return file_data
+
+
+def covid_19_risk_area(symbol: str = "高风险等级地区") -> pd.DataFrame:
+    """
+    卫生健康委-疫情风险等级查询
+    http://bmfw.www.gov.cn/yqfxdjcx/risk.html
+    :param symbol: choice of {"高风险等级地区", "中风险等级地区"}
+    :type symbol: str
+    :return: 疫情风险等级查询
+    :rtype: pandas.DataFrame
+    """
+    file_data = _get_file_content(file="covid.js")
+    ctx = py_mini_racer.MiniRacer()
+    ctx.eval(file_data)
+    decode_ajax_dict = ctx.call("generateAjaxParmas", "xxx")
+    decode_header_dict = ctx.call("generateHeaderParmas", "xxx")
+    url = "http://103.66.32.242:8005/zwfwMovePortal/interface/interfaceJson"
+    payload = {
+        "appId": "NcApplication",
+        "key": "3C502C97ABDA40D0A60FBEE50FAAD1DA",
+        "nonceHeader": "123456789abcdefg",
+        "paasHeader": "zdww",
+        "signatureHeader": eval(decode_ajax_dict)["signatureHeader"],
+        "timestampHeader": eval(decode_ajax_dict)["timestampHeader"],
+    }
+    headers = {
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+        "Cache-Control": "no-cache",
+        "Content-Length": "235",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Host": "103.66.32.242:8005",
+        "Origin": "http://bmfw.www.gov.cn",
+        "Pragma": "no-cache",
+        "Proxy-Connection": "keep-alive",
+        "Referer": "http://bmfw.www.gov.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36",
+        "x-wif-nonce": "QkjjtiLM2dCratiA",
+        "x-wif-paasid": "smt-application",
+        "x-wif-signature": eval(decode_header_dict)["signatureHeader"],
+        "x-wif-timestamp": eval(decode_header_dict)["timestampHeader"],
+    }
+    r = requests.post(url, json=payload, headers=headers)
+    data_json = r.json()
+    if symbol == "高风险等级地区":
+        temp_df = pd.DataFrame(data_json["data"]["highlist"])
+        temp_df = temp_df.explode(["communitys"])
+        del temp_df["type"]
+        temp_df["grade"] = "高风险"
+        temp_df["report_date"] = data_json["data"]["end_update_time"]
+        temp_df["number"] = data_json["data"]["hcount"]
+        return temp_df
+    else:
+        temp_df = pd.DataFrame(data_json["data"]["middlelist"])
+        temp_df = temp_df.explode(["communitys"])
+        del temp_df["type"]
+        temp_df["grade"] = "高风险"
+        temp_df["report_date"] = data_json["data"]["end_update_time"]
+        temp_df["number"] = data_json["data"]["mcount"]
+        return temp_df
 
 
 def covid_19_163(indicator: str = "实时") -> pd.DataFrame:
@@ -251,7 +324,7 @@ def covid_19_dxy(indicator: str = "浙江省") -> pd.DataFrame:
     for i, p in enumerate(jsonpath.jsonpath(data_text_json, "$..provinceName")):
         temp_df = pd.DataFrame(jsonpath.jsonpath(data_text_json, "$..cities")[i])
         temp_df["province"] = p
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     domestic_city_df = big_df
     data_df = pd.DataFrame(data_text_json).iloc[:, :7]
     data_df.columns = ["地区", "地区简称", "现存确诊", "累计确诊", "-", "治愈", "死亡"]
@@ -415,13 +488,14 @@ def covid_19_baidu(indicator: str = "浙江") -> pd.DataFrame:
     )
     big_df = pd.DataFrame()
     for i, p in enumerate(
-        jsonpath.jsonpath(data_json["component"][0]["caseList"], "$..area")
+        [item["area"] for item in data_json["component"][0]["caseList"]]
     ):
         temp_df = pd.DataFrame(
-            jsonpath.jsonpath(data_json["component"][0]["caseList"], "$..subList")[i]
+            jsonpath.jsonpath(data_json["component"][0]["caseList"][i], "$.subList")[0]
         )
+
         temp_df["province"] = p
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     domestic_city_df = big_df
 
     domestic_province_df = pd.DataFrame(data_json["component"][0]["caseList"]).iloc[
@@ -438,7 +512,8 @@ def covid_19_baidu(indicator: str = "浙江") -> pd.DataFrame:
             )[i]
         )
         temp_df["province"] = p
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+
     outside_city_df = big_df
 
     outside_country_df = pd.DataFrame(
@@ -453,7 +528,8 @@ def covid_19_baidu(indicator: str = "浙江") -> pd.DataFrame:
             jsonpath.jsonpath(data_json["component"][0]["globalList"], "$..subList")[i]
         )
         temp_df["province"] = p
-        big_df = big_df.append(temp_df, ignore_index=True)
+
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     global_country_df = big_df
 
     global_continent_df = pd.DataFrame(data_json["component"][0]["globalList"])[
@@ -624,7 +700,7 @@ def migration_area_baidu(
         "date": date,
     }
     r = requests.get(url, params=params)
-    data_text = r.text[r.text.find("({") + 1: r.text.rfind(");")]
+    data_text = r.text[r.text.find("({") + 1 : r.text.rfind(");")]
     data_json = json.loads(data_text)
     temp_df = pd.DataFrame(data_json["data"]["list"])
     return temp_df
@@ -666,7 +742,7 @@ def migration_scale_baidu(
         "endDate": end_date,
     }
     r = requests.get(url, params=params)
-    json_data = json.loads(r.text[r.text.find("({") + 1: r.text.rfind(");")])
+    json_data = json.loads(r.text[r.text.find("({") + 1 : r.text.rfind(");")])
     temp_df = pd.DataFrame.from_dict(json_data["data"]["list"], orient="index")
     temp_df.index = pd.to_datetime(temp_df.index)
     temp_df.columns = ["迁徙规模指数"]
@@ -735,7 +811,8 @@ def covid_19_trace() -> pd.DataFrame:
         temp_df["risk_level"] = risk_level
         temp_df["count_time"] = count_time
         del temp_df["create_time"]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+
     big_df.columns = [
         "地址",
         "城市",
@@ -747,16 +824,18 @@ def covid_19_trace() -> pd.DataFrame:
         "风险等级",
         "统计时间",
     ]
-    big_df = big_df[[
-        "地址",
-        "城市",
-        "区",
-        "省份",
-        "标题",
-        "更新时间",
-        "风险等级",
-        "统计时间",
-    ]]
+    big_df = big_df[
+        [
+            "地址",
+            "城市",
+            "区",
+            "省份",
+            "标题",
+            "更新时间",
+            "风险等级",
+            "统计时间",
+        ]
+    ]
     return big_df
 
 
@@ -867,6 +946,12 @@ def covid_19_csse_global_recovered() -> pd.DataFrame:
 
 
 if __name__ == "__main__":
+    covid_19_risk_area_df = covid_19_risk_area(symbol="高风险等级地区")
+    print(covid_19_risk_area_df)
+
+    covid_19_risk_area_df = covid_19_risk_area(symbol="中等风险等级地区")
+    print(covid_19_risk_area_df)
+
     # 163
     indicator_list = [
         "数据说明",

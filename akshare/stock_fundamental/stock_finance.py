@@ -116,7 +116,8 @@ def stock_financial_analysis_indicator(symbol: str = "600004") -> pd.DataFrame:
         big_df.columns = big_df.iloc[0, :].tolist()
         big_df = big_df.iloc[1:, :]
         big_df.index = temp_df.columns.tolist()[1:]
-        out_df = out_df.append(big_df)
+        out_df = pd.concat([out_df, big_df])
+
     out_df.dropna(inplace=True)
     out_df.reset_index(inplace=True)
     out_df.rename(columns={'index': '日期'}, inplace=True)
@@ -178,6 +179,8 @@ def stock_history_dividend_detail(
             "查看详细",
         ]
         del temp_df["查看详细"]
+        if temp_df.iloc[0, 0] == '暂时没有数据！':
+            return pd.DataFrame()
         temp_df["公告日期"] = pd.to_datetime(temp_df["公告日期"]).dt.date
         temp_df["送股"] = pd.to_numeric(temp_df["送股"])
         temp_df["转增"] = pd.to_numeric(temp_df["转增"])
@@ -217,6 +220,8 @@ def stock_history_dividend_detail(
             "查看详细",
         ]
         del temp_df["查看详细"]
+        if temp_df.iloc[0, 0] == '暂时没有数据！':
+            return pd.DataFrame()
         temp_df["公告日期"] = pd.to_datetime(temp_df["公告日期"]).dt.date
         temp_df["配股方案"] = pd.to_numeric(temp_df["配股方案"])
         temp_df["配股价格"] = pd.to_numeric(temp_df["配股价格"])
@@ -423,11 +428,11 @@ if __name__ == "__main__":
     )
     print(stock_financial_report_sina_df)
 
-    stock_financial_abstract_df = stock_financial_abstract(stock="600004")
+    stock_financial_abstract_df = stock_financial_abstract(stock="000958")
     print(stock_financial_abstract_df)
 
     stock_financial_analysis_indicator_df = stock_financial_analysis_indicator(
-        symbol="002230"
+        symbol="000001"
     )
     print(stock_financial_analysis_indicator_df)
 

@@ -12,34 +12,35 @@
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| - | - | - | - |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数-品牌
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| id      | int64   |  每个运动员的唯一ID  |
-| name      | object   |  运动员名字  |
-| sex      | object   |  性别   |
-| age      | float64   |  年龄   |
-| height      | float64   |  身高   |
-| weight      | float64   |  体重   |
-| team      | object   |  所代表的国家队   |
-| noc      | object   |  国家奥委会3个字母的代码   |
-| games      | object   |  年份与季节   |
-| year      | int64   |  比赛年份   |
-| season      | object   |  比赛季节   |
-| city      | object   |  举办城市   |
-| sport      | object   | 运动类别   |
-| event      | object   |  比赛项目   |
-| medal      | object   |  奖牌   |
+| 名称     | 类型      | 描述           |
+|--------|---------|--------------|
+| id     | int64   | 每个运动员的唯一ID   |
+| name   | object  | 运动员名字        |
+| sex    | object  | 性别           |
+| age    | float64 | 年龄           |
+| height | float64 | 身高           |
+| weight | float64 | 体重           |
+| team   | object  | 所代表的国家队      |
+| noc    | object  | 国家奥委会3个字母的代码 |
+| games  | object  | 年份与季节        |
+| year   | int64   | 比赛年份         |
+| season | object  | 比赛季节         |
+| city   | object  | 举办城市         |
+| sport  | object  | 运动类别         |
+| event  | object  | 比赛项目         |
+| medal  | object  | 奖牌           |
 
 接口示例
 
 ```python
 import akshare as ak
+
 sport_olympic_hist_df = ak.sport_olympic_hist()
 print(sport_olympic_hist_df)
 ```
@@ -48,41 +49,95 @@ print(sport_olympic_hist_df)
 
 ```
             id                      name sex   age  height  ...  season  \
-0            1                 A Dijiang   M  24.0   180.0  ...  Summer   
-1            2                  A Lamusi   M  23.0   170.0  ...  Summer   
-2            3       Gunnar Nielsen Aaby   M  24.0     NaN  ...  Summer   
-3            4      Edgar Lindenau Aabye   M  34.0     NaN  ...  Summer   
-4            5  Christine Jacoba Aaftink   F  21.0   185.0  ...  Winter   
-        ...                       ...  ..   ...     ...  ...     ...   
-271111  135569                Andrzej ya   M  29.0   179.0  ...  Winter   
-271112  135570                  Piotr ya   M  27.0   176.0  ...  Winter   
-271113  135570                  Piotr ya   M  27.0   176.0  ...  Winter   
-271114  135571        Tomasz Ireneusz ya   M  30.0   185.0  ...  Winter   
-271115  135571        Tomasz Ireneusz ya   M  34.0   185.0  ...  Winter   
+0            1                 A Dijiang   M  24.0   180.0  ...  Summer
+1            2                  A Lamusi   M  23.0   170.0  ...  Summer
+2            3       Gunnar Nielsen Aaby   M  24.0     NaN  ...  Summer
+3            4      Edgar Lindenau Aabye   M  34.0     NaN  ...  Summer
+4            5  Christine Jacoba Aaftink   F  21.0   185.0  ...  Winter
+        ...                       ...  ..   ...     ...  ...     ...
+271111  135569                Andrzej ya   M  29.0   179.0  ...  Winter
+271112  135570                  Piotr ya   M  27.0   176.0  ...  Winter
+271113  135570                  Piotr ya   M  27.0   176.0  ...  Winter
+271114  135571        Tomasz Ireneusz ya   M  30.0   185.0  ...  Winter
+271115  135571        Tomasz Ireneusz ya   M  34.0   185.0  ...  Winter
                   city          sport  \
-0            Barcelona     Basketball   
-1               London           Judo   
-2            Antwerpen       Football   
-3                Paris     Tug-Of-War   
-4              Calgary  Speed Skating   
-                ...            ...   
-271111       Innsbruck           Luge   
-271112           Sochi    Ski Jumping   
-271113           Sochi    Ski Jumping   
-271114          Nagano      Bobsleigh   
-271115  Salt Lake City      Bobsleigh   
-                                           event  medal  
-0                    Basketball Men's Basketball    NaN  
-1                   Judo Men's Extra-Lightweight    NaN  
-2                        Football Men's Football    NaN  
-3                    Tug-Of-War Men's Tug-Of-War   Gold  
-4               Speed Skating Women's 500 metres    NaN  
-                                          ...    ...  
-271111                Luge Mixed (Men)'s Doubles    NaN  
-271112  Ski Jumping Men's Large Hill, Individual    NaN  
-271113        Ski Jumping Men's Large Hill, Team    NaN  
-271114                      Bobsleigh Men's Four    NaN  
-271115                      Bobsleigh Men's Four    NaN  
+0            Barcelona     Basketball
+1               London           Judo
+2            Antwerpen       Football
+3                Paris     Tug-Of-War
+4              Calgary  Speed Skating
+                ...            ...
+271111       Innsbruck           Luge
+271112           Sochi    Ski Jumping
+271113           Sochi    Ski Jumping
+271114          Nagano      Bobsleigh
+271115  Salt Lake City      Bobsleigh
+                                           event  medal
+0                    Basketball Men's Basketball    NaN
+1                   Judo Men's Extra-Lightweight    NaN
+2                        Football Men's Football    NaN
+3                    Tug-Of-War Men's Tug-Of-War   Gold
+4               Speed Skating Women's 500 metres    NaN
+                                          ...    ...
+271111                Luge Mixed (Men)'s Doubles    NaN
+271112  Ski Jumping Men's Large Hill, Individual    NaN
+271113        Ski Jumping Men's Large Hill, Team    NaN
+271114                      Bobsleigh Men's Four    NaN
+271115                      Bobsleigh Men's Four    NaN
+```
+
+### 冬奥会历届奖牌榜
+
+接口: sport_olympic_winter_hist
+
+目标地址: https://m.sports.qq.com/g/sv3/winter-oly22/winter-olympic-rank.htm?type=0
+
+描述: 腾讯运动-冬奥会-历届奖牌榜
+
+限量: 单次返回 1924-2018 年度的冬奥会历届奖牌榜数据
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数-品牌
+
+| 名称    | 类型     | 描述  |
+|-------|--------|-----|
+| 序号    | int64  | -   |
+| 举办年份  | object | -   |
+| 届数    | object | -   |
+| 举办地点  | object | -   |
+| 国家及地区 | object | -   |
+| 金牌数   | int64  | -   |
+| 总奖牌数  | int64  | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+sport_olympic_winter_hist_df = ak.sport_olympic_winter_hist()
+print(sport_olympic_winter_hist_df)
+```
+
+数据示例
+
+```
+      序号  举办年份  届数 举办地点 国家及地区  金牌数  总奖牌数
+0      1  2018  23   平昌    挪威   14    39
+1      2  2018  23   平昌    德国   14    31
+2      3  2018  23   平昌   加拿大   11    29
+3      4  2018  23   平昌    美国    9    23
+4      5  2018  23   平昌    荷兰    8    20
+..   ...   ...  ..  ...   ...  ...   ...
+404  405  1924   1  霞慕尼    英国    1     4
+405  406  1924   1  霞慕尼    瑞典    1     2
+406  407  1924   1  霞慕尼   加拿大    1     1
+407  408  1924   1  霞慕尼    法国    0     3
+408  409  1924   1  霞慕尼   比利时    0     1
 ```
 
 ### 汽车销量排行
@@ -394,22 +449,23 @@ print(car_gasgoo_sale_rank_df)
 
 输入参数
 
-| 名称   | 类型 |  描述   |
-| -------- | ---- |  --- |
-| date | str | date="20210708";  20160330-至今|
+| 名称   | 类型  | 描述                            |
+|------|-----|-------------------------------|
+| date | str | date="20210708";  20160330-至今 |
 
 输出参数
 
-| 名称          | 类型 | 描述           |
-| --------------- | ----- | ---------------- |
-| date      | object   | 新闻日期  |
-| title      | object   | 新闻标题  |
-| content      | object   | 新闻内容   |
+| 名称      | 类型     | 描述   |
+|---------|--------|------|
+| date    | object | 新闻日期 |
+| title   | object | 新闻标题 |
+| content | object | 新闻内容 |
 
 接口示例
 
 ```python
 import akshare as ak
+
 news_cctv_df = ak.news_cctv(date="20210708")
 print(news_cctv_df)
 ```
@@ -580,7 +636,7 @@ print(sunrise_monthly_df)
 
 描述: 河北省指定 symbol 的最近 6 天空气质量数据
 
-注释: 
+注释:
 
 注释-等级划分
 
@@ -643,38 +699,56 @@ print(air_quality_hebei_df)
 
 #### 城市列表
 
-接口: air_city_list
+接口: air_city_table
 
 目标地址: https://www.aqistudy.cn/
 
-描述: 获取所有空气质量数据的城市列表
+描述: 所有能获取空气质量数据的城市表
 
-限量: 单次返回所有可以获取的城市的列表
+限量: 单次返回所有可以获取的城市表数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| - | - | - | - |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-|  168城市列表     | list  | Y        | list  |
+| 名称      | 类型      | 描述  |
+|---------|---------|-----|
+| 序号      | int64   | -   |
+| 省份      | object  | -   |
+| 城市      | object  | -   |
+| AQI     | float64 | -   |
+| 空气质量    | object  | -   |
+| PM2.5浓度 | object  | -   |
+| 首要污染物   | object  | -   |
 
 接口示例
 
 ```python
 import akshare as ak
-air_city_list_map = ak.air_city_list()
-print(air_city_list_map)
+
+air_city_table_df = ak.air_city_table()
+print(air_city_table_df)
 ```
 
 数据示例
 
 ```
-['北京', '廊坊', '承德', '唐山', '晋城', '保定', '德阳', '秦皇岛', '天津', '朝阳', '临汾', '运城', '成都', '焦作', '长治', '锦州', '绵阳', '资阳', '葫芦岛', '广安', '长春', '石家庄', '三门峡', '兰州', '沧州', '沈阳', '哈尔滨', '衡水', '洛阳', '滨州', '眉山', '东营', '阳泉', '内江', '铜川', '宜宾', '淄博', '邢台', '晋中', '自贡', '新乡', '安阳', '邯郸', '南充', '忻州', '临沂', '太原', '重庆', '乐山', '潍坊', '张家口', '济南', '德州', '聊城', '鹤壁', '青岛', '亳州', '日照', '枣庄', '西安', '咸阳', '宝鸡', '宿州', '泰安', '商丘', '达州', '济宁', '南阳', '吕梁', '连云港', '雅安', '郑州', '南昌', '阜阳', '渭南', '周口', '宿迁', '许昌', '武汉', '徐州', '开封', '泸州', '平顶山', '驻马店', '信阳', '菏泽', '淮南', '漯河', '朔州', '孝感', '濮阳', '杭州', '呼和浩特', '银川', '遂宁', '随州', '湖州', '襄阳', '淮安', '宜昌', '益阳', '淮北', '常州', '泰州', '拉萨', '包头', '蚌埠', '盐城', '六安', '西宁', '岳阳', '九江', '镇江', '苏州', '广州', '贵阳', '大同', '乌鲁木齐', '荆门', '铜陵', '新余', '扬州', '鄂州', '南通', '常德', '荆州', '无锡', '长沙', '咸宁', '嘉兴', '衢州', '大连', '黄冈', '温州', '厦门', '黄石', '绍兴', '合肥', '宜春', '上海', '昆明', '福州', '株洲', '金华', '南京', '湘潭', '丽水', '马鞍山', '萍乡', '宣城', '芜湖', '滁州', '安庆', '池州', '佛山', '黄山', '江门', '南宁', '台州', '惠州', '宁波', '肇庆', '舟山', '中山', '东莞', '深圳', '珠海', '海口']
+      序号  省份  城市    AQI  空气质量    PM2.5浓度 首要污染物
+0      1  北京  北京  204.0  重度污染  108 ug/m3    O3
+1      2  河北  廊坊  199.0  中度污染   54 ug/m3    O3
+2      3  河北  承德  198.0  中度污染   59 ug/m3    O3
+3      4  河北  唐山  176.0  中度污染   74 ug/m3    O3
+4      5  山西  晋城  164.0  中度污染   51 ug/m3    O3
+..   ...  ..  ..    ...   ...        ...   ...
+163  164  广东  中山   40.0     优   19 ug/m3   NaN
+164  165  广东  东莞   39.0     优   20 ug/m3   NaN
+165  166  广东  深圳   38.0     优   21 ug/m3   NaN
+166  167  广东  珠海   34.0     优   17 ug/m3   NaN
+167  168  海南  海口   32.0     优   14 ug/m3   NaN
 ```
 
 #### 空气质量历史数据
@@ -683,45 +757,46 @@ print(air_city_list_map)
 
 目标地址: https://www.zq12369.com/
 
-描述: 获取指定城市和数据频率下并且在指定时间段内的空气质量数据
+描述: 指定城市和数据频率下并且在指定时间段内的空气质量数据
 
 限量: 单次返回所有的数据, 在提取一小时频率数据时请注意时间跨度不宜过长, 提取日频率数据的早年数据请分段提取
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| city | str | Y | city="北京"; 调用 air_city_list 接口获取所有城市列表 |
-| period | str | Y | period="day"; "hour": 每小时一个数据, 由于数据量比较大, 下载较慢; "day": 每天一个数据; "month": 每个月一个数据 |
-| start_date | str | Y | start_date="2020-03-20"; 注意 **start_date** 和 **end_date** 跨度不宜过长 |
-| end_date | str | Y | end_date="2020-04-27"; 注意 **start_date** 和 **end_date** 跨度不宜过长 |
+| 名称         | 类型  | 描述                                                                             |
+|------------|-----|--------------------------------------------------------------------------------|
+| city       | str | city="北京"; 调用 ak.air_city_table() 接口获取所有城市列表                                   |
+| period     | str | period="day"; "hour": 每小时一个数据, 由于数据量比较大, 下载较慢; "day": 每天一个数据; "month": 每个月一个数据 |
+| start_date | str | start_date="20200320"; 注意 **start_date** 和 **end_date** 跨度不宜过长                 |
+| end_date   | str | end_date="20200427"; 注意 **start_date** 和 **end_date** 跨度不宜过长                   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| time      | str   | Y        | 日期时间索引  |
-| aqi      | str   | Y        | AQI  |
-| pm2_5      | float   | Y        | PM2.5   |
-| pm10     | str   | Y        | PM10  |
-| co      | float   | Y        | CO   |
-| no2      | str   | Y        | NO2  |
-| o3      | str   | Y        | O3  |
-| so2      | str   | Y        | SO2  |
-| complexindex      | str   | Y        | 综合指数  |
-| rank      | str   | Y        | 排名  |
-| primary_pollutant      | str   | Y        | 主要污染物  |
-| temp      | str   | Y        | 温度  |
-| humi      | str   | Y        | 湿度  |
-| windlevel      | str   | Y        | 风级  |
-| winddirection      | str   | Y        | 风向  |
-| weather      | str   | Y        | 天气  |
+| 名称                | 类型      | 描述     |
+|-------------------|---------|--------|
+| time              | object  | 日期时间索引 |
+| aqi               | object  | AQI    |
+| pm2_5             | float64 | PM2.5  |
+| pm10              | object  | PM10   |
+| co                | float64 | CO     |
+| no2               | object  | NO2    |
+| o3                | object  | O3     |
+| so2               | object  | SO2    |
+| complexindex      | object  | 综合指数   |
+| rank              | object  | 排名     |
+| primary_pollutant | object  | 主要污染物  |
+| temp              | object  | 温度     |
+| humi              | object  | 湿度     |
+| windlevel         | object  | 风级     |
+| winddirection     | object  | 风向     |
+| weather           | object  | 天气     |
 
 接口示例-小时频率
 
 ```python
 import akshare as ak
-air_quality_hist_df = ak.air_quality_hist(city="北京", period="hour", start_date="2020-04-25", end_date="2020-04-27")
+
+air_quality_hist_df = ak.air_quality_hist(city="北京", period="hour", start_date="20200425", end_date="20200427")
 print(air_quality_hist_df)
 ```
 
@@ -739,14 +814,15 @@ print(air_quality_hist_df)
 68  2020-04-27 20:00:00   66    47   82  ...   25         2           西南风       晴
 69  2020-04-27 21:00:00   67    46   84  ...   30         2           西南风       晴
 70  2020-04-27 22:00:00   68    42   86  ...   28         3           西南风       晴
-71  2020-04-27 23:00:00   69    43   87  ...   32         2           西南风       晴  
+71  2020-04-27 23:00:00   69    43   87  ...   32         2           西南风       晴
 ```
 
 接口示例-天频率
 
 ```python
 import akshare as ak
-air_quality_hist_df = ak.air_quality_hist(city="北京", period="day", start_date="2020-03-20", end_date="2020-04-27")
+
+air_quality_hist_df = ak.air_quality_hist(city="北京", period="day", start_date="20200320", end_date="20200427")
 print(air_quality_hist_df)
 ```
 
@@ -754,52 +830,53 @@ print(air_quality_hist_df)
 
 ```
           time  aqi pm2_5 pm10  ...    humi windlevel winddirection weather
-0   2020-03-20   60    29   70  ...  28.667     1.542                      
-1   2020-03-21   72    27   94  ...  25.250     2.042                      
-2   2020-03-22   62    30   74  ...  32.375     2.167                      
-3   2020-03-23   53    28   55  ...  35.333     1.542                      
-4   2020-03-24   70    51   68  ...  36.958     1.458                      
-5   2020-03-25  153   117  111  ...  49.833     1.792                      
-6   2020-03-26   39     8   24  ...  41.500     3.125                      
-7   2020-03-27   40     5   21  ...  15.083     2.500                      
-8   2020-03-28   39    10   28  ...  23.917     1.792                      
-9   2020-03-29   63    45   72  ...  35.292     1.958                      
-10  2020-03-30   92    68   87  ...  48.208     2.208                      
-11  2020-03-31   87    64   75  ...  53.826     2.130                      
-12  2020-04-01   42     9   21  ...  19.250     2.250                      
-13  2020-04-02   42    16   34  ...  34.458     1.500                      
-14  2020-04-03   47    14   36  ...  28.000     2.000                      
-15  2020-04-04  102    23  154  ...  24.708     2.500                      
-16  2020-04-05   69    30   88  ...  32.250     1.667                      
-17  2020-04-06   86    62  122  ...  42.500     1.667                      
-18  2020-04-07   77    45  103  ...  34.167     2.042                      
-19  2020-04-08   55    21   60  ...  33.042     1.750                      
-20  2020-04-09   49    34   47  ...  56.500     1.875                      
-21  2020-04-10   70    39   50  ...  46.542     1.417                      
-22  2020-04-11   51    20   38  ...  30.083     1.708                      
-23  2020-04-12   54    17   52  ...  13.333     1.958                      
-24  2020-04-13   59    26   67  ...  31.435     1.391                      
-25  2020-04-14  104    66  102  ...  35.500     1.750                      
-26  2020-04-15   95    63   93  ...  45.292     1.875                      
-27  2020-04-16   63    23   75  ...  54.583     2.250                      
-28  2020-04-17   78    23   37  ...  36.292     2.167                      
-29  2020-04-18   75    33   45  ...  40.000     1.500                      
-30  2020-04-19   94    39   54  ...  49.227     2.546                      
-31  2020-04-20   45     7   31  ...  23.708     3.167                      
-32  2020-04-21   42     7   33  ...  18.917     2.833                      
-33  2020-04-22   43     6   24  ...  12.125     2.667                      
-34  2020-04-23   45     7   21  ...  13.727     2.091                      
-35  2020-04-24   91    19  132  ...  12.375     2.875                      
-36  2020-04-25   52    10   53  ...  16.375     2.458                      
-37  2020-04-26   50    14   33  ...  25.375     1.792                      
-38  2020-04-27   76    41   63  ...  35.958     1.875                      
+0   2020-03-20   60    29   70  ...  28.667     1.542
+1   2020-03-21   72    27   94  ...  25.250     2.042
+2   2020-03-22   62    30   74  ...  32.375     2.167
+3   2020-03-23   53    28   55  ...  35.333     1.542
+4   2020-03-24   70    51   68  ...  36.958     1.458
+5   2020-03-25  153   117  111  ...  49.833     1.792
+6   2020-03-26   39     8   24  ...  41.500     3.125
+7   2020-03-27   40     5   21  ...  15.083     2.500
+8   2020-03-28   39    10   28  ...  23.917     1.792
+9   2020-03-29   63    45   72  ...  35.292     1.958
+10  2020-03-30   92    68   87  ...  48.208     2.208
+11  2020-03-31   87    64   75  ...  53.826     2.130
+12  2020-04-01   42     9   21  ...  19.250     2.250
+13  2020-04-02   42    16   34  ...  34.458     1.500
+14  2020-04-03   47    14   36  ...  28.000     2.000
+15  2020-04-04  102    23  154  ...  24.708     2.500
+16  2020-04-05   69    30   88  ...  32.250     1.667
+17  2020-04-06   86    62  122  ...  42.500     1.667
+18  2020-04-07   77    45  103  ...  34.167     2.042
+19  2020-04-08   55    21   60  ...  33.042     1.750
+20  2020-04-09   49    34   47  ...  56.500     1.875
+21  2020-04-10   70    39   50  ...  46.542     1.417
+22  2020-04-11   51    20   38  ...  30.083     1.708
+23  2020-04-12   54    17   52  ...  13.333     1.958
+24  2020-04-13   59    26   67  ...  31.435     1.391
+25  2020-04-14  104    66  102  ...  35.500     1.750
+26  2020-04-15   95    63   93  ...  45.292     1.875
+27  2020-04-16   63    23   75  ...  54.583     2.250
+28  2020-04-17   78    23   37  ...  36.292     2.167
+29  2020-04-18   75    33   45  ...  40.000     1.500
+30  2020-04-19   94    39   54  ...  49.227     2.546
+31  2020-04-20   45     7   31  ...  23.708     3.167
+32  2020-04-21   42     7   33  ...  18.917     2.833
+33  2020-04-22   43     6   24  ...  12.125     2.667
+34  2020-04-23   45     7   21  ...  13.727     2.091
+35  2020-04-24   91    19  132  ...  12.375     2.875
+36  2020-04-25   52    10   53  ...  16.375     2.458
+37  2020-04-26   50    14   33  ...  25.375     1.792
+38  2020-04-27   76    41   63  ...  35.958     1.875
 ```
 
 接口示例-月频率
 
 ```python
 import akshare as ak
-air_quality_hist_df = ak.air_quality_hist(city="北京", period="month", start_date="2019-04-25", end_date="2020-04-27")
+
+air_quality_hist_df = ak.air_quality_hist(city="北京", period="month", start_date="20190425", end_date="20200427")
 print(air_quality_hist_df)
 ```
 
@@ -817,7 +894,7 @@ print(air_quality_hist_df)
 7    74       北京  2019-12  ...         None         4.225              None
 8    87       北京  2020-01  ...         None         4.774              None
 9    88       北京  2020-02  ...         None         4.349              None
-10   62       北京  2020-03  ...         None         3.174              None          
+10   62       北京  2020-03  ...         None         3.174              None
 ```
 
 #### 空气质量排名
@@ -826,33 +903,34 @@ print(air_quality_hist_df)
 
 目标地址: https://www.zq12369.com/environment.php
 
-描述: 获取指定 **date** 时间点上所有城市(168个)的空气质量数据
+描述: 获取指定 date 时间点上所有城市(168个)的空气质量数据
 
 限量: 单次返回所有的数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| date | str | Y | date="2020-03-12"; "实时": 当前时刻空气质量排名; "2020-03-12": 当日空气质量排名; "2020-03": 当月空气质量排名; "2019": 当年空气质量排名; |
+| 名称   | 类型  | 描述                                                                                       |
+|------|-----|------------------------------------------------------------------------------------------|
+| date | str | date=""; "": 当前时刻空气质量排名, 默认; "20200312": 当日空气质量排名; "202003": 当月空气质量排名; "2019": 当年空气质量排名; |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 降序      | str  | Y        | 排名  |
-| 省份      | str   | Y        | -  |
-| 城市      | str   | Y        | -   |
-| AQI     | float   | Y        | -  |
-| 空气质量      | str   | Y        | -   |
-| PM2.5浓度      | str   | Y        | -  |
-| 首要污染物      | str   | Y        | -  |
+| 名称      | 类型    | 描述  |
+|---------|-------|-----|
+| 降序      | str   | 排名  |
+| 省份      | str   | -   |
+| 城市      | str   | -   |
+| AQI     | float | -   |
+| 空气质量    | str   | -   |
+| PM2.5浓度 | str   | -   |
+| 首要污染物   | str   | -   |
 
 接口示例-实时
 
 ```python
 import akshare as ak
-air_quality_rank_df = ak.air_quality_rank(date="实时")
+
+air_quality_rank_df = ak.air_quality_rank(date="")
 print(air_quality_rank_df)
 ```
 
@@ -870,7 +948,7 @@ print(air_quality_rank_df)
 165  165.0  江苏  南通   34.0     优  23 ug/m3    NaN
 166  166.0  浙江  舟山   30.0     优  11 ug/m3    NaN
 167  167.0  四川  雅安   30.0     优  13 ug/m3    NaN
-168  168.0  西藏  拉萨   29.0     优   9 ug/m3    NaN            
+168  168.0  西藏  拉萨   29.0     优   9 ug/m3    NaN
 ```
 
 接口示例-具体某天
@@ -962,7 +1040,7 @@ print(air_quality_rank_df)
 
 | 名称   | 类型 | 必选 | 描述                                                                              |
 | -------- | ---- | ---- | --- |
-| city | str | Y | city="杭州"; 调用 air_city_list 接口获取所有城市列表 | |
+| city | str | Y | city="杭州"; 调用 air_city_table 接口获取所有城市列表 | |
 | start_date | str | Y | start_date="2018-01-01" |
 | end_date | str | Y | end_date="2020-04-27" |
 
@@ -1001,7 +1079,7 @@ print(air_quality_watch_point_df)
 7         滨江  77.9729  ...                 172                 1.3
 8        卧龙桥  71.1863  ...                 161             1.13265
 9         云栖  70.4404  ...                 168                 1.2
-10       千岛湖  55.8762  ...  143.00000000000003                   1        
+10       千岛湖  55.8762  ...  143.00000000000003                   1
 ```
 
 ### 财富排行榜-中文
@@ -1108,120 +1186,121 @@ print(fortune_rank_eng_df)
 
 目标地址: https://www.forbeschina.com/lists
 
-描述: 获取福布斯中国-榜单数据, 一共 87 个指标的数据可以获取
+描述: 福布斯中国-榜单数据, 一共 87 个指标的数据可以获取
 
-限量: 单次返回指定指标的数据
+限量: 单次返回指定 symbol 的数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述 |
-| -------- | ---- | ---- | --- |
-| indicator | str  | Y    |   indicator="2020年福布斯中国400富豪榜"; 参考 **福布斯中国指标一览表**|
+| 名称     | 类型  | 描述                                                                                                  |
+|--------|-----|-----------------------------------------------------------------------------------------------------|
+| symbol | str | symbol="2020年福布斯中国400富豪榜"; 参考 **福布斯中国指标一览表**, 也可以访问 https://www.forbeschina.com/lists 获取所需要的 symbol |
 
 福布斯中国指标一览表
 
-|    | name                     | url                                    |
-|---:|:-------------------------|:---------------------------------------|
-|  0 | 2020福布斯中国400富豪榜         | https://www.forbeschina.com/lists/1750 |
-|  1 | 2020福布斯菲律宾富豪榜            | https://www.forbeschina.com/lists/1746 |
-|  2 | 2020福布斯美国富豪榜             | https://www.forbeschina.com/lists/1745 |
-|  3 | 2020福布斯中国名人榜             | https://www.forbeschina.com/lists/1744 |
-|  4 | 2020福布斯新加坡富豪榜            | https://www.forbeschina.com/lists/1743 |
-|  5 | 2020福布斯中国最佳CEO榜          | https://www.forbeschina.com/lists/1741 |
-|  6 | 2020福布斯中国医疗健康富豪榜         | https://www.forbeschina.com/lists/1740 |
-|  7 | 2020福布斯中国慈善榜             | https://www.forbeschina.com/lists/1739 |
-|  8 | 2020福布斯韩国富豪榜             | https://www.forbeschina.com/lists/1738 |
-|  9 | 2020福布斯中国科技女性榜           | https://www.forbeschina.com/lists/1737 |
-| 10 | 2020福布斯全球亿万富豪榜中国子榜       | https://www.forbeschina.com/lists/1734 |
-| 11 | 2020福布斯全球亿万富豪榜           | https://www.forbeschina.com/lists/1733 |
-| 12 | 2019福布斯中国400富豪榜          | https://www.forbeschina.com/lists/1728 |
-| 13 | 2019福布斯中国最佳创投人TOP100     | https://www.forbeschina.com/lists/1747 |
-| 14 | 2019福布斯全球最有影响力体育经纪人      | https://www.forbeschina.com/lists/1727 |
-| 15 | 2019福布斯中国30位30岁以下精英榜     | https://www.forbeschina.com/lists/1725 |
-| 16 | 2019福布斯美国400富豪榜          | https://www.forbeschina.com/lists/1722 |
-| 17 | 2019福布斯菲律宾富豪榜            | https://www.forbeschina.com/lists/1721 |
-| 18 | 2019福布斯中国慈善榜             | https://www.forbeschina.com/lists/1718 |
-| 19 | 2019福布斯100名人榜            | https://www.forbeschina.com/lists/1717 |
-| 20 | 2019福布斯韩国富豪榜             | https://www.forbeschina.com/lists/1716 |
-| 21 | 2019福布斯马来西亚50富豪榜         | https://www.forbeschina.com/lists/19   |
-| 22 | 2019福布斯中国最杰出商界女性排行榜      | https://www.forbeschina.com/lists/1165 |
-| 23 | 2019福布斯全球亿万富豪榜           | https://www.forbeschina.com/lists/21   |
-| 24 | 2018福布斯中国商界25位潜力女性       | https://www.forbeschina.com/lists/13   |
-| 25 | 2018福布斯中国慈善榜             | https://www.forbeschina.com/lists/1156 |
-| 26 | 2018福布斯中国最佳创投人TOP100     | https://www.forbeschina.com/lists/1258 |
-| 27 | 2018福布斯中国最富有女性Top25      | https://www.forbeschina.com/lists/11   |
-| 28 | 2018福布斯中国最佳女性创投人TOP25    | https://www.forbeschina.com/lists/12   |
-| 29 | 2018中国最杰出商界女性排行榜         | https://www.forbeschina.com/lists/1145 |
-| 30 | 2018中国分析师最佳价值发现榜         | https://www.forbeschina.com/lists/1147 |
-| 31 | 2018中国最佳分析师50强榜          | https://www.forbeschina.com/lists/1148 |
-| 32 | 2018福布斯中国分析师最佳预测盈利能力榜    | https://www.forbeschina.com/lists/1149 |
-| 33 | 2018全球亿万富豪榜              | https://www.forbeschina.com/lists/1151 |
-| 34 | 2018福布斯中国30位30岁以下精英榜     | https://www.forbeschina.com/lists/1157 |
-| 35 | 2018福布斯中国上市公司最佳CEO       | https://www.forbeschina.com/lists/1159 |
-| 36 | 2018福布斯中国400富豪榜          | https://www.forbeschina.com/lists/1162 |
-| 37 | 2017福布斯全球科技界100富豪榜       | https://www.forbeschina.com/lists/1618 |
-| 38 | 2017福布斯中国30位30岁以下精英榜     | https://www.forbeschina.com/lists/1617 |
-| 39 | 2017华人富豪榜                | https://www.forbeschina.com/lists/1131 |
-| 40 | 2017全球亿万富豪榜              | https://www.forbeschina.com/lists/1132 |
-| 41 | 2017福布斯全球运动员收入榜          | https://www.forbeschina.com/lists/1644 |
-| 42 | 2017福布斯台湾50富豪榜           | https://www.forbeschina.com/lists/1133 |
-| 43 | 2017福布斯中国上市公司最佳CEO       | https://www.forbeschina.com/lists/1134 |
-| 44 | 2017福布斯中国名人榜             | https://www.forbeschina.com/lists/1135 |
-| 45 | 2017中国慈善榜                | https://www.forbeschina.com/lists/1681 |
-| 46 | 2017分析师最佳预测盈利能力榜         | https://www.forbeschina.com/lists/1253 |
-| 47 | 2017福布斯中国最佳创投人TOP100     | https://www.forbeschina.com/lists/1254 |
-| 48 | 2017中国最佳分析师50强榜          | https://www.forbeschina.com/lists/1252 |
-| 49 | 2020年福布斯世界最佳雇主TOP100     | https://www.forbeschina.com/lists/1749 |
-| 50 | 2020福布斯中国上市公司潜力企业榜       | https://www.forbeschina.com/lists/1748 |
-| 51 | 2020福布斯亚州中小上市企业榜         | https://www.forbeschina.com/lists/1742 |
-| 52 | 2020福布斯中国最具创新力企业榜        | https://www.forbeschina.com/lists/1736 |
-| 53 | 2020福布斯全球企业2000强榜        | https://www.forbeschina.com/lists/1735 |
-| 54 | 2019福布斯全球最具价值的体育经纪机构     | https://www.forbeschina.com/lists/1726 |
-| 55 | 2019福布斯全球数字经济100强榜       | https://www.forbeschina.com/lists/1724 |
-| 56 | 2019福布斯中国最具创新力企业榜        | https://www.forbeschina.com/lists/1715 |
-| 57 | 2018福布斯中国新三板企业融资能力榜TOP50 | https://www.forbeschina.com/lists/14   |
-| 58 | 2018福布斯中国最具创新力企业榜        | https://www.forbeschina.com/lists/17   |
-| 59 | 2018非上市公司潜力企业榜           | https://www.forbeschina.com/lists/18   |
-| 60 | 2018福布斯中国最佳创投机构          | https://www.forbeschina.com/lists/20   |
-| 61 | 2018上市公司潜力企业榜            | https://www.forbeschina.com/lists/1152 |
-| 62 | 2018福布斯中国新三板TOP100       | https://www.forbeschina.com/lists/1155 |
-| 63 | 2018福布斯中国最佳PE机构          | https://www.forbeschina.com/lists/1257 |
-| 64 | 2017福布斯中国家族企业            | https://www.forbeschina.com/lists/1136 |
-| 65 | 2017福布斯全球企业2000强         | https://www.forbeschina.com/lists/1139 |
-| 66 | 2017值得关注的新三板企业           | https://www.forbeschina.com/lists/1459 |
-| 67 | 2017中国非上市公司潜力企业榜         | https://www.forbeschina.com/lists/1460 |
-| 68 | 2017福布斯中国最佳PE机构          | https://www.forbeschina.com/lists/1255 |
-| 69 | 2017福布斯中国最佳创投机构          | https://www.forbeschina.com/lists/1256 |
-| 70 | 2019福布斯美国大学排行榜           | https://www.forbeschina.com/lists/1720 |
-| 71 | 2018福布斯创新力最强的30个城市       | https://www.forbeschina.com/lists/15   |
-| 72 | 2018福布斯最适合新生活的宜居城市       | https://www.forbeschina.com/lists/16   |
-| 73 | 2018福布斯中国大陆最佳商业城市        | https://www.forbeschina.com/lists/1163 |
-| 74 | 2017福布斯中国大陆最佳商业城市        | https://www.forbeschina.com/lists/1138 |
-| 75 | 2017福布斯中国大陆最佳地级城市30强     | https://www.forbeschina.com/lists/1140 |
-| 76 | 2017福布斯中国大陆最佳县级城市30强     | https://www.forbeschina.com/lists/1141 |
-| 77 | 2017福布斯创新力最强的30个城市       | https://www.forbeschina.com/lists/1142 |
-| 78 | 2017福布斯经营成本最高的30个城市      | https://www.forbeschina.com/lists/1143 |
-| 79 | 2015福布斯全球最适宜经商的国家和地区     | https://www.forbeschina.com/lists/1120 |
-| 80 | 2015美国最适宜经商和就业的城市        | https://www.forbeschina.com/lists/1453 |
-| 81 | 2015美国就业增长最快城市100强       | https://www.forbeschina.com/lists/1525 |
-| 82 | 2015美国最适合经商和就业的州         | https://www.forbeschina.com/lists/1526 |
-| 83 | 2014美国最适宜经商和就业的地区        | https://www.forbeschina.com/lists/1515 |
-| 84 | 2014福布斯美国最适合经商和就业的州      | https://www.forbeschina.com/lists/1516 |
-| 85 | 2014年世界最负盛名城市榜           | https://www.forbeschina.com/lists/1517 |
-| 86 | 2014福布斯全球最适宜经商的国家和地区     | https://www.forbeschina.com/lists/1524 |
+|     | name                     | url                                    |
+|----:|:-------------------------|:---------------------------------------|
+|   0 | 2020福布斯中国400富豪榜          | https://www.forbeschina.com/lists/1750 |
+|   1 | 2020福布斯菲律宾富豪榜            | https://www.forbeschina.com/lists/1746 |
+|   2 | 2020福布斯美国富豪榜             | https://www.forbeschina.com/lists/1745 |
+|   3 | 2020福布斯中国名人榜             | https://www.forbeschina.com/lists/1744 |
+|   4 | 2020福布斯新加坡富豪榜            | https://www.forbeschina.com/lists/1743 |
+|   5 | 2020福布斯中国最佳CEO榜          | https://www.forbeschina.com/lists/1741 |
+|   6 | 2020福布斯中国医疗健康富豪榜         | https://www.forbeschina.com/lists/1740 |
+|   7 | 2020福布斯中国慈善榜             | https://www.forbeschina.com/lists/1739 |
+|   8 | 2020福布斯韩国富豪榜             | https://www.forbeschina.com/lists/1738 |
+|   9 | 2020福布斯中国科技女性榜           | https://www.forbeschina.com/lists/1737 |
+|  10 | 2020福布斯全球亿万富豪榜中国子榜       | https://www.forbeschina.com/lists/1734 |
+|  11 | 2020福布斯全球亿万富豪榜           | https://www.forbeschina.com/lists/1733 |
+|  12 | 2019福布斯中国400富豪榜          | https://www.forbeschina.com/lists/1728 |
+|  13 | 2019福布斯中国最佳创投人TOP100     | https://www.forbeschina.com/lists/1747 |
+|  14 | 2019福布斯全球最有影响力体育经纪人      | https://www.forbeschina.com/lists/1727 |
+|  15 | 2019福布斯中国30位30岁以下精英榜     | https://www.forbeschina.com/lists/1725 |
+|  16 | 2019福布斯美国400富豪榜          | https://www.forbeschina.com/lists/1722 |
+|  17 | 2019福布斯菲律宾富豪榜            | https://www.forbeschina.com/lists/1721 |
+|  18 | 2019福布斯中国慈善榜             | https://www.forbeschina.com/lists/1718 |
+|  19 | 2019福布斯100名人榜            | https://www.forbeschina.com/lists/1717 |
+|  20 | 2019福布斯韩国富豪榜             | https://www.forbeschina.com/lists/1716 |
+|  21 | 2019福布斯马来西亚50富豪榜         | https://www.forbeschina.com/lists/19   |
+|  22 | 2019福布斯中国最杰出商界女性排行榜      | https://www.forbeschina.com/lists/1165 |
+|  23 | 2019福布斯全球亿万富豪榜           | https://www.forbeschina.com/lists/21   |
+|  24 | 2018福布斯中国商界25位潜力女性       | https://www.forbeschina.com/lists/13   |
+|  25 | 2018福布斯中国慈善榜             | https://www.forbeschina.com/lists/1156 |
+|  26 | 2018福布斯中国最佳创投人TOP100     | https://www.forbeschina.com/lists/1258 |
+|  27 | 2018福布斯中国最富有女性Top25      | https://www.forbeschina.com/lists/11   |
+|  28 | 2018福布斯中国最佳女性创投人TOP25    | https://www.forbeschina.com/lists/12   |
+|  29 | 2018中国最杰出商界女性排行榜         | https://www.forbeschina.com/lists/1145 |
+|  30 | 2018中国分析师最佳价值发现榜         | https://www.forbeschina.com/lists/1147 |
+|  31 | 2018中国最佳分析师50强榜          | https://www.forbeschina.com/lists/1148 |
+|  32 | 2018福布斯中国分析师最佳预测盈利能力榜    | https://www.forbeschina.com/lists/1149 |
+|  33 | 2018全球亿万富豪榜              | https://www.forbeschina.com/lists/1151 |
+|  34 | 2018福布斯中国30位30岁以下精英榜     | https://www.forbeschina.com/lists/1157 |
+|  35 | 2018福布斯中国上市公司最佳CEO       | https://www.forbeschina.com/lists/1159 |
+|  36 | 2018福布斯中国400富豪榜          | https://www.forbeschina.com/lists/1162 |
+|  37 | 2017福布斯全球科技界100富豪榜       | https://www.forbeschina.com/lists/1618 |
+|  38 | 2017福布斯中国30位30岁以下精英榜     | https://www.forbeschina.com/lists/1617 |
+|  39 | 2017华人富豪榜                | https://www.forbeschina.com/lists/1131 |
+|  40 | 2017全球亿万富豪榜              | https://www.forbeschina.com/lists/1132 |
+|  41 | 2017福布斯全球运动员收入榜          | https://www.forbeschina.com/lists/1644 |
+|  42 | 2017福布斯台湾50富豪榜           | https://www.forbeschina.com/lists/1133 |
+|  43 | 2017福布斯中国上市公司最佳CEO       | https://www.forbeschina.com/lists/1134 |
+|  44 | 2017福布斯中国名人榜             | https://www.forbeschina.com/lists/1135 |
+|  45 | 2017中国慈善榜                | https://www.forbeschina.com/lists/1681 |
+|  46 | 2017分析师最佳预测盈利能力榜         | https://www.forbeschina.com/lists/1253 |
+|  47 | 2017福布斯中国最佳创投人TOP100     | https://www.forbeschina.com/lists/1254 |
+|  48 | 2017中国最佳分析师50强榜          | https://www.forbeschina.com/lists/1252 |
+|  49 | 2020年福布斯世界最佳雇主TOP100     | https://www.forbeschina.com/lists/1749 |
+|  50 | 2020福布斯中国上市公司潜力企业榜       | https://www.forbeschina.com/lists/1748 |
+|  51 | 2020福布斯亚州中小上市企业榜         | https://www.forbeschina.com/lists/1742 |
+|  52 | 2020福布斯中国最具创新力企业榜        | https://www.forbeschina.com/lists/1736 |
+|  53 | 2020福布斯全球企业2000强榜        | https://www.forbeschina.com/lists/1735 |
+|  54 | 2019福布斯全球最具价值的体育经纪机构     | https://www.forbeschina.com/lists/1726 |
+|  55 | 2019福布斯全球数字经济100强榜       | https://www.forbeschina.com/lists/1724 |
+|  56 | 2019福布斯中国最具创新力企业榜        | https://www.forbeschina.com/lists/1715 |
+|  57 | 2018福布斯中国新三板企业融资能力榜TOP50 | https://www.forbeschina.com/lists/14   |
+|  58 | 2018福布斯中国最具创新力企业榜        | https://www.forbeschina.com/lists/17   |
+|  59 | 2018非上市公司潜力企业榜           | https://www.forbeschina.com/lists/18   |
+|  60 | 2018福布斯中国最佳创投机构          | https://www.forbeschina.com/lists/20   |
+|  61 | 2018上市公司潜力企业榜            | https://www.forbeschina.com/lists/1152 |
+|  62 | 2018福布斯中国新三板TOP100       | https://www.forbeschina.com/lists/1155 |
+|  63 | 2018福布斯中国最佳PE机构          | https://www.forbeschina.com/lists/1257 |
+|  64 | 2017福布斯中国家族企业            | https://www.forbeschina.com/lists/1136 |
+|  65 | 2017福布斯全球企业2000强         | https://www.forbeschina.com/lists/1139 |
+|  66 | 2017值得关注的新三板企业           | https://www.forbeschina.com/lists/1459 |
+|  67 | 2017中国非上市公司潜力企业榜         | https://www.forbeschina.com/lists/1460 |
+|  68 | 2017福布斯中国最佳PE机构          | https://www.forbeschina.com/lists/1255 |
+|  69 | 2017福布斯中国最佳创投机构          | https://www.forbeschina.com/lists/1256 |
+|  70 | 2019福布斯美国大学排行榜           | https://www.forbeschina.com/lists/1720 |
+|  71 | 2018福布斯创新力最强的30个城市       | https://www.forbeschina.com/lists/15   |
+|  72 | 2018福布斯最适合新生活的宜居城市       | https://www.forbeschina.com/lists/16   |
+|  73 | 2018福布斯中国大陆最佳商业城市        | https://www.forbeschina.com/lists/1163 |
+|  74 | 2017福布斯中国大陆最佳商业城市        | https://www.forbeschina.com/lists/1138 |
+|  75 | 2017福布斯中国大陆最佳地级城市30强     | https://www.forbeschina.com/lists/1140 |
+|  76 | 2017福布斯中国大陆最佳县级城市30强     | https://www.forbeschina.com/lists/1141 |
+|  77 | 2017福布斯创新力最强的30个城市       | https://www.forbeschina.com/lists/1142 |
+|  78 | 2017福布斯经营成本最高的30个城市      | https://www.forbeschina.com/lists/1143 |
+|  79 | 2015福布斯全球最适宜经商的国家和地区     | https://www.forbeschina.com/lists/1120 |
+|  80 | 2015美国最适宜经商和就业的城市        | https://www.forbeschina.com/lists/1453 |
+|  81 | 2015美国就业增长最快城市100强       | https://www.forbeschina.com/lists/1525 |
+|  82 | 2015美国最适合经商和就业的州         | https://www.forbeschina.com/lists/1526 |
+|  83 | 2014美国最适宜经商和就业的地区        | https://www.forbeschina.com/lists/1515 |
+|  84 | 2014福布斯美国最适合经商和就业的州      | https://www.forbeschina.com/lists/1516 |
+|  85 | 2014年世界最负盛名城市榜           | https://www.forbeschina.com/lists/1517 |
+|  86 | 2014福布斯全球最适宜经商的国家和地区     | https://www.forbeschina.com/lists/1524 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排名      | str   | Y        | -  |
-| -      | -   | -        | 根据不同的指标而异   |
+| 名称  | 类型  | 描述              |
+|-----|-----|-----------------|
+| 排名  | str | -               |
+| -   | -   | 根据不同的 symbol 而异 |
 
 接口示例
 
 ```python
 import akshare as ak
-forbes_rank_df = ak.forbes_rank(indicator="2020福布斯中国400富豪榜")
+
+forbes_rank_df = ak.forbes_rank(symbol="2020福布斯中国400富豪榜")
 print(forbes_rank_df)
 ```
 
@@ -1303,31 +1382,32 @@ print(xincaifu_rank_df)
 
 目标地址: https://www.hurun.net/zh-CN/Rank/HsRankDetails?num=QWDD234E
 
-描述: 获取胡润百富榜, 胡润全球独角兽榜的榜单数据
+描述: 胡润百富榜单；富豪榜系列，创业系列，500强系列，特色系列
 
-限量: 单次返回指定指标和年份的榜单数据
+限量: 单次返回指定 indicator 和 year 的榜单数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述 |
-| -------- | ---- | ---- | --- |
-| indicator | str  | Y    |   indicator="胡润百富榜"; choice of {"胡润百富榜", "胡润全球富豪榜", "胡润全球独角兽榜", "胡润中国500强民营企业", "胡润世界500强", "胡润艺术榜"}|
-| year | str  | Y    |   year="2020"; choice of {"胡润百富榜": "2019至今", "胡润全球富豪榜": "2019至今", "胡润全球独角兽榜": "2019至今", "胡润中国500强民营企业": "2019至今", "胡润世界500强": "2020至今", "胡润艺术榜": "2019至今"}|
+| 名称        | 类型  | 描述                                                                                                                                                                                                                                                           |
+|-----------|-----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| indicator | str | indicator="胡润百富榜"; choice of {"胡润百富榜", "胡润全球富豪榜", "胡润印度榜", "胡润全球独角兽榜", "中国瞪羚企业榜", "全球瞪羚企业榜", "胡润Under30s创业领袖榜", "胡润中国500强民营企业", "胡润世界500强", "胡润艺术榜"}                                                                                                         |
+| year      | str | year="2020"; choice of {"胡润百富榜": "2014-至今", "胡润全球富豪榜": "2019-至今", "胡润印度榜": "2018-至今", "胡润全球独角兽榜": "2019-至今", "中国瞪羚企业榜": "2021-至今", "全球瞪羚企业榜": "2021-至今", "胡润Under30s创业领袖榜": "2019-至今", "胡润中国500强民营企业": "2019-至今", "胡润世界500强": "2020-至今", "胡润艺术榜": "2019-至今"} |
 
 输出参数-胡润百富榜
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排名      | int   | Y        | -  |
-| 财富      | float   | Y        | 注意单位: 亿元   |
-| 姓名      | str   | Y        | -   |
-| 企业      | str   | Y        | -   |
-| 行业      | str   | Y        | -   |
+| 名称  | 类型      | 描述       |
+|-----|---------|----------|
+| 排名  | int64   | -        |
+| 财富  | float64 | 注意单位: 亿元 |
+| 姓名  | object  | -        |
+| 企业  | object  | -        |
+| 行业  | object  | -        |
 
 接口示例-胡润百富榜
 
 ```python
 import akshare as ak
+
 hurun_rank_df = ak.hurun_rank(indicator="胡润百富榜", year="2020")
 print(hurun_rank_df)
 ```
@@ -1351,53 +1431,55 @@ print(hurun_rank_df)
 
 输出参数-胡润全球富豪榜
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排名      | int   | Y        | -  |
-| 财富      | float   | Y        | 注意单位: 亿美元   |
-| 姓名      | str   | Y        | -   |
-| 企业      | str   | Y        | -   |
-| 行业      | str   | Y        | -   |
+| 名称  | 类型      | 描述        |
+|-----|---------|-----------|
+| 排名  | int64   | -         |
+| 财富  | float64 | 注意单位: 亿美元 |
+| 姓名  | object  | -         |
+| 企业  | object  | -         |
+| 行业  | object  | -         |
 
 接口示例-胡润全球富豪榜
 
 ```python
 import akshare as ak
-hurun_rank_df = ak.hurun_rank(indicator="胡润全球富豪榜", year="2021")
+
+hurun_rank_df = ak.hurun_rank(indicator="胡润全球富豪榜", year="2022")
 print(hurun_rank_df)
 ```
 
 数据示例-胡润全球富豪榜
 
 ```
-        排名       财富       姓名            企业     行业
-0        1  12800.0   埃隆·马斯克           特斯拉  新能源汽车
-1        2  12200.0   杰夫·贝佐斯           亚马逊   电子商务
-2        3   7380.0  伯纳德·阿诺特  酩悦·轩尼诗-路易·威登    奢侈品
-3        4   7120.0    比尔·盖茨            微软  软件与服务
-4        5   6530.0  马克·扎克伯格     Facebook      媒体
-    ...      ...      ...           ...    ...
-3223  3050     65.0       周剑          迈为股份   工业设备
-3224  3050     65.0      周金辉            中赫    房地产
-3225  3050     65.0   周平、周梦晨           玉禾田     工程
-3226  3050     65.0      周夏耘            亚夏   汽车销售
-3227  3050     65.0      邹节明          三金药业     制药
+        排名       财富                    姓名                企业     行业
+0        1  12900.0                埃隆·马斯克               特斯拉  新能源汽车
+1        2  11850.0                杰夫·贝佐斯               亚马逊   电子商务
+2        3   9650.0               伯纳德·阿诺特      酩悦·轩尼诗-路易·威登    奢侈品
+3        4   7800.0                 比尔·盖茨                微软  软件与服务
+4        5   7500.0                沃伦·巴菲特          伯克希尔·哈撒韦     投资
+    ...      ...                   ...               ...    ...
+3377  3207     63.0         Lloyd D Frink            Zillow   在线市场
+3378  3207     63.0                   涂建华               广联达     建筑
+3379  3207     63.0       Helena Revoredo          Prosegur   安全软件
+3380  3207     63.0  Vardis Vardinoyannis  Motor Oil Hellas     贸易
+3381  3207     63.0                   冯国纶                利丰     物流
 ```
 
 输出参数-胡润全球独角兽榜
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排名      | int   | Y        | -  |
-| 财富      | float   | Y        | 注意单位: 亿元   |
-| 姓名      | str   | Y        | -   |
-| 企业      | str   | Y        | -   |
-| 行业      | str   | Y        | -   |
+| 名称  | 类型      | 描述       |
+|-----|---------|----------|
+| 排名  | int64   | -        |
+| 财富  | float64 | 注意单位: 亿元 |
+| 姓名  | object  | -        |
+| 企业  | object  | -        |
+| 行业  | object  | -        |
 
 接口示例-胡润全球独角兽榜
 
 ```python
 import akshare as ak
+
 hurun_rank_df = ak.hurun_rank(indicator="胡润全球独角兽榜", year="2020")
 print(hurun_rank_df)
 ```
@@ -1421,18 +1503,19 @@ print(hurun_rank_df)
 
 输出参数-胡润中国500强民营企业
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排名      | int   | Y        | -  |
-| 企业估值      | float   | Y        | 注意单位: 亿元   |
-| 企业信息      | str   | Y        | -   |
-| 创始人      | str   | Y        | -   |
-| 行业      | str   | Y        | -   |
+| 名称   | 类型      | 描述       |
+|------|---------|----------|
+| 排名   | int64   | -        |
+| 企业估值 | float64 | 注意单位: 亿元 |
+| 企业信息 | object  | -        |
+| 创始人  | object  | -        |
+| 行业   | object  | -        |
 
 接口示例-胡润中国500强民营企业
 
 ```python
 import akshare as ak
+
 hurun_rank_df = ak.hurun_rank(indicator="胡润中国500强民营企业", year="2019")
 print(hurun_rank_df)
 ```
@@ -1456,72 +1539,76 @@ print(hurun_rank_df)
 
 输出参数-胡润世界500强
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排名      | int   | Y        | -  |
-| 企业估值      | float   | Y        | 注意单位: 亿元   |
-| 企业信息      | str   | Y        | -   |
-| 创始人      | str   | Y        | -   |
-| 行业      | str   | Y        | -   |
+| 名称   | 类型      | 描述       |
+|------|---------|----------|
+| 排名   | int64   | -        |
+| 排名变化 | int64   | -        |
+| 企业估值 | float64 | 注意单位: 亿元 |
+| 企业信息 | object  | -        |
+| CEO  | object  | -        |
+| 行业   | object  | -        |
 
 接口示例-胡润世界500强
 
 ```python
 import akshare as ak
-hurun_rank_df = ak.hurun_rank(indicator="胡润世界500强", year="2020")
+
+hurun_rank_df = ak.hurun_rank(indicator="胡润世界500强", year="2021")
 print(hurun_rank_df)
 ```
 
 数据示例-胡润世界500强
 
 ```
-      排名      企业估值       企业信息             创始人     行业
-0      1  139900.0         苹果           蒂姆·库克   消费电子
-1      2  108200.0         微软         萨提亚·纳德拉  软件与服务
-2      3  106300.0        亚马逊          杰夫·贝索斯     零售
-3      4   80500.0   Alphabet         桑达尔·皮查伊  传媒和娱乐
-4      5   53900.0         脸书         马克·扎克伯格  传媒和娱乐
-..   ...       ...        ...             ...    ...
-495  494    2119.0         百胜     David Gibbs   食品饮料
-496  497    2112.0         嘉吉  Dave MacLennan     农业
-497  497    2112.0  BPCE银行集团   Laurent Mignon   金融服务
-498  499    2105.0        益博睿    Brian Cassin   金融服务
-499  499    2105.0   家庭人寿保险公司  Daniel P. Amos   金融服务
+      排名 排名变化      企业估值              企业信息                 CEO     行业
+0      1    0  158100.0                苹果               蒂姆·库克   消费电子
+1      2    0  136800.0                微软             萨提亚·纳德拉  软件与服务
+2      3    0  116600.0               亚马逊               安迪·贾西     零售
+3      4    0  112100.0          Alphabet             桑达尔·皮查伊  传媒和娱乐
+4      5    0   62600.0                脸书             马克·扎克伯格  传媒和娱乐
+..   ...  ...       ...               ...                 ...    ...
+495  495  New    2381.0               瑞思迈  Michael J. Farrell   卫生保健
+496  497  New    2374.0              发现金融    Roger Hochschild   金融服务
+497  498  -61    2368.0            埃克西尔能源           Ben Fowke     能源
+498  498  New    2368.0              赫伯罗特  Rolf Habben Jansen   物流运输
+499  498  New    2368.0  HCL Technologies       C Vijayakumar  软件与服务
 ```
 
 输出参数-胡润艺术榜
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排名      | int   | Y        | -  |
-| 成交额      | float   | Y        | 注意单位: 万   |
-| 姓名      | str   | Y        | -   |
-| 年龄      | str   | Y        | -   |
-| 艺术类别      | str   | Y        | -   |
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 排名   | int64   | -       |
+| 排名   | int64   | -       |
+| 成交额  | float64 | 注意单位: 万 |
+| 姓名   | object  | -       |
+| 年龄   | object  | -       |
+| 艺术类别 | object  | -       |
 
 接口示例-胡润艺术榜
 
 ```python
 import akshare as ak
-hurun_rank_df = ak.hurun_rank(indicator="胡润艺术榜", year="2020")
+
+hurun_rank_df = ak.hurun_rank(indicator="胡润艺术榜", year="2021")
 print(hurun_rank_df)
 ```
 
 数据示例-胡润艺术榜
 
 ```
-     排名      成交额   姓名  年龄     艺术类别
-0     1  33665.0  崔如琢  76     中国书画
-1     2  33108.0   刘野  56       油画
-2     3  20288.0  黄建南  68  油画、中国书画
-3     4  16538.0  周春芽  65       油画
-4     5  15830.0   范曾  82     中国书画
-..  ...      ...  ...  ..      ...
-95   96    200.0  季大纯  52       油画
-96   97    200.0  江宏伟  63     中国书画
-97   98    197.0   薛亮  64     中国书画
-98   99    178.0   龙瑞  74     中国书画
-99  100    173.0  陈文骥  66       油画
+     排名 排名变化      成交额   姓名  年龄 艺术类别
+0     1    0  77991.0  崔如琢  77   国画
+1     2    5  27072.0  曾梵志  57   油画
+2     3    1  25578.0  周春芽  66   油画
+3     4   -2  21378.0   刘野  57   油画
+4     5    3  19184.0  张晓刚  63   油画
+..  ...  ...      ...  ...  ..  ...
+95   96    0    128.0  季大纯  53   油画
+96   97  -19    115.0  卢禹舜  59   国画
+97   98   -8    107.0  贾广健  57   国画
+98   99  -25     99.0  熊红钢  62   国画
+99  100  -27     93.0  刘大为  76   国画
 ```
 
 ### 电影票房
@@ -1532,31 +1619,32 @@ print(hurun_rank_df)
 
 目标地址: https://www.endata.com.cn/BoxOffice/BO/RealTime/reTimeBO.html
 
-描述: 获取当前时刻的实时电影票房数据, 每 5 分钟更新一次数据, 实时票房包含今天未开映场次已售出的票房
+描述: 当前时刻的实时电影票房数据, 每 5 分钟更新一次数据, 实时票房包含今天未开映场次已售出的票房
 
 限量: 当前时刻的实时票房数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| - | -  | -    |  - |
+| 名称  | 类型  | 必选  | 描述  |
+|-----|-----|-----|-----|
+| -   | -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排序     | float   | Y        | 票房排名  |  
-| 影片名称     | float   | Y        | -  |  
-| 实时票房     | float   | Y        | 注意单位: 万  |  
-| 票房占比     | float   | Y        | 注意单位: %  |  
-| 上映天数     | float   | Y        | -  |  
-| 累计票房     | float   | Y        | 注意单位: 万  |  
+| 名称   | 类型    | 默认显示 | 描述      |
+|------|-------|------|---------|
+| 排序   | float | Y    | 票房排名    |
+| 影片名称 | float | Y    | -       |
+| 实时票房 | float | Y    | 注意单位: 万 |
+| 票房占比 | float | Y    | 注意单位: % |
+| 上映天数 | float | Y    | -       |
+| 累计票房 | float | Y    | 注意单位: 万 |
 
 接口示例
 
 ```python
 import akshare as ak
+
 movie_boxoffice_realtime_df = ak.movie_boxoffice_realtime()
 print(movie_boxoffice_realtime_df)
 ```
@@ -1584,34 +1672,35 @@ print(movie_boxoffice_realtime_df)
 
 目标地址: https://www.endata.com.cn/BoxOffice/BO/Day/index.html
 
-描述: 获取指定日期的电影票房数据, 每日 10:30, 12:30更新日票房，16:30 同时补充前 7 日票房
+描述: 指定日期的电影票房数据, 每日 10:30, 12:30更新日票房，16:30 同时补充前 7 日票房
 
 限量: 只能指定最近的日期
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| date | str  | Y    |  date="20201019"; 只能选择最近的日期 |
+| 名称   | 类型  | 必选  | 描述                         |
+|------|-----|-----|----------------------------|
+| date | str | Y   | date="20201019"; 只能选择最近的日期 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排序     | float   | Y        | 票房排名  |  
-| 影片名称     | float   | Y        | -  |  
-| 单日票房     | float   | Y        | 注意单位: 万  |  
-| 环比变化     | float   | Y        | 注意单位: %  |  
-| 累计票房     | float   | Y        | 注意单位: 万  |  
-| 平均票价     | float   | Y        | 注意单位: 元  |  
-| 场均人次     | float   | Y        | -  |  
-| 口碑指数     | float   | Y        | -  |  
-| 上映天数     | float   | Y        | -  |  
+| 名称   | 类型    | 默认显示 | 描述      |
+|------|-------|------|---------|
+| 排序   | float | Y    | 票房排名    |
+| 影片名称 | float | Y    | -       |
+| 单日票房 | float | Y    | 注意单位: 万 |
+| 环比变化 | float | Y    | 注意单位: % |
+| 累计票房 | float | Y    | 注意单位: 万 |
+| 平均票价 | float | Y    | 注意单位: 元 |
+| 场均人次 | float | Y    | -       |
+| 口碑指数 | float | Y    | -       |
+| 上映天数 | float | Y    | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 movie_boxoffice_daily_df = ak.movie_boxoffice_daily(date="20201019")
 print(movie_boxoffice_daily_df)
 ```
@@ -1638,35 +1727,36 @@ print(movie_boxoffice_daily_df)
 
 目标地址: https://www.endata.com.cn/BoxOffice/BO/Week/oneWeek.html
 
-描述: 获取指定日期所在完整周的票房数据, 影片周票房数据初始更新周期为每周二，下周二补充数据
+描述: 指定日期所在完整周的票房数据, 影片周票房数据初始更新周期为每周二，下周二补充数据
 
 限量: 指定日期所在完整周的票房数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| date | str  | Y    |  date="20201018"; 指定日期所在周必须已经完整 |
+| 名称   | 类型  | 必选  | 描述                             |
+|------|-----|-----|--------------------------------|
+| date | str | Y   | date="20201018"; 指定日期所在周必须已经完整 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排序     | float   | Y        | 票房排名  |  
-| 影片名称     | float   | Y        | -  |  
-| 排名变化     | float   | Y        | -  |  
-| 单周票房     | float   | Y        | 注意单位: 万  |  
-| 环比变化     | float   | Y        | 注意单位: %  |  
-| 累计票房     | float   | Y        | 注意单位: 万  |  
-| 平均票价     | float   | Y        | -  |  
-| 场均人次     | float   | Y        | -  |  
-| 口碑指数     | float   | Y        | -  |  
-| 上映天数     | float   | Y        | -  |  
+| 名称   | 类型    | 默认显示 | 描述      |
+|------|-------|------|---------|
+| 排序   | float | Y    | 票房排名    |
+| 影片名称 | float | Y    | -       |
+| 排名变化 | float | Y    | -       |
+| 单周票房 | float | Y    | 注意单位: 万 |
+| 环比变化 | float | Y    | 注意单位: % |
+| 累计票房 | float | Y    | 注意单位: 万 |
+| 平均票价 | float | Y    | -       |
+| 场均人次 | float | Y    | -       |
+| 口碑指数 | float | Y    | -       |
+| 上映天数 | float | Y    | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 movie_boxoffice_weekly_df = ak.movie_boxoffice_weekly(date="20201018")
 print(movie_boxoffice_weekly_df)
 ```
@@ -1699,28 +1789,29 @@ print(movie_boxoffice_weekly_df)
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| date | str  | Y    |  date="20201019"; 输入具体的日期即可 |
+| 名称   | 类型  | 必选  | 描述                         |
+|------|-----|-----|----------------------------|
+| date | str | Y   | date="20201019"; 输入具体的日期即可 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排序     | float   | Y        | 票房排名  |  
-| 影片名称     | float   | Y        | -  |  
-| 单月票房     | float   | Y        | 注意单位: 万  |  
-| 月度占比     | float   | Y        | 注意单位: %  |  
-| 平均票价     | float   | Y        | -  |  
-| 场均人次     | float   | Y        | -  |  
-| 上映日期     | float   | Y        | -  |  
-| 口碑指数     | float   | Y        | -  |  
-| 月内天数     | float   | Y        | -  |  
+| 名称   | 类型    | 默认显示 | 描述      |
+|------|-------|------|---------|
+| 排序   | float | Y    | 票房排名    |
+| 影片名称 | float | Y    | -       |
+| 单月票房 | float | Y    | 注意单位: 万 |
+| 月度占比 | float | Y    | 注意单位: % |
+| 平均票价 | float | Y    | -       |
+| 场均人次 | float | Y    | -       |
+| 上映日期 | float | Y    | -       |
+| 口碑指数 | float | Y    | -       |
+| 月内天数 | float | Y    | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 movie_boxoffice_monthly_df = ak.movie_boxoffice_monthly(date="20201019")
 print(movie_boxoffice_monthly_df)
 ```
@@ -1754,27 +1845,28 @@ print(movie_boxoffice_monthly_df)
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| date | str  | Y    |  date="20201019"; 输入具体的日期即可 |
+| 名称   | 类型  | 必选  | 描述                         |
+|------|-----|-----|----------------------------|
+| date | str | Y   | date="20201019"; 输入具体的日期即可 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排序     | float   | Y        | 票房排名  |  
-| 影片名称     | float   | Y        | -  |  
-| 类型     | float   | Y        | -  |  
-| 总票房     | float   | Y        | 注意单位: 万  |  
-| 平均票价     | float   | Y        | -  |  
-| 场均人次     | float   | Y        | -  |  
-| 国家及地区     | float   | Y        | -  |  
-| 上映日期     | float   | Y        | -  |  
+| 名称    | 类型    | 默认显示 | 描述      |
+|-------|-------|------|---------|
+| 排序    | float | Y    | 票房排名    |
+| 影片名称  | float | Y    | -       |
+| 类型    | float | Y    | -       |
+| 总票房   | float | Y    | 注意单位: 万 |
+| 平均票价  | float | Y    | -       |
+| 场均人次  | float | Y    | -       |
+| 国家及地区 | float | Y    | -       |
+| 上映日期  | float | Y    | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 movie_boxoffice_yearly_df = ak.movie_boxoffice_yearly(date="20201019")
 print(movie_boxoffice_yearly_df)
 ```
@@ -1816,34 +1908,35 @@ print(movie_boxoffice_yearly_df)
 
 目标地址: https://www.endata.com.cn/BoxOffice/BO/Year/firstWeek.html
 
-描述: 获取指定日期所在年度的年度首周票房数据
+描述: 指定日期所在年度的年度首周票房数据
 
 限量: 指定日期所在年度的年度首周票房数据, 只能获取最近年度的数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| date | str  | Y    |  date="20201019"; 输入具体的日期即可 |
+| 名称   | 类型  | 必选  | 描述                         |
+|------|-----|-----|----------------------------|
+| date | str | Y   | date="20201019"; 输入具体的日期即可 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排序     | float   | Y        | 票房排名  |  
-| 影片名称     | float   | Y        | -  |  
-| 类型     | float   | Y        | -  |  
-| 首周票房     | float   | Y        | 注意单位: 万  |  
-| 占总票房比重     | float   | Y        | 注意单位: %  |  
-| 场均人次     | float   | Y        | -  |  
-| 国家及地区     | float   | Y        | -  |  
-| 上映日期     | float   | Y        | -  |  
-| 首周天数     | float   | Y        | -  |  
+| 名称     | 类型    | 默认显示 | 描述      |
+|--------|-------|------|---------|
+| 排序     | float | Y    | 票房排名    |
+| 影片名称   | float | Y    | -       |
+| 类型     | float | Y    | -       |
+| 首周票房   | float | Y    | 注意单位: 万 |
+| 占总票房比重 | float | Y    | 注意单位: % |
+| 场均人次   | float | Y    | -       |
+| 国家及地区  | float | Y    | -       |
+| 上映日期   | float | Y    | -       |
+| 首周天数   | float | Y    | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 movie_boxoffice_yearly_first_week_df = ak.movie_boxoffice_yearly_first_week(date="20201019")
 print(movie_boxoffice_yearly_first_week_df)
 ```
@@ -1868,32 +1961,33 @@ print(movie_boxoffice_yearly_first_week_df)
 
 目标地址: https://www.endata.com.cn/BoxOffice/BO/Cinema/day.html
 
-描述: 获取指定日期的每日各影院的票房数据
+描述: 指定日期的每日各影院的票房数据
 
 限量: 指定日期各影院的票房数据, 注意当前日期的数据需要第二日才可以获取
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| date | str  | Y    |  date="20201019"; 输入具体的日期即可 |
+| 名称   | 类型  | 必选  | 描述                         |
+|------|-----|-----|----------------------------|
+| date | str | Y   | date="20201019"; 输入具体的日期即可 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排序     | float   | Y        | 票房排名  |  
-| 影院名称     | float   | Y        | -  |  
-| 单日票房     | float   | Y        | 注意单位: 元  |  
-| 单日场次     | float   | Y        | -  |  
-| 场均人次     | float   | Y        | -  |  
-| 场均票价     | float   | Y        | -  |  
-| 上座率     | float   | Y        | 注意单位: %  |  
+| 名称   | 类型    | 默认显示 | 描述      |
+|------|-------|------|---------|
+| 排序   | float | Y    | 票房排名    |
+| 影院名称 | float | Y    | -       |
+| 单日票房 | float | Y    | 注意单位: 元 |
+| 单日场次 | float | Y    | -       |
+| 场均人次 | float | Y    | -       |
+| 场均票价 | float | Y    | -       |
+| 上座率  | float | Y    | 注意单位: % |
 
 接口示例
 
 ```python
 import akshare as ak
+
 movie_boxoffice_cinema_daily_df = ak.movie_boxoffice_cinema_daily(date="20201018")
 print(movie_boxoffice_cinema_daily_df)
 ```
@@ -1921,32 +2015,33 @@ print(movie_boxoffice_cinema_daily_df)
 
 目标地址: https://www.endata.com.cn/BoxOffice/BO/Cinema/week.html
 
-描述: 获取指定日期的完整周各影院的票房数据
+描述: 指定日期的完整周各影院的票房数据
 
 限量: 指定日期的完整周各影院的票房数据, 注意当前日期的数据只能返回上周的数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| date | str  | Y    |  date="20201018"; 输入具体的日期即可 |
+| 名称   | 类型  | 必选  | 描述                         |
+|------|-----|-----|----------------------------|
+| date | str | Y   | date="20201018"; 输入具体的日期即可 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 排序     | float   | Y        | 票房排名  |  
-| 影院名称     | float   | Y        | -  |  
-| 当周票房     | float   | Y        | 注意单位: 万  |  
-| 单银幕票房     | float   | Y        | 注意单位: 元  |  
-| 场均人次     | float   | Y        | -  |  
-| 单日单厅票房     | float   | Y        | -  |  
-| 单日单厅场次     | float   | Y        | -  |  
+| 名称     | 类型    | 默认显示 | 描述      |
+|--------|-------|------|---------|
+| 排序     | float | Y    | 票房排名    |
+| 影院名称   | float | Y    | -       |
+| 当周票房   | float | Y    | 注意单位: 万 |
+| 单银幕票房  | float | Y    | 注意单位: 元 |
+| 场均人次   | float | Y    | -       |
+| 单日单厅票房 | float | Y    | -       |
+| 单日单厅场次 | float | Y    | -       |
 
 接口示例
 
 ```python
 import akshare as ak
+
 movie_boxoffice_cinema_weekly_df = ak.movie_boxoffice_cinema_weekly(date="20201018")
 print(movie_boxoffice_cinema_weekly_df)
 ```
@@ -1982,28 +2077,29 @@ print(movie_boxoffice_cinema_weekly_df)
 
 输入参数
 
-| 名称   | 类型 |  描述      |
-| -------- | ---- | --- |
-| - | -  |  - |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 排序     | int64   |-  |  
-| 名称     | object   |  -  |  
-| 类型     | object   |-  |  
-| 播映指数     | float64   | -  |  
-| 媒体热度     | float64   |  -  |  
-| 用户热度     | float64   | -  |  
-| 好评度     | float64   | -  |  
-| 观看度     | float64   | -  |  
-| 统计日期     | float64   | -  |  
+| 名称   | 类型      | 描述  |
+|------|---------|-----|
+| 排序   | int64   | -   |
+| 名称   | object  | -   |
+| 类型   | object  | -   |
+| 播映指数 | float64 | -   |
+| 媒体热度 | float64 | -   |
+| 用户热度 | float64 | -   |
+| 好评度  | float64 | -   |
+| 观看度  | float64 | -   |
+| 统计日期 | float64 | -   |
 
 接口示例
 
 ```python
 import akshare as ak
+
 video_tv_df = ak.video_tv()
 print(video_tv_df)
 ```
@@ -2036,28 +2132,29 @@ print(video_tv_df)
 
 输入参数
 
-| 名称   | 类型 |  描述      |
-| -------- | ---- | --- |
-| - | -  |  - |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 排序     | int64   |-  |  
-| 名称     | object   |  -  |  
-| 类型     | object   |-  |  
-| 播映指数     | float64   | -  |  
-| 媒体热度     | float64   |  -  |  
-| 用户热度     | float64   | -  |  
-| 好评度     | float64   | -  |  
-| 观看度     | float64   | -  |  
-| 统计日期     | float64   | -  |  
+| 名称   | 类型      | 描述  |
+|------|---------|-----|
+| 排序   | int64   | -   |
+| 名称   | object  | -   |
+| 类型   | object  | -   |
+| 播映指数 | float64 | -   |
+| 媒体热度 | float64 | -   |
+| 用户热度 | float64 | -   |
+| 好评度  | float64 | -   |
+| 观看度  | float64 | -   |
+| 统计日期 | float64 | -   |
 
 接口示例
 
 ```python
 import akshare as ak
+
 video_variety_show_df = ak.video_variety_show()
 print(video_variety_show_df)
 ```
@@ -2092,27 +2189,28 @@ print(video_variety_show_df)
 
 输入参数
 
-| 名称   | 类型 |  描述      |
-| -------- | ---- | --- |
-| - | -  |  - |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 排名     | int64   |-  |  
-| 艺人     | object   |  -  |  
-| 商业价值     | float64   |  商业价值由专业度，关注度，预测热度加权汇总计算后得出，分值范围0~100，综合反映明星作品、代言表现、近期热度及舆情口碑。  |  
-| 专业热度     | float64   |  艺人专业热度主要表现艺人历史作品及品牌代言的效果情况，参与计算的指标维度包括历史主演电影票房表现，历史主演视频节目播映热度，电影作品豆瓣评分，作品相关微博内容评论正负向，历史代言品牌数量，品牌热度，艺人获奖数量。  |  
-| 关注热度     | float64   |  艺人关注热度主要表现艺人网络中的舆情声量，参与计算的指标维度包括百度搜索指数，百度新闻数量，今日头条新闻数，微博转发量，微博评论量，微博点赞量，微博粉丝数量，贴吧关注数量，微博话题数量。  |  
-| 预测热度     | float64   |  预测热度的数值反映明星的未来发展潜力，包括粉丝增长规模，作品口碑以及未来作品预测。  |  
-| 美誉度     | float64   |  根据艺人近三年参演电影、视频作品在豆瓣等平台的评分、微博正向评价，以及微博好评率等指标综合加权得出。  |  
-| 统计日期     | object   |  -  |  
+| 名称   | 类型      | 描述                                                                                                         |
+|------|---------|------------------------------------------------------------------------------------------------------------|
+| 排名   | int64   | -                                                                                                          |
+| 艺人   | object  | -                                                                                                          |
+| 商业价值 | float64 | 商业价值由专业度，关注度，预测热度加权汇总计算后得出，分值范围0~100，综合反映明星作品、代言表现、近期热度及舆情口碑。                                              |
+| 专业热度 | float64 | 艺人专业热度主要表现艺人历史作品及品牌代言的效果情况，参与计算的指标维度包括历史主演电影票房表现，历史主演视频节目播映热度，电影作品豆瓣评分，作品相关微博内容评论正负向，历史代言品牌数量，品牌热度，艺人获奖数量。 |
+| 关注热度 | float64 | 艺人关注热度主要表现艺人网络中的舆情声量，参与计算的指标维度包括百度搜索指数，百度新闻数量，今日头条新闻数，微博转发量，微博评论量，微博点赞量，微博粉丝数量，贴吧关注数量，微博话题数量。              |
+| 预测热度 | float64 | 预测热度的数值反映明星的未来发展潜力，包括粉丝增长规模，作品口碑以及未来作品预测。                                                                  |
+| 美誉度  | float64 | 根据艺人近三年参演电影、视频作品在豆瓣等平台的评分、微博正向评价，以及微博好评率等指标综合加权得出。                                                         |
+| 统计日期 | object  | -                                                                                                          |
 
 接口示例
 
 ```python
 import akshare as ak
+
 business_value_artist_df = ak.business_value_artist()
 print(business_value_artist_df)
 ```
@@ -2146,27 +2244,28 @@ print(business_value_artist_df)
 
 输入参数
 
-| 名称   | 类型 |  描述      |
-| -------- | ---- | --- |
-| - | -  |  - |
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 排名     | int64   |-  |  
-| 艺人     | object   |  -  |  
-| 流量价值     | float64   |  流量价值由专业度，关注度，预测热度，带货力加权汇总计算后得出，分值范围0~100，在商业价值的基础上增加了明星近期热度及带货力的权重。  |  
-| 专业热度     | float64   |  艺人专业热度主要表现艺人历史作品及品牌代言的效果情况，参与计算的指标维度包括历史主演电影票房表现，历史主演视频节目播映热度，电影作品豆瓣评分，作品相关微博内容评论正负向，历史代言品牌数量，品牌热度，艺人获奖数量。  |  
-| 关注热度     | float64   |  艺人关注热度主要表现艺人网络中的舆情声量，参与计算的指标维度包括百度搜索指数，百度新闻数量，今日头条新闻数，微博转发量，微博评论量，微博点赞量，微博粉丝数量，贴吧关注数量，微博话题数量。  |  
-| 预测热度     | float64   |  预测热度的数值反映明星的未来发展潜力，包括粉丝增长规模，作品口碑以及未来作品预测。  |  
-| 带货力     | float64   | 带货力的数值代表艺人的带货号召力，包括艺人的铁杆粉丝规模，超话粉丝规模。  |  
-| 统计日期     | object   |  -  |  
+| 名称   | 类型      | 描述                                                                                                         |
+|------|---------|------------------------------------------------------------------------------------------------------------|
+| 排名   | int64   | -                                                                                                          |
+| 艺人   | object  | -                                                                                                          |
+| 流量价值 | float64 | 流量价值由专业度，关注度，预测热度，带货力加权汇总计算后得出，分值范围0~100，在商业价值的基础上增加了明星近期热度及带货力的权重。                                        |
+| 专业热度 | float64 | 艺人专业热度主要表现艺人历史作品及品牌代言的效果情况，参与计算的指标维度包括历史主演电影票房表现，历史主演视频节目播映热度，电影作品豆瓣评分，作品相关微博内容评论正负向，历史代言品牌数量，品牌热度，艺人获奖数量。 |
+| 关注热度 | float64 | 艺人关注热度主要表现艺人网络中的舆情声量，参与计算的指标维度包括百度搜索指数，百度新闻数量，今日头条新闻数，微博转发量，微博评论量，微博点赞量，微博粉丝数量，贴吧关注数量，微博话题数量。              |
+| 预测热度 | float64 | 预测热度的数值反映明星的未来发展潜力，包括粉丝增长规模，作品口碑以及未来作品预测。                                                                  |
+| 带货力  | float64 | 带货力的数值代表艺人的带货号召力，包括艺人的铁杆粉丝规模，超话粉丝规模。                                                                       |
+| 统计日期 | object  | -                                                                                                          |
 
 接口示例
 
 ```python
 import akshare as ak
+
 online_value_artist_df = ak.online_value_artist()
 print(online_value_artist_df)
 ```
@@ -2202,27 +2301,28 @@ print(online_value_artist_df)
 
 输入参数
 
-| 名称   | 类型 |  描述      |
-| -------- | ---- | --- |
-| symbol | str  |  symbol="英雄联盟"; choice of {'英雄联盟', '绝地求生', '王者荣耀', 'DOTA2', '穿越火线', '和平精英'} |
+| 名称     | 类型  | 描述                                                                         |
+|--------|-----|----------------------------------------------------------------------------|
+| symbol | str | symbol="英雄联盟"; choice of {'英雄联盟', '绝地求生', '王者荣耀', 'DOTA2', '穿越火线', '和平精英'} |
 
 输出参数-英雄联盟
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 排名     | int64   |-  |  
-| 俱乐部名称     | object   |-  |  
-| 人气指数     | int64   |-  |  
-| 舆论指数     | int64   |-  |  
-| 战绩指数     | float64   |-  |  
-| 综合指数     | float64   |-  |  
-| 排名变动     | float64   |-  |  
-| 更新时间     | object   |-  |  
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 排名    | int64   | -   |
+| 俱乐部名称 | object  | -   |
+| 人气指数  | int64   | -   |
+| 舆论指数  | int64   | -   |
+| 战绩指数  | float64 | -   |
+| 综合指数  | float64 | -   |
+| 排名变动  | float64 | -   |
+| 更新时间  | object  | -   |
 
 接口示例-英雄联盟
 
 ```python
 import akshare as ak
+
 club_rank_game_df = ak.club_rank_game(symbol="英雄联盟")
 print(club_rank_game_df)
 ```
@@ -2262,29 +2362,30 @@ print(club_rank_game_df)
 
 输入参数
 
-| 名称   | 类型 |  描述      |
-| -------- | ---- | --- |
-| symbol | str  |  symbol="英雄联盟"; choice of {'英雄联盟', '绝地求生', '王者荣耀', 'DOTA2', '穿越火线', '和平精英'} |
+| 名称     | 类型  | 描述                                                                         |
+|--------|-----|----------------------------------------------------------------------------|
+| symbol | str | symbol="英雄联盟"; choice of {'英雄联盟', '绝地求生', '王者荣耀', 'DOTA2', '穿越火线', '和平精英'} |
 
 输出参数-英雄联盟
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 排名     | int64   |-  |  
-| 选手ID     | object   |-  |
-| 所属战队     | object   |-  |
-| 人气指数     | int64   |-  |
-| 舆论指数     | int64   |-  |
-| 战绩指数     | float64   |-  |
-| 综合指数     | float64   |-  |
-| 身价     | object   |-  |
-| 排名变动     | float64   |-  |
-| 更新时间     | object   |-  |  
+| 名称   | 类型      | 描述  |
+|------|---------|-----|
+| 排名   | int64   | -   |
+| 选手ID | object  | -   |
+| 所属战队 | object  | -   |
+| 人气指数 | int64   | -   |
+| 舆论指数 | int64   | -   |
+| 战绩指数 | float64 | -   |
+| 综合指数 | float64 | -   |
+| 身价   | object  | -   |
+| 排名变动 | float64 | -   |
+| 更新时间 | object  | -   |
 
 接口示例-英雄联盟
 
 ```python
 import akshare as ak
+
 player_rank_game_df = ak.player_rank_game(symbol="英雄联盟")
 print(player_rank_game_df)
 ```
@@ -2342,41 +2443,42 @@ print(player_rank_game_df)
 
 目标地址: https://expatistan.com/cost-of-living/index
 
-描述: 获取世界各大城市生活成本数据
+描述: 世界各大城市生活成本数据
 
 限量: 返回当前时点所有数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| region     | str   | -        | region="world", 默认, 返回所有城市数据, 其他城市请查看 **城市一览表**  |  
+| 名称     | 类型  | 必选  | 描述                                              |
+|--------|-----|-----|-------------------------------------------------|
+| region | str | -   | region="world", 默认, 返回所有城市数据, 其他城市请查看 **城市一览表** |
 
 城市一览表
 
-| 名称   | 类型 |   
-| -------- | ---- |
-| europe | 欧洲  |
-| north-america | 北美洲  |
-| latin-america | 拉丁美洲  |
-| asia | 亚洲  |
-| middle-east | 中东  |
-| africa | 非洲  |
-| oceania | 大洋洲  |
-| world | 默认全球所有城市  |
+| 名称            | 类型       |
+|---------------|----------|
+| europe        | 欧洲       |
+| north-america | 北美洲      |
+| latin-america | 拉丁美洲     |
+| asia          | 亚洲       |
+| middle-east   | 中东       |
+| africa        | 非洲       |
+| oceania       | 大洋洲      |
+| world         | 默认全球所有城市 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| rank     | str   | -        | 排名  |  
-| city     | str   | -        | 城市名称 |  
-| index    | str   | -        | 价格指数  |  
+| 名称    | 类型  | 默认显示 | 描述   |
+|-------|-----|------|------|
+| rank  | str | -    | 排名   |
+| city  | str | -    | 城市名称 |
+| index | str | -    | 价格指数 |
 
 接口示例
 
 ```python
 import akshare as ak
+
 cost_living_df = ak.cost_living()
 print(cost_living_df)
 ```
@@ -2406,32 +2508,33 @@ print(cost_living_df)
 
 目标地址: https://www.itjuzi.com/deathCompany
 
-描述: 获取新经济死亡公司数据库
+描述: 新经济死亡公司数据库
 
 限量: 返回所有历史数据
 
 输入参数
 
-| 名称   | 类型 | 描述               |
-| -------- | ---- |  --- |
-| -     | -   | -  |  
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 描述           |
-| --------------- | ----- | ---------------- |
-| 公司简称     | object   |  -  |  
-| 成立时间     | object   |  - |  
-| 关闭时间    | object   |  -  |  
-| 存活天数    | int64   |  -  |  
-| 融资规模    | float64   |  注意单位: 万元  |  
-| 行业    | object   | -  |  
-| 地点    | object   |  -  |  
+| 名称   | 类型      | 描述       |
+|------|---------|----------|
+| 公司简称 | object  | -        |
+| 成立时间 | object  | -        |
+| 关闭时间 | object  | -        |
+| 存活天数 | int64   | -        |
+| 融资规模 | float64 | 注意单位: 万元 |
+| 行业   | object  | -        |
+| 地点   | object  | -        |
 
 接口示例
 
 ```python
 import akshare as ak
+
 death_company_df = ak.death_company()
 print(death_company_df)
 ```
@@ -2465,24 +2568,25 @@ print(death_company_df)
 
 输入参数
 
-| 名称   | 类型 |  描述                         |
-| -------- | ---- |  --- |
-| -     | -   |  -  |  
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ----- | ---------------- |
-| 序号     | int32   |  -  |  
-| 公司     | object   |  - |  
-| 地区    | object   |  -  |  
-| 行业    | object   |  -  |  
-| 子行业    | object   |  -  |  
+| 名称  | 类型     | 描述  |
+|-----|--------|-----|
+| 序号  | int32  | -   |
+| 公司  | object | -   |
+| 地区  | object | -   |
+| 行业  | object | -   |
+| 子行业 | object | -   |
 
 接口示例
 
 ```python
 import akshare as ak
+
 nicorn_company_df = ak.nicorn_company()
 print(nicorn_company_df)
 ```
@@ -2516,23 +2620,24 @@ print(nicorn_company_df)
 
 输入参数
 
-| 名称   | 类型 |  描述                |
-| -------- | ---- |  --- |
-| -     | -   | -     -  |  
+| 名称  | 类型  | 描述      |
+|-----|-----|---------|
+| -   | -   | -     - |
 
 输出参数
 
-| 名称          | 类型 | 描述       |
-| --------------- | ----- |  ------------ |
-| 序号     | int32   |  -  |  
-| 公司     | object   |  - |  
-| 行业    | object   |  -  |  
-| 地区    | object   |  -  |
+| 名称  | 类型     | 描述  |
+|-----|--------|-----|
+| 序号  | int32  | -   |
+| 公司  | object | -   |
+| 行业  | object | -   |
+| 地区  | object | -   |
 
 接口示例
 
 ```python
 import akshare as ak
+
 maxima_company_df = ak.maxima_company()
 print(maxima_company_df)
 ```
@@ -2554,419 +2659,45 @@ print(maxima_company_df)
 661  662      编程猫    教育  广东
 ```
 
-### 特许经营许可
-
-接口: franchise_china
-
-目标地址: http://txjy.syggs.mofcom.gov.cn/
-
-描述: 获取中国-特许经营许可数据
-
-限量: 单次返回所有特许经营许可数据
-
-输入参数
-
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| - | - | - | - |
-
-输出参数
-
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 特许人名称      | str   | Y        | -  |
-| 备案时间      | str   | Y        | -  |
-| 地址      | str   | Y        | -   |
-
-接口示例
-
-```python
-import akshare as ak
-franchise_china_df = ak.franchise_china()
-print(franchise_china_df)
-```
-
-数据示例
-
-```
-                             特许人名称  ...                                                 地址
-0             特许人名称：深圳市百果园投资发展有限公司  ...                  地址：深圳市龙岗区南湾街道下李朗社区平吉大道1号建昇大厦B1305
-1                特许人名称：深圳市唯爱控股有限公司  ...                       地址：深圳市福田区福保街道石厦北三街4号雅云轩29楼A室
-2               特许人名称：广州绿色医药贸易有限公司  ...                      地址：广州市白云区京溪桥东侧广州新百佳小商品城B1303室
-3              特许人名称：广州萌茶茶餐饮管理有限公司  ...                         地址：广州市天河区黄埔大道中309号自编3-18-7
-4              特许人名称：福州汕之膳餐饮管理有限公司  ...     地址：福建省福州市台江区瀛洲街道江滨中大道116号君临闽江公寓1-7#楼连地下1层216铺位
-                            ...  ...                                                ...
-5395           特许人名称：北京车爵仕汽车用品有限公司  ...                          地址：北京市宣武区广安门外马连道路11号1125室
-5396          特许人名称：北京风尚引力投资顾问有限公司  ...                             地址：北京市大兴区魏善庄镇工业区龙江路95号
-5397          特许人名称：奥力赛克服装（北京）有限公司  ...                    地址：北京市宣武区宣武门外大街6号（庄胜广场北办公室楼902）
-5398        特许人名称：中达睿信投资管理(北京)有限公司  ...                 地址：北京市丰台区航丰路1号院2号楼1015、1016、1017房间
-5399  特许人名称：DDBR International LLC  ...  地址：The Corporation Trust Company, Corporation ...
-```
-
-### 慈善中国
-
-#### 慈善组织查询
-
-接口: charity_china_organization
-
-目标地址: http://cishan.chinanpo.gov.cn/biz/ma/csmh/a/csmhaindex.html
-
-描述: 获取慈善中国-慈善组织查询数据
-
-限量: 单次返回所有慈善中国-慈善组织查询数据, 但是要注意网络稳定性, 建议获取后存储
-
-输入参数
-
-| 名称   | 类型 |描述 |
-| -------- | ---- |  --- |
-| - | - | - |
-
-输出参数
-
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 序号      | str   |  -  |
-| 统一社会信用代码      | str   |  -  |
-| 组织名称      | str   |  -   |
-| 成立时间      | str   |  -   |
-| 登记管理机关      | str   |  -   |
-
-接口示例
-
-```python
-import akshare as ak
-charity_china_organization_df = ak.charity_china_organization()
-print(charity_china_organization_df)
-```
-
-数据示例
-
-```
-    序号            统一社会信用代码              组织名称          成立时间            登记管理机关
-0    1  53330000501876705E        温州市人民教育基金会   Jan 1, 1989            浙江省民政厅
-1    2  51440100572156377E        广州市乐善助学促进会  Mar 14, 2011            广州市民政局
-2    3  51440106C149234018         广州市天河区慈善会  Mar 26, 1995         广州市天河区民政局
-3    4  13220100013829643R           长春市红十字会  Nov 11, 1998        长春市机构编制委员会
-4    5  514206245037423566            南漳县慈善会   Apr 3, 1994             南漳民政局
-5    6  12420624MB1856281C           南漳县红十字会  Aug 13, 2018      南漳县事业单位登记管理局
-6    7  51370103MJD7207131          济南市中慈善总会  Aug 30, 2005         济南市市中区民政局
-7    8  13330726674784083R           浦江县红十字会  Jun 15, 2010        浦江县机构编制委员会
-8    9  13450100007578462M           南宁市红十字会  Dec 29, 2001        南宁市机构编制委员会
-9   10  51222402774243137N           图们市慈善总会  Aug 29, 2003            图们市民政局
-10  11  51110102500530454R          北京西城慈善协会  Sep 10, 1995         北京市西城区民政局
-11  12  12411402554217009W        商丘市梁园区红十字会  Oct 16, 1998       商丘市梁园区编制委员会
-12  13  51661200697824762N  新疆生产建设兵团第十二师红十字会  Oct 24, 2008           第十二师民政局
-13  14  11421304MB1C163392            随县红十字会  Sep 30, 2009  中共随县县委机构编制委员会办公室
-14  15  123203054665457747        徐州市贾汪区红十字会  Sep 20, 2012         徐州市贾汪区民政局
-```
-
-#### 慈善信托查询
-
-接口: charity_china_trust
-
-目标地址: http://cishan.chinanpo.gov.cn/biz/ma/csmh/e/csmheindex.html
-
-描述: 获取慈善中国-慈善信托查询数据
-
-限量: 单次返回所有慈善中国-慈善信托查询数据, 但是要注意网络稳定性, 建议获取后存储
-
-输入参数
-
-| 名称   | 类型 |  描述 |
-| -------- | ---- |  --- |
-| - | - | - |
-
-输出参数
-
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 序号      | str   |  -  |
-| 慈善信托名称      | str   |  -  |
-| 备案单位      | str   | -   |
-| 受托人      | str   |  -   |
-| 财产总规模（万元）      | str   |  -   |
-| 信托期限      | str   |  -   |
-
-接口示例
-
-```python
-import akshare as ak
-charity_china_trust_df = ak.charity_china_trust()
-print(charity_china_trust_df)
-```
-
-数据示例
-
-```
-    序号                    慈善信托名称  ... 财产总规模（万元）    信托期限
-0    1     华宝善行•抗击新型冠状病毒肺炎疫情慈善信托  ...    272.81      2年
-1    2           华信信托-抗击新型肺炎慈善信托  ...    100.00   无固定期限
-2    3        “上善”系列赴鄂救援抗击疫情慈善信托  ...    500.00      2年
-3    4                   泰来县红十字会  ...  30000.00      5年
-4    5  天信世嘉·信德众志成城抗击新型肺炎01期慈善信托  ...     50.00      1年
-5    6                  根生博爱慈善信托  ...    114.70      永续
-6    7         中融-深圳市慈善会托普思维慈善信托  ...     50.00      10
-7    8             重庆信托·温暖童心慈善信托  ...      7.00      1年
-8    9             华润信托•银杏乐天慈善信托  ...    100.00     10年
-9   10            光信善·益中专项教育慈善信托  ...   1000.00   无固定期限
-10  11      光信善·祥生扶贫1号阳光益投系列慈善信托  ...      5.00      2年
-11  12                    骏昆慈善信托  ...      5.00   无固定期限
-12  13          厦门信托-星之助公益进堂慈善信托  ...     12.00  不设固定期限
-13  14      光信善·瀚京尊享1号阳光益投系列慈善信托  ...     10.00      3年
-14  15                光信善·云焕慈善信托  ...     10.00      永续
-```
-
-#### 募捐方案备案
-
-接口: charity_china_plan
-
-目标地址: http://cishan.chinanpo.gov.cn/biz/ma/csmh/c/csmhcindex.html
-
-描述: 获取慈善中国-募捐方案备案数据
-
-限量: 单次返回所有慈善中国-募捐方案备案数据, 但是要注意网络稳定性, 建议获取后存储
-
-输入参数
-
-| 名称   | 类型 | 描述     |
-| -------- | ---- | --- |
-| - | - | - |
-
-输出参数
-
-| 名称          | 类型 | 描述           |
-| --------------- | ----- |  ---------------- |
-| 组织      | str   | -  |
-| 状态      | str   |  -  |
-| 名称      | str   |  -   |
-| 备案号      | str   |  -   |
-
-接口示例
-
-```python
-import akshare as ak
-charity_china_plan_df = ak.charity_china_plan()
-print(charity_china_plan_df)
-```
-
-数据示例
-
-```
-                 组织  ...                                备案号
-0           重庆市慈善总会  ...  募捐方案备案编号：51500000504029915YA20015
-1           重庆市慈善总会  ...  募捐方案备案编号：51500000504029915YA20014
-2           重庆市慈善总会  ...  募捐方案备案编号：51500000504029915YA20013
-3  新疆维吾尔族自治区资助教育基金会  ...  募捐方案备案编号：536501045762170776A20003
-4           钦州市红十字会  ...  募捐方案备案编号：13450700K32947229MA20001
-5           山东省红十字会  ...  募捐方案备案编号：133700000045025699A20001
-6           南宁市红十字会  ...  募捐方案备案编号：13450100007578462MA20001
-7       天祝藏族自治县红十字会  ...  募捐方案备案编号：11620623576286750DA20001
-```
-
-#### 慈善项目进展
-
-接口: charity_china_progress
-
-目标地址: http://cishan.chinanpo.gov.cn/biz/ma/csmh/b/csmhbindex.html
-
-描述: 获取慈善中国-慈善项目进展数据
-
-限量: 单次返回所有慈善中国-慈善项目进展数据, 但是要注意网络稳定性, 建议获取后存储
-
-输入参数
-
-| 名称   | 类型 |  描述     |
-| -------- | ---- | --- |
-| - | - | - |
-
-输出参数
-
-| 名称          | 类型 |  描述           |
-| --------------- | ----- |  ---------------- |
-| 组织      | str   | -  |
-| 名称      | str   |  -   |
-| 项目编号      | str   |  -   |
-| 发起慈善组织      | str   |  -   |
-| 项目状态      | str   | -   |
-
-接口示例
-
-```python
-import akshare as ak
-charity_china_progress_df = ak.charity_china_progress()
-print(charity_china_progress_df)
-```
-
-数据示例
-
-```
-          组织                             名称  ...     发起慈善组织 项目状态
-0  中国华侨公益基金会                爱步寒冷—冰雪徒步志愿服务项目  ...  中国华侨公益基金会  已完成
-1  中国华侨公益基金会      童沐书香 首都图书馆文化志愿服务讲故事智力脱贫项目  ...  中国华侨公益基金会  已完成
-2  中国华侨公益基金会                      经典导读，点亮心灯  ...  中国华侨公益基金会  已完成
-3  中国华侨公益基金会            山区帮扶励志“阳光小讲台”志愿服务活动  ...  中国华侨公益基金会  已完成
-4  中国华侨公益基金会                 青春守护点对点 关爱留守儿童  ...  中国华侨公益基金会  已完成
-5  中国华侨公益基金会                      爱心部落·公益超市  ...  中国华侨公益基金会  已完成
-6  中国华侨公益基金会             农村牧区“12345”扶贫攻坚义工队  ...  中国华侨公益基金会  已完成
-7  中国华侨公益基金会  “授渔”-呼和浩特天使公益协会山区贫困儿童家庭精准扶贫项目  ...  中国华侨公益基金会  已完成
-```
-
-#### 慈善组织年报
-
-接口: charity_china_report
-
-目标地址: http://cishan.chinanpo.gov.cn/biz/ma/csmh/d/csmhdindex.html
-
-描述: 获取慈善中国-慈善组织年报数据
-
-限量: 单次返回所有慈善中国-慈善组织年报数据, 但是要注意网络稳定性, 建议获取后存储
-
-输入参数
-
-| 名称   | 类型 | 描述  |
-| -------- | ---- | --- |
-| - | - | - |
-
-输出参数
-
-| 名称          | 类型 | 描述           |
-| --------------- | ----- |  ---------------- |
-| 序号      | str   | -  |
-| 统一社会信用代码      | str   |  -   |
-| 组织名称      | str   |  -   |
-| 社会组织类别      | str   | -   |
-| 年度      | str   | -   |
-| 操作      | str   |  提供下载 PDF 的地址   |
-
-接口示例
-
-```python
-import akshare as ak
-charity_china_report_df = ak.charity_china_report()
-print(charity_china_report_df)
-```
-
-数据示例
-
-```
-   序号  ...                                                 操作
-0   1  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-1   2  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-2   3  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-3   4  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-4   5  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-5   6  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-6   7  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-7   8  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-8   9  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-9  10  ...  http://cishan.chinanpo.gov.cn/mz/upload/pub/lo...
-```
-
-#### 募捐信息平台
-
-接口: charity_china_platform
-
-目标地址: http://cishan.chinanpo.gov.cn/biz/ma/csmh/h/csmhhindex.html
-
-描述: 获取慈善中国-募捐信息平台数据
-
-限量: 单次返回所有慈善中国-募捐信息平台数据, 但是要注意网络稳定性, 建议获取后存储
-
-输入参数
-
-| 名称   | 类型 | 描述  |
-| -------- | ---- | --- |
-| - | - |  - |
-
-输出参数
-
-| 名称          | 类型 | 描述           |
-| --------------- | ----- | ---------------- |
-| 网址      | str   |  -  |
-| 组织      | str   |  -   |
-| 名称      | str   |  -   |
-| 联系方式      | str   |  -   |
-
-接口示例
-
-```python
-import akshare as ak
-charity_china_platform_df = ak.charity_china_platform()
-print(charity_china_platform_df)
-```
-
-数据示例
-
-```
-                                                   网址  ...                       联系方式
-0                               http://gongyi.qq.com/  ...      gongyi_TS@tencent.com
-1                          https://gongyi.taobao.com/  ...              0571-88157858
-2                            https://love.alipay.com/  ...              0571-88158090
-3                             http://gongyi.weibo.com  ...               010-60618539
-4   http://gongyi.m.jd.com/index.html?&utm_source=...  ...               010-89126602
-5                            http://gongyi.baidu.com/  ...               010-50803597
-6                            http://www.gongyibao.cn/  ...               010-82609011
-7                           http://xhgy.xinhuanet.com  ...                 4000260110
-8                             https://www.qschou.com/  ...                   10101019
-9                  https://www.lianquan.org/index.jsp  ...           021-60146234-801
-10                               http://www.gyufc.org  ...                 4008599595
-11                          http://gongyi.meituan.com  ...                 4000810990
-12                                 javascript:void(0)  ...  didigongyi@didiglobal.com
-13                 https://www.shanyuanfoundation.com  ...        sygy@17shanyuan.com
-14  http://channels1.mall.icbc.com.cn/channels/pc/...  ...                 4009195588
-15                   http://www.shuidichou.com/gongyi  ...      gongyi@shuidichou.com
-16                          https://gongyi.suning.com  ...        gongyi@cnsuning.com
-17                        https://www.bangbangwang.cn  ...               010-85693651
-18                           http://gongyi.yeepay.com  ...               4001-500-800
-19                           http://www.zgshfp.com.cn  ...               400-600-1017
-20                             http://www.mca.gov.cn/  ...                       None
-21              http://www.chinanpo.gov.cn/index.html  ...                       None
-22                      http://www.chinavolunteer.cn/  ...                       None
-23               http://www.jianzai.gov.cn/DRpublish/  ...                       None
-24                         http://www.neusoft.com/cn/  ...                       None
-25                 http://www.foundationcenter.org.cn  ...                       None
-26                                                  #  ...                       None
-27                                                  #  ...                       None
-```
-
 ### 微博舆情报告
 
 接口: stock_js_weibo_report
 
 目标地址: https://datacenter.jin10.com/market
 
-描述: 获取微博舆情报告中近期受关注的股票
+描述: 微博舆情报告中近期受关注的股票
 
 限量: 单次返回指定时间内微博舆情报告中近期受关注的股票
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| time_period | str | Y | time_period="CNHOUR12"; 详见下表**time_period参数一览表**, 可通过调用 **stock_js_weibo_nlp_time** 获取|
+| 名称          | 类型  | 描述                                                                                     |
+|-------------|-----|----------------------------------------------------------------------------------------|
+| time_period | str | time_period="CNHOUR12"; 详见下表**time_period参数一览表**, 可通过调用 **stock_js_weibo_nlp_time** 获取 |
 
-time_period参数一览表
+time_period 参数一览表
 
-|参数|说明|
-|---|---|
-|CNHOUR2|2小时|
-|CNHOUR6|6小时|
-|CNHOUR12|12小时|
-|CNHOUR24|1天| 
-|CNDAY7|1周| 
-|CNDAY30|1月|
+| 参数       | 说明   |
+|----------|------|
+| CNHOUR2  | 2小时  |
+| CNHOUR6  | 6小时  |
+| CNHOUR12 | 12小时 |
+| CNHOUR24 | 1天   |
+| CNDAY7   | 1周   |
+| CNDAY30  | 1月   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| name      | str   | Y        | 股票名称  |
-| rate      | str   | Y        | 人气排行指数   |
+| 名称   | 类型  | 描述     |
+|------|-----|--------|
+| name | str | 股票名称   |
+| rate | str | 人气排行指数 |
 
 接口示例
 
 ```python
 import akshare as ak
+
 stock_js_weibo_report_df = ak.stock_js_weibo_report(time_period="CNHOUR12")
 print(stock_js_weibo_report_df)
 ```
@@ -3029,38 +2760,96 @@ print(stock_js_weibo_report_df)
 
 ### 彭博亿万富豪指数
 
+#### 彭博实时亿万富豪指数
+
 接口: index_bloomberg_billionaires
 
 目标地址: https://www.bloomberg.com/billionaires/
 
-描述: 获取彭博亿万富豪指数, 全球前 500 名
+描述: 彭博亿万富豪指数, 全球前 500 名; 该接口需要使用代理访问
 
 限量: 单次返回所有数据彭博亿万富豪排名数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| - | - | - | -|
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| rank      | str   | Y        | Rank  |
-| name      | str   | Y        | Name   |
-| total_net_worth      | str   | Y        | Total net worth   |
-| last_change      | str   | Y        | $ Last change   |
-| YTD_change      | str   | Y        | $ YTD change   |
-| country      | str   | Y        | Country   |
-| industry      | str   | Y        | Industry   |
+| 名称              | 类型  | 描述              |
+|-----------------|-----|-----------------|
+| rank            | str | Rank            |
+| name            | str | Name            |
+| total_net_worth | str | Total net worth |
+| last_change     | str | $ Last change   |
+| YTD_change      | str | $ YTD change    |
+| country         | str | Country         |
+| industry        | str | Industry        |
 
 接口示例
 
 ```python
 import akshare as ak
+
 index_bloomberg_billionaires_df = ak.index_bloomberg_billionaires()
 print(index_bloomberg_billionaires_df)
+```
+
+数据示例
+
+```
+    rank                        name  ...             country     industry
+0      1                  Jeff Bezos  ...       United States   Technology
+1      2                  Bill Gates  ...       United States   Technology
+2      3             Mark Zuckerberg  ...       United States   Technology
+3      4             Bernard Arnault  ...              France     Consumer
+4      5               Steve Ballmer  ...       United States   Technology
+..   ...                         ...  ...                 ...          ...
+494  496                 Ira Rennert  ...       United States  Commodities
+495  497  Traudl Engelhorn-Vechiatto  ...         Switzerland  Diversified
+496  498            Sergey Galitskiy  ...  Russian Federation       Retail
+497  499                  Xu Jingren  ...               China  Health Care
+498  500                Shi Yonghong  ...           Singapore     Consumer
+```
+
+#### 历史彭博亿万富豪指数
+
+接口: index_bloomberg_billionaires_hist
+
+目标地址: https://stats.areppim.com/stats/links_billionairexlists.htm
+
+描述: 按照年份查询彭博亿万富豪指数; 该接口需要使用代理访问
+
+限量: 单次返回当年所有数据彭博亿万富豪排名数据
+
+输入参数
+
+| 名称   | 类型  | 描述                                                   |
+|------|-----|------------------------------------------------------|
+| year | str | year="2021"; choice of {"2021", "2019", "2018", ...} |
+
+输出参数
+
+| 名称              | 类型  | 描述              |
+|-----------------|-----|-----------------|
+| rank            | str | Rank            |
+| name            | str | Name            |
+| total_net_worth | str | Total net worth |
+| last_change     | str | $ Last change   |
+| YTD_change      | str | $ YTD change    |
+| country         | str | Country         |
+| industry        | str | Industry        |
+| age             | str | Age             |
+
+接口示例
+
+```python
+import akshare as ak
+
+index_bloomberg_billionaires_hist_df=ak.index_bloomberg_billionaires_hist(year='2019')
+print(index_bloomberg_billionaires_hist_df)
 ```
 
 数据示例
