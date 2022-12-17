@@ -3,7 +3,7 @@
 ## 重要提示
 
 1. 目前 [AKShare](https://github.com/akfamily/akshare) 仅支持 64 位版本的操作系统安装和使用;
-2. 目前 [AKShare](https://github.com/akfamily/akshare) 仅支持 [Python](https://www.python.org/) 3.7(64 位) 及以上版本, 这里推荐 [Python](https://www.python.org/) 3.8.5(64 位) 版本;
+2. 目前 [AKShare](https://github.com/akfamily/akshare) 仅支持 [Python](https://www.python.org/) 3.7(64 位) 及以上版本, 这里推荐 [Python](https://www.python.org/) 3.8.13(64 位) 版本;
 3. [AKShare](https://github.com/akfamily/akshare) 推荐安装最新版本的 [Anaconda (64 位)](https://www.anaconda.com/), 可以解决大部分环境配置问题;
 4. 对于熟悉容器技术的小伙伴, 可以安装 Docker 使用, 指导教程如下: [AKShare Docker 部署](https://www.akshare.xyz/zh_CN/latest/akdocker/akdocker.html).
 
@@ -39,24 +39,25 @@ P.S. **由于目前版本更新迭代频繁, 请在使用 [AKShare](https://gith
 pip install akshare --upgrade -i https://pypi.org/simple
 ```
 
-## 苹果 M1 处理器支持
+## 苹果处理器支持
 
 ### 缘起
 
 AKShare 由于使用 [PyMiniRacer](https://blog.sqreen.com/embedding-javascript-into-python/) 项目来支持在 Python 中运行 JavaScript
 代码，所以要完整的使用 AKShare 的全部功能需要安装该库。
 
-但是由于苹果的 M1 芯片采用 ARM 架构，而 [PyMiniRacer](https://blog.sqreen.com/embedding-javascript-into-python/) 并没有编译相对应的
-版本，所以造成在 M1 芯片的计算机上使用 AKShare 会出问题。
+但是由于苹果的 M 系列芯片采用 ARM 架构，而 [PyMiniRacer](https://blog.sqreen.com/embedding-javascript-into-python/) 并没有编译相对应的
+版本，所以造成在 M 系列芯片的计算机上使用 AKShare 会出问题。
 
 ### 解决方案
 
-本次的解决方案是提供编译好的文件供大家下载使用：[libmini_racer.dylib](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/software/pyminiracer/libmini_racer.dylib) ， 
-只需要把该文件下载到本地，然后存放在任意路径即可！
+本次的解决方案是提供编译好的文件供大家下载使用：[libmini_racer.dylib](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/software/pyminiracer/libmini_racer.dylib) ，
+只需要把该文件下载到本地，然后存放在报错提示的路径即可！
 
 ### 扩展阅读
 
-如果需要编译，请参考该文章：[Building V8 on an M1 MacBook](https://joyeecheung.github.io/blog/2021/08/27/binding-v8-on-an-m1-macbook/)
+1. 如果上述文档未能解决您的问题；可以观看《AKShare-初阶-使用教学》课程，里面手把手带您进行环境配置
+2. 如果需要编译，请参考该文章：[Building V8 on an M1 MacBook](https://joyeecheung.github.io/blog/2021/08/27/binding-v8-on-an-m1-macbook/)
 
 ## R 语言调用支持
 
@@ -102,16 +103,16 @@ install.packages("reticulate")
 
 ```
 library(reticulate)
-use_python("/usr/local/bin/python")
+use_python("/usr/local/bin/python")  # 默认使用本地的 Python, 如果需要使用虚拟环境的 Pyhton, 请参考 reticulate 的提示
 ```
 
-调用本地的 Python 程序，其中 usr 需要替换为本地电脑的用户名。
+调用本地的 Python 程序，其中 usr 需要替换为本地计算机的用户名。
 
 最后展示一段演示代码，此代码在 R 语言中通过 reticulate 包来调用 [AKShare](https://github.com/akfamily/akshare) 获取数据：
 
 ```
 library(reticulate)  # 导入 reticulate 包
-use_python("/king/local/bin/python")  # 其中的 king 为本地电脑用户名
+use_python("/king/local/bin/python")  # 其中的 king 为本地计算机用户名
 # use_condaenv(condaenv="ak_test", required = TRUE)  # 也可以使用 conda 创建的虚拟环境，其中的 ak_test 为虚拟环境名称
 ak <- import("akshare")  # 类似于 import akshare as ak
 stock_df <- ak$stock_zh_a_hist()  # 类似于 ak.stock_zh_a_hist()
@@ -119,20 +120,13 @@ head(stock_df)  # 查看数据
 ```
 
 ```
-        日期  开盘   收盘  最高   最低     成交量 成交额  振幅  涨跌幅 涨跌额
-1 1991-04-03 49.00 49.00 49.00 49.00      1   5000    0  22.50   9.00
-2 1991-04-04 48.76 48.76 48.76 48.76      3  15000    0  -0.49  -0.24
-3 1991-04-05 48.52 48.52 48.52 48.52      2  10000    0  -0.49  -0.24
-4 1991-04-06 48.28 48.28 48.28 48.28      7  34000    0  -0.49  -0.24
-5 1991-04-08 48.04 48.04 48.04 48.04      2  10000    0  -0.50  -0.24
-6 1991-04-09 47.80 47.80 47.80 47.80      4  19000    0  -0.50  -0.24
-  换手率
-1      0
-2      0
-3      0
-4      0
-5      0
-6      0
+        日期  开盘   收盘  最高   最低     成交量 成交额  振幅  涨跌幅 涨跌额 换手率    
+1 1991-04-03 49.00 49.00 49.00 49.00      1   5000    0  22.50   9.00  0  
+2 1991-04-04 48.76 48.76 48.76 48.76      3  15000    0  -0.49  -0.24  0  
+3 1991-04-05 48.52 48.52 48.52 48.52      2  10000    0  -0.49  -0.24  0  
+4 1991-04-06 48.28 48.28 48.28 48.28      7  34000    0  -0.49  -0.24  0  
+5 1991-04-08 48.04 48.04 48.04 48.04      2  10000    0  -0.50  -0.24  0  
+6 1991-04-09 47.80 47.80 47.80 47.80      4  19000    0  -0.50  -0.24  0  
 ```
 
 ## MATLAB 调用支持
@@ -166,7 +160,7 @@ pyenv
 如返回
 
 ```
-pe = 
+pe =
 
   PythonEnvironment - 属性:
 
@@ -180,8 +174,7 @@ pe =
       ProcessName: "MATLAB"
 ```
 
-则表示可以正常使用 ```C:\Anaconda3\envs\ak_test\python.exe``` 环境的 Python，同时确保在该
-环境中已经安装最新版的 AKShare。
+则表示可以正常使用 `C:\Anaconda3\envs\ak_test\python.exe` 环境的 Python，同时确保在该环境中已经安装最新版的 AKShare。
 
 #### 测试调用 AKShare 接口
 
@@ -194,7 +187,7 @@ py.akshare.stock_zh_a_hist
 如返回
 
 ```
-ans = 
+ans =
 
   Python DataFrame - 属性:
 
@@ -227,7 +220,7 @@ ans =
     7300  2021-11-08  17.62  17.42  17.81  ...  2.55  -1.25 -0.22  0.71
     7301  2021-11-09  17.48  17.53  17.65  ...  2.24   0.63  0.11  0.64
     7302  2021-11-10  17.46  17.40  17.47  ...  1.77  -0.74 -0.13  0.63
-    
+
     [7303 rows x 11 columns]
 ```
 
@@ -246,7 +239,7 @@ py.akshare.macro_cnbs
 如返回
 
 ```
-ans = 
+ans =
 
   Python DataFrame - 属性:
 
@@ -279,7 +272,7 @@ ans =
     103  2021-03  62.100000  161.400000  ...  267.800000  52.800000  62.300000
     104  2021-06  62.000000  158.800000  ...  265.400000  51.300000  61.700000
     105  2021-09  62.100000  157.200000  ...  264.800000  49.200000  61.900000
-    
+
     [106 rows x 9 columns]
 ```
 
@@ -297,7 +290,7 @@ py.akshare.stock_zh_a_hist("000001", "daily", "20170301", '20210907', "")
 如返回
 
 ```
-ans = 
+ans =
 
   Python DataFrame - 属性:
 
@@ -330,7 +323,7 @@ ans =
     1102  2021-09-03  18.50  18.04  18.50  ...  4.35 -1.96 -0.36  0.72
     1103  2021-09-06  17.93  18.45  18.60  ...  4.55  2.27  0.41  0.78
     1104  2021-09-07  18.60  19.24  19.56  ...  6.56  4.28  0.79  0.84
-    
+
     [1105 rows x 11 columns]
 ```
 

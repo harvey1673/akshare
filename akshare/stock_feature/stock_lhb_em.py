@@ -177,7 +177,7 @@ def stock_lhb_stock_statistic_em(symbol: str = "近一月") -> pd.DataFrame:
 
 
 def stock_lhb_jgmmtj_em(
-    start_date: str = "20220311", end_date: str = "20220315"
+    start_date: str = "20220906", end_date: str = "20220906"
 ) -> pd.DataFrame:
     """
     东方财富网-数据中心-龙虎榜单-机构买卖每日统计
@@ -224,13 +224,15 @@ def stock_lhb_jgmmtj_em(
         "市场总成交额",
         "机构净买额占总成交额比",
         "换手率",
-        "-",
+        "流通市值",
         "上榜原因",
-        "上榜后1日",
-        "上榜后2日",
         "-",
-        "上榜后5日",
-        "上榜后10日",
+        "-",
+        "-",
+        "-",
+        "-",
+        "-",
+        "-",
         "-",
         "-",
     ]
@@ -239,7 +241,6 @@ def stock_lhb_jgmmtj_em(
             "序号",
             "代码",
             "名称",
-            "上榜日期",
             "收盘价",
             "涨跌幅",
             "买方机构数",
@@ -250,14 +251,26 @@ def stock_lhb_jgmmtj_em(
             "市场总成交额",
             "机构净买额占总成交额比",
             "换手率",
+            "流通市值",
             "上榜原因",
-            "上榜后1日",
-            "上榜后2日",
-            "上榜后5日",
-            "上榜后10日",
+            "上榜日期",
         ]
     ]
     temp_df["上榜日期"] = pd.to_datetime(temp_df["上榜日期"]).dt.date
+    temp_df["收盘价"] = pd.to_numeric(temp_df["收盘价"], errors="coerce")
+    temp_df["涨跌幅"] = pd.to_numeric(temp_df["涨跌幅"], errors="coerce")
+    temp_df["买方机构数"] = pd.to_numeric(temp_df["买方机构数"], errors="coerce")
+    temp_df["卖方机构数"] = pd.to_numeric(temp_df["卖方机构数"], errors="coerce")
+    temp_df["机构买入总额"] = pd.to_numeric(temp_df["机构买入总额"], errors="coerce")
+    temp_df["机构卖出总额"] = pd.to_numeric(temp_df["机构卖出总额"], errors="coerce")
+    temp_df["机构买入净额"] = pd.to_numeric(temp_df["机构买入净额"], errors="coerce")
+    temp_df["市场总成交额"] = pd.to_numeric(temp_df["市场总成交额"], errors="coerce")
+    temp_df["机构净买额占总成交额比"] = pd.to_numeric(
+        temp_df["机构净买额占总成交额比"], errors="coerce"
+    )
+    temp_df["换手率"] = pd.to_numeric(temp_df["换手率"], errors="coerce")
+    temp_df["流通市值"] = pd.to_numeric(temp_df["流通市值"], errors="coerce")
+
     return temp_df
 
 
@@ -336,7 +349,6 @@ def stock_lhb_hyyyb_em(
     big_df["买入总金额"] = pd.to_numeric(big_df["买入总金额"])
     big_df["卖出总金额"] = pd.to_numeric(big_df["卖出总金额"])
     big_df["总买卖净额"] = pd.to_numeric(big_df["总买卖净额"])
-
     return big_df
 
 
@@ -520,20 +532,28 @@ if __name__ == "__main__":
     )
     print(stock_lhb_detail_em_df)
 
-    stock_lhb_stock_statistic_em_df = stock_lhb_stock_statistic_em(symbol="近一月")
+    stock_lhb_stock_statistic_em_df = stock_lhb_stock_statistic_em(
+        symbol="近一月"
+    )
     print(stock_lhb_stock_statistic_em_df)
 
-    stock_lhb_stock_statistic_em_df = stock_lhb_stock_statistic_em(symbol="近三月")
+    stock_lhb_stock_statistic_em_df = stock_lhb_stock_statistic_em(
+        symbol="近三月"
+    )
     print(stock_lhb_stock_statistic_em_df)
 
-    stock_lhb_stock_statistic_em_df = stock_lhb_stock_statistic_em(symbol="近六月")
+    stock_lhb_stock_statistic_em_df = stock_lhb_stock_statistic_em(
+        symbol="近六月"
+    )
     print(stock_lhb_stock_statistic_em_df)
 
-    stock_lhb_stock_statistic_em_df = stock_lhb_stock_statistic_em(symbol="近一年")
+    stock_lhb_stock_statistic_em_df = stock_lhb_stock_statistic_em(
+        symbol="近一年"
+    )
     print(stock_lhb_stock_statistic_em_df)
 
     stock_lhb_jgmmtj_em_df = stock_lhb_jgmmtj_em(
-        start_date="20220311", end_date="20220315"
+        start_date="20220904", end_date="20220906"
     )
     print(stock_lhb_jgmmtj_em_df)
 
@@ -542,11 +562,13 @@ if __name__ == "__main__":
     )
     print(stock_lhb_hyyyb_em_df)
 
-    stock_lhb_stock_detail_date_em_df = stock_lhb_stock_detail_date_em(symbol="600077")
+    stock_lhb_stock_detail_date_em_df = stock_lhb_stock_detail_date_em(
+        symbol="002901"
+    )
     print(stock_lhb_stock_detail_date_em_df)
 
     stock_lhb_stock_detail_em_df = stock_lhb_stock_detail_em(
-        symbol="000788", date="20220315", flag="买入"
+        symbol="002901", date="20221012", flag="买入"
     )
     print(stock_lhb_stock_detail_em_df)
 

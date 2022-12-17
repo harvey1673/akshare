@@ -16,6 +16,7 @@
 
 # Temp
 build/
+docs/build/
 docs/_build/
 dist/
 *.egg-info/
@@ -29,3 +30,4 @@ colors
 .ipynb_checkpoints
 #docs/source/_static/
 #docs/source/_templates/
+.DS_Store

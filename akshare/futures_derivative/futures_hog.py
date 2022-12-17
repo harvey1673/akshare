@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/8/13 17:03
+Date: 2022/11/18 22:03
 Desc: 养猪数据中心
-https://zhujia.zhuwang.cc/
+https://zhujia.zhuwang.cc
 """
 import requests
 import pandas as pd
 
 
-def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
+def futures_hog_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
     """
     养猪数据中心
     https://zhujia.zhuwang.cc/
@@ -28,7 +28,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         del temp_df["item"]
         return temp_df
     elif symbol == "仔猪价格":
-        url = "https://zt.zhuwang.cc/new_map/zhizhu/chart2.json"
+        url = "https://zhujia.zhuwang.cc/new_map/zhizhu/chart2.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -43,13 +43,13 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         r = requests.get(url, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json)
-        need_list = temp_df.iloc[-1, [1, 3, 5, 7, 9, 11]].tolist()
-        temp_df.columns = list("abcdefghijklm")
-        temp_df = temp_df.drop(["b", "d", "f", "h", "j", "l"], axis="columns")
+        need_list = temp_df.iloc[-1, [1, 3, 5, 7, 9, 11, 13, 15]].tolist()
+        temp_df.columns = list("abcdefghijklmnopq")
+        temp_df = temp_df.drop(["b", "d", "f", "h", "j", "l", "n", "p"], axis="columns")
         temp_df.columns = ["日期"] + need_list
         return temp_df
     elif symbol == "二元母猪价格":
-        url = "https://zt.zhuwang.cc/new_map/eryuanpig/chart2.json"
+        url = "https://zhujia.zhuwang.cc/new_map/eryuanpig/chart2.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -59,7 +59,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         temp_df["value"] = pd.to_numeric(temp_df["value"])
         return temp_df
     elif symbol == "生猪产能数据":
-        url = "https://zt.zhuwang.cc/new_map/shengzhuchanneng/chart1.json"
+        url = "https://zhujia.zhuwang.cc/new_map/shengzhuchanneng/chart1.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -71,7 +71,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         temp_df["生猪出栏"] = pd.to_numeric(temp_df["生猪出栏"], errors="coerce")
         return temp_df
     elif symbol == "饲料原料数据":
-        url = "https://zt.zhuwang.cc/new_map/pigfeed/chart1.json"
+        url = "https://zhujia.zhuwang.cc/new_map/pigfeed/chart1.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -84,7 +84,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         temp_df["玉米播种面积"] = pd.to_numeric(temp_df["玉米播种面积"], errors="coerce")
         return temp_df
     elif symbol == "中央储备冻猪肉":
-        url = "https://zt.zhuwang.cc/new_map/chubeidongzhurou/chart2.json"
+        url = "https://zhujia.zhuwang.cc/new_map/chubeidongzhurou/chart2.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -94,7 +94,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         temp_df["value"] = pd.to_numeric(temp_df["value"])
         return temp_df
     elif symbol == "白条肉":
-        url = "https://zt.zhuwang.cc/new_map/baitiaozhurou/chart1.json"
+        url = "https://zhujia.zhuwang.cc/new_map/baitiaozhurou/chart1.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -126,7 +126,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         temp_df["value"] = pd.to_numeric(temp_df["value"])
         return temp_df
     elif symbol == "猪粮比价":
-        url = "https://zt.zhuwang.cc/new_map/zhuliangbi/chart2.json"
+        url = "https://zhujia.zhuwang.cc/new_map/zhuliangbi/chart2.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -136,7 +136,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         temp_df["value"] = pd.to_numeric(temp_df["value"])
         return temp_df
     elif symbol == "猪企销售简报-销售量":
-        url = "https://zt.zhuwang.cc/new_map/zhuqixiaoshoujianbao/xiaoliang.json"
+        url = "https://zhujia.zhuwang.cc/new_map/zhuqixiaoshoujianbao/xiaoliang.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -148,7 +148,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         temp_df["牧原"] = pd.to_numeric(temp_df["牧原"])
         return temp_df
     elif symbol == "猪企销售简报-销售额":
-        url = "https://zt.zhuwang.cc/new_map/zhuqixiaoshoujianbao/xiaoshoue.json"
+        url = "https://zhujia.zhuwang.cc/new_map/zhuqixiaoshoujianbao/xiaoshoue.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -160,7 +160,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         temp_df["牧原"] = pd.to_numeric(temp_df["牧原"])
         return temp_df
     elif symbol == "猪企销售简报-销售均价":
-        url = "https://zt.zhuwang.cc/new_map/zhuqixiaoshoujianbao/junjia.json"
+        url = "https://zhujia.zhuwang.cc/new_map/zhuqixiaoshoujianbao/junjia.json"
         params = {"timestamp": "1627567846422"}
         r = requests.get(url, params=params)
         data_json = r.json()
@@ -173,7 +173,7 @@ def futures_pig_info(symbol: str = "猪肉批发价") -> pd.DataFrame:
         return temp_df
 
 
-def futures_pig_rank(symbol: str = "外三元") -> pd.DataFrame:
+def futures_hog_rank(symbol: str = "外三元") -> pd.DataFrame:
     """
     价格排行榜
     https://zhujia.zhuwang.cc/lists.shtml
@@ -255,59 +255,59 @@ def futures_pig_rank(symbol: str = "外三元") -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    futures_pig_info_df = futures_pig_info(symbol="猪肉批发价")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="猪肉批发价")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="仔猪价格")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="仔猪价格")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="生猪期货指数")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="生猪期货指数")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="二元母猪价格")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="二元母猪价格")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="生猪产能数据")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="生猪产能数据")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="饲料原料数据")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="饲料原料数据")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="中央储备冻猪肉")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="中央储备冻猪肉")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="白条肉")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="白条肉")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="育肥猪配合饲料")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="育肥猪配合饲料")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="肉类价格指数")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="肉类价格指数")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="猪粮比价")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="猪粮比价")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="猪企销售简报-销售量")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="猪企销售简报-销售量")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="猪企销售简报-销售额")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="猪企销售简报-销售额")
+    print(futures_hog_info_df)
 
-    futures_pig_info_df = futures_pig_info(symbol="猪企销售简报-销售均价")
-    print(futures_pig_info_df)
+    futures_hog_info_df = futures_hog_info(symbol="猪企销售简报-销售均价")
+    print(futures_hog_info_df)
 
-    futures_pig_rank_df = futures_pig_rank(symbol="外三元")
-    print(futures_pig_rank_df)
+    futures_hog_rank_df = futures_hog_rank(symbol="外三元")
+    print(futures_hog_rank_df)
 
-    futures_pig_rank_df = futures_pig_rank(symbol="内三元")
-    print(futures_pig_rank_df)
+    futures_hog_rank_df = futures_hog_rank(symbol="内三元")
+    print(futures_hog_rank_df)
 
-    futures_pig_rank_df = futures_pig_rank(symbol="土杂猪")
-    print(futures_pig_rank_df)
+    futures_hog_rank_df = futures_hog_rank(symbol="土杂猪")
+    print(futures_hog_rank_df)
 
-    futures_pig_rank_df = futures_pig_rank(symbol="玉米")
-    print(futures_pig_rank_df)
+    futures_hog_rank_df = futures_hog_rank(symbol="玉米")
+    print(futures_hog_rank_df)
 
-    futures_pig_rank_df = futures_pig_rank(symbol="豆粕")
-    print(futures_pig_rank_df)
+    futures_hog_rank_df = futures_hog_rank(symbol="豆粕")
+    print(futures_hog_rank_df)

@@ -605,25 +605,25 @@ print(futures_comm_info_df)
 ```python
 import akshare as ak
 
-futures_rule_df = ak.futures_rule(date="20220106")
+futures_rule_df = ak.futures_rule(date="20221028")
 print(futures_rule_df)
 ```
 
 数据示例
 
 ```
-    交易所         品种  ...                                    特殊合约参数调整  调整备注
-0   上期所          铜  ...                       CU2201合约交易保证金比例为20.0%   NaN
-1   上期所        铜期权  ...  期权卖方交易保证金中涉及标的期货合约的公司交易保证金按照对应的期货合约保证金标准收取   NaN
-2   上期所          铝  ...                       AL2201合约交易保证金比例为20.0%   NaN
-3   上期所        铝期权  ...  期权卖方交易保证金中涉及标的期货合约的公司交易保证金按照对应的期货合约保证金标准收取   NaN
-4   上期所          锌  ...                       ZN2201合约交易保证金比例为20.0%   NaN
-..  ...        ...  ...                                         ...   ...
-86  中金所   上证50股指期货  ...                                         NaN   NaN
-87  中金所  中证500股指期货  ...                                         NaN   NaN
-88  中金所      2年期国债  ...                                         NaN   NaN
-89  中金所      5年期国债  ...                                         NaN   NaN
-90  中金所     10年期国债  ...                                         NaN   NaN
+    交易所          品种  ...                                    特殊合约参数调整  调整备注
+0   上期所           铜  ...                                         NaN   NaN
+1   上期所         铜期权  ...  期权卖方交易保证金中涉及标的期货合约的公司交易保证金按照对应的期货合约保证金标准收取   NaN
+2   上期所           铝  ...                                         NaN   NaN
+3   上期所         铝期权  ...  期权卖方交易保证金中涉及标的期货合约的公司交易保证金按照对应的期货合约保证金标准收取   NaN
+4   上期所           锌  ...                                         NaN   NaN
+..  ...         ...  ...                                         ...   ...
+93  中金所   沪深300股指期权  ...                      保证金调整系数为14%，最低保障系数为0.5   NaN
+94  中金所  中证1000股指期权  ...                      保证金调整系数为17%，最低保障系数为0.5   NaN
+95  中金所       2年期国债  ...                                         NaN   NaN
+96  中金所       5年期国债  ...                                         NaN   NaN
+97  中金所      10年期国债  ...                                         NaN   NaN
 ```
 
 #### 库存数据-99期货网
@@ -634,7 +634,7 @@ print(futures_rule_df)
 
 描述: 99 期货网-大宗商品库存数据; 周频率
 
-限量: 单次返回指定 exchange 和指定 symbol 的具体品种的交割仓库的仓单周报数据
+限量: 单次返回指定 exchange 和指定 symbol 的具体品种的期货库存数据, 仓单日报数据
 
 输入参数
 
@@ -642,21 +642,6 @@ print(futures_rule_df)
 |----------|-----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | exchange | str | exchange='大连商品交易所'; 交易所名称; choice of {"上海期货交易所", "郑州商品交易所", "大连商品交易所", "LME", "NYMEX", "CBOT", "NYBOT", "TOCOM", "上海国际能源交易中心", "OSE"}; 具体交易所查询：http://www.99qh.com/d/store.aspx |
 | symbol   | str | symbol='豆一'; 交易所对应的具体品种; 如：大连商品交易所的 豆一; 具体品种查询：http://www.99qh.com/d/store.aspx                                                                                                 |
-
-99 期货网的交易所代码
-
-| 交易所名称              | 代码           |
-|--------------------|--------------|
-| 上海期货交易所            | 1            |
-| 郑州商品交易所            | 2            |
-| 大连商品交易所            | 3            |
-| 上海国际能源交易中心         | 14           |
-| LME                | 7            |
-| NYMEX              | 8            |
-| CBOT               | 9            |
-| NYBOT              | 11           |
-| TOCOM              | 12           |
-| OSE                | 15           |
 
 输出参数
 
@@ -678,17 +663,17 @@ print(futures_inventory_99_df)
 数据示例
 
 ```
-      日期      库存      增减
-0  2021-01-08   82342   -4337
-1  2020-12-31   86679   11530
-2  2020-12-25   75149     927
-3  2020-12-18   74222   -7870
-4  2020-12-11   82092  -15691
-5  2020-12-04   97783    4871
-6  2020-11-27   92912   -3854
-7  2020-11-20   96766  -21183
-8  2020-11-13  117949  -13372
-9  2020-11-06  131321   -8336
+       日期     库存   增减
+0  2022-06-22  13851 -100
+1  2022-06-23  13441 -410
+2  2022-06-24  13241 -200
+3  2022-06-27  12971 -270
+4  2022-06-28  12226 -745
+5  2022-06-29  11886 -340
+6  2022-06-30  12821  935
+7  2022-07-01  12634 -187
+8  2022-07-04  12192 -442
+9  2022-07-05  11570 -622
 ```
 
 #### 库存数据-东方财富
@@ -697,54 +682,48 @@ print(futures_inventory_99_df)
 
 目标地址: http://data.eastmoney.com/ifdata/kcsj.html
 
-描述: 东方财富网-期货数据-库存数据; 近 20 个交易日的期货库存日频率数据
+描述: 东方财富网-期货数据-库存数据; 近 60 个交易日的期货库存日频率数据
 
-限量: 返回指定交易所指定品种的指定交割仓库仓单日报数据
+限量: 返回指定交易所指定品种的期货库存数据, 仓单日报数据
 
 输入参数
 
-| 名称       | 类型  | 必选  | 描述                                                                     |
-|----------|-----|-----|------------------------------------------------------------------------|
-| exchange | str | Y   | exchange="上海期货交易所"; choice of {"上海期货交易所", "郑州商品交易所", "大连商品交易所"}        |
-| symbol   | str | Y   | symbol="沪铝"; http://data.eastmoney.com/ifdata/kcsj.html 对应的中文名称, 如: 沪铝 |
+| 名称       | 类型  | 描述                                                                     |
+|----------|-----|------------------------------------------------------------------------|
+| symbol   | str | symbol="豆一"; http://data.eastmoney.com/ifdata/kcsj.html 对应的中文名称, 如: 沪铝 |
 
 输出参数
 
-| 名称  | 类型  | 默认显示 | 描述          |
-|-----|-----|------|-------------|
-| 日期  | str | Y    | 日期          |
-| 库存  | str | Y    | 库存数据        |
-| 增减  | str | Y    | 相对前一个交易日的增减 |
+| 名称  | 类型      | 描述          |
+|-----|---------|-------------|
+| 日期  | object  | 日期          |
+| 库存  | int64   | 库存数据        |
+| 增减  | float64 | 相对前一个交易日的增减 |
 
 接口示例
 
 ```python
 import akshare as ak
 
-futures_inventory_em_df = ak.futures_inventory_em(exchange="大连商品交易所", symbol="豆粕")
+futures_inventory_em_df = ak.futures_inventory_em(symbol="豆一")
 print(futures_inventory_em_df)
 ```
 
 数据示例
 
 ```
-      日期    库存     增减
-0   2020-04-24  5450      0
-1   2020-04-23  5450      0
-2   2020-04-22  5450      0
-3   2020-04-21  5450      0
-4   2020-04-20  5450      0
-5   2020-04-17  5450      0
-6   2020-04-16  5450      0
-7   2020-04-15  5450      0
-8   2020-04-14  5450      0
-9   2020-04-13  5450      0
-10  2020-04-10  5450      0
-11  2020-04-09  5450   2250
-12  2020-04-08  3200   3200
-13  2020-03-31     0  -4011
-14  2020-03-30  4011  -3100
-15  2020-03-27  7111  -1000
+     日期    库存     增减
+0   2022-08-17  5343    NaN
+1   2022-08-18  5713  370.0
+2   2022-08-19  5613 -100.0
+3   2022-08-22  5099 -514.0
+4   2022-08-23  4979 -120.0
+..         ...   ...    ...
+62  2022-11-21  9509 -150.0
+63  2022-11-22  9802  293.0
+64  2022-11-23  9850   48.0
+65  2022-11-24  9850    0.0
+66  2022-11-25  9844   -6.0
 ```
 
 #### 展期收益率
@@ -1045,20 +1024,21 @@ print(futures_dce_detail_dict)
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| trade_date | str | Y | trade_date="20200702"; 交易日 |
+| 名称         | 类型  | 描述                         |
+|------------|-----|----------------------------|
+| trade_date | str | trade_date="20200702"; 交易日 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 键值对字典      | dict   | Y        | 键值对, 键为品种代码, 值为 pandas.DataFrame 格式的数据  |
+| 名称    | 类型   | 描述                                     |
+|-------|------|----------------------------------------|
+| 键值对字典 | dict | 键值对, 键为品种代码, 值为 pandas.DataFrame 格式的数据 |
 
 接口示例
 
 ```python
 import akshare as ak
+
 czce_warehouse_receipt_df = ak.futures_czce_warehouse_receipt(trade_date="20200702")
 print(czce_warehouse_receipt_df)
 ```
@@ -1127,26 +1107,27 @@ print(czce_warehouse_receipt_df)
 
 目标地址: http://www.dce.com.cn/dalianshangpin/xqsj/tjsj26/rtj/cdrb/index.html
 
-描述: 提供大连商品交易所-行情数据-统计数据-日统计-仓单日报
+描述: 大连商品交易所-行情数据-统计数据-日统计-仓单日报
 
 限量: 单次返回当前交易日的所有仓单日报数据
 
 输入参数
 
-| 名称   | 类型 | 必选 | 描述                                                                              |
-| -------- | ---- | ---- | --- |
-| trade_date | str | Y | trade_date="20200702"; 交易日 |
+| 名称         | 类型  | 描述                         |
+|------------|-----|----------------------------|
+| trade_date | str | trade_date="20200702"; 交易日 |
 
 输出参数
 
-| 名称          | 类型 | 默认显示 | 描述           |
-| --------------- | ----- | -------- | ---------------- |
-| 键值对字典      | dict   | Y        | 键值对, 键为品种代码, 值为 pandas.DataFrame 格式的数据  |
+| 名称    | 类型   | 描述                                     |
+|-------|------|----------------------------------------|
+| 键值对字典 | dict | 键值对, 键为品种代码, 值为 pandas.DataFrame 格式的数据 |
 
 接口示例
 
 ```python
 import akshare as ak
+
 futures_dce_warehouse_receipt_df = ak.futures_dce_warehouse_receipt(trade_date="20200702")
 print(futures_dce_warehouse_receipt_df)
 ```
@@ -1287,16 +1268,16 @@ print(futures_shfe_warehouse_receipt_df)
 
 #### 日线行情K线
 
-通过采集交易所官网信息, 可以获得各合约日线行情, 以及根据持仓量加权的指数行情, 用法如下:
+通过采集交易所官网信息, 可以获得各合约日线行情, 用法如下:
 
 ```python
 import akshare as ak
-get_futures_daily_df = ak.get_futures_daily(start_date="20190107", end_date="20190108", market="SHFE", index_bar=True)
+
+get_futures_daily_df = ak.get_futures_daily(start_date="20190107", end_date="20190108", market="SHFE")
 print(get_futures_daily_df)
 ```
 
 market 可以添为四个交易所的简称, 即 "DCE" 代表大商所; "INE" 代表能源所; "SHFE" 代表上期所; "CZCE" 代表郑商所, 时间需要大于20100824; "CFFEX" 代表中金所.
-index_bar 为 True 时, 在生成的 pandas.DataFrame 中通过持仓量加权合成指数合约, 如 RB99.
 
 #### 期转现-大商所
 
@@ -2250,7 +2231,6 @@ print(futures_zh_daily_sina_df)
 | start_date | str | start_date="20200701"                                           |
 | end_date   | str | end_date="20200716"                                             |
 | market     | str | market="DCE"; choice of {"CFFEX", "INE", "CZCE", "DCE", "SHFE"} |
-| index_bar  | str | index_bar=False; 是否合成指数                                         |
 
 输出参数
 
@@ -2274,7 +2254,7 @@ print(futures_zh_daily_sina_df)
 ```python
 import akshare as ak
 
-get_futures_daily_df = ak.get_futures_daily(start_date="20200701", end_date="20200716", market="DCE", index_bar=False)
+get_futures_daily_df = ak.get_futures_daily(start_date="20200701", end_date="20200716", market="DCE")
 print(get_futures_daily_df)
 ```
 
@@ -2371,28 +2351,28 @@ print(futures_hq_subscribe_exchange_symbol_df)
 
 输入参数
 
-| 名称   | 类型 |  描述     |
-| -------- | ---- | --- |
-| subscribe_list | list | 需要订阅的合约代码; 调用 **ak.futures_hq_subscribe_exchange_symbol()** 获取字段及代码对应表  |
+| 名称             | 类型   | 描述                                                                     |
+|----------------|------|------------------------------------------------------------------------|
+| subscribe_list | list | 需要订阅的合约代码; 调用 **ak.futures_hq_subscribe_exchange_symbol()** 获取字段及代码对应表 |
 
 输出参数
 
-| 名称          | 类型 |  描述           |
-| --------------- | ------- |  ---------------- |
-| 名称      | object   |  -  |
-| 最新价      | float64   | -  |
-| 人民币报价      | float64   |  -   |
-| 涨跌额      | float64   |  -        |
-| 涨跌幅        | float64 |  -    |
-| 开盘价         | float64 | -         |
-| 最高价      | float64 |  -      |
-| 最低价      | float64 |  -      |
-| 昨日结算价      | float64 |  -      |
-| 持仓量      | float64   |  -        |
-| 买价        | float64   | -    |
-| 卖价      | float64 |  -      |
-| 行情时间      | object |  -      |
-| 日期      | object |  -      |
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 名称    | object  | -   |
+| 最新价   | float64 | -   |
+| 人民币报价 | float64 | -   |
+| 涨跌额   | float64 | -   |
+| 涨跌幅   | float64 | -   |
+| 开盘价   | float64 | -   |
+| 最高价   | float64 | -   |
+| 最低价   | float64 | -   |
+| 昨日结算价 | float64 | -   |
+| 持仓量   | float64 | -   |
+| 买价    | float64 | -   |
+| 卖价    | float64 | -   |
+| 行情时间  | object  | -   |
+| 日期    | object  | -   |
 
 接口示例
 
@@ -3184,17 +3164,17 @@ print(futures_price_index_nh_df)
 
 ```
             date       value
-0     2004-05-31  3182.47000
-1     2004-06-01  3253.56000
-2     2004-06-02  3228.85000
-3     2004-06-03  3240.11000
-4     2004-06-06  3206.05000
+0     2006-01-10  5076.97000
+1     2006-01-11  5067.15000
+2     2006-01-12  5064.05000
+3     2006-01-13  5015.42000
+4     2006-01-16  5039.58000
           ...         ...
-4261  2021-12-12  5940.22871
-4262  2021-12-13  5911.65821
-4263  2021-12-14  5903.40275
-4264  2021-12-15  5974.44006
-4265  2021-12-16  5981.32376
+4084  2022-11-07  9346.86433
+4085  2022-11-08  9314.52648
+4086  2022-11-09  9090.63555
+4087  2022-11-10  9085.68164
+4088  2022-11-11  9174.23577
 ```
 
 #### 波动率指数
@@ -3679,9 +3659,9 @@ print(futures_comex_inventory_df)
 
 ### 生猪信息
 
-接口: futures_pig_info
+接口: futures_hog_info
 
-目标地址: https://zhujia.zhuwang.cc/
+目标地址:  https://zhujia.zhuwang.cc/
 
 描述: 养猪数据中心-猪肉价格信息数据
 
@@ -3705,8 +3685,8 @@ print(futures_comex_inventory_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="猪肉批发价")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="猪肉批发价")
+print(futures_hog_info_df)
 ```
 
 数据示例-猪肉批发价
@@ -3738,8 +3718,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="仔猪价格")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="仔猪价格")
+print(futures_hog_info_df)
 ```
 
 数据示例-仔猪价格
@@ -3783,8 +3763,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="生猪期货指数")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="生猪期货指数")
+print(futures_hog_info_df)
 ```
 
 数据示例-生猪期货指数
@@ -3816,8 +3796,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="二元母猪价格")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="二元母猪价格")
+print(futures_hog_info_df)
 ```
 
 数据示例-二元母猪价格
@@ -3852,8 +3832,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="生猪产能数据")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="生猪产能数据")
+print(futures_hog_info_df)
 ```
 
 数据示例-生猪产能数据
@@ -3891,8 +3871,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="饲料原料数据")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="饲料原料数据")
+print(futures_hog_info_df)
 ```
 
 数据示例-饲料原料数据
@@ -3920,8 +3900,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="中央储备冻猪肉")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="中央储备冻猪肉")
+print(futures_hog_info_df)
 ```
 
 数据示例-中央储备冻猪肉
@@ -3967,8 +3947,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="白条肉")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="白条肉")
+print(futures_hog_info_df)
 ```
 
 数据示例-白条肉
@@ -4003,8 +3983,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="育肥猪配合饲料")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="育肥猪配合饲料")
+print(futures_hog_info_df)
 ```
 
 数据示例-白条肉
@@ -4036,8 +4016,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="肉类价格指数")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="肉类价格指数")
+print(futures_hog_info_df)
 ```
 
 数据示例-肉类价格指数
@@ -4081,8 +4061,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="猪粮比价")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="猪粮比价")
+print(futures_hog_info_df)
 ```
 
 数据示例-猪粮比价
@@ -4117,8 +4097,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="猪企销售简报-销售量")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="猪企销售简报-销售量")
+print(futures_hog_info_df)
 ```
 
 数据示例-猪企销售简报-销售量
@@ -4148,8 +4128,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="猪企销售简报-销售额")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="猪企销售简报-销售额")
+print(futures_hog_info_df)
 ```
 
 数据示例-猪企销售简报-销售额
@@ -4179,8 +4159,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_info_df = ak.futures_pig_info(symbol="猪企销售简报-销售均价")
-print(futures_pig_info_df)
+futures_hog_info_df = ak.futures_hog_info(symbol="猪企销售简报-销售均价")
+print(futures_hog_info_df)
 ```
 
 数据示例-猪企销售简报-销售均价
@@ -4197,9 +4177,9 @@ print(futures_pig_info_df)
 
 ### 生猪价格排行
 
-接口: futures_pig_rank
+接口: futures_hog_rank
 
-目标地址: https://zhujia.zhuwang.cc/lists.shtml
+目标地址:  https://zhujia.zhuwang.cc/
 
 描述: 养猪数据中心-生猪价格排行
 
@@ -4226,8 +4206,8 @@ print(futures_pig_info_df)
 ```python
 import akshare as ak
 
-futures_pig_rank_df = ak.futures_pig_rank(symbol="外三元")
-print(futures_pig_rank_df)
+futures_hog_rank_df = ak.futures_hog_rank(symbol="外三元")
+print(futures_hog_rank_df)
 ```
 
 数据示例-外三元
@@ -4282,8 +4262,8 @@ print(futures_pig_rank_df)
 ```python
 import akshare as ak
 
-futures_pig_rank_df = ak.futures_pig_rank(symbol="内三元")
-print(futures_pig_rank_df)
+futures_hog_rank_df = ak.futures_hog_rank(symbol="内三元")
+print(futures_hog_rank_df)
 ```
 
 数据示例-内三元
@@ -4338,8 +4318,8 @@ print(futures_pig_rank_df)
 ```python
 import akshare as ak
 
-futures_pig_rank_df = ak.futures_pig_rank(symbol="土杂猪")
-print(futures_pig_rank_df)
+futures_hog_rank_df = ak.futures_hog_rank(symbol="土杂猪")
+print(futures_hog_rank_df)
 ```
 
 数据示例-土杂猪
@@ -4394,8 +4374,8 @@ print(futures_pig_rank_df)
 ```python
 import akshare as ak
 
-futures_pig_rank_df = ak.futures_pig_rank(symbol="玉米")
-print(futures_pig_rank_df)
+futures_hog_rank_df = ak.futures_hog_rank(symbol="玉米")
+print(futures_hog_rank_df)
 ```
 
 数据示例-玉米
@@ -4450,8 +4430,8 @@ print(futures_pig_rank_df)
 ```python
 import akshare as ak
 
-futures_pig_rank_df = ak.futures_pig_rank(symbol="豆粕")
-print(futures_pig_rank_df)
+futures_hog_rank_df = ak.futures_hog_rank(symbol="豆粕")
+print(futures_hog_rank_df)
 ```
 
 数据示例-豆粕
@@ -4489,6 +4469,61 @@ print(futures_pig_rank_df)
 28  29  豆粕    广西   3496  1.75
 29  30  豆粕   青海省   3193  1.60
 30  31  豆粕    西藏   2642  1.32
+```
+
+### 生猪市场价格指数
+
+接口: index_hog_spot_price
+
+目标地址: http://hqb.nxin.com/pigindex/index.shtml
+
+描述: 行情宝-生猪市场价格指数
+
+限量: 单次返回所有数据
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数
+
+| 名称     | 类型      | 描述         |
+|--------|---------|------------|
+| 日期     | object  | -          |
+| 指数     | float64 | -          |
+| 4个月均线  | float64 | -          |
+| 6个月均线  | float64 | -          |
+| 12个月均线 | float64 | -          |
+| 预售均价   | float64 | 注意单位: 元/公斤 |
+| 成交均价   | float64 | 注意单位: 元/公斤 |
+| 成交均重   | int64   | 注意单位: kg   |
+
+接口示例
+
+```python
+import akshare as ak
+
+index_hog_spot_price_df = ak.index_hog_spot_price()
+print(index_hog_spot_price_df)
+```
+
+数据示例
+
+```
+     日期          指数   4个月均线   6个月均线  12个月均线  预售均价   成交均价  成交均重
+0    2015-01-05   92.88     NaN     NaN     NaN   0.00  13.49     0
+1    2015-01-12   92.82     NaN     NaN     NaN   0.00  13.48     0
+2    2015-01-19   93.29     NaN     NaN     NaN   0.00  13.55     0
+3    2015-01-26   93.48     NaN     NaN     NaN   0.00  13.57     0
+4    2015-02-02   92.12     NaN     NaN     NaN   0.00  13.38     0
+..          ...     ...     ...     ...     ...    ...    ...   ...
+395  2022-10-17  189.27  155.01  138.04  120.97  26.22  27.48   110
+396  2022-10-24  193.57  159.47  141.98  123.11  27.40  28.11   110
+397  2022-10-31  185.18  163.11  145.18  124.75  27.12  26.89   110
+398  2022-11-07  180.98  165.49  148.09  126.09  26.35  26.28   119
+399  2022-11-14  170.49  166.16  150.59  127.17  25.37  24.76   120
 ```
 
 ### 鸡蛋信息
@@ -4649,4 +4684,103 @@ print(futures_egg_price_area_df)
 2421  2021/8/17  4.61  4.65  4.68  4.61  4.73  4.75
 2422  2021/8/18  4.56  4.62  4.68  4.61  4.73  4.74
 2423  2021/8/19  4.52  4.60  4.68  4.70  4.75  4.67
+```
+
+### 期货资讯
+
+接口: futures_news_shmet
+
+目标地址: https://www.shmet.com/newsFlash/newsFlash.html?searchKeyword=
+
+描述: 上海金属网-快讯
+
+限量: 指定 symbol 的数据
+
+输入参数
+
+| 名称     | 类型  | 描述                                                                                           |
+|--------|-----|----------------------------------------------------------------------------------------------|
+| symbol | str | symbol="全部"; choice of {"全部", "要闻", "VIP", "财经", "铜", "铝", "铅", "锌", "镍", "锡", "贵金属", "小金属"} |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 发布时间 | object | -   |
+| 内容   | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+futures_news_shmet_df = ak.futures_news_shmet(symbol="铜")
+print(futures_news_shmet_df)
+```
+
+数据示例
+
+```
+                         发布时间                                                 内容
+0   2022-06-15 15:00:51+08:00  【SHMET基本金属现货对LME3月比值】上海金属网讯：截止15:00，沪铜现货/lme3月...
+1   2022-06-15 15:02:40+08:00  【SHFE收盘_基本金属行情】沪铜主力跌1.01%报70670；结算价71010；沪铝主力跌...
+2   2022-06-15 15:07:03+08:00  【SHMET期现交割成本核算】上海金属网讯：2022年6月15日有色金属现货对期货合约年化收...
+3   2022-06-15 15:13:10+08:00  【SHMET基差日报】上海金属网讯：今现货-沪铜2207收盘后基差为580元/吨，较上一交易...
+4   2022-06-15 15:36:05+08:00  【06月15日上期所基本金属仓单】铜期货仓单19545吨，较前一日增加10212吨;铝期货仓...
+..                        ...                                                ...
+995 2022-07-29 11:40:18+08:00  【SHMET基本金属月均价】铜58324元/吨，较上月下跌11136元/吨；铝18136元/...
+996 2022-07-29 11:40:18+08:00  【SHMET基本金属本周均价】铜59123元/吨，较上周上涨2617元/吨；铝18140元/...
+997 2022-07-29 11:41:22+08:00  【《中国矿产供应链尽责管理指南》正式获得LME负责任供应链的有条件合规资格】中国五矿化工进出...
+998 2022-07-29 11:51:28+08:00  【SHMET铜现货报价】上海金属网讯：截止11:30分，上海金属网1#电解铜报价60180-...
+999 2022-07-29 11:56:38+08:00  【期铜偏强 现货市场成交一般】今日上海金属网1#电解铜报价60180-60450元/吨，均价...
+```
+
+### 期货新闻
+
+接口: futures_news_baidu
+
+目标地址: https://gushitong.baidu.com/futures/ab-CJ888
+
+描述: 百度股市通-期货-新闻
+
+限量: 指定 symbol 的近期新闻数据
+
+输入参数
+
+| 名称     | 类型  | 描述                  |
+|--------|-----|---------------------|
+| symbol | str | symbol="AL"; 期货品种代码 |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 标题   | object | -   |
+| 发布时间 | object | -   |
+| 新闻链接 | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+futures_news_baidu_df = ak.futures_news_baidu(symbol="AL")
+print(futures_news_baidu_df)
+```
+
+数据示例
+
+```
+                                                标题  ...                                               新闻链接
+0                      刷新认知！上市公司董事长带队炒期货  4个月暴赚近7亿  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
+1                           【调研报告】铝：铝价年内将以震荡偏弱走势为主  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
+2                     【调研报告――铝】广东铝下游调研―消费乏力，旺季有待检验  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
+3      【SMM金属早参】原油续跌 伦镍跌超9% 内盘沪铝涨超1%\| 产业链供应情况调研一览  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
+4                            【金属周末要闻】金属市场基本面最新调研出炉  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
+..                                             ...  ...                                                ...
+526                  金属普跌 沪锌、沪镍、沪铝、铁矿石均跌超3% 焦炭跌超4%  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
+527  【期货收评】崩跌！大宗商品遭恐慌抛售  沪锌跌5%创3个月新低 铁矿、焦炭、沪铝大跌超4%  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
+528                  【期市盘面】近60亿资金涌出！原油、铁矿等品种惨遭资金抛售  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
+529                  【仓单】10月31日上期所沪铝期货仓单较上一日增加397吨  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
+530                                    商品日报：10月31日  ...  https://fupage.10jqka.com.cn/activity-v2/pc-ne...
 ```

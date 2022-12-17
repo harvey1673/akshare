@@ -7,6 +7,7 @@ Desc: 股票基本信息
 import json
 import warnings
 from io import BytesIO
+from functools import lru_cache
 
 import pandas as pd
 import requests
@@ -137,7 +138,7 @@ def stock_info_sh_name_code(indicator: str = "主板A股") -> pd.DataFrame:
         "CSRC_CODE": "",
         "STOCK_CODE": "",
         "sqlId": "COMMON_SSE_CP_GPJCTPZ_GPLB_GP_L",
-        "COMPANY_STATUS": "2, 4, 5, 7, 8",
+        "COMPANY_STATUS": "2,4,5,7,8",
         "type": "inParams",
         "isPagination": "true",
         "pageHelp.cacheSize": "1",
@@ -150,7 +151,7 @@ def stock_info_sh_name_code(indicator: str = "主板A股") -> pd.DataFrame:
     r = requests.get(url, params=params, headers=headers)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["result"])
-    temp_df.columns = [
+    columns = [
         "-",
         "-",
         "-",
@@ -162,9 +163,18 @@ def stock_info_sh_name_code(indicator: str = "主板A股") -> pd.DataFrame:
         "-",
         "上市日期",
         "-",
-        "证券代码",
+        "-",
         "-",
     ]
+
+    # column index 3=A_STOCK_CODE, 8=B_STOCK_CODE, 11=COMPANY_CODE
+    if indicator == "主板B股":
+        columns[8] = "证券代码"
+    else:
+        columns[3] = "证券代码"
+
+    temp_df.columns = columns
+
     temp_df = temp_df[
         [
             "证券代码",
@@ -198,7 +208,7 @@ def stock_info_bj_name_code() -> pd.DataFrame:
     data_json = json.loads(data_text[data_text.find("[") : -1])
     total_page = data_json[0]["totalPages"]
     big_df = pd.DataFrame()
-    for page in tqdm(range(total_page)):
+    for page in tqdm(range(total_page), leave=False):
         payload.update({"page": page})
         r = requests.post(url, data=payload)
         data_text = r.text
@@ -417,6 +427,7 @@ def stock_info_change_name(symbol: str = "000503") -> pd.DataFrame:
         return pd.DataFrame()
 
 
+@lru_cache()
 def stock_info_a_code_name() -> pd.DataFrame:
     """
     沪深京 A 股列表
@@ -448,6 +459,9 @@ def stock_info_a_code_name() -> pd.DataFrame:
 
 if __name__ == "__main__":
     stock_info_sh_name_code_df = stock_info_sh_name_code(indicator="主板A股")
+    print(stock_info_sh_name_code_df)
+
+    stock_info_sh_name_code_df = stock_info_sh_name_code(indicator="主板B股")
     print(stock_info_sh_name_code_df)
 
     stock_info_sz_name_code_df = stock_info_sz_name_code(indicator="A股列表")

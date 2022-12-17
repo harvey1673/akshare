@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/12/31 14:28
-Desc: 新浪财经-所有指数-实时行情数据和历史行情数据
+Date: 2022/11/12 21:28
+Desc: 股票指数数据-新浪-东财-腾讯
+所有指数-实时行情数据和历史行情数据
 https://finance.sina.com.cn/realstock/company/sz399552/nc.shtml
 """
 import datetime
@@ -67,7 +68,8 @@ def stock_zh_index_spot() -> pd.DataFrame:
         zh_sina_stock_payload_copy.update({"page": page})
         res = requests.get(zh_sina_index_stock_url, params=zh_sina_stock_payload_copy)
         data_json = demjson.decode(res.text)
-        big_df = big_df.append(pd.DataFrame(data_json), ignore_index=True)
+        big_df = pd.concat([big_df, pd.DataFrame(data_json)], ignore_index=True)
+
     big_df = big_df.applymap(_replace_comma)
     big_df["trade"] = big_df["trade"].astype(float)
     big_df["pricechange"] = big_df["pricechange"].astype(float)
@@ -182,7 +184,7 @@ def stock_zh_index_daily_tx(symbol: str = "sz980017") -> pd.DataFrame:
     http://gu.qq.com/sh000919/zs
     :param symbol: 带市场标识的股票或者指数代码
     :type symbol: str
-    :return: 后复权的股票和指数数据
+    :return: 前复权的股票和指数数据
     :rtype: pandas.DataFrame
     """
     start_date = _get_tx_start_year(symbol=symbol)
@@ -206,7 +208,7 @@ def stock_zh_index_daily_tx(symbol: str = "sz980017") -> pd.DataFrame:
             inner_temp_df = pd.DataFrame(
                 demjson.decode(text[text.find("={") + 1 :])["data"][symbol]["qfqday"]
             )
-        temp_df = temp_df.append(inner_temp_df, ignore_index=True)
+        temp_df = pd.concat([temp_df, inner_temp_df], ignore_index=True)
     if temp_df.shape[1] == 6:
         temp_df.columns = ["date", "open", "close", "high", "low", "amount"]
     else:
@@ -218,14 +220,14 @@ def stock_zh_index_daily_tx(symbol: str = "sz980017") -> pd.DataFrame:
     temp_df["high"] = pd.to_numeric(temp_df["high"])
     temp_df["low"] = pd.to_numeric(temp_df["low"])
     temp_df["amount"] = pd.to_numeric(temp_df["amount"])
-    temp_df.drop_duplicates(inplace=True)
+    temp_df.drop_duplicates(inplace=True, ignore_index=True)
     return temp_df
 
 
 def stock_zh_index_daily_em(symbol: str = "sh000913") -> pd.DataFrame:
     """
     东方财富网-股票指数数据
-    http://quote.eastmoney.com/center/hszs.html
+    https://quote.eastmoney.com/center/hszs.html
     :param symbol: 带市场标识的指数代码
     :type symbol: str
     :return: 指数数据

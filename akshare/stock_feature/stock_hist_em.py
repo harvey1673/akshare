@@ -11,7 +11,7 @@ import pandas as pd
 def stock_zh_a_spot_em() -> pd.DataFrame:
     """
     东方财富网-沪深京 A 股-实时行情
-    http://quote.eastmoney.com/center/gridlist.html#hs_a_board
+    https://quote.eastmoney.com/center/gridlist.html#hs_a_board
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
@@ -130,7 +130,7 @@ def stock_sh_a_spot_em() -> pd.DataFrame:
     url = "http://82.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
-        "pz": "5000",
+        "pz": "50000",
         "po": "1",
         "np": "1",
         "ut": "bd1d9ddb04089700cf9c27f6f7426281",
@@ -242,7 +242,7 @@ def stock_sz_a_spot_em() -> pd.DataFrame:
     url = "http://82.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
-        "pz": "5000",
+        "pz": "50000",
         "po": "1",
         "np": "1",
         "ut": "bd1d9ddb04089700cf9c27f6f7426281",
@@ -354,7 +354,7 @@ def stock_bj_a_spot_em() -> pd.DataFrame:
     url = "http://82.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
-        "pz": "5000",
+        "pz": "50000",
         "po": "1",
         "np": "1",
         "ut": "bd1d9ddb04089700cf9c27f6f7426281",
@@ -466,7 +466,7 @@ def stock_new_a_spot_em() -> pd.DataFrame:
     url = "http://82.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
-        "pz": "5000",
+        "pz": "50000",
         "po": "1",
         "np": "1",
         "ut": "bd1d9ddb04089700cf9c27f6f7426281",
@@ -583,7 +583,7 @@ def stock_kc_a_spot_em() -> pd.DataFrame:
     url = "http://7.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
-        "pz": "5000",
+        "pz": "50000",
         "po": "1",
         "np": "1",
         "ut": "bd1d9ddb04089700cf9c27f6f7426281",
@@ -696,7 +696,7 @@ def stock_zh_b_spot_em() -> pd.DataFrame:
     url = "http://28.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
-        "pz": "5000",
+        "pz": "50000",
         "po": "1",
         "np": "1",
         "ut": "bd1d9ddb04089700cf9c27f6f7426281",
@@ -879,7 +879,7 @@ def stock_zh_a_hist(
 ) -> pd.DataFrame:
     """
     东方财富网-行情首页-沪深京 A 股-每日行情
-    http://quote.eastmoney.com/concept/sh603777.html?from=classic
+    https://quote.eastmoney.com/concept/sh603777.html?from=classic
     :param symbol: 股票代码
     :type symbol: str
     :param period: choice of {'daily', 'weekly', 'monthly'}
@@ -954,7 +954,7 @@ def stock_zh_a_hist_min_em(
 ) -> pd.DataFrame:
     """
     东方财富网-行情首页-沪深京 A 股-每日分时行情
-    http://quote.eastmoney.com/concept/sh603777.html?from=classic
+    https://quote.eastmoney.com/concept/sh603777.html?from=classic
     :param symbol: 股票代码
     :type symbol: str
     :param start_date: 开始日期
@@ -1146,7 +1146,7 @@ def stock_hk_spot_em() -> pd.DataFrame:
     url = "http://72.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
-        "pz": "5000",
+        "pz": "50000",
         "po": "1",
         "np": "1",
         "ut": "bd1d9ddb04089700cf9c27f6f7426281",
@@ -1689,10 +1689,10 @@ if __name__ == "__main__":
     print(stock_hk_spot_em_df)
 
     stock_zh_a_hist_df = stock_zh_a_hist(
-        symbol="301183",
-        period="weekly",
+        symbol="430090",
+        period="daily",
         start_date="20220516",
-        end_date="20220522",
+        end_date="20220722",
         adjust="hfq",
     )
     print(stock_zh_a_hist_df)
@@ -1757,8 +1757,8 @@ if __name__ == "__main__":
         symbol="000001",
         period="60",
         adjust="hfq",
-        start_date="2022-06-02 09:32:00",
-        end_date="2022-06-02 14:40:00",
+        start_date="2022-07-01 09:32:00",
+        end_date="2022-07-01 14:40:00",
     )
     print(stock_zh_a_hist_min_em_df)
 
@@ -1775,8 +1775,8 @@ if __name__ == "__main__":
         symbol="01611",
         period="1",
         adjust="",
-        start_date="2022-06-02 09:30:00",
-        end_date="2022-06-02 18:32:00",
+        start_date="2022-10-02 09:30:00",
+        end_date="2022-10-29 18:32:00",
     )
     print(stock_hk_hist_min_em_df)
 

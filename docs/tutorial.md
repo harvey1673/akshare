@@ -164,6 +164,9 @@
  "sw_index_daily_indicator"  # 申万一级、二级历史行情指标
  "sw_index_third_info"  # 申万三级信息
  "sw_index_third_cons"  # 申万三级信息成份
+ "index_level_one_hist_sw"  # 申万指数-指数发布-指数体系-一级行业
+ "index_market_representation_hist_sw"  # 申万指数-指数发布-指数体系-市场表征
+ "index_style_index_hist_sw"  # 申万指数-指数发布-指数体系-风格指数
  # 空气质量
  "air_quality_hist"  # 空气质量历史数据
  "air_quality_rank"  # 空气质量排行
@@ -220,8 +223,8 @@
  "stock_gpzy_profile_em"  # 获取股权质押市场概况
  "stock_gpzy_pledge_ratio_em"  # 获取上市公司质押比例
  "stock_gpzy_pledge_ratio_detail_em"  # 获取重要股东股权质押明细
- "stock_em_gpzy_distribute_statistics_company"  # 获取质押机构分布统计-证券公司
- "stock_em_gpzy_distribute_statistics_bank"  # 获取质押机构分布统计-银行
+ "stock_gpzy_distribute_statistics_company_em"  # 获取质押机构分布统计-证券公司
+ "stock_gpzy_distribute_statistics_bank_em"  # 获取质押机构分布统计-银行
  "stock_gpzy_industry_data_em"  # 获取上市公司质押比例-行业数据
  # 商誉专题数据
  "stock_em_sy_profile"  # 获取A股商誉市场概况
@@ -393,6 +396,9 @@
  "option_cffex_hs300_list_sina"  # 沪深300期权列表
  "option_cffex_hs300_spot_sina"  # 沪深300期权实时行情
  "option_cffex_hs300_daily_sina"  # 沪深300期权历史行情-日频
+ "option_cffex_zz1000_list_sina"  # 中证1000期权列表
+ "option_cffex_zz1000_spot_sina"  # 中证1000期权实时行情
+ "option_cffex_zz1000_daily_sina"  # 中证1000期权历史行情-日频
  "option_sse_list_sina"  # 上交所期权列表
  "option_sse_expire_day_sina"  # 上交所期权剩余到期日
  "option_sse_codes_sina"  # 上交所期权代码
@@ -422,6 +428,7 @@
  "currency_name_code"  # 当前所有可兑换货币对
  # 公募基金
  "fund_name_em",  # 基金基本信息
+ "fund_info_index_em",  # 指数型基金-基本信息
  "fund_purchase_em",  # 基金申购状态
  "fund_open_fund_daily_em",  # 开放式基金-实时数据
  "fund_open_fund_info_em",  # 开放式基金-历史数据
@@ -458,6 +465,7 @@
  "stock_hsgt_institution_statistics_em"  # 沪深港通持股-每日机构统计
  "stock_hsgt_hist_em"  # 沪深港通历史数据
  "stock_hsgt_board_rank_em"  # 板块排行
+ "stock_hsgt_fund_flow_summary_em"  # 沪深港通资金流向
  # 两市停复牌
  "stock_tfp_em"  # 两市停复牌数据
  # 恐慌指数
@@ -479,7 +487,6 @@
  "hf_sp_500"  # 获取标普500指数的分钟数据
  # 商品期货库存数据
  "futures_inventory_em"  # 库存数据-东方财富
- "futures_inventory_99"  # 库存数据-99期货
  # 个股资金流
  "stock_individual_fund_flow"  # 个股资金流
  "stock_individual_fund_flow_rank"  # 个股资金流排名
@@ -494,7 +501,11 @@
  "stock_history_dividend_detail"  # 分红配股
  "stock_history_dividend"  # 历史分红
  "stock_dividents_cninfo"  # 个股历史分红
- "stock_restricted_shares"  # 限售解禁
+ "stock_restricted_release_queue_sina"  # 限售解禁-新浪
+ "stock_restricted_release_summary_em"  # 东方财富网-数据中心-特色数据-限售股解禁
+ "stock_restricted_release_detail_em"  # 东方财富网-数据中心-限售股解禁-解禁详情一览
+ "stock_restricted_release_queue_em"  # 东方财富网-数据中心-个股限售解禁-解禁批次
+ "stock_restricted_release_stockholder_em"  # 东方财富网-数据中心-个股限售解禁-解禁股东
  "stock_circulate_stock_holder"  # 流动股东
  "stock_fund_stock_holder"  # 基金持股
  "stock_main_stock_holder"  # 主要股东
@@ -525,7 +536,7 @@
  # 美股港股目标价
  "stock_price_js"  # 美股港股目标价
  # 券商业绩月报
- "stock_em_qsjy"  # 券商业绩月报
+ "stock_qsjy_em"  # 券商业绩月报
  # 彭博亿万富豪指数
  "index_bloomberg_billionaires"  # 彭博亿万富豪指数
  "index_bloomberg_billionaires_hist"  # 彭博亿万富豪历史指数
@@ -841,8 +852,8 @@
  "macro_australia_ppi_quarterly"  # 生产者物价指数季率
  "macro_australia_retail_rate_monthly"  # 零售销售月率
  # 养猪数据中心
- "futures_pig_info"  # 生猪信息
- "futures_pig_rank"  # 生猪价格排行
+ "futures_hog_info"  # 生猪信息
+ "futures_hog_rank"  # 生猪价格排行
  # 宏观-加拿大
  "macro_canada_new_house_rate"  # 新屋开工
  "macro_canada_unemployment_rate"  # 失业率
@@ -952,6 +963,7 @@
  "stock_rank_xzjp_ths"  # 险资举牌
  # 可转债分时数据
  "bond_zh_hs_cov_min"  # 可转债分时数据
+ "bond_zh_hs_cov_pre_min"  # 可转债分时数据-分时行情-盘前
  # 艺人
  "business_value_artist"  # 艺人商业价值
  "online_value_artist"  # 艺人流量价值
@@ -1101,6 +1113,73 @@
  "option_risk_indicator_sse"  # 上海证券交易所-产品-股票期权-期权风险指标
  # 人民币汇率中间价
  "currency_boc_safe"  # 人民币汇率中间价
+ # 主营构成
+ "stock_zygc_ym"  # 主营构成
+ # 管理层讨论与分析
+ "stock_mda_ym"  # 管理层讨论与分析
+ # 行业分类数据
+ "stock_industry_category_cninfo"  # 巨潮资讯-行业分类数据
+ # 上市公司行业归属的变动情况
+ "stock_industry_change_cninfo"  # 巨潮资讯-上市公司行业归属的变动情况
+ # 公司股本变动
+ "stock_share_change_cninfo"  # 巨潮资讯-公司股本变动
+ # 咨询-财联社
+ "stock_zh_a_alerts_cls"  # 咨询-财联社-今日快讯
+ "stock_telegraph_cls"  # 咨询-财联社-电报
+ # 上海金属网
+ "futures_news_shmet"  # 上海金属网-快讯
+ # 分红配股
+ "news_trade_notify_dividend_baidu"  # 分红配股
+ # 中国债券信息网-中债指数-中债指数族系-总指数-综合类指数
+ "bond_new_composite_index_cbond"  # 中债-新综合指数
+ "bond_composite_index_cbond"  # 中债-综合指数
+ # 沪深港股通-参考汇率和结算汇率
+ "stock_sgt_settlement_exchange_rate_szse"  # 深港通-港股通业务信息-结算汇率
+ "stock_sgt_reference_exchange_rate_szse"  # 深港通-港股通业务信息-参考汇率
+ "stock_sgt_reference_exchange_rate_sse"  # 沪港通-港股通信息披露-参考汇率
+ "stock_sgt_settlement_exchange_rate_sse"  # 沪港通-港股通信息披露-结算汇兑
+ # 配股实施方案-巨潮资讯
+ "stock_allotment_cninfo"  # 配股实施方案-巨潮资讯
+ # 巨潮资讯-个股-公司概况
+ "stock_profile_cninfo"  # 巨潮资讯-个股-公司概况
+ # 百度股市通-港股-财务报表-估值数据
+ "stock_hk_valuation_baidu"  # 百度股市通-港股-财务报表-估值数据
+ # 百度股市通-A 股-财务报表-估值数据
+ "stock_zh_valuation_baidu"  # 百度股市通-A 股-财务报表-估值数据
+ # 百度股市通- A 股或指数-股评-投票
+ "stock_zh_vote_baidu"  # 百度股市通- A 股或指数-股评-投票
+ # 百度股市通-期货-新闻
+ "futures_news_baidu"  # 百度股市通-期货-新闻
+ # 百度股市通-热搜股票
+ "stock_hot_search_baidu"  # 百度股市通-热搜股票
+ # 乐估乐股-底部研究-巴菲特指标
+ "stock_buffett_index_lg"  # 乐估乐股-底部研究-巴菲特指标
+ # 百度股市通-外汇-行情榜单
+ "fx_quote_baidu"  # 百度股市通-外汇-行情榜单
+ # 50ETF 期权波动率指数
+ "option_50etf_qvix"  # 50ETF 期权波动率指数
+ # 300 ETF 期权波动率指数
+ "option_300etf_qvix"  # 300 ETF 期权波动率指数
+ # 300 ETF 期权波动率指数 QVIX-分时
+ "option_300etf_min_qvix"  # 300 ETF 期权波动率指数 QVIX-分时
+ # 申万指数实时行情
+ "index_realtime_sw"  # 申万指数实时行情
+ # 申万指数历史行情
+ "index_hist_sw"  # 申万指数历史行情
+ # 申万指数分时行情
+ "index_min_sw"  # 申万指数分时行情
+ # 申万指数成分股
+ "index_component_sw"  # 申万指数成分股
+ # 申万宏源研究-指数分析
+ "index_analysis_daily_sw"  # 申万宏源研究-指数分析-日报表
+ "index_analysis_weekly_sw"  # 申万宏源研究-指数分析-周报表
+ "index_analysis_monthly_sw"  # 申万宏源研究-指数分析-月报表
+ "index_analysis_week_month_sw"  # 申万宏源研究-指数分析-周/月-日期序列
+ # 债券-信息查询结果
+ "bond_info_cm"  # 中国外汇交易中心暨全国银行间同业拆借中心-债券-信息查询结果
+ "bond_info_detail_cm"  # 中国外汇交易中心暨全国银行间同业拆借中心-债券-债券详情
+ # 生猪市场价格指数
+ "index_hog_spot_price"  # 生猪市场价格指数
 ```
 
 ## 案例演示

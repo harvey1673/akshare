@@ -1,16 +1,20 @@
 # -*- coding:utf-8 -*-
 # !/usr/bin/env python
 """
-Date: 2021/10/21 19:00
+Date: 2022/12/16 17:00
 Desc: 中证指数-所有指数-历史行情数据
 https://www.csindex.com.cn/zh-CN/indices/index-detail/H30374#/indices/family/list?index_series=1
 """
+from functools import lru_cache
+
 import pandas as pd
 import requests
 
 
 def stock_zh_index_hist_csindex(
-    symbol: str = "H30374", start_date: str = "20160101", end_date: str = "20211015"
+    symbol: str = "H30374",
+    start_date: str = "20160101",
+    end_date: str = "20211015",
 ) -> pd.DataFrame:
     """
     中证指数-具体指数-历史行情数据
@@ -34,6 +38,7 @@ def stock_zh_index_hist_csindex(
     r = requests.get(url, params=params)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"])
+    del temp_df["peg"]
     temp_df.columns = [
         "日期",
         "指数代码",
@@ -95,6 +100,7 @@ def stock_zh_index_value_csindex(symbol: str = "H30374") -> pd.DataFrame:
     return temp_df
 
 
+@lru_cache()
 def index_value_name_funddb() -> pd.DataFrame:
     """
     funddb-指数估值-指数代码
@@ -103,15 +109,7 @@ def index_value_name_funddb() -> pd.DataFrame:
     :rtype: 指数代码
     """
     url = "https://api.jiucaishuo.com/v2/guzhi/showcategory"
-    payload = {
-        "act_time": 1634821370997,
-        "authtoken": "",
-        "category_id": "",
-        "data_source": "xichou",
-        "type": "pc",
-        "version": "1.7.7",
-    }
-    r = requests.post(url, json=payload)
+    r = requests.get(url)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"]["right_list"])
     temp_df.columns = [
@@ -119,18 +117,16 @@ def index_value_name_funddb() -> pd.DataFrame:
         "-",
         "指数名称",
         "指数代码",
+        "最新PE",
+        "最新PB",
+        "PE分位",
+        "PB分位",
+        "股息率",
         "-",
         "-",
         "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
+        "更新时间",
+        "股息率分位",
         "-",
         "-",
         "-",
@@ -151,11 +147,24 @@ def index_value_name_funddb() -> pd.DataFrame:
     temp_df = temp_df[
         [
             "指数名称",
+            "最新PE",
+            "PE分位",
+            "最新PB",
+            "PB分位",
+            "股息率",
+            "股息率分位",
             "指数代码",
             "指数开始时间",
+            "更新时间",
         ]
     ]
     temp_df["指数开始时间"] = pd.to_datetime(temp_df["指数开始时间"]).dt.date
+    temp_df["最新PE"] = pd.to_numeric(temp_df["最新PE"])
+    temp_df["PE分位"] = pd.to_numeric(temp_df["PE分位"])
+    temp_df["最新PB"] = pd.to_numeric(temp_df["最新PB"])
+    temp_df["PB分位"] = pd.to_numeric(temp_df["PB分位"])
+    temp_df["股息率"] = pd.to_numeric(temp_df["股息率"])
+    temp_df["股息率分位"] = pd.to_numeric(temp_df["股息率分位"])
     return temp_df
 
 
@@ -179,24 +188,22 @@ def index_value_hist_funddb(
     }
     index_value_name_funddb_df = index_value_name_funddb()
     name_code_map = dict(
-        zip(index_value_name_funddb_df["指数名称"], index_value_name_funddb_df["指数代码"])
+        zip(
+            index_value_name_funddb_df["指数名称"],
+            index_value_name_funddb_df["指数代码"],
+        )
     )
     url = "https://api.jiucaishuo.com/v2/guzhi/newtubiaolinedata"
     payload = {
-        "act_time": 1634821370997,
-        "authtoken": "",
-        "data_source": "xichou",
         "gu_code": name_code_map[symbol],
         "pe_category": indicator_map[indicator],
-        "type": "pc",
-        "version": "1.7.7",
-        "year": -1,
     }
     r = requests.post(url, json=payload)
     data_json = r.json()
     big_df = pd.DataFrame()
     temp_df = pd.DataFrame(
-        data_json["data"]["tubiao"]["series"][0]["data"], columns=["timestamp", "value"]
+        data_json["data"]["tubiao"]["series"][0]["data"],
+        columns=["timestamp", "value"],
     )
     big_df["日期"] = (
         pd.to_datetime(temp_df["timestamp"], unit="ms", utc=True)
@@ -224,12 +231,15 @@ def index_value_hist_funddb(
 
 if __name__ == "__main__":
     stock_zh_index_hist_csindex_df = stock_zh_index_hist_csindex(
-        symbol="000859", start_date="20100101", end_date="20220317"
+        symbol="000832", start_date="20221122", end_date="20221123"
     )
     print(stock_zh_index_hist_csindex_df)
 
     stock_zh_index_value_csindex_df = stock_zh_index_value_csindex(symbol="H30374")
     print(stock_zh_index_value_csindex_df)
 
-    index_value_hist_funddb_df = index_value_hist_funddb(symbol="中证能源", indicator="股息率")
+    index_value_hist_funddb_df = index_value_hist_funddb(symbol="大盘成长", indicator="市净率")
     print(index_value_hist_funddb_df)
+
+    index_value_name_funddb_df = index_value_name_funddb()
+    print(index_value_name_funddb_df)

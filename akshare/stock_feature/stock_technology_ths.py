@@ -5,7 +5,6 @@ Date: 2021/11/2 21:08
 Desc: 同花顺-数据中心-技术选股
 http://data.10jqka.com.cn/rank/cxg/
 """
-
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -56,7 +55,9 @@ def stock_rank_cxg_ths(symbol: str = "创月新高") -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -69,8 +70,17 @@ def stock_rank_cxg_ths(symbol: str = "创月新高") -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/cxg/board/{symbol_map[symbol]}/field/stockcode/order/asc/page/{page}/ajax/1/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text)[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
-    big_df.columns = ["序号", "股票代码", "股票简称", "涨跌幅", "换手率", "最新价", "前期高点", "前期高点日期"]
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+    big_df.columns = [
+        "序号",
+        "股票代码",
+        "股票简称",
+        "涨跌幅",
+        "换手率",
+        "最新价",
+        "前期高点",
+        "前期高点日期",
+    ]
     big_df["股票代码"] = big_df["股票代码"].astype(str).str.zfill(6)
     big_df["涨跌幅"] = big_df["涨跌幅"].str.strip("%")
     big_df["换手率"] = big_df["换手率"].str.strip("%")
@@ -109,7 +119,9 @@ def stock_rank_cxd_ths(symbol: str = "创月新低") -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -122,8 +134,17 @@ def stock_rank_cxd_ths(symbol: str = "创月新低") -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/cxd/board/{symbol_map[symbol]}/field/stockcode/order/asc/page/{page}/ajax/1/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text)[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
-    big_df.columns = ["序号", "股票代码", "股票简称", "涨跌幅", "换手率", "最新价", "前期低点", "前期低点日期"]
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+    big_df.columns = [
+        "序号",
+        "股票代码",
+        "股票简称",
+        "涨跌幅",
+        "换手率",
+        "最新价",
+        "前期低点",
+        "前期低点日期",
+    ]
     big_df["股票代码"] = big_df["股票代码"].astype(str).str.zfill(6)
     big_df["涨跌幅"] = big_df["涨跌幅"].str.strip("%")
     big_df["换手率"] = big_df["换手率"].str.strip("%")
@@ -154,7 +175,9 @@ def stock_rank_lxsz_ths() -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -167,7 +190,7 @@ def stock_rank_lxsz_ths() -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/lxsz/field/lxts/order/desc/page/{page}/ajax/1/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text, converters={"股票代码": str})[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -210,7 +233,9 @@ def stock_rank_lxxd_ths() -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -223,7 +248,7 @@ def stock_rank_lxxd_ths() -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/lxxd/field/lxts/order/desc/page/{page}/ajax/1/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text, converters={"股票代码": str})[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -266,7 +291,9 @@ def stock_rank_cxfl_ths() -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -279,7 +306,7 @@ def stock_rank_cxfl_ths() -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/cxfl/field/count/order/desc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text, converters={"股票代码": str})[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -321,7 +348,9 @@ def stock_rank_cxsl_ths() -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -334,7 +363,7 @@ def stock_rank_cxsl_ths() -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/cxsl/field/count/order/desc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text, converters={"股票代码": str})[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -388,7 +417,9 @@ def stock_rank_xstp_ths(symbol: str = "500日均线") -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -401,7 +432,7 @@ def stock_rank_xstp_ths(symbol: str = "500日均线") -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/xstp/board/{symbol_map[symbol]}/order/asc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text, converters={"股票代码": str})[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -452,7 +483,9 @@ def stock_rank_xxtp_ths(symbol: str = "500日均线") -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -465,7 +498,7 @@ def stock_rank_xxtp_ths(symbol: str = "500日均线") -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/xxtp/board/{symbol_map[symbol]}/order/asc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text, converters={"股票代码": str})[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -504,7 +537,9 @@ def stock_rank_ljqs_ths() -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -517,7 +552,7 @@ def stock_rank_ljqs_ths() -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/ljqs/field/count/order/desc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text, converters={"股票代码": str})[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -557,7 +592,9 @@ def stock_rank_ljqd_ths() -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -570,7 +607,7 @@ def stock_rank_ljqd_ths() -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/rank/ljqd/field/count/order/desc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text, converters={"股票代码": str})[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -610,7 +647,9 @@ def stock_rank_xzjp_ths() -> pd.DataFrame:
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
     try:
-        total_page = soup.find("span", attrs={"class": "page_info"}).text.split("/")[1]
+        total_page = soup.find(
+            "span", attrs={"class": "page_info"}
+        ).text.split("/")[1]
     except AttributeError as e:
         total_page = 1
     big_df = pd.DataFrame()
@@ -623,7 +662,7 @@ def stock_rank_xzjp_ths() -> pd.DataFrame:
         url = f"http://data.10jqka.com.cn/ajax/xzjp/field/DECLAREDATE/order/desc/ajax/1/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(r.text, converters={"股票代码": str})[0]
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "举牌公告日",

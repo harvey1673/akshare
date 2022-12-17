@@ -322,11 +322,11 @@ token = js_functions.call("hex", datetime.now().date().isoformat()).lower()
 def stock_a_all_pb() -> pd.DataFrame:
     """
     全部A股-等权重市净率、中位数市净率
-    https://www.legulegu.com/stockdata/all-pb
+    https://legulegu.com/stockdata/all-pb
     :return: 全部A股-等权重市盈率、中位数市盈率
     :rtype: pandas.DataFrame
     """
-    url = "https://www.legulegu.com/api/stock-data/market-index-pb"
+    url = "https://legulegu.com/api/stock-data/market-index-pb"
     params = {
         'marketId': 'ALL',
         "token": token,
@@ -336,7 +336,6 @@ def stock_a_all_pb() -> pd.DataFrame:
     temp_df = pd.DataFrame(data_json["data"])
     temp_df['date'] = pd.to_datetime(
         temp_df["date"], unit="ms", utc=True).dt.tz_convert("Asia/Shanghai").dt.date
-    del temp_df['marketId']
     del temp_df['weightingAveragePB']
     return temp_df
 

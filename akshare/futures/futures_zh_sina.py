@@ -9,7 +9,7 @@ P.S. 注意采集速度, 容易封禁 IP, 如果不能访问请稍后再试
 import json
 import time
 from functools import lru_cache
-from warnings import warn
+from py_mini_racer import py_mini_racer
 
 import pandas as pd
 import requests
@@ -33,10 +33,10 @@ def futures_symbol_mark() -> pd.DataFrame:
     """
     url = "http://vip.stock.finance.sina.com.cn/quotes_service/view/js/qihuohangqing.js"
     r = requests.get(url)
+    r.encoding = "gb2312"
     data_text = r.text
     raw_json = data_text[data_text.find("{") : data_text.find("}") + 1]
     data_json = demjson.decode(raw_json)
-
     czce_mark_list = [item[1] for item in data_json["czce"][1:]]
     dce_mark_list = [item[1] for item in data_json["dce"][1:]]
     shfe_mark_list = [item[1] for item in data_json["shfe"][1:]]
@@ -207,10 +207,13 @@ def futures_zh_spot(
     :return: 期货的实时行情数据
     :rtype: pandas.DataFrame
     """
+    file_data = "Math.round(Math.random() * 2147483648).toString(16)"
+    ctx = py_mini_racer.MiniRacer()
+    rn_code = ctx.eval(file_data)
     subscribe_list = ",".join(
         ["nf_" + item.strip() for item in symbol.split(",")]
     )
-    url = f"https://hq.sinajs.cn/rn={round(time.time() * 1000)}&list={subscribe_list}"
+    url = f"https://hq.sinajs.cn/rn={rn_code}&list={subscribe_list}"
     headers = {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate",
@@ -672,13 +675,16 @@ def futures_zh_daily_sina(symbol: str = "V2105") -> pd.DataFrame:
 
 
 if __name__ == "__main__":
+    match_main_contract_df = match_main_contract(symbol="dce")
+    print(match_main_contract_df)
+
     futures_zh_spot_df = futures_zh_spot(
-        symbol="V2205, P2205, B2201, M2205", market="CF", adjust="0"
+        symbol="TA2209, P2209, B2209, M2209", market="CF", adjust="0"
     )
     print(futures_zh_spot_df)
 
     futures_zh_spot_df = futures_zh_spot(
-        symbol="TA2209", market="CF", adjust="0"
+        symbol="M2301", market="CF", adjust="0"
     )
     print(futures_zh_spot_df)
 
@@ -689,7 +695,7 @@ if __name__ == "__main__":
     print(futures_zh_realtime_df)
 
     futures_zh_minute_sina_df = futures_zh_minute_sina(
-        symbol="V2201", period="5"
+        symbol="M2301", period="1"
     )
     print(futures_zh_minute_sina_df)
 
@@ -698,3 +704,6 @@ if __name__ == "__main__":
 
     futures_zh_daily_sina_df = futures_zh_daily_sina(symbol="V2205")
     print(futures_zh_daily_sina_df)
+
+    futures_zh_spot_df = futures_zh_spot()
+    print(futures_zh_spot_df)

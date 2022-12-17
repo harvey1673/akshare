@@ -38,7 +38,17 @@ def sw_index_representation_spot() -> pd.DataFrame:
     r = requests.get(url, params=params)
     data_json = demjson.decode(r.text)
     temp_df = pd.DataFrame(data_json["root"])
-    temp_df.columns = ["指数代码", "指数名称", "昨收盘", "今开盘", "成交额", "最高价", "最低价", "最新价", "成交量"]
+    temp_df.columns = [
+        "指数代码",
+        "指数名称",
+        "昨收盘",
+        "今开盘",
+        "成交额",
+        "最高价",
+        "最低价",
+        "最新价",
+        "成交量",
+    ]
     temp_df["昨收盘"] = pd.to_numeric(temp_df["昨收盘"])
     temp_df["今开盘"] = pd.to_numeric(temp_df["今开盘"])
     temp_df["成交额"] = pd.to_numeric(temp_df["成交额"])
@@ -69,7 +79,17 @@ def sw_index_spot() -> pd.DataFrame:
         result.extend(data["root"])
     temp_df = pd.DataFrame(result)
     temp_df["L2"] = temp_df["L2"].str.strip()
-    temp_df.columns = ["指数代码", "指数名称", "昨收盘", "今开盘", "成交额", "最高价", "最低价", "最新价", "成交量"]
+    temp_df.columns = [
+        "指数代码",
+        "指数名称",
+        "昨收盘",
+        "今开盘",
+        "成交额",
+        "最高价",
+        "最低价",
+        "最新价",
+        "成交量",
+    ]
     temp_df["昨收盘"] = pd.to_numeric(temp_df["昨收盘"])
     temp_df["今开盘"] = pd.to_numeric(temp_df["今开盘"])
     temp_df["成交额"] = pd.to_numeric(temp_df["成交额"])
@@ -108,7 +128,17 @@ def sw_index_second_spot() -> pd.DataFrame:
         result.extend(data["root"])
     temp_df = pd.DataFrame(result)
     temp_df["L2"] = temp_df["L2"].str.strip()
-    temp_df.columns = ["指数代码", "指数名称", "昨收盘", "今开盘", "成交额", "最高价", "最低价", "最新价", "成交量"]
+    temp_df.columns = [
+        "指数代码",
+        "指数名称",
+        "昨收盘",
+        "今开盘",
+        "成交额",
+        "最高价",
+        "最低价",
+        "最新价",
+        "成交量",
+    ]
     temp_df["昨收盘"] = pd.to_numeric(temp_df["昨收盘"])
     temp_df["今开盘"] = pd.to_numeric(temp_df["今开盘"])
     temp_df["成交额"] = pd.to_numeric(temp_df["成交额"])
@@ -301,7 +331,9 @@ def sw_index_daily_indicator(
     temp_df["pe"] = pd.to_numeric(temp_df["pe"])
     temp_df["pb"] = pd.to_numeric(temp_df["pb"])
     temp_df["vwap"] = pd.to_numeric(temp_df["vwap"])
-    temp_df["float_mv"] = temp_df["float_mv"].apply(lambda x: x.replace(",", ""))
+    temp_df["float_mv"] = temp_df["float_mv"].apply(
+        lambda x: x.replace(",", "")
+    )
     temp_df["float_mv"] = pd.to_numeric(
         temp_df["float_mv"],
     )
@@ -309,8 +341,123 @@ def sw_index_daily_indicator(
         lambda x: x.replace(",", "")
     )
     temp_df["avg_float_mv"] = pd.to_numeric(temp_df["avg_float_mv"])
-    temp_df["dividend_yield_ratio"] = pd.to_numeric(temp_df["dividend_yield_ratio"])
+    temp_df["dividend_yield_ratio"] = pd.to_numeric(
+        temp_df["dividend_yield_ratio"]
+    )
     temp_df["turnover_pct"] = pd.to_numeric(temp_df["turnover_pct"])
+    return temp_df
+
+
+def sw_index_first_info() -> pd.DataFrame:
+    """
+    乐咕乐股-申万一级-分类
+    https://legulegu.com/stockdata/sw-industry-overview#level1
+    :return: 分类
+    :rtype: pandas.DataFrame
+    """
+    url = "https://legulegu.com/stockdata/sw-industry-overview"
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, "lxml")
+    code_raw = soup.find("div", attrs={"id": "level1Items"}).find_all(
+        "div", attrs={"class": "lg-industries-item-chinese-title"}
+    )
+    name_raw = soup.find("div", attrs={"id": "level1Items"}).find_all(
+        "div", attrs={"class": "lg-industries-item-number"}
+    )
+    value_raw = soup.find("div", attrs={"id": "level1Items"}).find_all(
+        "div", attrs={"class": "lg-sw-industries-item-value"}
+    )
+    code = [item.get_text() for item in code_raw]
+    name = [item.get_text().split("(")[0] for item in name_raw]
+    num = [item.get_text().split("(")[1].split(")")[0] for item in name_raw]
+    num_1 = [
+        item.find_all("span", attrs={"class": "value"})[0].get_text().strip()
+        for item in value_raw
+    ]
+    num_2 = [
+        item.find_all("span", attrs={"class": "value"})[1].get_text().strip()
+        for item in value_raw
+    ]
+    num_3 = [
+        item.find_all("span", attrs={"class": "value"})[2].get_text().strip()
+        for item in value_raw
+    ]
+    num_4 = [
+        item.find_all("span", attrs={"class": "value"})[3].get_text().strip()
+        for item in value_raw
+    ]
+    temp_df = pd.DataFrame([code, name, num, num_1, num_2, num_3, num_4]).T
+    temp_df.columns = [
+        "行业代码",
+        "行业名称",
+        "成份个数",
+        "静态市盈率",
+        "TTM(滚动)市盈率",
+        "市净率",
+        "静态股息率",
+    ]
+    temp_df["成份个数"] = pd.to_numeric(temp_df["成份个数"])
+    temp_df["静态市盈率"] = pd.to_numeric(temp_df["静态市盈率"])
+    temp_df["TTM(滚动)市盈率"] = pd.to_numeric(temp_df["TTM(滚动)市盈率"])
+    temp_df["市净率"] = pd.to_numeric(temp_df["市净率"])
+    temp_df["静态股息率"] = pd.to_numeric(temp_df["静态股息率"])
+    return temp_df
+
+
+def sw_index_second_info() -> pd.DataFrame:
+    """
+    乐咕乐股-申万二级-分类
+    https://legulegu.com/stockdata/sw-industry-overview#level1
+    :return: 分类
+    :rtype: pandas.DataFrame
+    """
+    url = "https://legulegu.com/stockdata/sw-industry-overview"
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, "lxml")
+    code_raw = soup.find("div", attrs={"id": "level2Items"}).find_all(
+        "div", attrs={"class": "lg-industries-item-chinese-title"}
+    )
+    name_raw = soup.find("div", attrs={"id": "level2Items"}).find_all(
+        "div", attrs={"class": "lg-industries-item-number"}
+    )
+    value_raw = soup.find("div", attrs={"id": "level2Items"}).find_all(
+        "div", attrs={"class": "lg-sw-industries-item-value"}
+    )
+    code = [item.get_text() for item in code_raw]
+    name = [item.get_text().split("(")[0] for item in name_raw]
+    num = [item.get_text().split("(")[1].split(")")[0] for item in name_raw]
+    num_1 = [
+        item.find_all("span", attrs={"class": "value"})[0].get_text().strip()
+        for item in value_raw
+    ]
+    num_2 = [
+        item.find_all("span", attrs={"class": "value"})[1].get_text().strip()
+        for item in value_raw
+    ]
+    num_3 = [
+        item.find_all("span", attrs={"class": "value"})[2].get_text().strip()
+        for item in value_raw
+    ]
+    num_4 = [
+        item.find_all("span", attrs={"class": "value"})[3].get_text().strip()
+        for item in value_raw
+    ]
+    temp_df = pd.DataFrame([code, name, num, num_1, num_2, num_3, num_4]).T
+    temp_df.columns = [
+        "行业代码",
+        "行业名称",
+        "成份个数",
+        "静态市盈率",
+        "TTM(滚动)市盈率",
+        "市净率",
+        "静态股息率",
+    ]
+    temp_df["成份个数"] = pd.to_numeric(temp_df["成份个数"])
+    temp_df["静态市盈率"] = pd.to_numeric(temp_df["静态市盈率"])
+    temp_df["TTM(滚动)市盈率"] = pd.to_numeric(temp_df["TTM(滚动)市盈率"])
+    temp_df["市净率"] = pd.to_numeric(temp_df["市净率"])
+    temp_df["静态股息率"] = pd.to_numeric(temp_df["静态股息率"])
+
     return temp_df
 
 
@@ -370,10 +517,10 @@ def sw_index_third_info() -> pd.DataFrame:
     return temp_df
 
 
-def sw_index_third_cons(symbol: str = "851921.SI") -> pd.DataFrame:
+def sw_index_third_cons(symbol: str = "801120.SI") -> pd.DataFrame:
     """
     乐咕乐股-申万三级-行业成份
-    https://legulegu.com/stockdata/index-composition?industryCode=851921.SI
+    https://legulegu.com/stockdata/index-composition?industryCode=801120.SI
     :param symbol: 三级行业的行业代码
     :type symbol: str
     :return: 行业成份
@@ -395,17 +542,214 @@ def sw_index_third_cons(symbol: str = "851921.SI") -> pd.DataFrame:
         "市净率",
         "股息率",
         "市值",
+        "归母净利润同比增长(09-30)",
+        "归母净利润同比增长(06-30)",
+        "营业收入同比增长(09-30)",
+        "营业收入同比增长(06-30)",
     ]
     temp_df["价格"] = pd.to_numeric(temp_df["价格"], errors="coerce")
     temp_df["市盈率"] = pd.to_numeric(temp_df["市盈率"], errors="coerce")
     temp_df["市盈率ttm"] = pd.to_numeric(temp_df["市盈率ttm"], errors="coerce")
     temp_df["市净率"] = pd.to_numeric(temp_df["市净率"], errors="coerce")
-    temp_df["股息率"] = pd.to_numeric(temp_df["股息率"].str.strip("%"), errors="coerce")
+    temp_df["股息率"] = pd.to_numeric(
+        temp_df["股息率"].str.strip("%"), errors="coerce"
+    )
     temp_df["市值"] = pd.to_numeric(temp_df["市值"], errors="coerce")
+
+    temp_df["归母净利润同比增长(09-30)"] = temp_df["归母净利润同比增长(09-30)"].str.strip("%")
+    temp_df["归母净利润同比增长(06-30)"] = temp_df["归母净利润同比增长(06-30)"].str.strip("%")
+    temp_df["营业收入同比增长(09-30)"] = temp_df["营业收入同比增长(09-30)"].str.strip("%")
+    temp_df["营业收入同比增长(06-30)"] = temp_df["营业收入同比增长(06-30)"].str.strip("%")
+
+    temp_df["归母净利润同比增长(09-30)"] = pd.to_numeric(temp_df["归母净利润同比增长(09-30)"], errors="coerce")
+    temp_df["归母净利润同比增长(06-30)"] = pd.to_numeric(temp_df["归母净利润同比增长(06-30)"], errors="coerce")
+    temp_df["营业收入同比增长(09-30)"] = pd.to_numeric(temp_df["营业收入同比增长(09-30)"], errors="coerce")
+    temp_df["营业收入同比增长(06-30)"] = pd.to_numeric(temp_df["营业收入同比增长(06-30)"], errors="coerce")
+    return temp_df
+
+
+def index_level_one_hist_sw(symbol: str = "801010") -> pd.DataFrame:
+    """
+    申万指数-指数发布-指数体系-一级行业
+    http://www.swsindex.com/idx0110.aspx
+    :param symbol: 一级行业
+    :type symbol: str
+    :return: 一级行业
+    :rtype: pandas.DataFrame
+    """
+    url = "http://www.swsindex.com/downloadfiles.aspx"
+    params = {
+        "swindexcode": symbol,
+        "type": "510",
+        "columnid": "8890",
+    }
+    headers = {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "en,zh;q=0.9",
+        "Cache-Control": "no-cache",
+        "Host": "www.swsindex.com",
+        "Pragma": "no-cache",
+        "Proxy-Connection": "keep-alive",
+        "Referer": "http://www.swsindex.com/idx0110.aspx",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
+    }
+    r = requests.get(url, params=params, headers=headers)
+    r.encoding = "utf-8"
+    temp_df = pd.read_html(r.text)[0]
+    temp_df.columns = [
+        "指数代码",
+        "指数名称",
+        "发布日期",
+        "开盘指数",
+        "最高指数",
+        "最低指数",
+        "收盘指数",
+        "成交量",
+        "成交额",
+        "涨跌幅",
+        "换手率",
+        "市盈率",
+        "市净率",
+        "均价",
+        "成交额占比",
+        "流通市值",
+        "平均流通市值",
+        "股息率",
+    ]
+    temp_df["发布日期"] = pd.to_datetime(temp_df["发布日期"]).dt.date
+    temp_df.sort_values(["发布日期"], inplace=True, ignore_index=True)
+    temp_df["指数代码"] = temp_df["指数代码"].astype(str)
+    return temp_df
+
+
+def index_market_representation_hist_sw(
+    symbol: str = "801001",
+) -> pd.DataFrame:
+    """
+    申万指数-指数发布-指数体系-市场表征
+    http://www.swsindex.com/idx0110.aspx
+    :param symbol: 市场表征代码
+    :type symbol: str
+    :return: 市场表征
+    :rtype: pandas.DataFrame
+    """
+    url = "http://www.swsindex.com/downloadfiles.aspx"
+    params = {
+        "swindexcode": symbol,
+        "type": "510",
+        "columnid": "8890",
+    }
+    headers = {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "en,zh;q=0.9",
+        "Cache-Control": "no-cache",
+        "Host": "www.swsindex.com",
+        "Pragma": "no-cache",
+        "Proxy-Connection": "keep-alive",
+        "Referer": "http://www.swsindex.com/idx0110.aspx",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
+    }
+    r = requests.get(url, params=params, headers=headers)
+    r.encoding = "utf-8"
+    temp_df = pd.read_html(r.text)[0]
+    temp_df.columns = [
+        "指数代码",
+        "指数名称",
+        "发布日期",
+        "开盘指数",
+        "最高指数",
+        "最低指数",
+        "收盘指数",
+        "成交量",
+        "成交额",
+        "涨跌幅",
+        "换手率",
+        "市盈率",
+        "市净率",
+        "均价",
+        "成交额占比",
+        "流通市值",
+        "平均流通市值",
+        "股息率",
+    ]
+    temp_df["发布日期"] = pd.to_datetime(temp_df["发布日期"]).dt.date
+    temp_df.sort_values(["发布日期"], inplace=True, ignore_index=True)
+    temp_df["指数代码"] = temp_df["指数代码"].astype(str)
+    return temp_df
+
+
+def index_style_index_hist_sw(symbol: str = "801811") -> pd.DataFrame:
+    """
+    申万指数-指数发布-指数体系-风格指数
+    http://www.swsindex.com/idx0110.aspx
+    :param symbol: 风格指数代码
+    :type symbol: str
+    :return: 风格指数
+    :rtype: pandas.DataFrame
+    """
+    url = "http://www.swsindex.com/downloadfiles.aspx"
+    params = {
+        "swindexcode": symbol,
+        "type": "510",
+        "columnid": "8890",
+    }
+    headers = {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "en,zh;q=0.9",
+        "Cache-Control": "no-cache",
+        "Host": "www.swsindex.com",
+        "Pragma": "no-cache",
+        "Proxy-Connection": "keep-alive",
+        "Referer": "http://www.swsindex.com/idx0110.aspx",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
+    }
+    r = requests.get(url, params=params, headers=headers)
+    r.encoding = "utf-8"
+    temp_df = pd.read_html(r.text)[0]
+    temp_df.columns = [
+        "指数代码",
+        "指数名称",
+        "发布日期",
+        "开盘指数",
+        "最高指数",
+        "最低指数",
+        "收盘指数",
+        "成交量",
+        "成交额",
+        "涨跌幅",
+        "换手率",
+        "市盈率",
+        "市净率",
+        "均价",
+        "成交额占比",
+        "流通市值",
+        "平均流通市值",
+        "股息率",
+    ]
+    temp_df["发布日期"] = pd.to_datetime(temp_df["发布日期"]).dt.date
+    temp_df.sort_values(["发布日期"], inplace=True, ignore_index=True)
+    temp_df["指数代码"] = temp_df["指数代码"].astype(str)
     return temp_df
 
 
 if __name__ == "__main__":
+    index_level_one_hist_sw_df = index_level_one_hist_sw(symbol="801010")
+    print(index_level_one_hist_sw_df)
+
+    index_market_representation_hist_sw_df = (
+        index_market_representation_hist_sw(symbol="801001")
+    )
+    print(index_market_representation_hist_sw_df)
+
+    index_style_index_hist_sw_df = index_style_index_hist_sw(symbol="801811")
+    print(index_style_index_hist_sw_df)
+
     sw_index_representation_spot_df = sw_index_representation_spot()
     print(sw_index_representation_spot_df)
 
@@ -415,7 +759,7 @@ if __name__ == "__main__":
     sw_index_second_spot_df = sw_index_second_spot()
     print(sw_index_second_spot_df)
 
-    sw_index_cons_df = sw_index_cons(symbol="801011")
+    sw_index_cons_df = sw_index_cons(symbol="801010")
     print(sw_index_cons_df)
 
     sw_index_daily_df = sw_index_daily(
@@ -431,8 +775,14 @@ if __name__ == "__main__":
     )
     print(sw_index_daily_indicator_df)
 
+    sw_index_first_info_df = sw_index_first_info()
+    print(sw_index_first_info_df)
+
+    sw_index_second_info_df = sw_index_second_info()
+    print(sw_index_second_info_df)
+
     sw_index_third_info_df = sw_index_third_info()
     print(sw_index_third_info_df)
 
-    sw_index_third_cons_df = sw_index_third_cons(symbol="851921.SI")
+    sw_index_third_cons_df = sw_index_third_cons(symbol="850111.SI")
     print(sw_index_third_cons_df)
