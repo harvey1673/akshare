@@ -13,6 +13,7 @@
  "get_czce_daily",  # 郑州商品交易所每日交易数据
  "get_czce_rank_table",  # 获取郑州商品交易所前20会员持仓数据明细
  "get_dce_daily",  # 获取大连商品交易所每日交易数据
+ "get_gfex_daily",  # 获取广州期货交易所每日交易数据
  "get_ine_daily",  # 获取上海国际能源交易中心每日交易数据
  "futures_sgx_daily",  # 获取新加坡交易所每日交易数据
  "get_dce_rank_table",  #获取大连商品交易所前20会员持仓数据明细
@@ -64,14 +65,9 @@
  # 宏观-欧洲
  "macro_euro_interest_rate"  # 欧洲央行决议报告
  # 宏观-主要机构
- "macro_cons_gold_amount"  # 全球最大黄金ETF—SPDR Gold Trust持仓报告-总价值
- "macro_cons_gold_change"  # 全球最大黄金ETF—SPDR Gold Trust持仓报告-增持/减持
- "macro_cons_gold_volume"  # 全球最大黄金ETF—SPDR Gold Trust持仓报告-总库存
- "macro_cons_opec_month"  # 欧佩克报告-差异
- "macro_cons_opec_near_change"  # 欧佩克报告-月份
- "macro_cons_silver_amount"  # 全球最大白银ETF--iShares Silver Trust持仓报告-总价值
- "macro_cons_silver_change"  # 全球最大白银ETF--iShares Silver Trust持仓报告-增持/减持
- "macro_cons_silver_volume"  # 全球最大白银ETF--iShares Silver Trust持仓报告-总库存
+ "macro_cons_gold"  # 全球最大黄金ETF—SPDR Gold Trust持仓报告
+ "macro_cons_silver"  # 全球最大白银ETF--iShares Silver Trust持仓报告
+ "macro_cons_opec_month"  # 欧佩克报告
  # 期货-仓单有效期
  "get_receipt_date"  # 期货仓单有效期数据
  # 新浪财经-期货
@@ -348,7 +344,6 @@
  "macro_cons_silver_volume"  # 全球最大白银ETF--iShares Silver Trust持仓报告
  "macro_cons_silver_change"  # 全球最大白银ETF--iShares Silver Trust持仓报告
  "macro_cons_silver_amount"  # 全球最大白银ETF--iShares Silver Trust持仓报告
- "macro_cons_opec_month"  # 欧佩克报告-月度
  # 伦敦金属交易所(LME)
  "macro_euro_lme_holding"  # 伦敦金属交易所(LME)-持仓报告
  "macro_euro_lme_stock"  # 伦敦金属交易所(LME)-库存报告
@@ -475,8 +470,9 @@
  "energy_oil_detail"  # 地区油价
  # 现货与股票
  "futures_spot_stock"  # 现货与股票接口
- # 中国期货市场监控中心
- "futures_index_cscidx"  # 中国期货市场监控中心-指数
+ # 中证商品指数
+ "futures_index_ccidx"  # 中证商品指数
+ "futures_index_min_ccidx"  # 中证商品指数-分时
  # 打新收益率
  "stock_dxsyl_em"  # 打新收益率
  "stock_xgsglb_em"  # 新股申购与中签查询
@@ -783,6 +779,7 @@
  "stock_zh_a_hist"  # A 股日频率数据-东方财富
  # 盘口异动
  "stock_changes_em"  # 盘口异动
+ "stock_board_change_em"  # 板块异动
  # CME 比特币成交量
  "crypto_bitcoin_cme"  # CME 比特币成交量
  # 加密货币全球市场指数
@@ -1180,6 +1177,15 @@
  "bond_info_detail_cm"  # 中国外汇交易中心暨全国银行间同业拆借中心-债券-债券详情
  # 生猪市场价格指数
  "index_hog_spot_price"  # 生猪市场价格指数
+ # 乐咕乐股-股息率-A 股股息率
+ "stock_a_gxl_lg"  # 乐咕乐股-股息率-A 股股息率
+ "stock_hk_gxl_lg"  # 乐咕乐股-股息率-恒生指数股息率
+ # 乐咕乐股-大盘拥挤度
+ "stock_a_congestion_lg"  # 乐咕乐股-大盘拥挤度
+ # 乐咕乐股-基金仓位
+ "fund_stock_position_lg"  # 乐咕乐股-基金仓位-股票型基金仓位
+ "fund_balance_position_lg"  # 乐咕乐股-基金仓位-平衡混合型基金仓位
+ "fund_linghuo_position_lg"  # 乐咕乐股-基金仓位-灵活配置型基金仓位
 ```
 
 ## 案例演示

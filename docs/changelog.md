@@ -4,6 +4,12 @@
 
 | AKShare 版本 | 旧接口名称                                       | 新接口名称                                       | 修改日期     |
 |------------|---------------------------------------------|---------------------------------------------|----------|
+| 1.8.38     | macro_cons_silver_amount                    | macro_cons_silver                           | 20221227 |
+| 1.8.38     | macro_cons_silver_change                    | macro_cons_silver                           | 20221227 |
+| 1.8.38     | macro_cons_silver_volume                    | macro_cons_silver                           | 20221227 |
+| 1.8.38     | macro_cons_gold_amount                      | macro_cons_gold                             | 20221227 |
+| 1.8.38     | macro_cons_gold_change                      | macro_cons_gold                             | 20221227 |
+| 1.8.38     | macro_cons_gold_volume                      | macro_cons_gold                             | 20221227 |
 | 1.8.23     | stock_restricted_shares                     | stock_restricted_release_queue_sina         | 20221122 |
 | 1.8.3      | stock_em_qbzf                               | stock_qbzf_em                               | 20221122 |
 | 1.8.3      | stock_em_pg                                 | stock_pg_em                                 | 20221122 |
@@ -42,6 +48,62 @@
 | 1.4.86     | fund_em_aum                                 | fund_aum_em                                 | 20220322 |
 
 ## 更新说明
+
+1.8.45 fix: fix calendar.json
+
+    1. 新增 calendar.json 2023 日历数据
+
+1.8.44 fix: fix stock_info_bj_name_code interface
+
+    1. 修复 stock_info_bj_name_code 接口
+
+1.8.43 add: add stock_ebs_lg interface
+
+    1. 新增 stock_ebs_lg 接口
+
+1.8.42 add: add get_gfex_daily interface
+
+    1. 新增 get_gfex_daily 接口, 获取广期所的量价数据
+
+1.8.41 add: add futures_index_ccidx interface
+
+    1. 新增 futures_index_ccidx 接口
+
+1.8.40 add: add fund_balance_position_lg interface
+
+    1. 新增 fund_balance_position_lg 接口
+
+1.8.39 add: add stock_board_change_em interface
+
+    1. 新增 stock_board_change_em 接口
+
+1.8.38 fix: fix macro_cons_gold interface
+
+    1. 修复 macro_cons_gold 接口
+
+1.8.37 add: add fund_stock_position_lg interface
+
+    1. 新增 fund_stock_position_lg 接口
+
+1.8.36 add: add stock_a_congestion_lg interface
+
+    1. 新增 stock_a_congestion_lg 接口
+
+1.8.35 add: add stock_hk_gxl_lg interface
+
+    1. 新增 stock_hk_gxl_lg 接口
+
+1.8.34 add: add stock_a_gxl_lg interface
+
+    1. 新增 stock_a_gxl_lg 接口
+
+1.8.33 fix: fix stock_hot_rank_em interface
+
+    1. 修复 stock_hot_rank_em 接口
+
+1.8.32 fix: fix js_news interface
+
+    1. 修复 js_news 接口
 
 1.8.31 fix: fix get_dce_daily interface
 
@@ -1660,6 +1722,34 @@
     3. 修改 air_quality_hist 接口的请求日期格式，从 '2022-01-01' 为 '20220101'
 
 ## 版本更新说明
+
+1.8.45 fix: fix calendar.json
+
+1.8.44 fix: fix stock_info_bj_name_code interface
+
+1.8.43 add: add stock_ebs_lg interface
+
+1.8.42 add: add get_gfex_daily interface
+
+1.8.41 add: add futures_index_ccidx interface
+
+1.8.40 add: add fund_balance_position_lg interface
+
+1.8.39 add: add stock_board_change_em interface
+
+1.8.38 fix: fix macro_cons_gold interface
+
+1.8.37 add: add fund_stock_position_lg interface
+
+1.8.36 add: add stock_a_congestion_lg interface
+
+1.8.35 add: add stock_hk_gxl_lg interface
+
+1.8.34 add: add stock_a_gxl_lg interface
+
+1.8.33 fix: fix stock_hot_rank_em interface
+
+1.8.32 fix: fix js_news interface
 
 1.8.31 fix: fix get_dce_daily interface
 

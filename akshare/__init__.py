@@ -2248,9 +2248,23 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 1.8.29 fix: fix baidu_search_index interface
 1.8.30 fix: fix index_value_name_funddb interface
 1.8.31 fix: fix get_dce_daily interface
+1.8.32 fix: fix js_news interface
+1.8.33 fix: fix stock_hot_rank_em interface
+1.8.34 add: add stock_a_gxl_lg interface
+1.8.35 add: add stock_hk_gxl_lg interface
+1.8.36 add: add stock_a_congestion_lg interface
+1.8.37 add: add fund_stock_position_lg interface
+1.8.38 fix: fix macro_cons_gold interface
+1.8.39 add: add stock_board_change_em interface
+1.8.40 add: add fund_balance_position_lg interface
+1.8.41 add: add futures_index_ccidx interface
+1.8.42 add: add get_gfex_daily interface
+1.8.43 add: add stock_ebs_lg interface
+1.8.44 fix: fix stock_info_bj_name_code interface
+1.8.45 fix: fix calendar.json
 """
 
-__version__ = "1.8.31"
+__version__ = "1.8.45"
 __author__ = "AKFamily"
 
 import sys
@@ -2260,6 +2274,30 @@ if sys.version_info < (3, 7):
     sys.exit(1)
 
 del sys
+
+"""
+乐咕乐股-股债利差
+"""
+from akshare.stock_feature.stock_ebs_lg import stock_ebs_lg
+
+"""
+乐咕乐股-基金仓位
+"""
+from akshare.fund.fund_position_lg import (
+    fund_stock_position_lg,
+    fund_balance_position_lg,
+    fund_linghuo_position_lg,
+)
+
+"""
+乐咕乐股-大盘拥挤度
+"""
+from akshare.stock_feature.stock_congestion_lg import stock_a_congestion_lg
+
+"""
+乐咕乐股-股息率-A 股股息率
+"""
+from akshare.stock_feature.stock_gxl_lg import stock_a_gxl_lg, stock_hk_gxl_lg
 
 """
 东方财富-限售解禁股
@@ -2957,7 +2995,10 @@ from akshare.crypto.crypto_bitcoin_cme import crypto_bitcoin_cme
 """
 盘口异动
 """
-from akshare.stock_feature.stock_pankou import stock_changes_em
+from akshare.stock_feature.stock_pankou_em import (
+    stock_changes_em,
+    stock_board_change_em,
+)
 
 """
 A 股东方财富
@@ -3048,7 +3089,7 @@ from akshare.stock_feature.stock_zf_pg import stock_qbzf_em, stock_pg_em
 """
 平均持仓
 """
-from akshare.stock_feature.stock_legu_average_position import (
+from akshare.stock_feature.stock_average_position_lg import (
     stock_average_position_legu,
 )
 
@@ -3480,7 +3521,7 @@ from akshare.fortune.fortune_bloomberg import (
 """
 stock-券商业绩月报
 """
-from akshare.stock_feature.stock_em_qsjy import stock_qsjy_em
+from akshare.stock_feature.stock_qsjy_em import stock_qsjy_em
 
 """
 futures-warehouse-receipt
@@ -3628,9 +3669,12 @@ from akshare.event.covid import (
 )
 
 """
-futures_cscidx
+中证商品指数
 """
-from akshare.futures.futures_cscidx import futures_index_cscidx
+from akshare.futures.futures_index_ccidx import (
+    futures_index_min_ccidx,
+    futures_index_ccidx,
+)
 
 """
 futures_em_spot_stock
@@ -3658,7 +3702,7 @@ from akshare.futures.futures_foreign import (
 """
 stock-em-tfp
 """
-from akshare.stock_feature.stock_em_tfp import stock_tfp_em
+from akshare.stock_feature.stock_tfp_em import stock_tfp_em
 
 """
 stock-em-hsgt
@@ -3928,7 +3972,7 @@ from akshare.futures.futures_rule import futures_rule
 """
 东方财富-商誉专题
 """
-from akshare.stock_feature.stock_em_sy import (
+from akshare.stock_feature.stock_sy_em import (
     stock_em_sy_profile,
     stock_em_sy_yq_list,
     stock_em_sy_jz_list,
@@ -3951,7 +3995,7 @@ from akshare.stock_feature.stock_gpzy_em import (
 """
 东方财富-机构调研
 """
-from akshare.stock_feature.stock_em_jgdy import (
+from akshare.stock_feature.stock_jgdy_em import (
     stock_jgdy_tj_em,
     stock_jgdy_detail_em,
 )
@@ -4217,13 +4261,9 @@ from akshare.stock.stock_zh_zrbg_hx import stock_zh_a_scr_report
 全球宏观-机构宏观
 """
 from akshare.economic.macro_constitute import (
-    macro_cons_gold_amount,
-    macro_cons_gold_change,
-    macro_cons_gold_volume,
+    macro_cons_gold,
+    macro_cons_silver,
     macro_cons_opec_month,
-    macro_cons_silver_amount,
-    macro_cons_silver_change,
-    macro_cons_silver_volume,
 )
 
 """
@@ -4499,4 +4539,5 @@ from akshare.futures.futures_daily_bar import (
     get_dce_daily,
     get_futures_daily,
     get_ine_daily,
+    get_gfex_daily,
 )
