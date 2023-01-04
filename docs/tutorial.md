@@ -388,6 +388,9 @@
  "bond_cb_index_jsl"  # 可转债-集思录可转债等权指数
  "bond_cb_redeem_jsl"  # 可转债-集思录可转债-强赎
  # 金融期权-新浪
+ "option_cffex_sz50_list_sina"  # 上证50期权列表
+  "option_cffex_sz50_spot_sina"  # 沪深300期权实时行情
+ "option_cffex_sz50_daily_sina"  # 沪深300期权历史行情-日频
  "option_cffex_hs300_list_sina"  # 沪深300期权列表
  "option_cffex_hs300_spot_sina"  # 沪深300期权实时行情
  "option_cffex_hs300_daily_sina"  # 沪深300期权历史行情-日频
@@ -547,8 +550,11 @@
  # 交易日历
  "tool_trade_date_hist"  # 新浪财经-交易日历
  # 基金行情
- "fund_etf_category_sina"  # 基金列表
- "fund_etf_hist_sina"  # 基金行情
+ "fund_etf_category_sina"  # 基金实时行情-新浪
+ "fund_etf_hist_sina"  # 基金行情-新浪
+ "fund_etf_hist_em"  # 基金历史行情-东财
+ "fund_etf_hist_min_em"  # 基金分时行情-东财
+ "fund_etf_spot_em"  # 基金实时行情-东财
  # 股票财务报告-预约披露
  "stock_report_disclosure"  # 股票财务报告-预约披露时间
  # 基金持股

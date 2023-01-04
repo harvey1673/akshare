@@ -2262,9 +2262,12 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 1.8.43 add: add stock_ebs_lg interface
 1.8.44 fix: fix stock_info_bj_name_code interface
 1.8.45 fix: fix calendar.json
+1.8.46 fix: fix get_roll_yield_bar interface
+1.8.47 add: add option_cffex_sz50_list_sina interface
+1.8.48 add: add fund_etf_hist_em interface
 """
 
-__version__ = "1.8.45"
+__version__ = "1.8.48"
 __author__ = "AKFamily"
 
 import sys
@@ -2274,6 +2277,11 @@ if sys.version_info < (3, 7):
     sys.exit(1)
 
 del sys
+
+"""
+东方财富-ETF 行情
+"""
+from akshare.fund.fund_etf_em import fund_etf_hist_em, fund_etf_hist_min_em, fund_etf_spot_em
 
 """
 乐咕乐股-股债利差
@@ -3776,6 +3784,9 @@ from akshare.stock.stock_weibo_nlp import (
 金融期权-新浪
 """
 from akshare.option.option_finance_sina import (
+    option_cffex_sz50_list_sina,
+    option_cffex_sz50_spot_sina,
+    option_cffex_sz50_daily_sina,
     option_cffex_hs300_list_sina,
     option_cffex_hs300_spot_sina,
     option_cffex_hs300_daily_sina,
