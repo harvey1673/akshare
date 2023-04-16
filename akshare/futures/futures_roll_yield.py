@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/7/20 19:58
+Date: 2023/1/12 16:58
 Desc: 中国期货各合约展期收益率
 日线数据从 daily_bar 函数获取, 需要在收盘后运行
 """
@@ -118,7 +118,7 @@ def get_roll_yield_bar(
 
     if type_method == "var":
         df = pd.DataFrame()
-        for market in ["dce", "cffex", "shfe", "czce"]:
+        for market in ["dce", "cffex", "shfe", "czce", "gfex"]:
             df = pd.concat(
                 [
                     df,
@@ -128,8 +128,9 @@ def get_roll_yield_bar(
                 ]
             )
         var_list = list(set(df["variety"]))
-        if "IO" in var_list:
-            var_list.remove("IO")  # IO 为期权
+        for i_remove in ['IO', 'MO', 'HO']:
+            if i_remove in var_list:
+                var_list.remove(i_remove)
         df_l = pd.DataFrame()
         for var in var_list:
             ry = get_roll_yield(date, var, df=df)
@@ -173,9 +174,9 @@ def get_roll_yield_bar(
 if __name__ == "__main__":
     get_roll_yield_bar_range_df = get_roll_yield_bar(
         type_method="date",
-        var="CF",
+        var="IM",
         start_day="20230101",
-        end_day="20230104",
+        end_day="20230112",
     )
     print(get_roll_yield_bar_range_df)
 

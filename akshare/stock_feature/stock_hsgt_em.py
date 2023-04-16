@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # !/usr/bin/env python
 """
-Date: 2022/11/27 20:32
+Date: 2023/3/10 16:32
 Desc: 东方财富网-数据中心-沪深港通持股
 https://data.eastmoney.com/hsgtcg/
 沪深港通详情: https://finance.eastmoney.com/news/1622,20161118685370149.html
@@ -636,12 +636,12 @@ def stock_hsgt_hold_stock_em(
 
 def stock_hsgt_stock_statistics_em(
     symbol: str = "北向持股",
-    start_date: str = "20211027",
-    end_date: str = "20211027",
+    start_date: str = "20230113",
+    end_date: str = "20230113",
 ):
     """
     东方财富网-数据中心-沪深港通-沪深港通持股-每日个股统计
-    http://data.eastmoney.com/hsgtcg/StockStatistics.aspx
+    https://data.eastmoney.com/hsgtcg/StockStatistics.aspx
     market=001, 沪股通持股
     market=003, 深股通持股
     :param symbol: choice of {"北向持股", "南向持股"}
@@ -1401,7 +1401,7 @@ def stock_hsgt_board_rank_em(
 ) -> pd.DataFrame:
     """
     东方财富网-数据中心-沪深港通持股-行业板块排行-北向资金增持行业板块排行
-    http://data.eastmoney.com/hsgtcg/hy.html
+    https://data.eastmoney.com/hsgtcg/hy.html
     :param symbol: choice of {"北向资金增持行业板块排行", "北向资金增持概念板块排行", "北向资金增持地域板块排行"}
     :type symbol: str
     :param indicator: choice of {"今日", "3日", "5日", "10日", "1月", "1季", "1年"}
@@ -1523,7 +1523,7 @@ def stock_hsgt_board_rank_em(
 def stock_hsgt_individual_em(stock: str = "002008") -> pd.DataFrame:
     """
     东方财富-数据中心-沪深港通-沪深港通持股-具体股票
-    http://data.eastmoney.com/hsgtcg/StockHdStatistics/002008.html
+    https://data.eastmoney.com/hsgtcg/StockHdStatistics/002008.html
     :param stock: 股票代码
     :type stock: str
     :return: 具体股票-沪深港通持股
@@ -1598,7 +1598,7 @@ def stock_hsgt_individual_detail_em(
 ) -> pd.DataFrame:
     """
     东方财富-数据中心-沪深港通-沪深港通持股-具体股票详情
-    http://data.eastmoney.com/hsgtcg/StockHdStatistics/002008.html
+    https://data.eastmoney.com/hsgtcg/StockHdStatistics/002008.html
     :param symbol: 股票代码
     :type symbol: str
     :param start_date: 开始时间
@@ -1752,7 +1752,7 @@ if __name__ == "__main__":
     print(stock_hsgt_hold_stock_em_df)
 
     stock_hsgt_stock_statistics_em_df = stock_hsgt_stock_statistics_em(
-        symbol="北向持股", start_date="20220601", end_date="20220615"
+        symbol="北向持股", start_date="20221216", end_date="20230315"
     )
     print(stock_hsgt_stock_statistics_em_df)
 

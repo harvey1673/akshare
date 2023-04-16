@@ -1,10 +1,10 @@
-# [AKShare](https://github.com/akfamily/akshare) 快速入门
+# [AKShare](https://github.com/akfamily/akshare/) 快速入门
 
 ## 查看数据
 
-具体函数使用详情, 请查看 [AKShare 文档](https://akshare.readthedocs.io/) 每个接口的示例代码
+具体函数使用详情, 请查看 [AKShare 文档](https://akshare.akfamily.xyz/) 每个接口的示例代码
 
-[AKShare](https://github.com/akfamily/akshare) 数据接口一览
+[AKShare](https://github.com/akfamily/akshare/) 数据接口一览
 
 ```
  # 交易所期货数据
@@ -81,14 +81,15 @@
  "get_finance_option"  # 提供上海证券交易所期权数据
  # 加密货币行情
  "crypto_js_spot"  # 提供主流加密货币行情数据接口
- # 股票-企业社会责任
- "stock_zh_a_scr_report"  # 企业社会责任数据
  # 美股-中国概念股行情和历史数据
  "stock_us_zh_spot"  # 中国概念股行情
  "stock_us_zh_daily"  # 中国概念股历史数据
  # 新浪财经-港股
  "stock_hk_spot"  # 获取港股的历史行情数据(包括前后复权因子)
  "stock_hk_daily"  # 获取港股的实时行情数据(也可以用于获得所有港股代码)
+ # 东方财富
+ "stock_hk_spot_em"  # 港股实时行情
+ "stock_hk_main_board_spot_em"  # 港股主板实时行情
  # 新浪财经-美股
  "get_us_stock_name"  # 获得美股的所有股票代码
  "stock_us_spot"  # 获取美股行情报价
@@ -128,7 +129,6 @@
  # 股票分笔数据
  "stock_zh_a_tick_tx"  # A 股票分笔行情数据(近2年)-腾讯
  "stock_zh_a_tick_tx_js"  # A 股票分笔行情数据(近2年)-腾讯-当日数据
- "stock_zh_a_tick_163"  # A 股票分笔行情数据(近5个交易日)-163
  # 世界各地区日出和日落数据-日
  "weather_daily"  # 每日日出和日落数据
  # 世界各地区日出和日落数据-月
@@ -491,6 +491,8 @@
  "stock_individual_fund_flow_rank"  # 个股资金流排名
  "stock_market_fund_flow"  # 大盘资金流
  "stock_sector_fund_flow_rank"  # 板块资金流排名
+ "stock_sector_fund_flow_summary"  # xx行业个股资金流
+ "stock_sector_fund_flow_hist"  # 行业历史资金流
  # 股票基本面数据
  "stock_financial_abstract"  # 财务摘要
  "stock_financial_report_sina"  # 三大财务报表
@@ -517,7 +519,7 @@
  "stock_info_bj_name_code"  # 北京证券交易所股票代码和简称
  "stock_info_sh_delist"  # 上海证券交易所暂停和终止上市
  "stock_info_sz_delist"  # 深证证券交易所暂停和终止上市
- "stock_info_sz_change_name"  # 深证证券交易所股票曾用名详情
+ "stock_info_sz_change_name"  # 深证证券交易所名称变更
  "stock_info_change_name"  # A 股股票曾用名列表
  "stock_info_a_code_name"  # A 股股票代码和简称
  # 机构持股
@@ -540,11 +542,12 @@
  "index_bloomberg_billionaires"  # 彭博亿万富豪指数
  "index_bloomberg_billionaires_hist"  # 彭博亿万富豪历史指数
  # A 股市盈率和市净率
- "stock_a_pb"  # A 股市净率
- "stock_a_pe"  # A 股市盈率
- "stock_a_pe_and_pb"  # A 股市盈率和市净率
- "stock_a_lg_indicator"  # A 股个股市盈率、市净率和股息率指标
- "stock_hk_eniu_indicator"  # 港股股个股市盈率、市净率和股息率指标
+ "stock_market_pe_lg"  # 乐咕乐股-主板市盈率
+ "stock_index_pe_lg"  # 乐咕乐股-指数市盈率
+ "stock_market_pb_lg"  # 乐咕乐股-主板市净率
+ "stock_index_pb_lg"  # 乐咕乐股-指数市净率
+ "stock_a_indicator_lg"  # A 股个股市盈率、市净率和股息率指标
+ "stock_hk_indicator_eniu"  # 港股股个股市盈率、市净率和股息率指标
  "stock_a_high_low_statistics"  # 创新高和新低的股票数量
  "stock_a_below_net_asset_statistics"  # 破净股统计
  # 交易日历
@@ -651,8 +654,6 @@
  "stock_zh_kcb_report_em"  # 科创板报告
  # 东方财富-期权
  "option_current_em"  # 东方财富-期权
- # 金十数据-新闻资讯
- "js_news"  # 金十数据-新闻资讯
  # 国证指数
  "index_all_cni"  # 国证指数-所有指数
  "index_hist_cni"  # 国证指数-指数行情
@@ -696,7 +697,8 @@
  # 基金经理
  "fund_manager"  # 基金经理-基金经理大全
  # 盈利预测
- "stock_profit_forecast"  # 盈利预测
+ "stock_profit_forecast_em"  # 盈利预测-东财
+ "stock_profit_forecast_ths"  # 盈利预测-同花顺
  # 中美国债收益率
  "bond_zh_us_rate"  # 中美国债收益率
  # 分红配送
@@ -881,7 +883,6 @@
  "futures_egg_price"  # 2015-2021年鸡蛋价格走势图
  "futures_egg_price_area"  # 各主产区鸡蛋均价
  # REITs
- "reits_info_jsl"  #  REITs-信息
  "reits_realtime_em"  #  REITs-行情
  # A 股分时数据
  "stock_zh_a_hist_min_em"  # 东财-股票分时
@@ -1046,21 +1047,27 @@
  "index_zh_a_hist"  # 中国股票指数历史数据
  # 指数分时数据
  "index_zh_a_hist_min_em"  # 中国股票指数-指数分时数据
- # 东方财富-个股人气榜
+ # 东方财富-个股人气榜-A股
  "stock_hot_rank_em"  # 东方财富-个股人气榜-人气榜
  "stock_hot_rank_detail_em"  # 东方财富-个股人气榜-历史趋势及粉丝特征
  "stock_hot_rank_detail_realtime_em"  # 东方财富-个股人气榜-实时变动
  "stock_hot_keyword_em"  # 东方财富-个股人气榜-关键词
  "stock_hot_rank_latest_em"  # 东方财富-个股人气榜-最新排名
  "stock_hot_rank_relate_em"  # 东方财富-个股人气榜-相关股票
- # 网易财经-行情首页-沪深 A 股-每日行情
- "stock_zh_a_hist_163"  # 网易财经-行情首页-沪深 A 股-每日行情
+ # 东方财富-个股人气榜-港股
+ "stock_hk_hot_rank_em"  # 东方财富-个股人气榜-人气榜-港股
+ "stock_hk_hot_rank_detail_em"  # 东方财富-个股人气榜-历史趋势-港股
+ "stock_hk_hot_rank_detail_realtime_em"  # 东方财富-个股人气榜-实时变动-港股
+ "stock_hk_hot_rank_latest_em"  # 东方财富-个股人气榜-最新排名-港股
  # 东方财富-股票数据-龙虎榜
  "stock_lhb_detail_em"  # 东方财富网-数据中心-龙虎榜单-龙虎榜详情
  "stock_lhb_stock_statistic_em"  # 东方财富网-数据中心-龙虎榜单-个股上榜统计
  "stock_lhb_stock_detail_em"  # 东方财富网-数据中心-龙虎榜单-个股龙虎榜详情
  "stock_lhb_jgmmtj_em"  # 东方财富网-数据中心-龙虎榜单-机构买卖每日统计
  "stock_lhb_hyyyb_em"  # 东方财富网-数据中心-龙虎榜单-每日活跃营业部
+ "stock_lhb_yybph_em"  # 东方财富网-数据中心-龙虎榜单-营业部排行
+ "stock_lhb_jgstatistic_em"  # 东方财富网-数据中心-龙虎榜单-机构席位追踪
+ "stock_lhb_traderstatistic_em"  # 东方财富网-数据中心-龙虎榜单-营业部统计
  # 投资组合-基金持仓
  "fund_portfolio_hold_em"  # 天天基金网-基金档案-投资组合-基金持仓
  "fund_portfolio_bond_hold_em"  # 天天基金网-基金档案-投资组合-债券持仓
@@ -1117,7 +1124,8 @@
  # 人民币汇率中间价
  "currency_boc_safe"  # 人民币汇率中间价
  # 主营构成
- "stock_zygc_ym"  # 主营构成
+ "stock_zygc_ym"  # 主营构成-益盟
+ "stock_zygc_em"  # 主营构成-东财
  # 管理层讨论与分析
  "stock_mda_ym"  # 管理层讨论与分析
  # 行业分类数据
@@ -1192,6 +1200,9 @@
  "fund_stock_position_lg"  # 乐咕乐股-基金仓位-股票型基金仓位
  "fund_balance_position_lg"  # 乐咕乐股-基金仓位-平衡混合型基金仓位
  "fund_linghuo_position_lg"  # 乐咕乐股-基金仓位-灵活配置型基金仓位
+ "stock_zyjs_ths"  # 主营介绍
+ # 东方财富-行情报价
+ "stock_bid_ask_em"  # 东方财富-行情报价
 ```
 
 ## 案例演示

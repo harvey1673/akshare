@@ -159,12 +159,12 @@ def index_value_name_funddb() -> pd.DataFrame:
         ]
     ]
     temp_df["指数开始时间"] = pd.to_datetime(temp_df["指数开始时间"]).dt.date
-    temp_df["最新PE"] = pd.to_numeric(temp_df["最新PE"])
-    temp_df["PE分位"] = pd.to_numeric(temp_df["PE分位"])
-    temp_df["最新PB"] = pd.to_numeric(temp_df["最新PB"])
-    temp_df["PB分位"] = pd.to_numeric(temp_df["PB分位"])
-    temp_df["股息率"] = pd.to_numeric(temp_df["股息率"])
-    temp_df["股息率分位"] = pd.to_numeric(temp_df["股息率分位"])
+    temp_df["最新PE"] = pd.to_numeric(temp_df["最新PE"], errors="coerce")
+    temp_df["PE分位"] = pd.to_numeric(temp_df["PE分位"], errors="coerce")
+    temp_df["最新PB"] = pd.to_numeric(temp_df["最新PB"], errors="coerce")
+    temp_df["PB分位"] = pd.to_numeric(temp_df["PB分位"], errors="coerce")
+    temp_df["股息率"] = pd.to_numeric(temp_df["股息率"], errors="coerce")
+    temp_df["股息率分位"] = pd.to_numeric(temp_df["股息率分位"], errors="coerce")
     return temp_df
 
 
@@ -185,6 +185,7 @@ def index_value_hist_funddb(
         "市盈率": "pe",
         "市净率": "pb",
         "股息率": "xilv",
+        "风险溢价": "fed",
     }
     index_value_name_funddb_df = index_value_name_funddb()
     name_code_map = dict(
@@ -238,7 +239,7 @@ if __name__ == "__main__":
     stock_zh_index_value_csindex_df = stock_zh_index_value_csindex(symbol="H30374")
     print(stock_zh_index_value_csindex_df)
 
-    index_value_hist_funddb_df = index_value_hist_funddb(symbol="大盘成长", indicator="市盈率")
+    index_value_hist_funddb_df = index_value_hist_funddb(symbol="大盘成长", indicator="风险溢价")
     print(index_value_hist_funddb_df)
 
     index_value_name_funddb_df = index_value_name_funddb()

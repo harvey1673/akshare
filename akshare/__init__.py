@@ -2265,23 +2265,157 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 1.8.46 fix: fix get_roll_yield_bar interface
 1.8.47 add: add option_cffex_sz50_list_sina interface
 1.8.48 add: add fund_etf_hist_em interface
+1.8.49 fix: fix futures_comm_info interface
+1.8.50 fix: fix stock_us_daily interface
+1.8.51 fix: fix fortune_rank interface
+1.8.52 fix: fix index_value_hist_funddb interface
+1.8.53 fix: fix stock_hot_rank_wc interface
+1.8.54 fix: fix get_roll_yield_bar interface
+1.8.55 fix: fix macro_usa_pmi interface
+1.8.56 fix: fix stock_hk_valuation_baidu interface
+1.8.57 fix: fix stock_szse_summary interface
+1.8.58 fix: fix get_calendar interface
+1.8.59 fix: fix stock_zh_valuation_baidu interface
+1.8.60 fix: fix hurun_rank interface
+1.8.61 fix: fix futures_comm_info interface
+1.8.62 fix: fix stock_board_industry_index_ths interface
+1.8.63 fix: fix stock_cash_flow_sheet_by_report_em interface
+1.8.64 fix: fix stock_ggcg_em interface
+1.8.65 fix: fix get_roll_yield_bar interface
+1.8.66 fix: fix python 3.7.x support
+1.8.67 fix: fix python warning 3.7.x support
+1.8.68 fix: fix stock_individual_fund_flow interface
+1.8.69 fix: fix stock_individual_fund_flow_rank interface
+1.8.70 add: add stock_market_pe_lg interface
+1.8.71 add: add stock_zygc_em interface
+1.8.72 fix: fix drewry_wci_index interface
+1.8.73 add: add stock_zyjs_ths interface
+1.8.74 fix: fix drewry_wci_index interface
+1.8.75 add: add stock_cy_a_spot_em interface
+1.8.76 remove: remove js_news and ws interface
+1.8.77 fix: fix stock_analyst_rank_em interface
+1.8.78 fix: fix stock_profit_forecast interface
+1.8.79 fix: fix stock_hk_valuation_baidu interface
+1.8.80 fix: fix stock_profit_forecast interface
+1.8.81 fix: fix futures_hog_info interface
+1.8.82 fix: fix stock_fund_stock_holder interface
+1.8.83 fix: fix stock_info_sh_name_code interface
+1.8.84 remove: remove stock_zh_a_scr_report interface
+1.8.85 fix: fix stock_info_sh_name_code interface
+1.8.86 fix: fix stock_info_sh_delist interface
+1.8.87 fix: fix stock_info_sz_change_name interface
+1.8.88 fix: fix stock_info_sz_delist interface
+1.8.89 fix: fix sunrise_city_list interface
+1.8.90 fix: fix bond_info_detail_cm interface
+1.8.91 fix: fix sunrise_monthly interface
+1.8.92 fix: fix stock_institute_hold interface
+1.8.93 fix: fix stock_gdfx_holding_detail_em interface
+1.8.94 fix: fix Dockerfile
+1.8.95 fix: fix index_zh_a_hist interface
+1.8.96 fix: fix option_finance_board interface
+1.8.97 fix: fix futures_egg_price_yearly interface
+1.8.98 fix: fix stock_info_sz_delist interface
+1.8.99 add: add futures_news_shmet interface
+1.9.1 fix: fix index_value_name_funddb interface
+1.9.2 fix: fix stock_xgsglb_em interface
+1.9.3 fix: fix fx_quote_baidu interface
+1.9.4 fix: fix drewry_wci_index interface
+1.9.5 fix: fix stock_info_a_code_name interface
+1.9.6 fix: fix futures_hog_info interface
+1.9.7 add: add stock_profit_forecast_ths interface
+1.9.8 fix: fix stock_hk_valuation_baidu interface
+1.9.9 add: add macro_shipping_bci interface
+1.9.10 add: add macro_shipping_bcti interface
+1.9.11 add: add stock_sector_fund_flow_hist interface
+1.9.12 fix: fix stock_hot_rank_wc interface
+1.9.13 fix: fix stock_zh_valuation_baidu interface
+1.9.14 fix: fix option_risk_analysis_em interface
+1.9.15 fix: fix stock_hk_daily interface
+1.9.16 fix: fix stock_financial_abstract interface
+1.9.17 add: add stock_board_industry_spot_em interface
+1.9.18 fix: fix macro_china_market_margin_sh interface
+1.9.19 fix: fix macro_cnbs interface
+1.9.20 fix: fix fund_financial_fund_info_em interface
+1.9.21 fix: fix fund_financial_fund_info_em interface
+1.9.22 fix: fix fund_hk_fund_hist_em interface
+1.9.23 fix: fix bond_cb_redeem_jsl interface
+1.9.24 fix: fix bond_cb_adj_logs_jsl interface
+1.9.25 add: add stock_hk_hot_rank_em interface
+1.9.26 fix: fix bond_cb_jsl interface
+1.9.27 fix: fix fund_exchange_rank_em interface
+1.9.28 fix: fix stock_financial_report_sina interface
+1.9.29 fix: fix stock_a_lg_indicator interface
+1.9.30 fix: fix stock_a_lg_indicator interface
+1.9.31 fix: fix amac_fund_info interface
+1.9.32 fix: fix bank_fjcf_table_detail interface
+1.9.33 add: add stock_hk_main_board_spot_em interface
+1.9.34 fix: fix stock_zh_a_tick_tx_js interface
+1.9.35 fix: fix stock_a_lg_indicator interface
+1.9.36 fix: fix stock_market_pe_lg interface
+1.9.37 fix: fix stock_hk_indicator_eniu interface
+1.9.38 fix: fix stock_a_lg_indicator interface
+1.9.39 fix: fix fund_stock_position_lg interface
+1.9.40 fix: fix stock_profit_forecast_em interface
+1.9.41 fix: fix stock_a_indicator_lg interface
+1.9.42 add: add stock_bid_ask_em interface
+1.9.43 fix: fix stock_a_congestion_lg interface
+1.9.44 fix: fix stock_a_high_low_statistics interface
+1.9.45 add: add stock_fhps_detail_ths interface
+1.9.46 fix: fix stock_a_gxl_lg interface
+1.9.47 fix: fix option_dce_daily interface
+1.9.48 fix: fix index_stock_cons interface
+1.9.49 add: add stock_lhb_yybph_em interface
+1.9.50 fix: fix stock_a_all_pb interface
+1.9.51 fix: fix get_shfe_daily interface
+1.9.52 fix: fix get_shfe_rank_table interface
+1.9.53 fix: fix get_ine_daily interface
 """
 
-__version__ = "1.8.48"
+__version__ = "1.9.53"
 __author__ = "AKFamily"
 
 import sys
+import warnings
 
-if sys.version_info < (3, 7):
-    print(f"AKShare {__version__} requires Python 3.7+ and 64 bit OS")
-    sys.exit(1)
+if sys.version_info < (3, 8):
+    warnings.warn("为了支持更多 AKShare 特性，请尽快升级 Python 到 3.8 以上版本")
+    # sys.exit(1)
 
 del sys
 
 """
+同花顺-分红融资
+"""
+from akshare.stock_feature.stock_fhps_ths import stock_fhps_detail_ths
+
+"""
+东方财富-行情报价
+"""
+from akshare.stock.stock_ask_bid_em import stock_bid_ask_em
+
+"""
+同花顺-盈利预测
+"""
+from akshare.stock_fundamental.stock_profit_forecast_ths import stock_profit_forecast_ths
+
+"""
+期货资讯
+"""
+from akshare.futures.futures_news_shmet import futures_news_shmet
+
+"""
+主营介绍
+"""
+from akshare.stock_fundamental.stock_zyjs_ths import stock_zyjs_ths
+
+"""
 东方财富-ETF 行情
 """
-from akshare.fund.fund_etf_em import fund_etf_hist_em, fund_etf_hist_min_em, fund_etf_spot_em
+from akshare.fund.fund_etf_em import (
+    fund_etf_hist_em,
+    fund_etf_hist_min_em,
+    fund_etf_spot_em,
+)
 
 """
 乐咕乐股-股债利差
@@ -2438,7 +2572,7 @@ from akshare.stock_fundamental.stock_mda_ym import stock_mda_ym
 """
 主营构成
 """
-from akshare.stock_fundamental.stock_zygc_ym import stock_zygc_ym
+from akshare.stock_fundamental.stock_zygc import stock_zygc_ym, stock_zygc_em
 
 """
 人民币汇率中间价
@@ -2514,12 +2648,10 @@ from akshare.stock_feature.stock_lhb_em import (
     stock_lhb_jgmmtj_em,
     stock_lhb_stock_statistic_em,
     stock_lhb_stock_detail_date_em,
+    stock_lhb_yybph_em,
+    stock_lhb_jgstatistic_em,
+    stock_lhb_traderstatistic_em,
 )
-
-"""
-网易财经-行情首页-沪深 A 股-每日行情
-"""
-from akshare.stock.stock_hist_163 import stock_zh_a_hist_163
 
 """
 指数行情数据
@@ -2531,7 +2663,7 @@ from akshare.index.index_zh_em import (
 )
 
 """
-东方财富个股人气榜
+东方财富个股人气榜-A股
 """
 from akshare.stock.stock_hot_rank_em import (
     stock_hot_rank_detail_em,
@@ -2540,6 +2672,16 @@ from akshare.stock.stock_hot_rank_em import (
     stock_hot_rank_relate_em,
     stock_hot_keyword_em,
     stock_hot_rank_latest_em,
+)
+
+"""
+东方财富个股人气榜-港股
+"""
+from akshare.stock.stock_hk_hot_rank_em import (
+    stock_hk_hot_rank_detail_em,
+    stock_hk_hot_rank_latest_em,
+    stock_hk_hot_rank_detail_realtime_em,
+    stock_hk_hot_rank_em,
 )
 
 """
@@ -2653,6 +2795,7 @@ from akshare.stock.stock_board_industry_em import (
     stock_board_industry_hist_em,
     stock_board_industry_hist_min_em,
     stock_board_industry_name_em,
+    stock_board_industry_spot_em,
 )
 
 """
@@ -2844,7 +2987,7 @@ from akshare.stock.stock_us_pink import stock_us_pink_spot_em
 """
 REITs
 """
-from akshare.reits.reits_basic import reits_info_jsl, reits_realtime_em
+from akshare.reits.reits_basic import reits_realtime_em
 
 """
 鸡蛋价格数据
@@ -3016,11 +3159,13 @@ from akshare.stock_feature.stock_hist_em import (
     stock_bj_a_spot_em,
     stock_new_a_spot_em,
     stock_kc_a_spot_em,
+    stock_cy_a_spot_em,
     stock_sh_a_spot_em,
     stock_sz_a_spot_em,
     stock_zh_b_spot_em,
     stock_zh_a_hist,
     stock_hk_spot_em,
+    stock_hk_main_board_spot_em,
     stock_hk_hist,
     stock_us_spot_em,
     stock_us_hist,
@@ -3220,7 +3365,7 @@ from akshare.stock_feature.stock_board_concept_ths import (
 """
 分红配送
 """
-from akshare.stock_feature.stock_fhps_em import stock_fhps_em
+from akshare.stock_feature.stock_fhps_em import stock_fhps_em, stock_fhps_detail_em
 
 """
 中美国债收益率
@@ -3230,8 +3375,8 @@ from akshare.bond.bond_em import bond_zh_us_rate
 """
 盈利预测
 """
-from akshare.stock_fundamental.stock_profit_forecast import (
-    stock_profit_forecast,
+from akshare.stock_fundamental.stock_profit_forecast_em import (
+    stock_profit_forecast_em,
 )
 
 """
@@ -3323,11 +3468,6 @@ from akshare.index.index_cni import (
 )
 
 """
-金十数据-新闻资讯
-"""
-from akshare.ws.js_ws_news import js_news
-
-"""
 东方财富-期权
 """
 from akshare.option.option_em import option_current_em
@@ -3366,11 +3506,11 @@ from akshare.rate.repo_rate import repo_rate_hist
 公募基金排行
 """
 from akshare.fund.fund_rank_em import (
-    fund_em_exchange_rank,
-    fund_em_money_rank,
+    fund_exchange_rank_em,
+    fund_money_rank_em,
     fund_open_fund_rank_em,
-    fund_em_hk_rank,
-    fund_em_lcx_rank,
+    fund_hk_rank_em,
+    fund_lcx_rank_em,
 )
 
 """
@@ -3506,12 +3646,15 @@ from akshare.option.option_commodity_sina import (
 """
 A 股PE和PB
 """
-from akshare.stock_feature.stock_a_pb import stock_a_pb
-from akshare.stock_feature.stock_a_pe import stock_a_pe
-from akshare.stock_feature.stock_a_pe_and_pb import stock_a_pe_and_pb
+from akshare.stock_feature.stock_a_pe_and_pb import (
+    stock_market_pb_lg,
+    stock_index_pb_lg,
+    stock_market_pe_lg,
+    stock_index_pe_lg,
+)
 from akshare.stock_feature.stock_a_indicator import (
-    stock_a_lg_indicator,
-    stock_hk_eniu_indicator,
+    stock_a_indicator_lg,
+    stock_hk_indicator_eniu,
 )
 from akshare.stock_feature.stock_a_high_low import stock_a_high_low_statistics
 from akshare.stock_feature.stock_a_below_net_asset_statistics import (
@@ -3624,6 +3767,8 @@ from akshare.stock.stock_fund import (
     stock_market_fund_flow,
     stock_sector_fund_flow_rank,
     stock_individual_fund_flow_rank,
+    stock_sector_fund_flow_summary,
+    stock_sector_fund_flow_hist,
 )
 
 """
@@ -4145,16 +4290,14 @@ from akshare.air.air_hebei import air_quality_hebei
 """
 timeanddate-日出和日落
 """
-from akshare.air.time_and_date import sunrise_daily, sunrise_monthly
+from akshare.air.sunrise_tad import sunrise_daily, sunrise_monthly
 
 """
 新浪-指数实时行情和历史行情
 """
-from akshare.stock.stock_zh_a_tick_tx_163 import (
+from akshare.stock.stock_zh_a_tick_tx import (
     stock_zh_a_tick_tx,
     stock_zh_a_tick_tx_js,
-    stock_zh_a_tick_163,
-    stock_zh_a_tick_163_now,
 )
 
 """
@@ -4262,11 +4405,6 @@ from akshare.futures_derivative.sys_spot_futures import (
 和讯财经-行情及历史数据
 """
 from akshare.stock.stock_us_zh_hx import stock_us_zh_spot, stock_us_zh_daily
-
-"""
-和讯财经-企业社会责任
-"""
-from akshare.stock.stock_zh_zrbg_hx import stock_zh_a_scr_report
 
 """
 全球宏观-机构宏观
@@ -4413,6 +4551,10 @@ from akshare.economic.macro_china import (
     macro_china_real_estate,
     macro_china_qyspjg,
     macro_china_fdi,
+    macro_shipping_bci,
+    macro_shipping_bcti,
+    macro_shipping_bdi,
+    macro_shipping_bpi,
 )
 
 """

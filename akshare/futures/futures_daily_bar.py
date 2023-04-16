@@ -278,7 +278,7 @@ def get_ine_daily(date: str = "20220208") -> pd.DataFrame:
         # warnings.warn(f"{day.strftime('%Y%m%d')}非交易日")
         return
     url = f"http://www.ine.cn/data/dailydata/kx/kx{day.strftime('%Y%m%d')}.dat"
-    r = requests.get(url)
+    r = requests.get(url, headers=cons.shfe_headers)
     result_df = pd.DataFrame()
     try:
         data_json = r.json()
@@ -674,7 +674,7 @@ def get_dce_daily(date: str = "20220308") -> pd.DataFrame:
 def get_futures_daily(
     start_date: str = "20220208",
     end_date: str = "20220208",
-    market: str = "INE",
+    market: str = "CFFEX",
 ) -> pd.DataFrame:
     """
     交易所日交易数据
@@ -682,7 +682,7 @@ def get_futures_daily(
     :type start_date: str
     :param end_date: 结束数据 format：YYYY-MM-DD 或 YYYYMMDD 或 datetime.date对象 为空时为当天
     :type end_date: str
-    :param market: 'CFFEX' 中金所, 'CZCE' 郑商所,  'SHFE' 上期所, 'DCE' 大商所 之一, 'INE' 上海国际能源交易中心。默认为中金所
+    :param market: 'CFFEX' 中金所, 'CZCE' 郑商所,  'SHFE' 上期所, 'DCE' 大商所 之一, 'INE' 上海国际能源交易中心, "GFEX" 广州期货交易所。默认为中金所
     :type market: str
     :return: 交易所日交易数据
     :rtype: pandas.DataFrame
@@ -744,10 +744,10 @@ if __name__ == "__main__":
     get_ine_daily_df = get_ine_daily(date="20211201")
     print(get_ine_daily_df)
 
-    get_czce_daily_df = get_czce_daily(date="20100825")
+    get_czce_daily_df = get_czce_daily(date="20230320")
     print(get_czce_daily_df)
 
-    get_shfe_daily_df = get_shfe_daily(date="20160104")
+    get_shfe_daily_df = get_shfe_daily(date="20230412")
     print(get_shfe_daily_df)
 
     get_gfex_daily_df = get_gfex_daily(date="20221228")

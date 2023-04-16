@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/8/20 17:58
+Date: 2023/1/12 16:58
 Desc: 期货配置文件
 """
 import datetime
@@ -105,7 +105,7 @@ BOND_BANK_URL = (
 
 # 键值对: 键为交易所代码, 值为具体合约代码
 market_exchange_symbols = {
-    "cffex": ["IF", "IC", "IH", "T", "TF", "TS"],
+    "cffex": ["IF", "IC", "IM", "IH", "T", "TF", "TS"],
     "dce": [
         "C",
         "CS",
@@ -185,6 +185,7 @@ market_exchange_symbols = {
         "LU",
         "BC",
     ],
+    "gfex": ["SI"],
 }
 
 contract_symbols = []
@@ -499,7 +500,8 @@ def get_calendar():
     """
     setting_file_name = "calendar.json"
     setting_file_path = get_json_path(setting_file_name, __file__)
-    data_json = json.load(open(setting_file_path, "r"))
+    with open(setting_file_path, "r") as f:
+        data_json = json.load(f)
     return data_json
 
 

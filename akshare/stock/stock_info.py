@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2022/4/13 13:00
+Date: 2023/2/19 19:00
 Desc: 股票基本信息
 """
 import json
@@ -115,12 +115,12 @@ def stock_info_sz_name_code(indicator: str = "A股列表") -> pd.DataFrame:
         return temp_df
 
 
-def stock_info_sh_name_code(indicator: str = "主板A股") -> pd.DataFrame:
+def stock_info_sh_name_code(symbol: str = "主板A股") -> pd.DataFrame:
     """
     上海证券交易所-股票列表
     http://www.sse.com.cn/assortment/stock/list/share/
-    :param indicator: choice of {"主板A股": "1", "主板B股": "2", "科创板": "8"}
-    :type indicator: str
+    :param symbol: choice of {"主板A股": "1", "主板B股": "2", "科创板": "8"}
+    :type symbol: str
     :return: 指定 indicator 的数据
     :rtype: pandas.DataFrame
     """
@@ -133,7 +133,7 @@ def stock_info_sh_name_code(indicator: str = "主板A股") -> pd.DataFrame:
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
     }
     params = {
-        "STOCK_TYPE": indicator_map[indicator],
+        "STOCK_TYPE": indicator_map[symbol],
         "REG_PROVINCE": "",
         "CSRC_CODE": "",
         "STOCK_CODE": "",
@@ -151,38 +151,19 @@ def stock_info_sh_name_code(indicator: str = "主板A股") -> pd.DataFrame:
     r = requests.get(url, params=params, headers=headers)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["result"])
-    columns = [
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
+    col_stock_code = "B_STOCK_CODE" if symbol == "主板B股" else "A_STOCK_CODE"
+    temp_df.rename(columns={
+        col_stock_code: "证券代码",
+        "COMPANY_ABBR": "证券简称",
+        "FULL_NAME": "公司全称",
+        "LIST_DATE": "上市日期",
+    }, inplace=True)
+    temp_df = temp_df[[
+        "证券代码",
         "证券简称",
-        "扩位证券简称",
-        "-",
+        "公司全称",
         "上市日期",
-        "-",
-        "-",
-        "-",
-    ]
-
-    # column index 3=A_STOCK_CODE, 8=B_STOCK_CODE, 11=COMPANY_CODE
-    if indicator == "主板B股":
-        columns[8] = "证券代码"
-    else:
-        columns[3] = "证券代码"
-
-    temp_df.columns = columns
-
-    temp_df = temp_df[
-        [
-            "证券代码",
-            "证券简称",
-            "扩位证券简称",
-            "上市日期",
-        ]
-    ]
+    ]]
     temp_df["上市日期"] = pd.to_datetime(temp_df["上市日期"]).dt.date
     return temp_df
 
@@ -203,14 +184,17 @@ def stock_info_bj_name_code() -> pd.DataFrame:
         "sortfield": "xxzqdm",
         "sorttype": "asc",
     }
-    r = requests.post(url, data=payload)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+    }
+    r = requests.post(url, data=payload, headers=headers)
     data_text = r.text
     data_json = json.loads(data_text[data_text.find("[") : -1])
     total_page = data_json[0]["totalPages"]
     big_df = pd.DataFrame()
     for page in tqdm(range(total_page), leave=False):
         payload.update({"page": page})
-        r = requests.post(url, data=payload)
+        r = requests.post(url, data=payload, headers=headers)
         data_text = r.text
         data_json = json.loads(data_text[data_text.find("[") : -1])
         temp_df = data_json[0]["content"]
@@ -321,21 +305,12 @@ def stock_info_sh_delist() -> pd.DataFrame:
     r = requests.get(url, params=params, headers=headers)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["result"])
-    temp_df.columns = [
-        "-",
-        "-",
-        "公司简称",
-        "-",
-        "暂停上市日期",
-        "-",
-        "-",
-        "-",
-        "-",
-        "上市日期",
-        "-",
-        "公司代码",
-        "-",
-    ]
+    temp_df.rename(columns={
+        "COMPANY_ABBR": "公司简称",
+        "DELIST_DATE": "暂停上市日期",
+        "LIST_DATE": "上市日期",
+        "COMPANY_CODE": "公司代码",
+    }, inplace=True)
     temp_df = temp_df[
         [
             "公司代码",
@@ -349,12 +324,12 @@ def stock_info_sh_delist() -> pd.DataFrame:
     return temp_df
 
 
-def stock_info_sz_delist(indicator: str = "暂停上市公司") -> pd.DataFrame:
+def stock_info_sz_delist(symbol: str = "暂停上市公司") -> pd.DataFrame:
     """
     深证证券交易所-暂停上市公司-终止上市公司
     http://www.szse.cn/market/stock/suspend/index.html
-    :param indicator: choice of {"暂停上市公司", "终止上市公司"}
-    :type indicator: str
+    :param symbol: choice of {"暂停上市公司", "终止上市公司"}
+    :type symbol: str
     :return: 暂停上市公司 or 终止上市公司 的数据
     :rtype: pandas.DataFrame
     """
@@ -363,24 +338,28 @@ def stock_info_sz_delist(indicator: str = "暂停上市公司") -> pd.DataFrame:
     params = {
         "SHOWTYPE": "xlsx",
         "CATALOGID": "1793_ssgs",
-        "TABKEY": indicator_map[indicator],
+        "TABKEY": indicator_map[symbol],
         "random": "0.6935816432433362",
     }
     r = requests.get(url, params=params)
     with warnings.catch_warnings(record=True):
         warnings.simplefilter("always")
         temp_df = pd.read_excel(BytesIO(r.content))
+        if temp_df.empty:
+            return pd.DataFrame()
         temp_df["证券代码"] = temp_df["证券代码"].astype("str").str.zfill(6)
+        temp_df['上市日期'] = pd.to_datetime(temp_df['上市日期']).dt.date
+        temp_df['终止上市日期'] = pd.to_datetime(temp_df['终止上市日期']).dt.date
         return temp_df
 
 
-def stock_info_sz_change_name(indicator: str = "全称变更") -> pd.DataFrame:
+def stock_info_sz_change_name(symbol: str = "全称变更") -> pd.DataFrame:
     """
-    深证证券交易所-更名公司
-    http://www.szse.cn/market/companys/changename/index.html
-    :param indicator: choice of {"全称变更": "tab1", "简称变更": "tab2"}
-    :type indicator: str
-    :return: 全称变更 or 简称变更 的数据
+    深证证券交易所-市场数据-股票数据-名称变更
+    http://www.szse.cn/www/market/stock/changename/index.html
+    :param symbol: choice of {"全称变更": "tab1", "简称变更": "tab2"}
+    :type symbol: str
+    :return: 名称变更数据
     :rtype: pandas.DataFrame
     """
     indicator_map = {"全称变更": "tab1", "简称变更": "tab2"}
@@ -388,7 +367,7 @@ def stock_info_sz_change_name(indicator: str = "全称变更") -> pd.DataFrame:
     params = {
         "SHOWTYPE": "xlsx",
         "CATALOGID": "SSGSGMXX",
-        "TABKEY": indicator_map[indicator],
+        "TABKEY": indicator_map[symbol],
         "random": "0.6935816432433362",
     }
     r = requests.get(url, params=params)
@@ -396,6 +375,8 @@ def stock_info_sz_change_name(indicator: str = "全称变更") -> pd.DataFrame:
         warnings.simplefilter("always")
         temp_df = pd.read_excel(BytesIO(r.content))
         temp_df["证券代码"] = temp_df["证券代码"].astype("str").str.zfill(6)
+        temp_df['变更日期'] = pd.to_datetime(temp_df['变更日期']).dt.date
+        temp_df.sort_values(['变更日期'], inplace=True, ignore_index=True)
         return temp_df
 
 
@@ -435,7 +416,7 @@ def stock_info_a_code_name() -> pd.DataFrame:
     :rtype: pandas.DataFrame
     """
     big_df = pd.DataFrame()
-    stock_sh = stock_info_sh_name_code(indicator="主板A股")
+    stock_sh = stock_info_sh_name_code(symbol="主板A股")
     stock_sh = stock_sh[["证券代码", "证券简称"]]
 
     stock_sz = stock_info_sz_name_code(indicator="A股列表")
@@ -443,7 +424,7 @@ def stock_info_a_code_name() -> pd.DataFrame:
     big_df = pd.concat([big_df, stock_sz[["A股代码", "A股简称"]]], ignore_index=True)
     big_df.columns = ["证券代码", "证券简称"]
 
-    stock_kcb = stock_info_sh_name_code(indicator="科创板")
+    stock_kcb = stock_info_sh_name_code(symbol="科创板")
     stock_kcb = stock_kcb[["证券代码", "证券简称"]]
 
     stock_bse = stock_info_bj_name_code()
@@ -458,10 +439,13 @@ def stock_info_a_code_name() -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    stock_info_sh_name_code_df = stock_info_sh_name_code(indicator="主板A股")
+    stock_info_sh_name_code_df = stock_info_sh_name_code(symbol="主板A股")
     print(stock_info_sh_name_code_df)
 
-    stock_info_sh_name_code_df = stock_info_sh_name_code(indicator="主板B股")
+    stock_info_sh_name_code_df = stock_info_sh_name_code(symbol="主板B股")
+    print(stock_info_sh_name_code_df)
+
+    stock_info_sh_name_code_df = stock_info_sh_name_code(symbol="科创板")
     print(stock_info_sh_name_code_df)
 
     stock_info_sz_name_code_df = stock_info_sz_name_code(indicator="A股列表")
@@ -479,7 +463,7 @@ if __name__ == "__main__":
     stock_info_sh_delist_df = stock_info_sh_delist()
     print(stock_info_sh_delist_df)
 
-    stock_info_sz_change_name_df = stock_info_sz_change_name(indicator="全称变更")
+    stock_info_sz_change_name_df = stock_info_sz_change_name(symbol="全称变更")
     print(stock_info_sz_change_name_df)
 
     stock_info_change_name_df = stock_info_change_name(symbol="000503")
@@ -490,3 +474,9 @@ if __name__ == "__main__":
 
     stock_info_bj_name_code_df = stock_info_bj_name_code()
     print(stock_info_bj_name_code_df)
+
+    stock_info_sz_delist_df = stock_info_sz_delist(symbol="终止上市公司")
+    print(stock_info_sz_delist_df)
+
+    stock_info_sz_delist_df = stock_info_sz_delist(symbol="暂停上市公司")
+    print(stock_info_sz_delist_df)

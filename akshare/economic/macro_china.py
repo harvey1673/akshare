@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2022/11/27 12:20
+Date: 2023/3/9 22:20
 Desc: 宏观数据-中国
 """
 import json
@@ -1385,20 +1385,8 @@ def macro_china_market_margin_sh() -> pd.DataFrame:
         "_": str(int(round(t * 1000))),
     }
     headers = {
-        "accept": "*/*",
-        "accept-encoding": "gzip, deflate, br",
-        "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
-        "cache-control": "no-cache",
-        "origin": "https://datacenter.jin10.com",
-        "pragma": "no-cache",
-        "referer": "https://datacenter.jin10.com/reportType/dc_market_margin_sse",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-site",
-        "x-app-id": "rU6QIu7JHe2gOUeR",
-        "x-csrf-token": "",
-        "x-version": "1.0.0",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36",
+        'x-app-id': 'rU6QIu7JHe2gOUeR',
+        'x-version': '1.0.0'
     }
     r = requests.get(url, params=params, headers=headers)
     temp_df = pd.DataFrame(r.json()["data"]["values"])
@@ -1422,11 +1410,14 @@ def macro_china_market_margin_sh() -> pd.DataFrame:
         temp_df.index = pd.to_datetime(temp_df.iloc[:, 0])
         temp_df = temp_df.iloc[:, 1:]
         temp_df.columns = [item["name"] for item in r.json()["data"]["keys"]][1:]
-        big_df = big_df.append(temp_df)
+        big_df = pd.concat([big_df, temp_df])
 
-    value_df = value_df.append(big_df)
+    value_df = pd.concat([value_df, big_df])
     value_df.drop_duplicates(inplace=True)
     value_df.sort_index(inplace=True)
+    value_df.reset_index(inplace=True)
+    value_df.rename(columns={"index": "日期"}, inplace=True)
+    value_df['日期'] = pd.to_datetime(value_df['日期']).dt.date
     return value_df
 
 
@@ -1463,10 +1454,29 @@ def macro_china_au_report() -> pd.DataFrame:
             "交收量",
             "日期",
         ]
-        big_df = big_df.append(temp_df, ignore_index=True)
-    big_df.index = pd.to_datetime(big_df["日期"])
-    del big_df["日期"]
-    big_df.sort_index(inplace=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+    big_df = big_df[
+        [
+            "日期",
+            "商品",
+            "开盘价",
+            "最高价",
+            "最低价",
+            "收盘价",
+            "涨跌",
+            "涨跌幅",
+            "加权平均价",
+            "成交量",
+            "成交金额",
+            "持仓量",
+            "交收方向",
+            "交收量",
+        ]
+    ]
+    big_df["日期"] = pd.to_datetime(big_df["日期"]).dt.date
+    big_df.sort_values(["日期"], inplace=True, ignore_index=True)
+    big_df["持仓量"] = pd.to_numeric(big_df["持仓量"], errors="coerce")
+    big_df["交收量"] = pd.to_numeric(big_df["交收量"], errors="coerce")
     return big_df
 
 
@@ -2488,6 +2498,101 @@ def macro_china_bsi_index() -> pd.DataFrame:
     big_df.sort_values(["日期"], inplace=True)
     big_df.reset_index(inplace=True, drop=True)
     return big_df
+
+
+def _em_macro_1(em_id) -> pd.DataFrame:
+    """
+    东财宏观数据的一种通用函数
+    """
+    url = "https://datacenter-web.eastmoney.com/api/data/v1/get"
+    ind_id = '"' + em_id + '"'
+    params = {
+        "sortColumns": "REPORT_DATE",
+        "sortTypes": "-1",
+        "pageSize": "500",
+        "pageNumber": "1",
+        "reportName": "RPT_INDUSTRY_INDEX",
+        "columns": "REPORT_DATE,INDICATOR_VALUE,CHANGE_RATE,CHANGERATE_3M,CHANGERATE_6M,CHANGERATE_1Y,CHANGERATE_2Y,CHANGERATE_3Y",
+        "filter": '(INDICATOR_ID=' + ind_id + ')',
+        "source": "WEB",
+        "client": "WEB",
+    }
+    r = requests.get(url, params=params)
+    data_json = r.json()
+    total_page = data_json["result"]["pages"]
+    big_df = pd.DataFrame()
+    for page in tqdm(range(1, total_page + 1), leave=False):
+        params.update({"pageNumber": page})
+        r = requests.get(url, params=params)
+        data_json = r.json()
+        temp_df = pd.DataFrame(data_json["result"]["data"])
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+    big_df.drop_duplicates(inplace=True)
+    big_df.columns = [
+        "日期",
+        "最新值",
+        "涨跌幅",
+        "近3月涨跌幅",
+        "近6月涨跌幅",
+        "近1年涨跌幅",
+        "近2年涨跌幅",
+        "近3年涨跌幅",
+    ]
+    big_df["日期"] = pd.to_datetime(big_df["日期"]).dt.date
+    big_df["最新值"] = pd.to_numeric(big_df["最新值"])
+    big_df["涨跌幅"] = pd.to_numeric(big_df["涨跌幅"])
+    big_df["近3月涨跌幅"] = pd.to_numeric(big_df["近3月涨跌幅"])
+    big_df["近6月涨跌幅"] = pd.to_numeric(big_df["近6月涨跌幅"])
+    big_df["近1年涨跌幅"] = pd.to_numeric(big_df["近1年涨跌幅"])
+    big_df["近2年涨跌幅"] = pd.to_numeric(big_df["近2年涨跌幅"])
+    big_df["近3年涨跌幅"] = pd.to_numeric(big_df["近3年涨跌幅"])
+    big_df.sort_values(["日期"], inplace=True)
+    big_df.reset_index(inplace=True, drop=True)
+    return big_df
+
+
+def macro_shipping_bci() -> pd.DataFrame:
+    """
+    海岬型运费指数(BCI)
+    https://data.eastmoney.com/cjsj/hyzs_list_EMI00107666.html
+    :return: 海岬型运费指数
+    :rtype: pandas.DataFrame
+    """
+    ts = _em_macro_1("EMI00107666")
+    return ts
+
+
+def macro_shipping_bdi() -> pd.DataFrame:
+    """
+    波罗的海干散货指数(BDI)
+    https://data.eastmoney.com/cjsj/hyzs_list_EMI00107664.html
+    :return: 波罗的海干散货指数
+    :rtype: pandas.DataFrame
+    """
+    ts = _em_macro_1("EMI00107664")
+    return ts
+
+
+def macro_shipping_bpi() -> pd.DataFrame:
+    """
+    巴拿马型运费指数(BPI)
+    https://data.eastmoney.com/cjsj/hyzs_list_EMI00107665.html
+    :return: 巴拿马型运费指数
+    :rtype: pandas.DataFrame
+    """
+    ts = _em_macro_1("EMI00107665")
+    return ts
+
+
+def macro_shipping_bcti() -> pd.DataFrame:
+    """
+    成品油运输指数（BCTI）
+    https://data.eastmoney.com/cjsj/hyzs_list_EMI00107669.html
+    :return: 成品油运输指数
+    :rtype: pandas.DataFrame
+    """
+    ts = _em_macro_1("EMI00107669")
+    return ts
 
 
 def macro_china_new_financial_credit() -> pd.DataFrame:
@@ -4411,3 +4516,15 @@ if __name__ == "__main__":
 
     macro_china_real_estate_df = macro_china_real_estate()
     print(macro_china_real_estate_df)
+
+    macro_shipping_bci_df = macro_shipping_bci()
+    print(macro_shipping_bci_df)
+
+    macro_shipping_bdi_df = macro_shipping_bdi()
+    print(macro_shipping_bdi_df)
+
+    macro_shipping_bpi_df = macro_shipping_bpi()
+    print(macro_shipping_bpi_df)
+
+    macro_shipping_bcti_df = macro_shipping_bcti()
+    print(macro_shipping_bcti_df)
