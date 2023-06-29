@@ -58,12 +58,12 @@ def pandas_read_html_link(url: str, encoding: str = "utf-8", method: str = "get"
             if method == "get":
                 r = requests.get(url, timeout=20)
                 r.encoding = encoding
-                r = pd.read_html(r.text, encoding=encoding)
+                r = pd.read_html(r.text, encoding=encoding, flavor='html5lib')
                 return r
             elif method == "post":
                 r = requests.post(url, timeout=20, data=data, headers=headers)
                 r.encoding = encoding
-                r = pd.read_html(r.text, encoding=encoding)
+                r = pd.read_html(r.text, encoding=encoding, flavor='html5lib')
                 return r
             else:
                 raise ValueError("请提供正确的请求方式")
