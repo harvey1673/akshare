@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 # !/usr/bin/env python
 """
-Date: 2022/6/10 22:32
+Date: 2023/3/10 16:32
 Desc: 东方财富网-数据中心-沪深港通持股
-http://data.eastmoney.com/hsgtcg/
-沪深港通详情: http://finance.eastmoney.com/news/1622,20161118685370149.html
+https://data.eastmoney.com/hsgtcg/
+沪深港通详情: https://finance.eastmoney.com/news/1622,20161118685370149.html
 """
 import json
 
@@ -12,6 +12,80 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from tqdm import tqdm
+
+
+def stock_hsgt_fund_flow_summary_em() -> pd.DataFrame:
+    """
+    东方财富网-数据中心-资金流向-沪深港通资金流向
+    https://data.eastmoney.com/hsgt/index.html#lssj
+    :return: 沪深港通资金流向
+    :rtype: pandas.DataFrame
+    """
+    url = "https://datacenter-web.eastmoney.com/api/data/v1/get"
+    params = {
+        "reportName": "RPT_MUTUAL_QUOTA",
+        "columns": "TRADE_DATE,MUTUAL_TYPE,BOARD_TYPE,MUTUAL_TYPE_NAME,FUNDS_DIRECTION,INDEX_CODE,INDEX_NAME,BOARD_CODE",
+        "quoteColumns": "status~07~BOARD_CODE,dayNetAmtIn~07~BOARD_CODE,dayAmtRemain~07~BOARD_CODE,dayAmtThreshold~07~BOARD_CODE,f104~07~BOARD_CODE,f105~07~BOARD_CODE,f106~07~BOARD_CODE,f3~03~INDEX_CODE~INDEX_f3,netBuyAmt~07~BOARD_CODE",
+        'quoteType': '0',
+        "pageNumber": "1",
+        "pageSize": "2000",
+        "sortTypes": "1",
+        "sortColumns": "MUTUAL_TYPE",
+        "source": "WEB",
+        "client": "WEB",
+        "_": "1669047266881",
+    }
+    r = requests.get(url, params=params)
+    data_json = r.json()
+    temp_df = pd.DataFrame(data_json["result"]["data"])
+    temp_df.columns = [
+        "交易日",
+        "-",
+        "类型",
+        "板块",
+        "资金方向",
+        "-",
+        "相关指数",
+        "-",
+        "交易状态",
+        "资金净流入",
+        "当日资金余额",
+        "-",
+        "上涨数",
+        "下跌数",
+        "持平数",
+        "指数涨跌幅",
+        "成交净买额",
+    ]
+    temp_df = temp_df[[
+        "交易日",
+        "类型",
+        "板块",
+        "资金方向",
+        "交易状态",
+        "成交净买额",
+        "资金净流入",
+        "当日资金余额",
+        "上涨数",
+        "持平数",
+        "下跌数",
+        "相关指数",
+        "指数涨跌幅",
+    ]]
+    temp_df['交易日'] = pd.to_datetime(temp_df['交易日']).dt.date
+    temp_df['成交净买额'] = pd.to_numeric(temp_df['成交净买额'], errors="coerce")
+    temp_df['资金净流入'] = pd.to_numeric(temp_df['资金净流入'], errors="coerce")
+    temp_df['当日资金余额'] = pd.to_numeric(temp_df['当日资金余额'], errors="coerce")
+    temp_df['上涨数'] = pd.to_numeric(temp_df['上涨数'], errors="coerce")
+    temp_df['持平数'] = pd.to_numeric(temp_df['持平数'], errors="coerce")
+    temp_df['下跌数'] = pd.to_numeric(temp_df['下跌数'], errors="coerce")
+    temp_df['指数涨跌幅'] = pd.to_numeric(temp_df['指数涨跌幅'], errors="coerce")
+
+    temp_df['成交净买额'] = temp_df['成交净买额'] / 10000
+    temp_df['资金净流入'] = temp_df['资金净流入'] / 10000
+    temp_df['当日资金余额'] = temp_df['当日资金余额'] / 10000
+
+    return temp_df
 
 
 def stock_hk_ggt_components_em() -> pd.DataFrame:
@@ -402,7 +476,7 @@ def stock_hsgt_south_acc_flow_in_em(symbol: str = "沪股通") -> pd.DataFrame:
 
 
 def stock_hsgt_hold_stock_em(
-    market: str = "北向", indicator: str = "5日排行"
+    market: str = "沪股通", indicator: str = "5日排行"
 ) -> pd.DataFrame:
     """
     东方财富-数据中心-沪深港通持股-个股排行
@@ -445,7 +519,7 @@ def stock_hsgt_hold_stock_em(
     elif market == "沪股通":
         filter_str = f"""(TRADE_DATE='{date}')(INTERVAL_TYPE="{indicator_type}")(MUTUAL_TYPE="001")"""
     elif market == "深股通":
-        filter_str = f"""(TRADE_DATE='{date}')(INTERVAL_TYPE="{indicator_type}")(MUTUAL_TYPE="001")"""
+        filter_str = f"""(TRADE_DATE='{date}')(INTERVAL_TYPE="{indicator_type}")(MUTUAL_TYPE="003")"""
     params = {
         "sortColumns": "ADD_MARKET_CAP",
         "sortTypes": "-1",
@@ -562,12 +636,12 @@ def stock_hsgt_hold_stock_em(
 
 def stock_hsgt_stock_statistics_em(
     symbol: str = "北向持股",
-    start_date: str = "20211027",
-    end_date: str = "20211027",
+    start_date: str = "20230113",
+    end_date: str = "20230113",
 ):
     """
     东方财富网-数据中心-沪深港通-沪深港通持股-每日个股统计
-    http://data.eastmoney.com/hsgtcg/StockStatistics.aspx
+    https://data.eastmoney.com/hsgtcg/StockStatistics.aspx
     market=001, 沪股通持股
     market=003, 深股通持股
     :param symbol: choice of {"北向持股", "南向持股"}
@@ -1327,7 +1401,7 @@ def stock_hsgt_board_rank_em(
 ) -> pd.DataFrame:
     """
     东方财富网-数据中心-沪深港通持股-行业板块排行-北向资金增持行业板块排行
-    http://data.eastmoney.com/hsgtcg/hy.html
+    https://data.eastmoney.com/hsgtcg/hy.html
     :param symbol: choice of {"北向资金增持行业板块排行", "北向资金增持概念板块排行", "北向资金增持地域板块排行"}
     :type symbol: str
     :param indicator: choice of {"今日", "3日", "5日", "10日", "1月", "1季", "1年"}
@@ -1449,7 +1523,7 @@ def stock_hsgt_board_rank_em(
 def stock_hsgt_individual_em(stock: str = "002008") -> pd.DataFrame:
     """
     东方财富-数据中心-沪深港通-沪深港通持股-具体股票
-    http://data.eastmoney.com/hsgtcg/StockHdStatistics/002008.html
+    https://data.eastmoney.com/hsgtcg/StockHdStatistics/002008.html
     :param stock: 股票代码
     :type stock: str
     :return: 具体股票-沪深港通持股
@@ -1524,7 +1598,7 @@ def stock_hsgt_individual_detail_em(
 ) -> pd.DataFrame:
     """
     东方财富-数据中心-沪深港通-沪深港通持股-具体股票详情
-    http://data.eastmoney.com/hsgtcg/StockHdStatistics/002008.html
+    https://data.eastmoney.com/hsgtcg/StockHdStatistics/002008.html
     :param symbol: 股票代码
     :type symbol: str
     :param start_date: 开始时间
@@ -1615,6 +1689,9 @@ def stock_hsgt_individual_detail_em(
 
 
 if __name__ == "__main__":
+    stock_hsgt_fund_flow_summary_em_df = stock_hsgt_fund_flow_summary_em()
+    print(stock_hsgt_fund_flow_summary_em_df)
+
     stock_hk_ggt_components_em_df = stock_hk_ggt_components_em()
     print(stock_hk_ggt_components_em_df)
 
@@ -1665,12 +1742,17 @@ if __name__ == "__main__":
     print(stock_hsgt_hold_stock_em_df)
 
     stock_hsgt_hold_stock_em_df = stock_hsgt_hold_stock_em(
+        market="深股通", indicator="5日排行"
+    )
+    print(stock_hsgt_hold_stock_em_df)
+
+    stock_hsgt_hold_stock_em_df = stock_hsgt_hold_stock_em(
         market="沪股通", indicator="10日排行"
     )
     print(stock_hsgt_hold_stock_em_df)
 
     stock_hsgt_stock_statistics_em_df = stock_hsgt_stock_statistics_em(
-        symbol="北向持股", start_date="20220601", end_date="20220615"
+        symbol="北向持股", start_date="20221216", end_date="20230315"
     )
     print(stock_hsgt_stock_statistics_em_df)
 

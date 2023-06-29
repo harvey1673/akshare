@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # !/usr/bin/env python
 """
-Date: 2022/2/17 16:55
+Date: 2023/5/30 19:00
 Desc: 东方财富网-数据中心-股东分析
 https://data.eastmoney.com/gdfx/
 """
@@ -10,7 +10,9 @@ import requests
 from tqdm import tqdm
 
 
-def stock_gdfx_free_holding_statistics_em(date: str = "20210630") -> pd.DataFrame:
+def stock_gdfx_free_holding_statistics_em(
+    date: str = "20210630",
+) -> pd.DataFrame:
     """
     东方财富网-数据中心-股东分析-股东持股统计-十大流通股东
     https://data.eastmoney.com/gdfx/HoldingAnalyse.html
@@ -483,11 +485,11 @@ def stock_gdfx_free_holding_detail_em(date: str = "20210930") -> pd.DataFrame:
         "报告期",
         "股东名称",
         "期末持股-数量",
-        "期末持股-持股占流通股比",
+        "-",
+        "期末持股-持股变动",
         "-",
         "-",
         "-",
-        "股东排名",
         "股票简称",
         "-",
         "-",
@@ -496,7 +498,7 @@ def stock_gdfx_free_holding_detail_em(date: str = "20210930") -> pd.DataFrame:
         "-",
         "-",
         "期末持股-数量变化比例",
-        "-",
+        "股东类型",
         "-",
         "公告日",
         "-",
@@ -505,25 +507,24 @@ def stock_gdfx_free_holding_detail_em(date: str = "20210930") -> pd.DataFrame:
         "-",
         "-",
         "-",
-        "股东类型",
-        "期末持股-持股变动",
+        "-",
+        "-",
         "-",
         "-",
         "-",
         "-",
         "期末持股-数量变化",
+        "-",
     ]
     big_df = big_df[
         [
             "序号",
             "股东名称",
             "股东类型",
-            "股东排名",
             "股票代码",
             "股票简称",
             "报告期",
             "期末持股-数量",
-            "期末持股-持股占流通股比",
             "期末持股-数量变化",
             "期末持股-数量变化比例",
             "期末持股-持股变动",
@@ -534,19 +535,22 @@ def stock_gdfx_free_holding_detail_em(date: str = "20210930") -> pd.DataFrame:
     big_df["报告期"] = pd.to_datetime(big_df["报告期"]).dt.date
     big_df["公告日"] = pd.to_datetime(big_df["公告日"]).dt.date
     big_df["期末持股-数量"] = pd.to_numeric(big_df["期末持股-数量"])
-    big_df["期末持股-持股占流通股比"] = pd.to_numeric(big_df["期末持股-持股占流通股比"])
     big_df["期末持股-数量变化"] = pd.to_numeric(big_df["期末持股-数量变化"])
     big_df["期末持股-数量变化比例"] = pd.to_numeric(big_df["期末持股-数量变化比例"])
     big_df["期末持股-流通市值"] = pd.to_numeric(big_df["期末持股-流通市值"])
     return big_df
 
 
-def stock_gdfx_holding_detail_em(date: str = "20210930") -> pd.DataFrame:
+def stock_gdfx_holding_detail_em(date: str = "20230331", indicator: str = "个人", symbol: str = "新进") -> pd.DataFrame:
     """
     东方财富网-数据中心-股东分析-股东持股明细-十大股东
     https://data.eastmoney.com/gdfx/HoldingAnalyse.html
     :param date: 报告期
     :type date: str
+    :param indicator: 股东类型; choice of {"个人", "基金", "QFII", "社保", "券商", "信托"}
+    :type indicator: str
+    :param symbol: 持股变动; choice of {"新进", "增加", "不变", "减少"}
+    :type symbol: str
     :return: 十大股东
     :rtype: pandas.DataFrame
     """
@@ -560,7 +564,7 @@ def stock_gdfx_holding_detail_em(date: str = "20210930") -> pd.DataFrame:
         "columns": "ALL",
         "source": "WEB",
         "client": "WEB",
-        "filter": f"(END_DATE='{'-'.join([date[:4], date[4:6], date[6:]])}')",
+        "filter": f"""(HOLDER_NEWTYPE="{indicator}")(HOLDNUM_CHANGE_NAME="{symbol}")(END_DATE='{'-'.join([date[:4], date[4:6], date[6:]])}')""",
     }
     r = requests.get(url, params=params)
     data_json = r.json()
@@ -607,6 +611,8 @@ def stock_gdfx_holding_detail_em(date: str = "20210930") -> pd.DataFrame:
         "股东类型",
         "-",
         "-",
+        "-",
+        "-",
     ]
     big_df = big_df[
         [
@@ -628,11 +634,11 @@ def stock_gdfx_holding_detail_em(date: str = "20210930") -> pd.DataFrame:
     ]
     big_df["报告期"] = pd.to_datetime(big_df["报告期"]).dt.date
     big_df["公告日"] = pd.to_datetime(big_df["公告日"]).dt.date
-    big_df["期末持股-数量"] = pd.to_numeric(big_df["期末持股-数量"])
-    big_df["期末持股-持股占流通股比"] = pd.to_numeric(big_df["期末持股-持股占流通股比"])
-    big_df["期末持股-数量变化"] = pd.to_numeric(big_df["期末持股-数量变化"])
-    big_df["期末持股-数量变化比例"] = pd.to_numeric(big_df["期末持股-数量变化比例"])
-    big_df["期末持股-流通市值"] = pd.to_numeric(big_df["期末持股-流通市值"])
+    big_df["期末持股-数量"] = pd.to_numeric(big_df["期末持股-数量"], errors="coerce")
+    big_df["期末持股-持股占流通股比"] = pd.to_numeric(big_df["期末持股-持股占流通股比"], errors="coerce")
+    big_df["期末持股-数量变化"] = pd.to_numeric(big_df["期末持股-数量变化"], errors="coerce")
+    big_df["期末持股-数量变化比例"] = pd.to_numeric(big_df["期末持股-数量变化比例"], errors="coerce")
+    big_df["期末持股-流通市值"] = pd.to_numeric(big_df["期末持股-流通市值"], errors="coerce")
     return big_df
 
 
@@ -707,6 +713,7 @@ def stock_gdfx_free_holding_analyse_em(date: str = "20210930") -> pd.DataFrame:
         "-",
         "-",
         "期末持股-数量变化",
+        "-",
         "公告日后涨跌幅-10个交易日",
         "公告日后涨跌幅-30个交易日",
         "公告日后涨跌幅-60个交易日",
@@ -741,7 +748,7 @@ def stock_gdfx_free_holding_analyse_em(date: str = "20210930") -> pd.DataFrame:
     return big_df
 
 
-def stock_gdfx_holding_analyse_em(date: str = "20210930") -> pd.DataFrame:
+def stock_gdfx_holding_analyse_em(date: str = "20230331") -> pd.DataFrame:
     """
     东方财富网-数据中心-股东分析-股东持股分析-十大股东
     https://data.eastmoney.com/gdfx/HoldingAnalyse.html
@@ -774,43 +781,32 @@ def stock_gdfx_holding_analyse_em(date: str = "20210930") -> pd.DataFrame:
         big_df = pd.concat([big_df, temp_df], ignore_index=True)
 
     big_df.reset_index(inplace=True)
-    big_df["index"] = big_df.index + 1
-    big_df.columns = [
-        "序号",
-        "-",
-        "股票代码",
-        "-",
-        "-",
-        "报告期",
-        "-",
-        "-",
-        "股东名称",
-        "期末持股-数量",
-        "-",
-        "期末持股-数量变化",
-        "期末持股-数量变化比例",
-        "-",
-        "-",
-        "股东类型",
-        "-",
-        "-",
-        "公告日",
-        "-",
-        "-",
-        "-",
-        "股票简称",
-        "-",
-        "-",
-        "期末持股-流通市值",
-        "期末持股-持股变动",
-        "-",
-        "-",
-        "-",
-        "-",
-        "公告日后涨跌幅-10个交易日",
-        "公告日后涨跌幅-30个交易日",
-        "公告日后涨跌幅-60个交易日",
-    ]
+    big_df['index'] = big_df['index'] + 1
+    big_df.rename(
+        columns={
+            "index": "序号",
+            "SECUCODE": "-",
+            "SECURITY_CODE": "股票代码",
+            "ORG_CODE": "-",
+            "SECURITY_TYPE_CODE": "-",
+            "END_DATE": "报告期",
+            "HOLDER_CODE": "-",
+            "HOLDER_NAME": "股东名称",
+            "HOLD_NUM": "期末持股-数量",
+            "HOLD_RATIO": "-",
+            "HOLD_NUM_CHANGE": "期末持股-数量变化",
+            "HOLD_RATIO_CHANGE": "期末持股-数量变化比例",
+            "NOTICE_DATE": "公告日",
+            "SECURITY_NAME_ABBR": "股票简称",
+            "HOLDER_MARKET_CAP": "期末持股-流通市值",
+            "HOLDNUM_CHANGE_NAME": "期末持股-持股变动",
+            "HOLDER_TYPE_ORG": "股东类型",
+            "D10_ADJCHRATE": "公告日后涨跌幅-10个交易日",
+            "D30_ADJCHRATE": "公告日后涨跌幅-30个交易日",
+            "D60_ADJCHRATE": "公告日后涨跌幅-60个交易日",
+        },
+        inplace=True,
+    )
     big_df = big_df[
         [
             "序号",
@@ -831,13 +827,14 @@ def stock_gdfx_holding_analyse_em(date: str = "20210930") -> pd.DataFrame:
         ]
     ]
     big_df["公告日"] = pd.to_datetime(big_df["公告日"]).dt.date
-    big_df["期末持股-数量"] = pd.to_numeric(big_df["期末持股-数量"])
-    big_df["期末持股-数量变化"] = pd.to_numeric(big_df["期末持股-数量变化"])
-    big_df["期末持股-数量变化比例"] = pd.to_numeric(big_df["期末持股-数量变化比例"])
-    big_df["期末持股-流通市值"] = pd.to_numeric(big_df["期末持股-流通市值"])
-    big_df["公告日后涨跌幅-10个交易日"] = pd.to_numeric(big_df["公告日后涨跌幅-10个交易日"])
-    big_df["公告日后涨跌幅-30个交易日"] = pd.to_numeric(big_df["公告日后涨跌幅-30个交易日"])
-    big_df["公告日后涨跌幅-60个交易日"] = pd.to_numeric(big_df["公告日后涨跌幅-60个交易日"])
+    big_df["报告期"] = pd.to_datetime(big_df["报告期"]).dt.date
+    big_df["期末持股-数量"] = pd.to_numeric(big_df["期末持股-数量"], errors="coerce")
+    big_df["期末持股-数量变化"] = pd.to_numeric(big_df["期末持股-数量变化"], errors="coerce")
+    big_df["期末持股-数量变化比例"] = pd.to_numeric(big_df["期末持股-数量变化比例"], errors="coerce")
+    big_df["期末持股-流通市值"] = pd.to_numeric(big_df["期末持股-流通市值"], errors="coerce")
+    big_df["公告日后涨跌幅-10个交易日"] = pd.to_numeric(big_df["公告日后涨跌幅-10个交易日"], errors="coerce")
+    big_df["公告日后涨跌幅-30个交易日"] = pd.to_numeric(big_df["公告日后涨跌幅-30个交易日"], errors="coerce")
+    big_df["公告日后涨跌幅-60个交易日"] = pd.to_numeric(big_df["公告日后涨跌幅-60个交易日"], errors="coerce")
     return big_df
 
 
@@ -956,10 +953,14 @@ def stock_gdfx_holding_teamwork_em() -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    stock_gdfx_free_holding_statistics_em_df = stock_gdfx_free_holding_statistics_em(date="20210930")
+    stock_gdfx_free_holding_statistics_em_df = stock_gdfx_free_holding_statistics_em(
+        date="20210930"
+    )
     print(stock_gdfx_free_holding_statistics_em_df)
 
-    stock_gdfx_holding_statistics_em_df = stock_gdfx_holding_statistics_em(date="20210930")
+    stock_gdfx_holding_statistics_em_df = stock_gdfx_holding_statistics_em(
+        date="20210930"
+    )
     print(stock_gdfx_holding_statistics_em_df)
 
     stock_gdfx_free_holding_change_em_df = stock_gdfx_free_holding_change_em(
@@ -987,11 +988,11 @@ if __name__ == "__main__":
     print(stock_gdfx_holding_detail_em_df)
 
     stock_gdfx_free_holding_analyse_em_df = stock_gdfx_free_holding_analyse_em(
-        date="20210930"
+        date="20220331"
     )
     print(stock_gdfx_free_holding_analyse_em_df)
 
-    stock_gdfx_holding_analyse_em_df = stock_gdfx_holding_analyse_em(date="20210930")
+    stock_gdfx_holding_analyse_em_df = stock_gdfx_holding_analyse_em(date="20220331")
     print(stock_gdfx_holding_analyse_em_df)
 
     stock_gdfx_free_holding_teamwork_em_df = stock_gdfx_free_holding_teamwork_em()

@@ -1,27 +1,59 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/12/19 13:15
+Date: 2023/4/6 20:20
 Desc: 市盈率, 市净率和股息率查询
 https://www.legulegu.com/stocklist
 https://www.legulegu.com/s/000001
 """
+from datetime import datetime
+from hashlib import md5
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
 
-def stock_a_lg_indicator(symbol: str = "000001") -> pd.DataFrame:
+def get_cookie_csrf(url: str = "") -> dict:
+    """
+    乐咕乐股-主板市盈率
+    https://legulegu.com/stockdata/shanghaiPE
+    :return: 指定市场的市盈率数据
+    :rtype: pandas.DataFrame
+    """
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, "lxml")
+    csrf_tag = soup.find("meta", attrs={"name": "_csrf"})
+    csrf_token = csrf_tag.attrs["content"]
+    headers = {"X-CSRF-Token": csrf_token}
+    return {"cookies": r.cookies, "headers": headers}
+
+
+def get_token_lg() -> str:
+    """
+    生成乐咕的 token
+    https://legulegu.com/s/002488
+    :return: token
+    :rtype: str
+    """
+    current_date_str = datetime.now().date().isoformat()
+    obj = md5()
+    obj.update(current_date_str.encode("utf-8"))
+    token = obj.hexdigest()
+    return token
+
+
+def stock_a_indicator_lg(symbol: str = "002174") -> pd.DataFrame:
     """
     市盈率, 市净率, 股息率数据接口
-    https://www.legulegu.com/stocklist
-    :param symbol: 通过 ak.stock_a_lg_indicator(stock="all") 来获取所有股票的代码
+    https://legulegu.com/stocklist
+    :param symbol: 通过 ak.stock_a_indicator_lg(symbol="all") 来获取所有股票的代码
     :type symbol: str
     :return: 市盈率, 市净率, 股息率查询
     :rtype: pandas.DataFrame
     """
     if symbol == "all":
-        url = "https://www.legulegu.com/stocklist"
+        url = "https://legulegu.com/stocklist"
         r = requests.get(url)
         soup = BeautifulSoup(r.text, "lxml")
         node_list = soup.find_all(attrs={"class": "col-xs-6"})
@@ -34,16 +66,30 @@ def stock_a_lg_indicator(symbol: str = "000001") -> pd.DataFrame:
         temp_df = temp_df[["code", "stock_name"]]
         return temp_df
     else:
-        url = f"https://www.legulegu.com/s/base-info/{symbol}"
-        r = requests.get(url)
+        url = "https://legulegu.com/api/s/base-info/"
+        token = get_token_lg()
+        params = {"token": token, "id": symbol}
+        r = requests.post(
+            url,
+            params=params,
+            **get_cookie_csrf(url="https://legulegu.com/"),
+        )
         temp_json = r.json()
-        temp_df = pd.DataFrame(temp_json["data"]["items"], columns=temp_json["data"]["fields"])
+        temp_df = pd.DataFrame(
+            temp_json["data"]["items"],
+            columns=temp_json["data"]["fields"],
+        )
         temp_df["trade_date"] = pd.to_datetime(temp_df["trade_date"]).dt.date
-        temp_df.iloc[:, 1:] = temp_df.iloc[:, 1:].astype(float)
+        temp_df[temp_df.columns[1:]] = temp_df[temp_df.columns[1:]].astype(float)
+        temp_df.sort_values(["trade_date"], inplace=True, ignore_index=True)
+        if len(set(temp_df['trade_date'])) < 10:
+            raise ValueError("数据获取失败, 请检查是否输入正确的股票代码")
         return temp_df
 
 
-def stock_hk_eniu_indicator(symbol: str = "hk01093", indicator: str = "市盈率") -> pd.DataFrame:
+def stock_hk_indicator_eniu(
+    symbol: str = "hk01093", indicator: str = "市盈率"
+) -> pd.DataFrame:
     """
     亿牛网-港股指标
     https://eniu.com/gu/hk01093/roe
@@ -59,7 +105,9 @@ def stock_hk_eniu_indicator(symbol: str = "hk01093", indicator: str = "市盈率
         r = requests.get(url)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json)
-        return temp_df[temp_df["stock_id"].str.contains("hk")]
+        temp_df = temp_df[temp_df["stock_id"].str.contains("hk")]
+        temp_df.reset_index(inplace=True, drop=True)
+        return temp_df
     if indicator == "市盈率":
         url = f"https://eniu.com/chart/peh/{symbol}"
     elif indicator == "市净率":
@@ -76,12 +124,14 @@ def stock_hk_eniu_indicator(symbol: str = "hk01093", indicator: str = "市盈率
     return temp_df
 
 
-if __name__ == '__main__':
-    stock_a_lg_indicator_all_df = stock_a_lg_indicator(symbol="000001")
-    print(stock_a_lg_indicator_all_df)
+if __name__ == "__main__":
+    stock_a_indicator_lg_all_df = stock_a_indicator_lg(symbol="all")
+    print(stock_a_indicator_lg_all_df)
 
-    stock_a_lg_indicator_df = stock_a_lg_indicator(symbol="000001")
-    print(stock_a_lg_indicator_df)
+    stock_a_indicator_lg_df = stock_a_indicator_lg(symbol="501050")
+    print(stock_a_indicator_lg_df)
 
-    stock_hk_eniu_indicator_df = stock_hk_eniu_indicator(symbol="hk01093", indicator="市净率")
-    print(stock_hk_eniu_indicator_df)
+    stock_hk_indicator_eniu_df = stock_hk_indicator_eniu(
+        symbol="hk01093", indicator="市盈率"
+    )
+    print(stock_hk_indicator_eniu_df)

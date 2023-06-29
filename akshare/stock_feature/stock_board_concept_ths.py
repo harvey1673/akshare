@@ -186,6 +186,7 @@ def stock_board_concept_cons_ths(symbol: str = "阿里巴巴概念") -> pd.DataF
     )
     del big_df["加自选"]
     big_df["代码"] = big_df["代码"].astype(str).str.zfill(6)
+    big_df = big_df[big_df["代码"] != "暂无成份股数据"]
     return big_df
 
 
@@ -383,7 +384,7 @@ if __name__ == "__main__":
     print(stock_board_concept_name_ths_df)
 
     stock_board_concept_cons_ths_df = stock_board_concept_cons_ths(
-        symbol="WiFi 6"
+        symbol="小米概念"
     )
     print(stock_board_concept_cons_ths_df)
 
@@ -393,9 +394,9 @@ if __name__ == "__main__":
     print(stock_board_concept_info_ths_df)
 
     stock_board_concept_hist_ths_df = stock_board_concept_hist_ths(
-        start_year="2021", symbol="一带一路"
+        start_year="2022", symbol="阿里巴巴概念"
     )
     print(stock_board_concept_hist_ths_df)
 
-    stock_board_cons_ths_df = stock_board_cons_ths(symbol="301558")
+    stock_board_cons_ths_df = stock_board_cons_ths(symbol="881121")
     print(stock_board_cons_ths_df)

@@ -1,10 +1,9 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
 """
-Date: 2021/11/16 15:48
+Date: 2023/4/3 20:48
 Desc: 中国证券投资基金业协会-信息公示数据
-中国证券投资基金业协会-新版: http://gs.amac.org.cn
-中国证券投资基金业协会-旧版: http://www1.amac.org.cn/
-目前的网络数据采集基于旧版接口, Guo Yangyang 正在更新新版接口数据
-接口目录设计按照 http://gs.amac.org.cn/ 来设计, 已经整理完该页面所有接口
+中国证券投资基金业协会-新版: https://gs.amac.org.cn
 """
 import pandas as pd
 import requests
@@ -268,15 +267,20 @@ def amac_manager_classify_info() -> pd.DataFrame:
         r = requests.post(url, params=params, json={}, verify=False)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["content"])
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     keys_list = [
         "managerName",
         "artificialPersonName",
         "primaryInvestType",
-        "registerProvince",
         "registerNo",
+        "registerProvince",
+        "officeAdrAgg",
         "establishDate",
         "registerDate",
+        "fundCount",
+        "memberType",
+        "hasSpecialTips",
+        "hasCreditTips",
     ]  # 定义要取的 value 的 keys
     manager_data_out = pd.DataFrame(big_df)
     manager_data_out = manager_data_out[keys_list]
@@ -284,10 +288,15 @@ def amac_manager_classify_info() -> pd.DataFrame:
         "私募基金管理人名称",
         "法定代表人/执行事务合伙人(委派代表)姓名",
         "机构类型",
-        "注册地",
         "登记编号",
+        "注册地",
+        "办公地",
         "成立时间",
         "登记时间",
+        "在管基金数量",
+        "会员类型",
+        "是否有提示信息",
+        "是否有诚信信息",
     ]
     manager_data_out["成立时间"] = pd.to_datetime(
         manager_data_out["成立时间"], unit="ms"
@@ -295,6 +304,9 @@ def amac_manager_classify_info() -> pd.DataFrame:
     manager_data_out["登记时间"] = pd.to_datetime(
         manager_data_out["登记时间"], unit="ms"
     ).dt.date
+    manager_data_out["在管基金数量"] = pd.to_numeric(manager_data_out["在管基金数量"])
+    manager_data_out["是否有提示信息"] = manager_data_out["是否有提示信息"].map({True: "是", False: "否"})
+    manager_data_out["是否有诚信信息"] = manager_data_out["是否有诚信信息"].map({True: "是", False: "否"})
     return manager_data_out
 
 
@@ -351,7 +363,7 @@ def amac_member_sub_info() -> pd.DataFrame:
 def amac_fund_info(start_page: str = '1', end_page: str = "2000") -> pd.DataFrame:
     """
     中国证券投资基金业协会-信息公示-基金产品-私募基金管理人基金产品
-    http://gs.amac.org.cn/amac-infodisc/res/pof/fund/index.html
+    https://gs.amac.org.cn/amac-infodisc/res/pof/fund/index.html
     :param start_page: 开始页码, 获取指定页码直接的数据
     :type start_page: str
     :param end_page: 结束页码, 获取指定页码直接的数据
@@ -378,7 +390,7 @@ def amac_fund_info(start_page: str = '1', end_page: str = "2000") -> pd.DataFram
         r = requests.post(url, params=params, json={}, verify=False)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["content"])
-        big_df = big_df.append(temp_df, ignore_index=True)
+        big_df = pd.concat([big_df, temp_df], ignore_index=True)
     keys_list = [
         "fundName",
         "managerName",
@@ -782,7 +794,7 @@ if __name__ == "__main__":
 
     # 中国证券投资基金业协会-信息公示-基金产品
     # 中国证券投资基金业协会-信息公示-基金产品-私募基金管理人基金产品
-    amac_fund_info_df = amac_fund_info(start_page="1", end_page='5')
+    amac_fund_info_df = amac_fund_info(start_page="1", end_page='100')
     print(amac_fund_info_df)
     example_df = amac_fund_info_df[amac_fund_info_df["私募基金管理人名称"].str.contains("聚宽")]
     print(example_df)

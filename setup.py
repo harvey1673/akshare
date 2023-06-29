@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/12/8 17:09
+Date: 2023/6/4 22:09
 Desc: AKShare's PYPI info file
 """
 import re
@@ -30,7 +30,7 @@ setuptools.setup(
     name="akshare",
     version=get_version_string(),
     author="AKFamily",
-    author_email="akfamily.akshare@gmail.com",
+    author_email="albertandking@gmail.com",
     license="MIT",
     description="AKShare is an elegant and simple financial data interface library for Python, built for human beings!",
     long_description=long_description,
@@ -43,7 +43,6 @@ setuptools.setup(
         "pandas>=0.25",
         "requests>=2.22.0",
         "pypinyin>=0.35.0",
-        "websocket-client>=0.56.0",
         "html5lib>=1.0.1",
         "xlrd>=1.2.0",
         "urllib3>=1.25.8",
@@ -53,7 +52,6 @@ setuptools.setup(
         "tabulate>=0.8.6",
         "decorator>=4.4.2",
         "py_mini_racer>=0.6.0",
-        "requests-cache>=0.9.3",
     ],
     package_data={"": ["*.py", "*.json", "*.pk", "*.js", "*.zip"]},
     keywords=[
@@ -78,6 +76,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],

@@ -2,7 +2,7 @@
 
 ## 致谢
 
-特别感谢 [FuShare](https://github.com/jindaxiang/fushare), [TuShare](https://github.com/waditu/tushare) 和 [OpenData](https://github.com/PKUJohnson/OpenData) 项目提供借鉴学习的机会;
+特别感谢 [FuShare](https://github.com/LowinLi/fushare), [TuShare](https://github.com/waditu/tushare) 和 [OpenData](https://github.com/PKUJohnson/OpenData) 项目提供借鉴学习的机会;
 
 感谢[生意社网站](http://www.100ppi.com)提供的相关数据;
 
@@ -78,8 +78,6 @@
 
 感谢[中国国家发展和改革委员会网站](http://jgjc.ndrc.gov.cn)提供的相关数据;
 
-感谢[163 网站](https://news.163.com)提供的相关数据;
-
 感谢[丁香园网站](http://3g.dxy.cn)提供的相关数据;
 
 感谢[百度网站](https://voice.baidu.com)提供的相关数据;
@@ -103,10 +101,10 @@
 欢迎关注 **数据科学实战** 微信公众号获取更新信息:
 
 <div>
-    <img src="https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/ds.png">
+    <img alt="数据科学实战二维码" src="https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/ds.png">
 </div>
 
-想了解更多金融量化、数据科学相关的内容，欢迎加入 **知识星球【数据科学家】** 高质量社区，里面有丰富的视频、问答、文章、书籍及代码等内容: ![](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/data_scientist.png)
+想了解更多金融量化、数据科学相关的内容，欢迎加入 **知识星球【数据科学实战】** 高质量社区，里面有丰富的视频课程、问答、文章、书籍及代码等内容: ![](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/data_scientist.png)
 
 ## 声明
 

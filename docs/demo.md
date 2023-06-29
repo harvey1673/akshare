@@ -4,7 +4,7 @@
 调用、基本的数据处理和回测框架使用，并不涉及任何投资建议，提供的示例代码也仅供参考。
 
 本策略示例都是基于 Python 编程语言的开源回测和交易框架 [Backtrader](https://www.backtrader.com) 来演示的，有兴趣
-想深入了解该框架的小伙伴，可以参考官网文档学习，同时也可以加入合作的知识星球 **数据科学家** 学习：
+想深入了解该框架的小伙伴，可以参考官网文档学习，同时也可以加入合作的知识星球 **数据科学实战** 学习：
 ![](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/data_scientist.png)
 
 注意：本教程的开发是基于：Python (64 位) 3.8.6 来进行的
@@ -19,7 +19,7 @@
 
 [Backtrader](https://www.backtrader.com) 的下载和安装都比较简单，尤其是在配置好 [AKShare](https://github.com/akfamily/akshare) 的
 基础上，我们只需要 ```pip install backtrader``` 就可以实现一键安装。如果需要了解 [AKShare](https://github.com/akfamily/akshare) 的
-环境配置，请参考 [AKShare 环境配置](https://www.akshare.xyz/zh_CN/latest/anaconda.html) 来设置本地环境。想要通过源码来安装的小伙伴，可以访问 [Backtrader 的 GitHub 地址](https://github.com/mementum/backtrader) 来下载安装，由于源码安装比较繁琐，建议直接通过 ```pip``` 或 ```conda``` 来安装和使用。需要注意的是如果要输出图形，请安装 ```pip install matplotlib==3.2.2```
+环境配置，请参考 [AKShare 环境配置](https://akshare.akfamily.xyz/anaconda.html) 来设置本地环境。想要通过源码来安装的小伙伴，可以访问 [Backtrader 的 GitHub 地址](https://github.com/mementum/backtrader) 来下载安装，由于源码安装比较繁琐，建议直接通过 ```pip``` 或 ```conda``` 来安装和使用。需要注意的是如果要输出图形，请安装 ```pip install matplotlib==3.2.2```
 
 ### Backtrader 系列教程
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/3/29 13:18
-Desc: 大连商品交易所, 上海期货交易所, 郑州商品交易所采集每日注册仓单数据
+Date: 2023/6/21 18:00
+Desc: 每日注册仓单数据
+大连商品交易所, 上海期货交易所, 郑州商品交易所, 广州期货交易所
 """
 import datetime
 import re
@@ -27,14 +28,14 @@ shfe_20101029 = pd.DataFrame({'var': ['CU', 'AL', 'ZN', 'RU', 'FU', 'AU', 'RB', 
 
 def get_dce_receipt(date: str = None, symbol_list: List = cons.contract_symbols):
     """
-    大连商品交易所注册仓单数据
-    :param date: format 开始日期: YYYY-MM-DD 或 YYYYMMDD 或 datetime.date对象, 为空时为当天
-    :param symbol_list: 合约品种如 RB, AL等列表, 为空时为所有商品数据从 20060106开始，每周五更新仓单数据。直到20090407起，每交易日都更新仓单数据
-    :return: pd.DataFrame
-    展期收益率数据(DataFrame):
-    var             商品品种                     string
-    receipt         仓单数                       int
-    date            日期                         string YYYYMMDD
+    大连商品交易所-注册仓单数据
+
+    :param date: 开始日期: YYYY-MM-DD 或 YYYYMMDD 或 datetime.date对象, 为空时为当天
+    :type date: str
+    :param vars_list: 合约品种如 RB, AL等列表, 为空时为所有商品数据从 20060106开始，每周五更新仓单数据。直到20090407起，每交易日都更新仓单数据
+    :type vars_list: list
+    :return: 注册仓单数据
+    :rtype: pandas.DataFrame
     """
     if not isinstance(symbol_list, list):
         return warnings.warn(f"symbol_list: 必须是列表")
@@ -137,7 +138,7 @@ def get_shfe_receipt_2(date: str = None, vars_list: List = cons.contract_symbols
         warnings.warn('%s非交易日' % date.strftime('%Y%m%d'))
         return None
     url = cons.SHFE_RECEIPT_URL_2 % date
-    r = requests_link(url, encoding='utf-8')
+    r = requests_link(url, encoding='utf-8', headers=cons.shfe_headers)
     try:
         context = r.json()
     except:
@@ -190,7 +191,7 @@ def get_czce_receipt_1(date: str = None, vars_list: List = cons.contract_symbols
     if date == '20090820':
         return pd.DataFrame()
     url = cons.CZCE_RECEIPT_URL_1 % date
-    r = requests_link(url, encoding='utf-8')
+    r = requests_link(url, encoding='utf-8', headers=cons.shfe_headers)
     context = r.text
     data = pd.read_html(context)[1]
     records = pd.DataFrame()
@@ -293,8 +294,8 @@ def get_czce_receipt_3(date: str = None, vars_list: List = cons.contract_symbols
     if date not in calendar:
         warnings.warn('%s非交易日' % date.strftime('%Y%m%d'))
         return None
-    url = cons.CZCE_RECEIPT_URL_3 % (date[:4], date)
-    r = requests_link(url, encoding='utf-8')
+    url = f"http://www.czce.com.cn/cn/DFSStaticFiles/Future/{date[:4]}/{date}/FutureDataWhsheet.xls"
+    r = requests_link(url, encoding='utf-8', headers=cons.shfe_headers)
     temp_df = pd.read_excel(BytesIO(r.content))
     temp_df = temp_df[[bool(1-item) for item in [item if item is not pd.NA else False for item in temp_df.iloc[:, 0].str.contains("非农产品")]]]
     temp_df.reset_index(inplace=True, drop=True)
@@ -348,6 +349,58 @@ def get_czce_receipt_3(date: str = None, vars_list: List = cons.contract_symbols
     return records.reset_index(drop=True)
 
 
+def get_gfex_receipt(date: str = None, vars_list: List = cons.contract_symbols) -> pd.DataFrame:
+    """
+    广州期货交易所-注册仓单数据
+    http://www.gfex.com.cn/gfex/cdrb/hqsj_tjsj.shtml
+    :param date: 开始日期 format：YYYY-MM-DD 或 YYYYMMDD 或 datetime.date对象 为空时为当天
+    :type date: str
+    :param vars_list: 合约品种如 SI 等列表为空时为所有商品
+    :type vars_list: list
+    :return: 注册仓单数据
+    :rtype: pandas.DataFrame
+    """
+    if not isinstance(vars_list, list):
+        return warnings.warn("vars_list: 必须是列表")
+    date = cons.convert_date(date) if date is not None else datetime.date.today()
+    if date.strftime('%Y%m%d') not in calendar:
+        warnings.warn(f"{date.strftime('%Y%m%d')}非交易日")
+        return None
+    url = "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
+    payload = {
+        "gen_date": date.isoformat().replace("-", "")
+    }
+    headers = {
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+        "Cache-Control": "no-cache",
+        "Content-Length": "32",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "Host": "www.gfex.com.cn",
+        "Origin": "http://www.gfex.com.cn",
+        "Pragma": "no-cache",
+        "Proxy-Connection": "keep-alive",
+        "Referer": "http://www.gfex.com.cn/gfex/rihq/hqsj_tjsj.shtml",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "content-type": "application/x-www-form-urlencoded"
+    }
+    r = requests.post(url, data=payload, headers=headers)
+    data_json = r.json()
+    temp_df = pd.DataFrame(data_json['data'])
+    result_se = temp_df[['wbillQty', 'diff']].iloc[-1, :]
+    result_se.index = ['receipt', 'receipt_chg']
+    result_se['date'] = date.isoformat().replace("-", "")
+    result_se['var'] = "SI"
+    result_df = result_se.to_frame().T
+    result_df.reset_index(drop=True)
+    result_df = result_df[[
+        'var', 'receipt', 'receipt_chg', 'date'
+    ]]
+    return result_df
+
+
 def get_receipt(start_day: str = None, end_day: str = None, vars_list: List = cons.contract_symbols):
     """
     大宗商品注册仓单数量
@@ -383,7 +436,13 @@ def get_receipt(start_day: str = None, end_day: str = None, vars_list: List = co
                         f = get_shfe_receipt_2
                     else:
                         f = None
-                        print('20081006起，shfe每交易日更新仓单数据')
+                        print('20081006 起，上海期货交易所每个交易日更新仓单数据')
+                elif market == "gfex":
+                    if start_day > datetime.date(2022, 12, 22):
+                        f = get_gfex_receipt
+                    else:
+                        f = None
+                        print('20081006 起，上海期货交易所每个交易日更新仓单数据')
                 elif market == 'czce':
                     if datetime.date(2008, 3, 3) <= start_day <= datetime.date(2010, 8, 24):
                         f = get_czce_receipt_1
@@ -406,5 +465,5 @@ def get_receipt(start_day: str = None, end_day: str = None, vars_list: List = co
 
 
 if __name__ == '__main__':
-    get_receipt_df = get_receipt(start_day='20210201', end_day='20210215')
+    get_receipt_df = get_receipt(start_day='20230621', end_day='20230621')
     print(get_receipt_df)

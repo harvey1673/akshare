@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/12/31 13:19
+Date: 2023/4/10 16:19
 Desc: 股票指数成份股数据, 新浪有两个接口, 这里使用老接口:
 新接口：http://vip.stock.finance.sina.com.cn/mkt/#zhishu_000001
 老接口：http://vip.stock.finance.sina.com.cn/corp/view/vII_NewestComponent.php?page=1&indexid=399639
@@ -12,7 +12,6 @@ from io import BytesIO
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-from tqdm import tqdm
 
 from akshare.utils import demjson
 
@@ -45,8 +44,8 @@ def index_stock_cons_sina(symbol: str = "000300") -> pd.DataFrame:
                 "_s_r_a": "init",
             }
             r = requests.get(url, params=params)
-            temp_df = temp_df.append(
-                pd.DataFrame(demjson.decode(r.text)), ignore_index=True
+            temp_df = pd.concat(
+                [temp_df, pd.DataFrame(demjson.decode(r.text))], ignore_index=True
             )
         return temp_df
 
@@ -97,7 +96,7 @@ def index_stock_cons(symbol: str = "399639") -> pd.DataFrame:
         .split("&")[0]
     )
     if page_num == "#":
-        temp_df = pd.read_html(r.text, header=1)[3].iloc[:, :3]
+        temp_df = pd.read_html(r.text, header=0, skiprows=1)[3].iloc[:, :3]
         temp_df["品种代码"] = temp_df["品种代码"].astype(str).str.zfill(6)
         return temp_df
 
@@ -106,7 +105,9 @@ def index_stock_cons(symbol: str = "399639") -> pd.DataFrame:
         url = f"http://vip.stock.finance.sina.com.cn/corp/view/vII_NewestComponent.php?page={page}&indexid={symbol}"
         r = requests.get(url)
         r.encoding = "gb2312"
-        temp_df = temp_df.append(pd.read_html(r.text, header=1)[3], ignore_index=True)
+        temp_df = pd.concat(
+            [temp_df, pd.read_html(r.text, header=1)[3]], ignore_index=True
+        )
     temp_df = temp_df.iloc[:, :3]
     temp_df["品种代码"] = temp_df["品种代码"].astype(str).str.zfill(6)
     return temp_df
@@ -135,7 +136,7 @@ def index_stock_cons_csindex(symbol: str = "000300") -> pd.DataFrame:
         "交易所",
         "交易所英文名称",
     ]
-    temp_df['日期'] = pd.to_datetime(temp_df['日期'], format="%Y%m%d").dt.date
+    temp_df["日期"] = pd.to_datetime(temp_df["日期"], format="%Y%m%d").dt.date
     temp_df["指数代码"] = temp_df["指数代码"].astype(str).str.zfill(6)
     temp_df["成分券代码"] = temp_df["成分券代码"].astype(str).str.zfill(6)
     return temp_df
@@ -165,42 +166,10 @@ def index_stock_cons_weight_csindex(symbol: str = "000300") -> pd.DataFrame:
         "交易所英文名称",
         "权重",
     ]
-    temp_df['日期'] = pd.to_datetime(temp_df['日期'], format="%Y%m%d").dt.date
+    temp_df["日期"] = pd.to_datetime(temp_df["日期"], format="%Y%m%d").dt.date
     temp_df["指数代码"] = temp_df["指数代码"].astype(str).str.zfill(6)
     temp_df["成分券代码"] = temp_df["成分券代码"].astype(str).str.zfill(6)
-    temp_df['权重'] = pd.to_numeric(temp_df['权重'])
-    return temp_df
-
-
-def index_stock_hist(symbol: str = "sh000300") -> pd.DataFrame:
-    """
-    指数历史成份, 从 2005 年开始
-    http://stock.jrj.com.cn/share,sh000300,2015nlscf_2.shtml
-    :param symbol: 指数代码, 需要带市场前缀
-    :type symbol: str
-    :return: 历史成份的进入和退出数据
-    :rtype: pandas.DataFrame
-    """
-    url = f"http://stock.jrj.com.cn/share,{symbol},2015nlscf.shtml"
-    r = requests.get(url)
-    r.encoding = "gb2312"
-    soup = BeautifulSoup(r.text, "lxml")
-    last_page_num = soup.find_all("a", attrs={"target": "_self"})[-2].text
-    temp_df = pd.read_html(r.text)[-1]
-    if last_page_num == "历史成份":
-        temp_df["股票代码"] = temp_df["股票代码"].astype(str).str.zfill(6)
-        del temp_df["股票名称"]
-        temp_df.columns = ["stock_code", "in_date", "out_date"]
-        return temp_df
-    for page in tqdm(range(2, int(last_page_num) + 1), leave=False):
-        url = f"http://stock.jrj.com.cn/share,{symbol},2015nlscf_{page}.shtml"
-        r = requests.get(url)
-        r.encoding = "gb2312"
-        inner_temp_df = pd.read_html(r.text)[-1]
-        temp_df = temp_df.append(inner_temp_df)
-    temp_df["股票代码"] = temp_df["股票代码"].astype(str).str.zfill(6)
-    del temp_df["股票名称"]
-    temp_df.columns = ["stock_code", "in_date", "out_date"]
+    temp_df["权重"] = pd.to_numeric(temp_df["权重"])
     return temp_df
 
 
@@ -222,14 +191,13 @@ if __name__ == "__main__":
     index_stock_cons_csindex_df = index_stock_cons_csindex(symbol="000300")
     print(index_stock_cons_csindex_df)
 
-    index_stock_cons_weight_csindex_df = index_stock_cons_weight_csindex(symbol="000300")
+    index_stock_cons_weight_csindex_df = index_stock_cons_weight_csindex(
+        symbol="000300"
+    )
     print(index_stock_cons_weight_csindex_df)
 
     index_stock_cons_sina_df = index_stock_cons_sina(symbol="000300")
     print(index_stock_cons_sina_df)
 
-    index_stock_cons_df = index_stock_cons(symbol="000001")
+    index_stock_cons_df = index_stock_cons(symbol="000688")
     print(index_stock_cons_df)
-
-    stock_index_hist_df = index_stock_hist(symbol="sh000300")
-    print(stock_index_hist_df)

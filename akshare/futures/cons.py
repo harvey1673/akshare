@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/8/20 17:58
+Date: 2023/1/12 16:58
 Desc: 期货配置文件
 """
 import datetime
@@ -24,9 +24,7 @@ hq_sina_spot_headers = {
 }
 
 # zh_sina_spot
-zh_subscribe_exchange_symbol_url = (
-    "http://vip.stock.finance.sina.com.cn/quotes_service/view/js/qihuohangqing.js"
-)
+zh_subscribe_exchange_symbol_url = "http://vip.stock.finance.sina.com.cn/quotes_service/view/js/qihuohangqing.js"
 zh_match_main_contract_url = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQFuturesData"
 zh_match_main_contract_payload = {
     "page": "1",
@@ -72,15 +70,17 @@ sample_headers = {
 }
 
 qh_headers = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate",
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-    "Cache-Control": "max-age=0",
+    "Cache-Control": "no-cache",
     "Connection": "keep-alive",
-    "Content-Length": "4458",
+    "Content-Length": "8429",
     "Content-Type": "application/x-www-form-urlencoded",
-    "Cookie": "UM_distinctid=16c378978de5cc-02cfeac5f7869b-c343162-1fa400-16c378978df8d7; __utmz=181566328.1570520149.3.2.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; ASP.NET_SessionId=wj5gxuzl3fvvr25503tquq55; __utmc=181566328; _fxaid=1D9A634AB9F5D0265856F7E85E7BC196%1D%2BOOl1inxPE7181fmKs5HCs%2BdLO%2Fq%2FbSvf46UVjo%2BE7w%3D%1DPYphpUa9OlzWUzatrOQTXLPOVillbwMhTIJas%2ByfkyVL2Hd5XA1GOSslksqDkMTccXvQ2duLNsc0CHT4789JrYNbakJrpzrxLnwtBC5GCTssKHGEpor6EwAZfWJgBUlCs4JYFcGUnh3jIO69A4LsOlRMOGf4c9cd%2FbohSjTx3VA%3D; __utma=181566328.1348268634.1564299852.1571066568.1571068391.7; tgw_l7_route=eb1311426274fc07631b2135a6431f7d; __utmt=1; __utmb=181566328.7.10.1571068391",
     "Host": "service.99qh.com",
+    "Origin": "http://service.99qh.com",
+    "Pragma": "no-cache",
+    "Cookie": "__utma=181566328.985082941.1656754961.1656754961.1656754961.1; __utmc=181566328; __utmz=181566328.1656754961.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); ASP.NET_SessionId=42k0mpzfu3fv5cxqmtrwc20y; tgw_l7_route=b26adbec28f4b4e1f7290033d59c43a7; __utmt=1; __utmb=181566328.2.10.1656754961",
     "Referer": "http://service.99qh.com/Storage/Storage.aspx?page=99qh",
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36",
@@ -91,17 +91,21 @@ QHKC_INDEX_TREND_URL = "https://qhkch.com/ajax/indexes_trend.php"
 QHKC_INDEX_PROFIT_LOSS_URL = "https://qhkch.com/ajax/indexes_profit_loss.php"
 QHKC_FUND_BS_URL = "https://qhkch.com/ajax/fund_bs_pie.php"
 QHKC_FUND_POSITION_URL = "https://qhkch.com/ajax/fund_position_pie.php"
-QHKC_FUND_POSITION_CHANGE_URL = "https://qhkch.com/ajax/fund_position_chge_pie.php"
+QHKC_FUND_POSITION_CHANGE_URL = (
+    "https://qhkch.com/ajax/fund_position_chge_pie.php"
+)
 QHKC_FUND_DEAL_URL = "https://qhkch.com/ajax/fund_deal_pie.php"
 QHKC_FUND_BIG_CHANGE_URL = "https://qhkch.com/ajax/fund_big_chge.php"
 QHKC_TOOL_FOREIGN_URL = "https://qhkch.com/ajax/toolbox_foreign.php"
 QHKC_TOOL_GDP_URL = "https://qhkch.com/dist/views/toolbox/gdp.html?v=1.10.7.1"
 
-BOND_BANK_URL = "http://zhuce.nafmii.org.cn/fans/publicQuery/releFileProjDataGrid"
+BOND_BANK_URL = (
+    "http://zhuce.nafmii.org.cn/fans/publicQuery/releFileProjDataGrid"
+)
 
 # 键值对: 键为交易所代码, 值为具体合约代码
 market_exchange_symbols = {
-    "cffex": ["IF", "IC", "IH", "T", "TF", "TS"],
+    "cffex": ["IF", "IC", "IM", "IH", "T", "TF", "TS"],
     "dce": [
         "C",
         "CS",
@@ -181,6 +185,7 @@ market_exchange_symbols = {
         "LU",
         "BC",
     ],
+    "gfex": ["SI"],
 }
 
 contract_symbols = []
@@ -239,14 +244,20 @@ CFFEX_VOL_RANK_URL = "http://www.cffex.com.cn/fzjy/ccpm/%s/%s/%s_1.csv"
 DCE_VOL_RANK_URL_1 = "http://www.dce.com.cn/publicweb/quotesdata/exportMemberDealPosiQuotesData.html?memberDealPosiQuotes.variety=%s&memberDealPosiQuotes.trade_type=0&contract.contract_id=%s&contract.variety_id=%s&year=%s&month=%s&day=%s&exportFlag=txt"
 DCE_VOL_RANK_URL_2 = "http://www.dce.com.cn/publicweb/quotesdata/memberDealPosiQuotes.html?memberDealPosiQuotes.variety=%s&memberDealPosiQuotes.trade_type=0&contract.contract_id=all&contract.variety_id=%s&year=%s&month=%s&day=%s"
 CZCE_VOL_RANK_URL_1 = "http://www.czce.com.cn/cn/exchange/jyxx/pm/pm%s.html"
-CZCE_VOL_RANK_URL_2 = "http://www.czce.com.cn/cn/exchange/%s/datatradeholding/%s.htm"
+CZCE_VOL_RANK_URL_2 = (
+    "http://www.czce.com.cn/cn/exchange/%s/datatradeholding/%s.htm"
+)
 CZCE_VOL_RANK_URL_3 = "http://www.czce.com.cn/cn/DFSStaticFiles/Future/%s/%s/FutureDataHolding.htm"
 
-DCE_RECEIPT_URL = "http://www.dce.com.cn/publicweb/quotesdata/wbillWeeklyQuotes.html"
+DCE_RECEIPT_URL = (
+    "http://www.dce.com.cn/publicweb/quotesdata/wbillWeeklyQuotes.html"
+)
 
 SHFE_RECEIPT_URL_1 = "http://www.shfe.com.cn/data/dailydata/%sdailystock.html"
 SHFE_RECEIPT_URL_2 = "http://www.shfe.com.cn/data/dailydata/%sdailystock.dat"
-CZCE_RECEIPT_URL_1 = "http://www.czce.com.cn/cn/exchange/jyxx/sheet/sheet%s.html"
+CZCE_RECEIPT_URL_1 = (
+    "http://www.czce.com.cn/cn/exchange/jyxx/sheet/sheet%s.html"
+)
 CZCE_RECEIPT_URL_2 = "http://www.czce.com.cn/cn/exchange/%s/datawhsheet/%s.htm"
 CZCE_RECEIPT_URL_3 = "http://www.czce.com.cn/cn/DFSStaticFiles/Future/%s/%s/FutureDataWhsheet.htm"
 
@@ -255,11 +266,15 @@ SHFE_INV_URL_2 = "http://www.shfe.com.cn/data/dailydata/%sweeklystock.dat"
 
 CFFEX_DAILY_URL = "http://www.cffex.com.cn/fzjy/mrhq/{}/{}/{}_1.csv"
 SHFE_DAILY_URL = "http://www.shfe.com.cn/data/dailydata/kx/kx%s.dat"
-SHFE_V_WAP_URL = "http://www.shfe.com.cn/data/dailydata/ck/%sdailyTimePrice.dat"
+SHFE_V_WAP_URL = (
+    "http://www.shfe.com.cn/data/dailydata/ck/%sdailyTimePrice.dat"
+)
 DCE_DAILY_URL = "http://www.dce.com.cn//publicweb/quotesdata/dayQuotesCh.html"
 CZCE_DAILY_URL_1 = "http://www.czce.com.cn/cn/exchange/jyxx/hq/hq%s.html"
 CZCE_DAILY_URL_2 = "http://www.czce.com.cn/cn/exchange/%s/datadaily/%s.txt"
-CZCE_DAILY_URL_3 = "http://www.czce.com.cn/cn/DFSStaticFiles/Future/%s/%s/FutureDataDaily.txt"
+CZCE_DAILY_URL_3 = (
+    "http://www.czce.com.cn/cn/DFSStaticFiles/Future/%s/%s/FutureDataDaily.txt"
+)
 
 DATE_PATTERN = re.compile(r"^([0-9]{4})[-/]?([0-9]{2})[-/]?([0-9]{2})")
 FUTURES_SYMBOL_PATTERN = re.compile(r"(^[A-Za-z]{1,2})[0-9]+")
@@ -432,7 +447,9 @@ def convert_date(date):
             groups = match.groups()
             if len(groups) == 3:
                 return datetime.date(
-                    year=int(groups[0]), month=int(groups[1]), day=int(groups[2])
+                    year=int(groups[0]),
+                    month=int(groups[1]),
+                    day=int(groups[2]),
                 )
     return None
 
@@ -444,7 +461,9 @@ def get_json_path(name, module_file):
     :param module_file: filename
     :return: str json_file_path
     """
-    module_folder = os.path.abspath(os.path.dirname(os.path.dirname(module_file)))
+    module_folder = os.path.abspath(
+        os.path.dirname(os.path.dirname(module_file))
+    )
     module_json_path = os.path.join(module_folder, "file_fold", name)
     return module_json_path
 
@@ -456,7 +475,9 @@ def get_pk_path(name, module_file):
     :param module_file: filename
     :return: str json_file_path
     """
-    module_folder = os.path.abspath(os.path.dirname(os.path.dirname(module_file)))
+    module_folder = os.path.abspath(
+        os.path.dirname(os.path.dirname(module_file))
+    )
     module_json_path = os.path.join(module_folder, "file_fold", name)
     return module_json_path
 
@@ -479,7 +500,8 @@ def get_calendar():
     """
     setting_file_name = "calendar.json"
     setting_file_path = get_json_path(setting_file_name, __file__)
-    data_json = json.load(open(setting_file_path, "r"))
+    with open(setting_file_path, "r") as f:
+        data_json = json.load(f)
     return data_json
 
 

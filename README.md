@@ -1,6 +1,8 @@
-**《AKShare 源码解析》课程即将上线，可加入【知识星球-数据科学家】学习！应广大小伙伴的需求，特此开设 AKShare 源码解析课程，本课程会系统的给大家手把手讲解 AKShare 数据接口的源码及财经数据的网络数据采集知识！[点击链接](https://mp.weixin.qq.com/s?__biz=MzI3MzYwODk2MQ==&mid=2247492193&idx=2&sn=a02b305b57a4b0756d5842494de96011&chksm=eb221a0fdc5593196168927217fc8b5486ab43e479f13cc643096069bb829e4a50067534a0b2&mpshare=1&scene=23&srcid=0316bvNDuCQ9P2E08BgK1Bnt&sharer_sharetime=1647406328931&sharer_shareid=2a5935b93d26c84266d2170040c3643c#rd) 查看课程信息**
+**AKShare VIP 交流群欢迎大家的加入，加群方式请点击[【加群】](https://zmj.xet.tech/s/28gOeh)**
 
-**本次发布 [AKTools](https://github.com/akfamily/aktools) 作为 AKShare 的 HTTP API 版本，突破 Python 语言的限制，欢迎各位小伙伴试用并提出更好的意见或建议！ 点击 [AKTools](https://github.com/akfamily/aktools) 查看使用指南。另外提供 [awesome-data](https://github.com/akfamily/awesome-data) 方便各位小伙伴查询各种数据源**
+**相关视频教程已经发布：《AKShare-初阶-使用教学》、《AKShare-初阶-实战应用》、《AKShare-源码解析》、《开源项目巡礼》**，详情请访问[课程](https://app3rqjh1z21630.h5.xiaoeknow.com)查看更多课程信息！
+
+**本次发布 [AKTools](https://github.com/akfamily/aktools) 作为 AKShare 的 HTTP API 版本，突破 Python 语言的限制，欢迎各位小伙伴试用并提出更好的意见或建议！ 点击 [AKTools](https://github.com/akfamily/aktools) 查看使用指南。另外提供 [awesome-data](https://github.com/akfamily/awesome-data) 方便各位小伙伴查询各种数据源。**
 
 ![](https://github.com/akfamily/akshare/blob/master/example/images/AKShare_logo.jpg)
 
@@ -19,13 +21,13 @@
 
 ## Overview
 
-[AKShare](https://github.com/akfamily/akshare) requires Python(64 bit) 3.7 or greater, aims to make fetch financial data as convenient as possible.
+[AKShare](https://github.com/akfamily/akshare) requires Python(64 bit) 3.8 or greater, aims to make fetch financial data as convenient as possible.
 
 **Write less, get more!**
 
-- Documentation: [中文文档](https://www.akshare.xyz/)
+- Documentation: [中文文档](https://akshare.akfamily.xyz/)
 
-# ![](https://github.com/akfamily/akshare/blob/master/example/images/AKShare.svg)
+![](https://github.com/akfamily/akshare/blob/master/example/images/AKShare.svg)
 
 ## Installation
 
@@ -43,28 +45,28 @@ pip install akshare -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host=mir
 
 ### PR
 
-Please check out [documentation](https://www.akshare.xyz/zh_CN/latest/contributor.html) if you want to contribute to AKShare
+Please check out [documentation](https://akshare.akfamily.xyz/contributor.html) if you want to contribute to AKShare
 
 ### Docker
 
 #### Pull images
 
 ```shell
-docker pull registry.cn-hangzhou.aliyuncs.com/akshare/akdocker
+docker pull registry.cn-shanghai.aliyuncs.com/akfamily/aktools:jupyter
 ```
 
-#### Run AKDocker
+#### Run Container
 
 ```shell
-docker run -it registry.cn-hangzhou.aliyuncs.com/akshare/akdocker python
+docker run -it registry.cn-shanghai.aliyuncs.com/akfamily/aktools:jupyter python
 ```
 
-#### Test AKDocker
+#### Test
 
 ```python
 import akshare as ak
 
-ak.__version__
+print(ak.__version__)
 ```
 
 ## Usage
@@ -120,17 +122,20 @@ Output
 
 ## Communication
 
-Pay attention to **数据科学家** Official Accounts to get more information about Quant, ML, DS and so on, please visit [数据科学家](https://www.akshare.xyz/introduction.html) for more information:
+Pay attention to **数据科学实战** Official Accounts to get more information about Quant, ML, DS and so on, please visit [数据科学实战](https://akshare.akfamily.xyz/introduction.html) for more information:
 
 <div>
-    <img src="https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/data_scientist.png">
+    <img alt="data science" src="https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/data_scientist.png">
 </div>
 
 Pay attention to **数据科学实战** WeChat Official Accounts to get the [AKShare](https://github.com/akfamily/akshare) updated info:
 
 <div>
-    <img src="https://github.com/akfamily/akshare/blob/master/example/images/ds.png">
+    <img alt="ds" src="https://github.com/akfamily/akshare/blob/master/example/images/ds.png">
 </div>
+
+Application to add **AKShare-VIP QQ group** and talk about [AKShare](https://github.com/akfamily/akshare) issues, please contact **AKShare-小助手 QQ**: 1254836886
+![](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/qr_code_1254836886.jpg)
 
 ## Features
 
@@ -140,11 +145,11 @@ Pay attention to **数据科学实战** WeChat Official Accounts to get the [AKS
 
 ## Tutorials
 
-1. [Overview](https://akshare.readthedocs.io/zh_CN/latest/akshare/ak-introduction.html)
-2. [Installation](https://akshare.readthedocs.io/zh_CN/latest/akshare/ak-installation.html)
-3. [Tutorial](https://akshare.readthedocs.io/zh_CN/latest/akshare/ak-tutorial.html)
-4. [Data Dict](https://akshare.readthedocs.io/zh_CN/latest/README.html)
-5. [Subjects](https://akshare.readthedocs.io/zh_CN/latest/subjects/index.html)
+1. [Overview](https://akshare.akfamily.xyz/introduction.html)
+2. [Installation](https://akshare.akfamily.xyz/installation.html)
+3. [Tutorial](https://akshare.akfamily.xyz/tutorial.html)
+4. [Data Dict](https://akshare.akfamily.xyz/data/index.html)
+5. [Subjects](https://akshare.akfamily.xyz/topic/index.html)
 
 ## Contribution
 
@@ -308,5 +313,5 @@ Thanks for the tutorials provided by [微信公众号: Python大咖谈](https://
 ## Backer and Sponsor
 
 <a href="https://www.jetbrains.com/?from=jindaxiang/akshare" target="_blank">
-<img src="https://github.com/akfamily/akshare/blob/master/example/images/jetbrains.svg" width="100px" height="100px">
+<img alt="jetbrains" src="https://github.com/akfamily/akshare/blob/master/example/images/jetbrains.svg" width="100px" height="100px">
 </a>

@@ -1,44 +1,27 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2022/6/20 17:05
+Date: 2023/6/8 14:05
 Desc: 债券-集思录-可转债
 集思录：https://app.jisilu.cn/data/cbnew/#cb
 """
-import ast
-
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
 
 from akshare.utils import demjson
 
 
 def bond_cb_index_jsl() -> pd.DataFrame:
     """
-    https://www.jisilu.cn/data/cbnew/cb_index/
+    https://www.jisilu.cn/web/data/cb/index
     首页-可转债-集思录可转债等权指数
     :return: 集思录可转债等权指数
     :rtype: pandas.DataFrame
     """
-    url = "https://www.jisilu.cn/data/cbnew/cb_index/"
+    url = "https://www.jisilu.cn/webapi/cb/index_history/"
     r = requests.get(url)
-    soup = BeautifulSoup(r.text, "lxml")
-    data_text = soup.find_all("script", attrs={"type": "text/javascript"})[
-        -4
-    ].string
-    inner_data_text = data_text[
-        data_text.find("__date") : data_text.find("__data")
-    ].strip("__date = ")
-    date_list = ast.literal_eval(inner_data_text[: inner_data_text.rfind(";")])
-    inner_data_text = data_text[
-        data_text.find("__data") : data_text.find("for(var")
-    ].strip("__data = ")
-    data_dict = demjson.decode(inner_data_text[: inner_data_text.rfind(";")])
-    temp_df = pd.DataFrame([date_list, data_dict["price"]]).T
-    temp_df.columns = ["date", "price"]
-    temp_df["date"] = pd.to_datetime(temp_df["date"]).dt.date
-    temp_df["price"] = pd.to_numeric(temp_df["price"])
+    data_dict = demjson.decode(r.text)["data"]
+    temp_df = pd.DataFrame(data_dict)
     return temp_df
 
 
@@ -99,69 +82,35 @@ def bond_cb_jsl(cookie: str = None) -> pd.DataFrame:
     r = requests.post(url, params=params, json=payload, headers=headers)
     data_json = r.json()
     temp_df = pd.DataFrame([item["cell"] for item in data_json["rows"]])
-    temp_df.columns = [
-        "代码",
-        "转债名称",
-        "-",
-        "现价",
-        "涨跌幅",
-        "正股代码",
-        "正股名称",
-        "-",
-        "正股价",
-        "正股涨跌",
-        "正股PB",
-        "转股价",
-        "转股价值",
-        "-",
-        "转股溢价率",
-        "双低",
-        "下修条件",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "评级",
-        "-",
-        "回售触发价",
-        "强赎触发价",
-        "转债流通市值占比",
-        "-",
-        "到期时间",
-        "剩余年限",
-        "剩余规模",
-        "成交额",
-        "-",
-        "换手率",
-        "到期税前收益",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-    ]
+    temp_df.rename(
+        columns={
+            "bond_id": "代码",
+            "bond_nm": "转债名称",
+            "price": "现价",
+            "increase_rt": "涨跌幅",
+            "stock_id": "正股代码",
+            "stock_nm": "正股名称",
+            "sprice": "正股价",
+            "sincrease_rt": "正股涨跌",
+            "pb": "正股PB",
+            "convert_price": "转股价",
+            "convert_value": "转股价值",
+            "premium_rt": "转股溢价率",
+            "dblow": "双低",
+            "rating_cd": "债券评级",
+            "put_convert_price": "回售触发价",
+            "force_redeem_price": "强赎触发价",
+            "convert_amt_ratio": "转债占比",
+            "maturity_dt": "到期时间",
+            "year_left": "剩余年限",
+            "curr_iss_amt": "剩余规模",
+            "volume": "成交额",
+            "turnover_rt": "换手率",
+            "ytm_rt": "到期税前收益",
+        },
+        inplace=True,
+    )
+
     temp_df = temp_df[
         [
             "代码",
@@ -176,37 +125,36 @@ def bond_cb_jsl(cookie: str = None) -> pd.DataFrame:
             "转股价",
             "转股价值",
             "转股溢价率",
-            "双低",
-            "下修条件",
-            "评级",
+            "债券评级",
             "回售触发价",
             "强赎触发价",
-            "转债流通市值占比",
+            "转债占比",
             "到期时间",
             "剩余年限",
             "剩余规模",
             "成交额",
             "换手率",
             "到期税前收益",
+            "双低",
         ]
     ]
-    temp_df["现价"] = pd.to_numeric(temp_df["现价"])
-    temp_df["涨跌幅"] = pd.to_numeric(temp_df["涨跌幅"])
-    temp_df["正股价"] = pd.to_numeric(temp_df["正股价"])
-    temp_df["正股涨跌"] = pd.to_numeric(temp_df["正股涨跌"])
-    temp_df["正股PB"] = pd.to_numeric(temp_df["正股PB"])
-    temp_df["转股价"] = pd.to_numeric(temp_df["转股价"])
-    temp_df["转股价值"] = pd.to_numeric(temp_df["转股价值"])
-    temp_df["转股溢价率"] = pd.to_numeric(temp_df["转股溢价率"])
-    temp_df["双低"] = pd.to_numeric(temp_df["双低"])
-    temp_df["回售触发价"] = pd.to_numeric(temp_df["回售触发价"])
-    temp_df["强赎触发价"] = pd.to_numeric(temp_df["强赎触发价"])
-    temp_df["转债流通市值占比"] = pd.to_numeric(temp_df["转债流通市值占比"])
-    temp_df["剩余年限"] = pd.to_numeric(temp_df["剩余年限"])
-    temp_df["剩余规模"] = pd.to_numeric(temp_df["剩余规模"])
-    temp_df["成交额"] = pd.to_numeric(temp_df["成交额"])
-    temp_df["换手率"] = pd.to_numeric(temp_df["换手率"])
-    temp_df["到期税前收益"] = pd.to_numeric(temp_df["到期税前收益"])
+    temp_df["到期时间"] = pd.to_datetime(temp_df["到期时间"]).dt.date
+    temp_df["现价"] = pd.to_numeric(temp_df["现价"], errors="coerce")
+    temp_df["涨跌幅"] = pd.to_numeric(temp_df["涨跌幅"], errors="coerce")
+    temp_df["正股价"] = pd.to_numeric(temp_df["正股价"], errors="coerce")
+    temp_df["正股涨跌"] = pd.to_numeric(temp_df["正股涨跌"], errors="coerce")
+    temp_df["正股PB"] = pd.to_numeric(temp_df["正股PB"], errors="coerce")
+    temp_df["转股价"] = pd.to_numeric(temp_df["转股价"], errors="coerce")
+    temp_df["转股价值"] = pd.to_numeric(temp_df["转股价值"], errors="coerce")
+    temp_df["转股溢价率"] = pd.to_numeric(temp_df["转股溢价率"], errors="coerce")
+    temp_df["回售触发价"] = pd.to_numeric(temp_df["回售触发价"], errors="coerce")
+    temp_df["强赎触发价"] = pd.to_numeric(temp_df["强赎触发价"], errors="coerce")
+    temp_df["转债占比"] = pd.to_numeric(temp_df["转债占比"], errors="coerce")
+    temp_df["剩余年限"] = pd.to_numeric(temp_df["剩余年限"], errors="coerce")
+    temp_df["剩余规模"] = pd.to_numeric(temp_df["剩余规模"], errors="coerce")
+    temp_df["成交额"] = pd.to_numeric(temp_df["成交额"], errors="coerce")
+    temp_df["换手率"] = pd.to_numeric(temp_df["换手率"], errors="coerce")
+    temp_df["到期税前收益"] = pd.to_numeric(temp_df["到期税前收益"], errors="coerce")
     return temp_df
 
 
@@ -248,36 +196,45 @@ def bond_cb_redeem_jsl() -> pd.DataFrame:
     r = requests.post(url, params=params, json=payload, headers=headers)
     data_json = r.json()
     temp_df = pd.DataFrame([item["cell"] for item in data_json["rows"]])
-    temp_df.columns = [
-        "代码",
-        "名称",
-        "现价",
-        "正股代码",
-        "正股名称",
-        "-",
-        "-",
-        "规模",
-        "剩余规模",
-        "转股起始日",
-        "转股价",
-        "-",
-        "-",
-        "-",
-        "-",
-        "-",
-        "强赎触发比",
-        "强赎价",
-        "-",
-        "-",
-        "-",
-        "强赎条款",
-        "正股价",
-        "强赎天计数",
-        "-",
-        "-",
-        "-",
-        "强赎触发价",
-    ]
+    temp_df.rename(
+        columns={
+            "bond_id": "代码",
+            "bond_nm": "名称",
+            "price": "现价",
+            "stock_id": "正股代码",
+            "stock_nm": "正股名称",
+            "margin_flg": "-",
+            "btype": "-",
+            "orig_iss_amt": "规模",
+            "curr_iss_amt": "剩余规模",
+            "convert_dt": "转股起始日",
+            "convert_price": "转股价",
+            "next_put_dt": "-",
+            "redeem_dt": "-",
+            "force_redeem": "-",
+            "redeem_flag": "-",
+            "redeem_price": "-",
+            "redeem_price_ratio": "强赎触发比",
+            "real_force_redeem_price": "强赎价",
+            "redeem_remain_days": "-",
+            "redeem_real_days": "-",
+            "redeem_total_days": "-",
+            "recount_dt": "-",
+            "redeem_count_days": "-",
+            "redeem_tc": "强赎条款",
+            "sprice": "正股价",
+            "delist_dt": "-",
+            "maturity_dt": "-",
+            "redeem_icon": "强赎状态",
+            "redeem_orders": "-",
+            "at_maturity": "-",
+            "redeem_count": "强赎天计数",
+            "after_next_put_dt": "-",
+            "force_redeem_price": "强赎触发价",
+        },
+        inplace=True,
+    )
+
     temp_df = temp_df[
         [
             "代码",
@@ -295,17 +252,24 @@ def bond_cb_redeem_jsl() -> pd.DataFrame:
             "强赎价",
             "强赎天计数",
             "强赎条款",
+            "强赎状态",
         ]
     ]
-    temp_df["现价"] = pd.to_numeric(temp_df["现价"])
-    temp_df["规模"] = pd.to_numeric(temp_df["规模"])
-    temp_df["剩余规模"] = pd.to_numeric(temp_df["剩余规模"])
+    temp_df["现价"] = pd.to_numeric(temp_df["现价"], errors="coerce")
+    temp_df["规模"] = pd.to_numeric(temp_df["规模"], errors="coerce")
+    temp_df["剩余规模"] = pd.to_numeric(temp_df["剩余规模"], errors="coerce")
     temp_df["转股起始日"] = pd.to_datetime(temp_df["转股起始日"]).dt.date
-    temp_df["转股价"] = pd.to_numeric(temp_df["转股价"])
-    temp_df["强赎触发比"] = pd.to_numeric(temp_df["强赎触发比"].str.strip("%"))
-    temp_df["强赎触发价"] = pd.to_numeric(temp_df["强赎触发价"])
-    temp_df["正股价"] = pd.to_numeric(temp_df["正股价"])
+    temp_df["转股价"] = pd.to_numeric(temp_df["转股价"], errors="coerce")
+    temp_df["强赎触发比"] = pd.to_numeric(temp_df["强赎触发比"].str.strip("%"), errors="coerce")
+    temp_df["强赎触发价"] = pd.to_numeric(temp_df["强赎触发价"], errors="coerce")
+    temp_df["正股价"] = pd.to_numeric(temp_df["正股价"], errors="coerce")
     temp_df["强赎价"] = pd.to_numeric(temp_df["强赎价"], errors="coerce")
+    temp_df["强赎天计数"] = temp_df["强赎天计数"].replace(
+        r"^.*?(\d{1,2}\/\d{1,2} \| \d{1,2}).*?$", r"\1", regex=True
+    )
+    temp_df["强赎状态"] = temp_df["强赎状态"].map(
+        {"R": "已公告强赎", "O": "公告要强赎", "G": "公告不强赎", "B": "已满足强赎条件", "": ""}
+    )
     return temp_df
 
 
@@ -328,11 +292,16 @@ def bond_cb_adj_logs_jsl(symbol: str = "128013") -> pd.DataFrame:
         return
     else:
         temp_df = pd.read_html(data_text, parse_dates=True)[0]
-        temp_df["股东大会日"] = pd.to_datetime(temp_df["股东大会日"]).dt.date
-        temp_df["下修前转股价"] = pd.to_numeric(temp_df["下修前转股价"])
-        temp_df["下修后转股价"] = pd.to_numeric(temp_df["下修后转股价"])
-        temp_df["新转股价生效日期"] = pd.to_datetime(temp_df["新转股价生效日期"]).dt.date
-        temp_df["下修底价"] = pd.to_numeric(temp_df["下修底价"])
+        temp_df.columns = [item.replace(" ", "") for item in temp_df.columns]
+        temp_df["下修前转股价"] = pd.to_numeric(temp_df["下修前转股价"], errors="coerce")
+        temp_df["下修后转股价"] = pd.to_numeric(temp_df["下修后转股价"], errors="coerce")
+        temp_df["下修底价"] = pd.to_numeric(temp_df["下修底价"], errors="coerce")
+        temp_df["股东大会日"] = pd.to_datetime(
+            temp_df["股东大会日"], format="%Y-%m-%d", errors="coerce"
+        ).dt.date
+        temp_df["新转股价生效日期"] = pd.to_datetime(
+            temp_df["新转股价生效日期"], format="%Y-%m-%d", errors="coerce"
+        ).dt.date
         return temp_df
 
 

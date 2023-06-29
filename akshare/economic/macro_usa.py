@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2021/12/24 12:08
+Date: 2023/5/10 17:00
 Desc: 金十数据中心-经济指标-美国
 https://datacenter.jin10.com/economic
 """
@@ -9,7 +9,6 @@ import json
 import time
 
 import pandas as pd
-from akshare.utils import demjson
 import requests
 
 from akshare.economic.cons import (
@@ -29,37 +28,50 @@ from akshare.economic.cons import (
 def macro_usa_phs() -> pd.DataFrame:
     """
     东方财富-经济数据一览-美国-未决房屋销售月率
-    http://data.eastmoney.com/cjsj/foreign_0_5.html
+    https://data.eastmoney.com/cjsj/foreign_0_5.html
     :return: 未决房屋销售月率
     :rtype: pandas.DataFrame
     """
-    url = "http://datainterface.eastmoney.com/EM_DataCenter/JS.aspx"
+    url = "https://datacenter-web.eastmoney.com/api/data/v1/get"
     params = {
-        'type': 'GJZB',
-        'sty': 'HKZB',
-        'js': '({data:[(x)],pages:(pc)})',
-        'p': '1',
-        'ps': '2000',
-        'mkt': '0',
-        'stat': '5',
-        'pageNo': '1',
-        'pageNum': '1',
-        '_': '1625474966006'
+        "reportName": "RPT_ECONOMICVALUE_USA",
+        "columns": "ALL",
+        "filter": '(INDICATOR_ID="EMG00342249")',
+        "pageNumber": "1",
+        "pageSize": "2000",
+        "sortColumns": "REPORT_DATE",
+        "sortTypes": "-1",
+        "source": "WEB",
+        "client": "WEB",
+        "p": "1",
+        "pageNo": "1",
+        "pageNum": "1",
+        "_": "1669047266881",
     }
     r = requests.get(url, params=params)
-    data_text = r.text
-    data_json = demjson.decode(data_text[1:-1])
-    temp_df = pd.DataFrame([item.split(',') for item in data_json['data']])
+    data_json = r.json()
+    temp_df = pd.DataFrame(data_json["result"]["data"])
     temp_df.columns = [
-        '时间',
-        '前值',
-        '现值',
-        '发布日期',
+        "-",
+        "-",
+        "-",
+        "时间",
+        "-",
+        "发布日期",
+        "现值",
+        "前值",
     ]
-    temp_df['时间'] = pd.to_datetime(temp_df['时间']).dt.date
-    temp_df['前值'] = pd.to_numeric(temp_df['前值'])
-    temp_df['现值'] = pd.to_numeric(temp_df['现值'])
-    temp_df['发布日期'] = pd.to_datetime(temp_df['发布日期']).dt.date
+    temp_df = temp_df[
+        [
+            "时间",
+            "前值",
+            "现值",
+            "发布日期",
+        ]
+    ]
+    temp_df["前值"] = pd.to_numeric(temp_df["前值"], errors="coerce")
+    temp_df["现值"] = pd.to_numeric(temp_df["现值"], errors="coerce")
+    temp_df["发布日期"] = pd.to_datetime(temp_df["发布日期"]).dt.date
     return temp_df
 
 
@@ -71,18 +83,18 @@ def macro_usa_gdp_monthly() -> pd.DataFrame:
     :return: pandas.Series
     """
     t = time.time()
-    res = requests.get(
+    r = requests.get(
         JS_USA_GDP_MONTHLY_URL.format(
             str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)
         )
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(r.text[r.text.find("{") : r.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国国内生产总值(GDP)"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
     value_df.columns = json_data["kinds"]
     value_df.index = pd.to_datetime(date_list)
-    temp_df = value_df["今值(%)"]
+
     url = "https://datacenter-api.jin10.com/reports/list_v2"
     params = {
         "max_date": "",
@@ -107,19 +119,21 @@ def macro_usa_gdp_monthly() -> pd.DataFrame:
         "x-version": "1.0.0",
     }
     r = requests.get(url, params=params, headers=headers)
-    temp_se = pd.DataFrame(r.json()["data"]["values"]).iloc[:, :2]
-    temp_se.index = pd.to_datetime(temp_se.iloc[:, 0])
-    temp_se = temp_se.iloc[:, 1]
-    temp_df = temp_df.append(temp_se)
-    temp_df.dropna(inplace=True)
+    temp_df = pd.DataFrame(r.json()["data"]["values"])
+    temp_df.index = pd.to_datetime(temp_df.iloc[:, 0])
+    temp_df.columns = ['date'] + json_data["kinds"]
+    del temp_df['date']
+    temp_df = pd.concat([value_df, temp_df])
+
+    temp_df.dropna(subset=["预测值(%)"], inplace=True)
     temp_df.sort_index(inplace=True)
     temp_df = temp_df.reset_index()
     temp_df.drop_duplicates(subset="index", inplace=True)
-    temp_df.set_index("index", inplace=True)
-    temp_df = temp_df.squeeze()
-    temp_df.index.name = None
-    temp_df.name = "gdp"
-    temp_df = temp_df.astype("float")
+    temp_df.columns = ['日期', '今值', '预测值', '前值']
+    temp_df['日期'] = pd.to_datetime(temp_df['日期']).dt.date
+    temp_df['今值'] = pd.to_numeric(temp_df['今值'], errors="coerce")
+    temp_df['预测值'] = pd.to_numeric(temp_df['预测值'], errors="coerce")
+    temp_df['前值'] = pd.to_numeric(temp_df['前值'], errors="coerce")
     return temp_df
 
 
@@ -138,7 +152,7 @@ def macro_usa_cpi_monthly() -> pd.DataFrame:
             str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)
         )
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国居民消费价格指数(CPI)(月环比)"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -198,7 +212,7 @@ def macro_usa_core_cpi_monthly() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_core_cpi_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国核心CPI月率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -258,7 +272,7 @@ def macro_usa_personal_spending() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_personal_spending_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国个人支出月率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -318,7 +332,7 @@ def macro_usa_retail_sales() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_retail_sales_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国零售销售月率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -378,7 +392,7 @@ def macro_usa_import_price() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_import_price_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国进口物价指数"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -438,7 +452,7 @@ def macro_usa_export_price() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_export_price_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国出口价格指数"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -500,7 +514,7 @@ def macro_usa_lmci() -> pd.DataFrame:
             str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)
         )
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美联储劳动力市场状况指数"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -562,7 +576,7 @@ def macro_usa_unemployment_rate() -> pd.DataFrame:
             str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)
         )
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国失业率"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -621,7 +635,7 @@ def macro_usa_job_cuts() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_job_cuts_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国挑战者企业裁员人数报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -682,7 +696,7 @@ def macro_usa_non_farm() -> pd.DataFrame:
             str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)
         )
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国非农就业人数"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -743,7 +757,7 @@ def macro_usa_adp_employment() -> pd.DataFrame:
             str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)
         )
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国ADP就业人数(万人)"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -804,7 +818,7 @@ def macro_usa_core_pce_price() -> pd.DataFrame:
             str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)
         )
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国核心PCE物价指数年率"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -863,7 +877,7 @@ def macro_usa_real_consumer_spending() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_real_consumer_spending_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国实际个人消费支出季率初值报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -922,7 +936,7 @@ def macro_usa_trade_balance() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_trade_balance_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国贸易帐报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -981,7 +995,7 @@ def macro_usa_current_account() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_current_account_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国经常账报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1037,10 +1051,10 @@ def macro_usa_rig_count() -> pd.DataFrame:
     :rtype: pandas.Series
     """
     t = time.time()
-    params = {
-        "_": t
-    }
-    res = requests.get("https://cdn.jin10.com/data_center/reports/baker.json", params=params)
+    params = {"_": t}
+    res = requests.get(
+        "https://cdn.jin10.com/data_center/reports/baker.json", params=params
+    )
     temp_df = pd.DataFrame(res.json().get("values")).T
     big_df = pd.DataFrame()
     big_df["钻井总数_钻井数"] = temp_df["钻井总数"].apply(lambda x: x[0])
@@ -1071,7 +1085,7 @@ def macro_usa_ppi() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_ppi_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国生产者物价指数(PPI)报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1131,7 +1145,7 @@ def macro_usa_core_ppi() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_core_ppi_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国核心生产者物价指数(PPI)报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1191,7 +1205,7 @@ def macro_usa_api_crude_stock() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_api_crude_stock_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国API原油库存报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1239,7 +1253,7 @@ def macro_usa_api_crude_stock() -> pd.DataFrame:
 
 
 # 金十数据中心-经济指标-美国-产业指标-制造业-美国Markit制造业PMI初值报告
-def macro_usa_pmi() -> pd.DataFrame:
+def macro_usa_pmi() -> pd.Series:
     """
     美国Markit制造业PMI初值报告, 数据区间从20120601-至今
     https://datacenter.jin10.com/reportType/dc_usa_pmi
@@ -1251,7 +1265,7 @@ def macro_usa_pmi() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_pmi_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国Markit制造业PMI报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1311,7 +1325,7 @@ def macro_usa_ism_pmi() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_ism_pmi_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国ISM制造业PMI报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1371,7 +1385,7 @@ def macro_usa_industrial_production() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_industrial_production_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国工业产出月率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1431,7 +1445,7 @@ def macro_usa_durable_goods_orders() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_durable_goods_orders_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国耐用品订单月率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1491,7 +1505,7 @@ def macro_usa_factory_orders() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_factory_orders_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国工厂订单月率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1551,7 +1565,7 @@ def macro_usa_services_pmi() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_services_pmi_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国Markit服务业PMI初值报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1611,7 +1625,7 @@ def macro_usa_business_inventories() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_business_inventories_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国商业库存月率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1671,7 +1685,7 @@ def macro_usa_ism_non_pmi() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_ism_non_pmi_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国ISM非制造业PMI报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1731,7 +1745,7 @@ def macro_usa_nahb_house_market_index() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_nahb_house_market_index_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国NAHB房产市场指数报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1791,7 +1805,7 @@ def macro_usa_house_starts() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_house_starts_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国新屋开工总数年化报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1851,7 +1865,7 @@ def macro_usa_new_home_sales() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_new_home_sales_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国新屋销售总数年化报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1911,7 +1925,7 @@ def macro_usa_building_permits() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_building_permits_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国营建许可总数报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -1971,7 +1985,7 @@ def macro_usa_exist_home_sales() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_exist_home_sales_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国成屋销售总数年化报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -2031,7 +2045,7 @@ def macro_usa_house_price_index() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_house_price_index_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国FHFA房价指数月率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -2091,7 +2105,7 @@ def macro_usa_spcs20() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_spcs20_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国S&P/CS20座大城市房价指数年率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -2151,7 +2165,7 @@ def macro_usa_pending_home_sales() -> pd.DataFrame:
     res = requests.get(
         f"https://cdn.jin10.com/dc/reports/dc_usa_pending_home_sales_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国成屋签约销售指数月率报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -2208,8 +2222,9 @@ def macro_usa_cb_consumer_confidence() -> pd.DataFrame:
     """
     t = time.time()
     res = requests.get(
-        f"https://cdn.jin10.com/dc/reports/dc_usa_cb_consumer_confidence_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}")
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+        f"https://cdn.jin10.com/dc/reports/dc_usa_cb_consumer_confidence_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
+    )
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国谘商会消费者信心指数报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -2267,8 +2282,9 @@ def macro_usa_nfib_small_business() -> pd.DataFrame:
     """
     t = time.time()
     res = requests.get(
-        f"https://cdn.jin10.com/dc/reports/dc_usa_nfib_small_business_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}")
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+        f"https://cdn.jin10.com/dc/reports/dc_usa_nfib_small_business_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
+    )
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国NFIB小型企业信心指数报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -2325,8 +2341,9 @@ def macro_usa_michigan_consumer_sentiment() -> pd.DataFrame:
     """
     t = time.time()
     res = requests.get(
-        f"https://cdn.jin10.com/dc/reports/dc_usa_michigan_consumer_sentiment_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}")
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+        f"https://cdn.jin10.com/dc/reports/dc_usa_michigan_consumer_sentiment_all.js?v={str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)}"
+    )
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国密歇根大学消费者信心指数初值报告"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -2397,7 +2414,7 @@ def macro_usa_eia_crude_rate() -> pd.DataFrame:
             str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)
         )
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国EIA原油库存(万桶)"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -2467,7 +2484,7 @@ def macro_usa_initial_jobless() -> pd.DataFrame:
             str(int(round(t * 1000))), str(int(round(t * 1000)) + 90)
         )
     )
-    json_data = json.loads(res.text[res.text.find("{"): res.text.rfind("}") + 1])
+    json_data = json.loads(res.text[res.text.find("{") : res.text.rfind("}") + 1])
     date_list = [item["date"] for item in json_data["list"]]
     value_list = [item["datas"]["美国初请失业金人数(万人)"] for item in json_data["list"]]
     value_df = pd.DataFrame(value_list)
@@ -2533,10 +2550,10 @@ def macro_usa_crude_inner() -> pd.DataFrame:
     2019-10-18    1260.00
     """
     t = time.time()
-    params = {
-        "_": t
-    }
-    res = requests.get("https://cdn.jin10.com/data_center/reports/usa_oil.json", params=params)
+    params = {"_": t}
+    res = requests.get(
+        "https://cdn.jin10.com/data_center/reports/usa_oil.json", params=params
+    )
     temp_df = pd.DataFrame(res.json().get("values")).T
     big_df = pd.DataFrame()
     big_df["美国国内原油总量_产量"] = temp_df["美国国内原油总量"].apply(lambda x: x[0])
@@ -2558,10 +2575,10 @@ def macro_usa_cftc_nc_holding() -> pd.DataFrame:
     :return: pandas.DataFrame
     """
     t = time.time()
-    params = {
-        "_": str(int(round(t * 1000)))
-    }
-    r = requests.get("https://cdn.jin10.com/data_center/reports/cftc_4.json", params=params)
+    params = {"_": str(int(round(t * 1000)))}
+    r = requests.get(
+        "https://cdn.jin10.com/data_center/reports/cftc_4.json", params=params
+    )
     json_data = r.json()
     temp_df = pd.DataFrame(json_data["values"]).T
     temp_df.fillna("[0, 0, 0]", inplace=True)
@@ -2584,10 +2601,10 @@ def macro_usa_cftc_c_holding() -> pd.DataFrame:
     :return: pandas.DataFrame
     """
     t = time.time()
-    params = {
-        "_": str(int(round(t * 1000)))
-    }
-    r = requests.get("https://cdn.jin10.com/data_center/reports/cftc_2.json", params=params)
+    params = {"_": str(int(round(t * 1000)))}
+    r = requests.get(
+        "https://cdn.jin10.com/data_center/reports/cftc_2.json", params=params
+    )
     json_data = r.json()
     temp_df = pd.DataFrame(json_data["values"]).T
     temp_df.fillna("[0, 0, 0]", inplace=True)
@@ -2610,10 +2627,10 @@ def macro_usa_cftc_merchant_currency_holding() -> pd.DataFrame:
     :return: pandas.DataFrame
     """
     t = time.time()
-    params = {
-        "_": str(int(round(t * 1000)))
-    }
-    r = requests.get("https://cdn.jin10.com/data_center/reports/cftc_3.json", params=params)
+    params = {"_": str(int(round(t * 1000)))}
+    r = requests.get(
+        "https://cdn.jin10.com/data_center/reports/cftc_3.json", params=params
+    )
     json_data = r.json()
     temp_df = pd.DataFrame(json_data["values"]).T
     temp_df.fillna("[0, 0, 0]", inplace=True)
@@ -2637,10 +2654,10 @@ def macro_usa_cftc_merchant_goods_holding() -> pd.DataFrame:
     :rtype: pandas.DataFrame
     """
     t = time.time()
-    params = {
-        "_": str(int(round(t * 1000)))
-    }
-    r = requests.get("https://cdn.jin10.com/data_center/reports/cftc_1.json", params=params)
+    params = {"_": str(int(round(t * 1000)))}
+    r = requests.get(
+        "https://cdn.jin10.com/data_center/reports/cftc_1.json", params=params
+    )
     json_data = r.json()
     temp_df = pd.DataFrame(json_data["values"]).T
     temp_df.fillna("[0, 0, 0]", inplace=True)
@@ -2806,7 +2823,9 @@ if __name__ == "__main__":
     macro_usa_cftc_c_holding_df = macro_usa_cftc_c_holding()
     print(macro_usa_cftc_c_holding_df)
     # 金十数据中心-美国商品期货交易委员会CFTC外汇类商业持仓报告
-    macro_usa_cftc_merchant_currency_holding_df = macro_usa_cftc_merchant_currency_holding()
+    macro_usa_cftc_merchant_currency_holding_df = (
+        macro_usa_cftc_merchant_currency_holding()
+    )
     print(macro_usa_cftc_merchant_currency_holding_df)
     # 金十数据中心-美国商品期货交易委员会CFTC商品类商业持仓报告
     macro_usa_cftc_merchant_goods_holding_df = macro_usa_cftc_merchant_goods_holding()
