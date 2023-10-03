@@ -1,15 +1,15 @@
 # -*- coding:utf-8 -*-
 # !/usr/bin/env python
 """
-Date: 2023/1/28 10:20
+Date: 2023/9/25 15:20
 Desc: 东方财富-股票-财务分析
 """
+from functools import lru_cache
+
 import pandas as pd
 import requests
-from tqdm import tqdm
 from bs4 import BeautifulSoup
-
-from functools import lru_cache
+from tqdm import tqdm
 
 
 @lru_cache()
@@ -52,10 +52,8 @@ def stock_balance_sheet_by_report_em(symbol: str = "SH600519") -> pd.DataFrame:
     temp_df["REPORT_DATE"] = pd.to_datetime(temp_df["REPORT_DATE"]).dt.date
     temp_df["REPORT_DATE"] = temp_df["REPORT_DATE"].astype(str)
     need_date = temp_df["REPORT_DATE"].tolist()
-    sep_list = [
-        ",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)
-    ]
-    big_df = pd.DataFrame()
+    sep_list = [",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)]
+    big_list = list()
     for item in tqdm(sep_list, leave=False):
         url = "https://emweb.securities.eastmoney.com/PC_HSF10/NewFinanceAnalysis/zcfzbAjaxNew"
         params = {
@@ -68,7 +66,8 @@ def stock_balance_sheet_by_report_em(symbol: str = "SH600519") -> pd.DataFrame:
         r = requests.get(url, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["data"])
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_list.append(temp_df)
+    big_df = pd.concat(big_list, ignore_index=True)
     return big_df
 
 
@@ -101,9 +100,7 @@ def stock_balance_sheet_by_yearly_em(symbol: str = "SH600036") -> pd.DataFrame:
     temp_df["REPORT_DATE"] = pd.to_datetime(temp_df["REPORT_DATE"]).dt.date
     temp_df["REPORT_DATE"] = temp_df["REPORT_DATE"].astype(str)
     need_date = temp_df["REPORT_DATE"].tolist()
-    sep_list = [
-        ",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)
-    ]
+    sep_list = [",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)]
     big_df = pd.DataFrame()
     for item in tqdm(sep_list, leave=False):
         url = "https://emweb.securities.eastmoney.com/PC_HSF10/NewFinanceAnalysis/zcfzbAjaxNew"
@@ -143,9 +140,7 @@ def stock_profit_sheet_by_report_em(symbol: str = "SH600519") -> pd.DataFrame:
     temp_df["REPORT_DATE"] = pd.to_datetime(temp_df["REPORT_DATE"]).dt.date
     temp_df["REPORT_DATE"] = temp_df["REPORT_DATE"].astype(str)
     need_date = temp_df["REPORT_DATE"].tolist()
-    sep_list = [
-        ",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)
-    ]
+    sep_list = [",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)]
     big_df = pd.DataFrame()
     for item in tqdm(sep_list, leave=False):
         url = "https://emweb.securities.eastmoney.com/PC_HSF10/NewFinanceAnalysis/lrbAjaxNew"
@@ -185,9 +180,7 @@ def stock_profit_sheet_by_yearly_em(symbol: str = "SH600519") -> pd.DataFrame:
     temp_df["REPORT_DATE"] = pd.to_datetime(temp_df["REPORT_DATE"]).dt.date
     temp_df["REPORT_DATE"] = temp_df["REPORT_DATE"].astype(str)
     need_date = temp_df["REPORT_DATE"].tolist()
-    sep_list = [
-        ",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)
-    ]
+    sep_list = [",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)]
     big_df = pd.DataFrame()
     for item in tqdm(sep_list, leave=False):
         url = "https://emweb.securities.eastmoney.com/PC_HSF10/NewFinanceAnalysis/lrbAjaxNew"
@@ -229,9 +222,7 @@ def stock_profit_sheet_by_quarterly_em(
     temp_df["REPORT_DATE"] = pd.to_datetime(temp_df["REPORT_DATE"]).dt.date
     temp_df["REPORT_DATE"] = temp_df["REPORT_DATE"].astype(str)
     need_date = temp_df["REPORT_DATE"].tolist()
-    sep_list = [
-        ",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)
-    ]
+    sep_list = [",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)]
     big_df = pd.DataFrame()
     for item in tqdm(sep_list, leave=False):
         url = "https://emweb.securities.eastmoney.com/PC_HSF10/NewFinanceAnalysis/lrbAjaxNew"
@@ -273,9 +264,7 @@ def stock_cash_flow_sheet_by_report_em(
     temp_df["REPORT_DATE"] = pd.to_datetime(temp_df["REPORT_DATE"]).dt.date
     temp_df["REPORT_DATE"] = temp_df["REPORT_DATE"].astype(str)
     need_date = temp_df["REPORT_DATE"].tolist()
-    sep_list = [
-        ",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)
-    ]
+    sep_list = [",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)]
     big_df = pd.DataFrame()
     for item in tqdm(sep_list, leave=False):
         url = "https://emweb.securities.eastmoney.com/PC_HSF10/NewFinanceAnalysis/xjllbAjaxNew"
@@ -317,9 +306,7 @@ def stock_cash_flow_sheet_by_yearly_em(
     temp_df["REPORT_DATE"] = pd.to_datetime(temp_df["REPORT_DATE"]).dt.date
     temp_df["REPORT_DATE"] = temp_df["REPORT_DATE"].astype(str)
     need_date = temp_df["REPORT_DATE"].tolist()
-    sep_list = [
-        ",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)
-    ]
+    sep_list = [",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)]
     big_df = pd.DataFrame()
     for item in tqdm(sep_list, leave=False):
         url = "https://emweb.securities.eastmoney.com/PC_HSF10/NewFinanceAnalysis/xjllbAjaxNew"
@@ -361,9 +348,7 @@ def stock_cash_flow_sheet_by_quarterly_em(
     temp_df["REPORT_DATE"] = pd.to_datetime(temp_df["REPORT_DATE"]).dt.date
     temp_df["REPORT_DATE"] = temp_df["REPORT_DATE"].astype(str)
     need_date = temp_df["REPORT_DATE"].tolist()
-    sep_list = [
-        ",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)
-    ]
+    sep_list = [",".join(need_date[i : i + 5]) for i in range(0, len(need_date), 5)]
     big_df = pd.DataFrame()
     for item in tqdm(sep_list, leave=False):
         url = "https://emweb.securities.eastmoney.com/PC_HSF10/NewFinanceAnalysis/xjllbAjaxNew"
@@ -413,7 +398,7 @@ if __name__ == "__main__":
     print(stock_profit_sheet_by_quarterly_em_df)
 
     stock_cash_flow_sheet_by_report_em_df = stock_cash_flow_sheet_by_report_em(
-        symbol="SH601398"
+        symbol="SH600519"
     )
     print(stock_cash_flow_sheet_by_report_em_df)
 
@@ -422,7 +407,7 @@ if __name__ == "__main__":
     )
     print(stock_cash_flow_sheet_by_yearly_em_df)
 
-    stock_cash_flow_sheet_by_quarterly_em_df = (
-        stock_cash_flow_sheet_by_quarterly_em(symbol="SH601398")
+    stock_cash_flow_sheet_by_quarterly_em_df = stock_cash_flow_sheet_by_quarterly_em(
+        symbol="SH601398"
     )
     print(stock_cash_flow_sheet_by_quarterly_em_df)

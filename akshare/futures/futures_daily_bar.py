@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2022/2/10 18:19
+Date: 2023/7/14 15:19
 Desc: 期货日线行情
 """
 import datetime
@@ -123,7 +123,10 @@ def get_cffex_daily(date: str = "20100416") -> pd.DataFrame:
     url = (
         f"http://www.cffex.com.cn/sj/historysj/{date[:-2]}/zip/{date[:-2]}.zip"
     )
-    r = requests.get(url)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+    }
+    r = requests.get(url, headers=headers)
     try:
         with zipfile.ZipFile(BytesIO(r.content)) as file:
             with file.open(f"{date}_1.csv") as my_file:
@@ -615,7 +618,8 @@ def get_dce_daily(date: str = "20220308") -> pd.DataFrame:
         "exportFlag": "excel",
     }
     r = requests.post(url, data=params, headers=headers)
-    data_df = pd.read_excel(BytesIO(r.content))
+    data_df = pd.read_excel(BytesIO(r.content), header=1)
+
     data_df = data_df[~data_df["商品名称"].str.contains("小计")]
     data_df = data_df[~data_df["商品名称"].str.contains("总计")]
     data_df["variety"] = data_df["商品名称"].map(lambda x: cons.DCE_MAP[x])
@@ -655,7 +659,12 @@ def get_dce_daily(date: str = "20220308") -> pd.DataFrame:
             "variety",
         ]
     ]
-    data_df = data_df.applymap(lambda x: x.replace(",", ""))
+    # TODO pandas 2.1.0 change
+    try:
+        data_df = data_df.map(lambda x: x.replace(",", ""))
+    except:
+        data_df = data_df.applymap(lambda x: x.replace(",", ""))
+
     data_df = data_df.astype(
         {
             "open": "float",
@@ -733,17 +742,17 @@ def get_futures_daily(
 
 if __name__ == "__main__":
     get_futures_daily_df = get_futures_daily(
-        start_date="20100823", end_date="20100825", market="CZCE"
+        start_date="20230901", end_date="20230915", market="DCE"
     )
     print(get_futures_daily_df)
 
-    get_dce_daily_df = get_dce_daily(date="20220308")
+    get_dce_daily_df = get_dce_daily(date="20230810")
     print(get_dce_daily_df)
 
-    get_cffex_daily_df = get_cffex_daily(date="20210719")
+    get_cffex_daily_df = get_cffex_daily(date="20230810")
     print(get_cffex_daily_df)
 
-    get_ine_daily_df = get_ine_daily(date="20211201")
+    get_ine_daily_df = get_ine_daily(date="20230818")
     print(get_ine_daily_df)
 
     get_czce_daily_df = get_czce_daily(date="20230320")

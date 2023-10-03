@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2022/3/6 18:28
+Date: 2023/7/6 19:28
 Desc: 新浪财经-科创板-实时行情数据和历史行情数据(包含前复权和后复权因子)
 """
 import datetime
@@ -26,8 +26,9 @@ from akshare.stock.cons import (
 def get_zh_kcb_page_count() -> int:
     """
     所有股票的总页数
-    http://vip.stock.finance.sina.com.cn/mkt/#hs_a
-    :return: int 需要抓取的股票总页数
+    https://vip.stock.finance.sina.com.cn/mkt/#hs_a
+    :return: 所有股票的总页数
+    :rtype: int
     """
     res = requests.get(zh_sina_kcb_stock_count_url)
     page_count = int(re.findall(re.compile(r"\d+"), res.text)[0]) / 80
@@ -146,7 +147,15 @@ def stock_zh_kcb_daily(symbol: str = "sh688399", adjust: str = "") -> pd.DataFra
     temp_df = pd.merge(
         data_df, amount_data_df, left_index=True, right_index=True, how="left"
     )
-    temp_df.fillna(method="ffill", inplace=True)
+    try:
+        # try for pandas >= 2.1.0
+        temp_df.ffill(inplace=True)
+    except Exception as e:
+        try:
+        # try for pandas < 2.1.0          
+            temp_df.fillna(method="ffill", inplace=True)
+        except Exception as e:
+                print("Error:", e)
     temp_df = temp_df.astype(float)
     temp_df["amount"] = temp_df["amount"] * 10000
     temp_df["turnover"] = temp_df["v"] / temp_df["amount"]
@@ -179,7 +188,15 @@ def stock_zh_kcb_daily(symbol: str = "sh688399", adjust: str = "") -> pd.DataFra
         temp_df = pd.merge(
             temp_df, hfq_factor_df, left_index=True, right_index=True, how="left"
         )
-        temp_df.fillna(method="ffill", inplace=True)
+        try:
+            # try for pandas >= 2.1.0
+            temp_df.ffill(inplace=True)
+        except Exception as e:
+            try:
+            # try for pandas < 2.1.0          
+                temp_df.fillna(method="ffill", inplace=True)
+            except Exception as e:
+                print("Error:", e)
         temp_df = temp_df.astype(float)
         temp_df["open"] = temp_df["open"] * temp_df["hfq_factor"]
         temp_df["high"] = temp_df["high"] * temp_df["hfq_factor"]
@@ -202,7 +219,15 @@ def stock_zh_kcb_daily(symbol: str = "sh688399", adjust: str = "") -> pd.DataFra
         temp_df = pd.merge(
             temp_df, qfq_factor_df, left_index=True, right_index=True, how="left"
         )
-        temp_df.fillna(method="ffill", inplace=True)
+        try:
+            # try for pandas >= 2.1.0
+            temp_df.ffill(inplace=True)
+        except Exception as e:
+            try:
+            # try for pandas < 2.1.0          
+                temp_df.fillna(method="ffill", inplace=True)
+            except Exception as e:
+                print("Error:", e)
         temp_df = temp_df.astype(float)
         temp_df["open"] = temp_df["open"] / temp_df["qfq_factor"]
         temp_df["high"] = temp_df["high"] / temp_df["qfq_factor"]
