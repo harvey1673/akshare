@@ -15,8 +15,8 @@
  "get_dce_daily",  # 获取大连商品交易所每日交易数据
  "get_gfex_daily",  # 获取广州期货交易所每日交易数据
  "get_ine_daily",  # 获取上海国际能源交易中心每日交易数据
- "futures_sgx_daily",  # 获取新加坡交易所每日交易数据
- "get_dce_rank_table",  #获取大连商品交易所前20会员持仓数据明细
+ "futures_settlement_price_sgx",  # 新加坡交易所期货品种每日交易数据
+ "get_dce_rank_table",  # 获取大连商品交易所前20会员持仓数据明细
  "get_futures_daily",  # 获取中国金融期货交易所每日基差数据
  "get_rank_sum",  # 获取四个期货交易所前5, 10, 15, 20会员持仓排名数据
  "get_rank_sum_daily",  # 获取每日四个期货交易所前5, 10, 15, 20会员持仓排名数据
@@ -93,7 +93,6 @@
  "get_us_stock_name"  # 获得美股的所有股票代码
  "stock_us_spot"  # 获取美股行情报价
  "stock_us_daily"  # 获取美股的历史数据(包括前复权因子)
- "stock_us_fundamental"  # 获取美股的基本面数据
  # A+H股实时行情数据和历史行情数据
  "stock_zh_ah_spot"  # 获取 A+H 股实时行情数据(延迟15分钟)
  "stock_zh_ah_daily"  # 获取 A+H 股历史行情数据(日频)
@@ -126,8 +125,7 @@
  "stock_zh_index_daily_em"  # 股票指数历史行情数据-东方财富
  "stock_zh_index_spot"  # 股票指数实时行情数据
  # 股票分笔数据
- "stock_zh_a_tick_tx"  # A 股票分笔行情数据(近2年)-腾讯
- "stock_zh_a_tick_tx_js"  # A 股票分笔行情数据(近2年)-腾讯-当日数据
+ "stock_zh_a_tick_tx_js"  # A 股票分笔行情数据-腾讯-当日数据
  # 世界各地区日出和日落数据-日
  "weather_daily"  # 每日日出和日落数据
  # 世界各地区日出和日落数据-月
@@ -143,7 +141,7 @@
  # 经济政策不确定性(EPU)指数
  "article_epu_index"  # 主要国家和地区的经济政策不确定性(EPU)指数
  # 微博指数
- "weibo_index"  # 获取3个月内的微博指数
+ "index_weibo_sina"  # 获取3个月内的微博指数
  # 百度指数
  "baidu_search_index"  # 获取百度搜索指数
  "baidu_info_index"  # 获取百度资讯指数
@@ -282,8 +280,6 @@
  "macro_china_czsr"  # 中国-财政收入
  "macro_china_whxd"  # 中国-外汇贷款数据
  "macro_china_wbck"  # 中国-本外币存款
- "macro_china_hb"  # 中国-货币净投放与净回笼
- "macro_china_gksccz"  # 中国-央行公开市场操作
  "macro_china_bond_public"  # 中国-债券发行
  # 美国
  "macro_usa_gdp_monthly"  # 金十数据中心-经济指标-美国-经济状况-美国GDP
@@ -664,7 +660,7 @@
  "fund_rating_zs"  # 基金评级-招商证券评级
  "fund_rating_ja"  # 基金评级-济安金信评级
  # 基金经理
- "fund_manager"  # 基金经理-基金经理大全
+ "fund_manager_em"  # 基金经理-基金经理大全
  # 盈利预测
  "stock_profit_forecast_em"  # 盈利预测-东财
  "stock_profit_forecast_ths"  # 盈利预测-同花顺
@@ -754,6 +750,8 @@
  "currency_boc_sina"  # 中行人民币牌价历史数据查询
  # A 股日频率数据-东方财富
  "stock_zh_a_hist"  # A 股日频率数据-东方财富
+ # A 股日频率数据-腾讯
+ "stock_zh_a_hist_tx"  # A 股日频率数据-腾讯
  # 盘口异动
  "stock_changes_em"  # 盘口异动
  "stock_board_change_em"  # 板块异动
@@ -1059,8 +1057,6 @@
  "stock_hot_follow_xq"  # 雪球-沪深股市-热度排行榜-关注排行榜
  "stock_hot_tweet_xq"  # 雪球-沪深股市-热度排行榜-讨论排行榜
  "stock_hot_deal_xq"  # 雪球-沪深股市-热度排行榜-分享交易排行榜
- # 股票热度-淘股吧
- "stock_hot_tgb"  # 淘股吧-热门股票
  # 内部交易
  "stock_inner_trade_xq"  # 内部交易
  # 股票-三大报表
@@ -1072,6 +1068,9 @@
  "stock_cash_flow_sheet_by_report_em"  # 东方财富-股票-财务分析-现金流量表-按报告期
  "stock_cash_flow_sheet_by_yearly_em"  # 东方财富-股票-财务分析-现金流量表-按年度
  "stock_cash_flow_sheet_by_quarterly_em"  # 东方财富-股票-财务分析-现金流量表-按单季度
+ "stock_balance_sheet_by_report_delisted_em"  # 东方财富-股票-财务分析-资产负债表-已退市股票-按报告期
+ "stock_profit_sheet_by_report_delisted_em"  # 东方财富-股票-财务分析-利润表-已退市股票-按报告期
+ "stock_cash_flow_sheet_by_report_delisted_em"  # 东方财富-股票-财务分析-现金流量表-已退市股票-按报告期
  # 宏观-全球事件
  "news_economic_baidu"  # 宏观-全球事件
  # 停复牌
@@ -1093,9 +1092,8 @@
  "stock_industry_change_cninfo"  # 巨潮资讯-上市公司行业归属的变动情况
  # 公司股本变动
  "stock_share_change_cninfo"  # 巨潮资讯-公司股本变动
- # 咨询-财联社
- "stock_zh_a_alerts_cls"  # 咨询-财联社-今日快讯
- "stock_telegraph_cls"  # 咨询-财联社-电报
+ # 资讯-财联社-电报
+ "stock_telegraph_cls"  # 资讯-财联社-电报
  # 上海金属网
  "futures_news_shmet"  # 上海金属网-快讯
  # 分红配股
@@ -1129,11 +1127,13 @@
  # 百度股市通-外汇-行情榜单
  "fx_quote_baidu"  # 百度股市通-外汇-行情榜单
  # 50ETF 期权波动率指数
- "option_50etf_qvix"  # 50ETF 期权波动率指数
+ "index_option_50etf_qvix"  # 50ETF 期权波动率指数
+ # 50ETF 期权波动率指数 QVIX-分时
+ "index_option_50etf_min_qvix"  # 50ETF 期权波动率指数 QVIX-分时
  # 300 ETF 期权波动率指数
- "option_300etf_qvix"  # 300 ETF 期权波动率指数
+ "index_option_300etf_qvix"  # 300 ETF 期权波动率指数
  # 300 ETF 期权波动率指数 QVIX-分时
- "option_300etf_min_qvix"  # 300 ETF 期权波动率指数 QVIX-分时
+ "index_option_300etf_min_qvix"  # 300 ETF 期权波动率指数 QVIX-分时
  # 申万指数实时行情
  "index_realtime_sw"  # 申万指数实时行情
  # 申万指数历史行情
@@ -1175,6 +1175,9 @@
  "stock_hk_index_daily_em"  # 东方财富网-港股-股票指数数据
  # 同花顺-财务指标-主要指标
  "stock_financial_abstract_ths"  # 同花顺-财务指标-主要指标
+ "stock_financial_debt_ths"  # 同花顺-财务指标-资产负债表
+ "stock_financial_benefit_ths"  # 同花顺-财务指标-利润表
+ "stock_financial_cash_ths"  # 同花顺-财务指标-现金流量表
  # LOF 行情
  "fund_lof_hist_em"  # 东方财富-LOF 行情
  "fund_lof_spot_em"  # 东方财富-LOF 实时行情
@@ -1212,6 +1215,18 @@
  "macro_china_nbs_region"  # 国家统计局地区数据通用接口
  # 新浪财经-美股指数行情
  "index_us_stock_sina"  # 新浪财经-美股指数行情
+ # 融资融券-标的证券名单及保证金比例查询
+ "stock_margin_ratio_pa"  # 融资融券-标的证券名单及保证金比例查询
+ # 东财财富-日内分时数据
+ "stock_intraday_em"  # 东财财富-日内分时数据
+ # 新浪财经-日内分时数据
+ "stock_intraday_sina"  # 新浪财经-日内分时数据
+ # 同花顺-板块-概念板块-概念图谱
+ "stock_board_concept_graph_ths"  # 同花顺-板块-概念板块-概念图谱
+ # 恐惧贪婪指数
+ "index_fear_greed_funddb"  # 恐惧贪婪指数
+ # 筹码分布
+ "stock_cyq_em"  # 筹码分布
 ```
 
 ## 案例演示

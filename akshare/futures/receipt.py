@@ -305,13 +305,13 @@ def get_czce_receipt_3(date: str = None, vars_list: List = cons.contract_symbols
         inner_df = inner_df.dropna(axis=1, how='all')
         if symbol == "PTA":
             try:
-                receipt_list.append(inner_df['仓单数量(完税)'].iloc[-1] + inner_df['仓单数量(保税)'].iloc[-1])  # 20210316 TA 分为保税和完税
+                receipt_list.append(inner_df['仓单数量(完税)'].iloc[-1] + int(inner_df['仓单数量(保税)'].iloc[-1]))  # 20210316 TA 分为保税和完税
             except:
                 receipt_list.append(0)
         elif symbol == "MA":
             try:
                 try:
-                    receipt_list.append(inner_df['仓单数量(完税)'].iloc[-2] + inner_df['仓单数量(保税)'].iloc[-2])  # 20210316 MA 分为保税和完税
+                    receipt_list.append(inner_df['仓单数量(完税)'].iloc[-2] + int(inner_df['仓单数量(保税)'].iloc[-2]))  # 20210316 MA 分为保税和完税
                 except:
                     receipt_list.append(inner_df['仓单数量(完税)'].iloc[-2])  # 处理 MA 的特殊格式
             except:
@@ -348,11 +348,11 @@ def get_gfex_receipt(date: str = None, vars_list: List = cons.contract_symbols) 
     :rtype: pandas.DataFrame
     """
     if not isinstance(vars_list, list):
-        return warnings.warn("vars_list: 必须是列表")
+        raise warnings.warn("vars_list: 必须是列表")
     date = cons.convert_date(date) if date is not None else datetime.date.today()
     if date.strftime('%Y%m%d') not in calendar:
         warnings.warn(f"{date.strftime('%Y%m%d')}非交易日")
-        return None
+        return pd.DataFrame()
     url = "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
     payload = {
         "gen_date": date.isoformat().replace("-", "")
@@ -376,12 +376,16 @@ def get_gfex_receipt(date: str = None, vars_list: List = cons.contract_symbols) 
     r = requests.post(url, data=payload, headers=headers)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json['data'])
-    result_se = temp_df[['wbillQty', 'diff']].iloc[-1, :]
-    result_se.index = ['receipt', 'receipt_chg']
-    result_se['date'] = date.isoformat().replace("-", "")
-    result_se['var'] = "SI"
-    result_df = result_se.to_frame().T
-    result_df.reset_index(drop=True)
+    temp_df = temp_df[temp_df['variety'].str.contains("小计")]
+    result_df = temp_df[['wbillQty', 'diff']].copy()
+    result_df.loc[:, 'date'] = date.isoformat().replace("-", "")
+    result_df.loc[:, 'var'] = [item.upper() for item in temp_df['varietyOrder'].tolist()]
+
+    result_df.reset_index(drop=True, inplace=True)
+    result_df.rename(columns={
+        "wbillQty": "receipt",
+        "diff": "receipt_chg",
+    }, inplace=True)
     result_df = result_df[[
         'var', 'receipt', 'receipt_chg', 'date'
     ]]
@@ -450,12 +454,9 @@ def get_receipt(start_day: str = None, end_day: str = None, vars_list: List = co
     records.reset_index(drop=True, inplace=True)
     if records.empty:
         return records
-    if "MA" in records["var"].to_list():
-        replace_index = records[records["var"] == "MA"]["receipt"].astype(str).str.split("0", expand=True)[0].index
-        records.loc[replace_index, "receipt"] = records[records["var"] == "MA"]["receipt"].astype(str).str.split("0", expand=True)[0]
     return records
 
 
 if __name__ == '__main__':
-    get_receipt_df = get_receipt(start_day='20230915', end_day='20230915')
+    get_receipt_df = get_receipt(start_day='20231205', end_day='20231210')
     print(get_receipt_df)

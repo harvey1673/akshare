@@ -3,13 +3,11 @@
 ## 重要提示
 
 1. 目前 [AKShare](https://github.com/akfamily/akshare) 仅支持 64 位版本的操作系统安装和使用;
-2. 目前 [AKShare](https://github.com/akfamily/akshare) 仅支持 [Python](https://www.python.org/) 3.8(64 位) 及以上版本, 这里推荐 [Python](https://www.python.org/) 3.10.x(64 位) 版本;
+2. 目前 [AKShare](https://github.com/akfamily/akshare) 仅支持 [Python](https://www.python.org/) 3.8(64 位) 及以上版本, 这里推荐 [Python](https://www.python.org/) 3.11.x(64 位) 版本;
 3. [AKShare](https://github.com/akfamily/akshare) 推荐安装最新版本的 [Anaconda (64 位)](https://www.anaconda.com/), 可以解决大部分环境配置问题;
 4. 对于熟悉容器技术的小伙伴, 可以安装 Docker 使用, 指导教程如下: [AKShare Docker 部署](https://akshare.akfamily.xyz/akdocker/akdocker.html).
 
 ## 安装 [AKShare](https://github.com/akfamily/akshare)
-
-提示：目前已经支持苹果 M1 处理器安装 [AKShare](https://github.com/akfamily/akshare)，请参考[AKShare 文档-苹果 M1 处理器支持](https://akshare.akfamily.xyz/installation.html#m1)
 
 ### 通用安装
 
@@ -39,26 +37,19 @@ P.S. **由于目前版本更新迭代频繁, 请在使用 [AKShare](https://gith
 pip install akshare --upgrade -i https://pypi.org/simple
 ```
 
-## 苹果处理器支持
+## M 系列芯片
 
-### 缘起
+1. 如果需要编译，请参考该文章：[Building V8 on an M1 MacBook](https://joyeecheung.github.io/blog/2021/08/27/binding-v8-on-an-m1-macbook/)
 
-AKShare 由于使用 [PyMiniRacer](https://blog.sqreen.com/embedding-javascript-into-python/) 项目来支持在 Python 中运行 JavaScript
-代码，所以要完整的使用 AKShare 的全部功能需要安装该库。
+## 树莓派支持
 
-但是由于苹果的 M 系列芯片采用 ARM 架构，而 [PyMiniRacer](https://blog.sqreen.com/embedding-javascript-into-python/) 并没有编译相对应的
-版本，所以造成在 M 系列芯片的计算机上使用 AKShare 会出问题。
+目前 AKShare 已支持在树莓派 4B 上安装和使用，具体安装方法如下：
 
-### 解决方案
-
-本次的解决方案是提供编译好的文件供大家下载使用：[libmini_racer.dylib](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/software/pyminiracer/libmini_racer.dylib) ，
-只需要把该文件下载到本地，然后存放在报错提示的路径即可，如果你使用的是 macOS 系统自带的 Python，则这个路径一般是 `/Users/<username>/Library/Python/<python_version>/lib/python/site-packages/py_mini_racer`，
-具体可以找到自己机器 Python 第三方包的下载路径。
-
-### 扩展阅读
-
-1. 如果上述文档未能解决您的问题；可以观看《AKShare-初阶-使用教学》课程，里面手把手带您进行环境配置
-2. 如果需要编译，请参考该文章：[Building V8 on an M1 MacBook](https://joyeecheung.github.io/blog/2021/08/27/binding-v8-on-an-m1-macbook/)
+1. 安装 [Raspberry Pi OS (64-bit)](https://www.raspberrypi.com/software/operating-systems/) 操作系统，目前支持树莓派于 20231010 发布的 64 位版本
+2. 通过 `sudo apt-get install python3-venv` 安装虚拟环境支持
+3. 通过 `python3 -m venv myenv` 创建名为 `myenv` 的虚拟环境
+4. 通过 `source myenv/bin/activate` 来激活创建好的虚拟环境
+5. 通过 `pip install akshare` 来安装 AKShare
 
 ## R 语言调用支持
 
