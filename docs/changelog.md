@@ -70,6 +70,57 @@
 
 ## 更新说明详情
 
+1.12.8 fix: fix fund_open_fund_info_em interface
+
+    1. 修复 fund_open_fund_info_em 接口
+
+1.12.7 fix: fix option_gfex_daily interface
+
+    1. 修复 option_gfex_daily 接口
+    2. 更新 calendar.json 文件
+
+1.12.6 fix: fix fund_open_fund_info_em interface
+    
+    1. 修复 fund_open_fund_info_em 接口
+
+1.12.5 fix: fix stock_zh_a_gdhs interface
+
+    1. 修复 stock_zh_a_gdhs 接口
+
+1.12.4 fix: fix tool_trade_date_hist_sina interface
+
+    1. 修复 tool_trade_date_hist_sina 接口
+
+1.12.3 fix: fix stock_gdfx_free_holding_teamwork_em interface
+
+    1. 修复 stock_gdfx_free_holding_teamwork_em 接口
+
+1.12.2 fix: fix hurun_rank interface
+
+    1. 修复 hurun_rank 接口
+
+1.12.1 fix: fix futures_comm_info interface
+
+    1. 修复 futures_comm_info 接口
+
+1.11.99 fix: fix stock_zh_index_spot interface
+    
+    1. 修复 stock_zh_index_spot 接口
+
+1.11.98 fix: fix stock_zh_a_disclosure_report_cninfo interface
+
+    1. 修复 stock_zh_a_disclosure_report_cninfo 接口
+
+1.11.97 add: add stock_zh_a_disclosure_report_cninfo interface
+
+    1. 新增 stock_zh_a_disclosure_report_cninfo 接口
+    2. 修复 stock_gdfx_free_holding_analyse_em 接口
+    3. 修复 stock_gdfx_holding_analyse_em 接口
+
+1.11.96 fix: fix fund_rating_all interface
+
+    1. 修复 fund_rating_all 接口
+
 1.11.95 fix: fix fund_etf_hist_min_em interface
 
     1. 修复 fund_etf_hist_min_em 接口
@@ -3242,6 +3293,30 @@
     3. 修改 air_quality_hist 接口的请求日期格式，从 '2022-01-01' 为 '20220101'
 
 ## 版本更新说明
+
+1.12.8 fix: fix fund_open_fund_info_em interface
+
+1.12.7 fix: fix option_gfex_daily interface
+
+1.12.6 fix: fix fund_open_fund_info_em interface
+
+1.12.5 fix: fix stock_zh_a_gdhs interface
+
+1.12.4 fix: fix tool_trade_date_hist_sina interface
+
+1.12.3 fix: fix stock_gdfx_free_holding_teamwork_em interface
+
+1.12.2 fix: fix hurun_rank interface
+
+1.12.1 fix: fix futures_comm_info interface
+
+1.11.99 fix: fix stock_zh_index_spot interface
+
+1.11.98 fix: fix stock_zh_a_disclosure_report_cninfo interface
+
+1.11.97 add: add stock_zh_a_disclosure_report_cninfo interface
+
+1.11.96 fix: fix fund_rating_all interface
 
 1.11.95 fix: fix fund_etf_hist_min_em interface
 

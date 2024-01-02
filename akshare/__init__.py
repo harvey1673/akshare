@@ -2609,9 +2609,21 @@ amac_manager_cancelled_info # 中国证券投资基金业协会-信息公示-诚
 1.11.93 fix: fix stock_zh_a_hist_pre_min_em interface
 1.11.94 fix: fix index_zh_a_hist_min_em interface
 1.11.95 fix: fix fund_etf_hist_min_em interface
+1.11.96 fix: fix fund_rating_all interface
+1.11.97 add: add stock_zh_a_disclosure_report_cninfo interface
+1.11.98 fix: fix stock_zh_a_disclosure_report_cninfo interface
+1.11.99 fix: fix stock_zh_index_spot interface
+1.12.1 fix: fix futures_comm_info interface
+1.12.2 fix: fix hurun_rank interface
+1.12.3 fix: fix stock_gdfx_free_holding_teamwork_em interface
+1.12.4 fix: fix tool_trade_date_hist_sina interface
+1.12.5 fix: fix stock_zh_a_gdhs interface
+1.12.6 fix: fix fund_open_fund_info_em interface
+1.12.7 fix: fix option_gfex_daily interface
+1.12.8 fix: fix fund_open_fund_info_em interface
 """
 
-__version__ = "1.11.95"
+__version__ = "1.12.8"
 __author__ = "AKFamily"
 
 import sys
@@ -2632,6 +2644,14 @@ if sys.version_info < (3, 9):
     )
 
 del sys
+
+"""
+巨潮资讯-首页-公告查询-信息披露
+"""
+from akshare.stock_feature.stock_disclosure_cninfo import (
+    stock_zh_a_disclosure_relation_cninfo,
+    stock_zh_a_disclosure_report_cninfo,
+)
 
 """
 东财财富-分时数据

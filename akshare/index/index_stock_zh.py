@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2023/10/27 21:28
+Date: 2023/12/20 17:20
 Desc: 股票指数数据-新浪-东财-腾讯
 所有指数-实时行情数据和历史行情数据
 https://finance.sina.com.cn/realstock/company/sz399552/nc.shtml
@@ -12,7 +12,6 @@ import re
 import pandas as pd
 import requests
 from py_mini_racer import py_mini_racer
-from tqdm import tqdm
 
 from akshare.index.cons import (
     zh_sina_index_stock_payload,
@@ -22,6 +21,7 @@ from akshare.index.cons import (
 )
 from akshare.stock.cons import hk_js_decode
 from akshare.utils import demjson
+from akshare.utils.tqdm import get_tqdm
 
 
 def _replace_comma(x):
@@ -41,7 +41,7 @@ def _replace_comma(x):
 def get_zh_index_page_count() -> int:
     """
     指数的总页数
-    http://vip.stock.finance.sina.com.cn/mkt/#hs_s
+    https://vip.stock.finance.sina.com.cn/mkt/#hs_s
     :return: 需要抓取的指数的总页数
     :rtype: int
     """
@@ -64,12 +64,12 @@ def stock_zh_index_spot() -> pd.DataFrame:
     big_df = pd.DataFrame()
     page_count = get_zh_index_page_count()
     zh_sina_stock_payload_copy = zh_sina_index_stock_payload.copy()
+    tqdm = get_tqdm()
     for page in tqdm(range(1, page_count + 1), leave=False):
         zh_sina_stock_payload_copy.update({"page": page})
         res = requests.get(zh_sina_index_stock_url, params=zh_sina_stock_payload_copy)
         data_json = demjson.decode(res.text)
         big_df = pd.concat([big_df, pd.DataFrame(data_json)], ignore_index=True)
-
     big_df = big_df.map(_replace_comma)
     big_df["trade"] = pd.to_numeric(big_df["trade"], errors="coerce")
     big_df["pricechange"] = pd.to_numeric(big_df["pricechange"], errors="coerce")
@@ -112,6 +112,15 @@ def stock_zh_index_spot() -> pd.DataFrame:
             "成交额",
         ]
     ]
+    big_df['最新价'] = pd.to_numeric(big_df['最新价'], errors="coerce")
+    big_df['涨跌额'] = pd.to_numeric(big_df['涨跌额'], errors="coerce")
+    big_df['涨跌幅'] = pd.to_numeric(big_df['涨跌幅'], errors="coerce")
+    big_df['昨收'] = pd.to_numeric(big_df['昨收'], errors="coerce")
+    big_df['今开'] = pd.to_numeric(big_df['今开'], errors="coerce")
+    big_df['最高'] = pd.to_numeric(big_df['最高'], errors="coerce")
+    big_df['最低'] = pd.to_numeric(big_df['最低'], errors="coerce")
+    big_df['成交量'] = pd.to_numeric(big_df['成交量'], errors="coerce")
+    big_df['成交额'] = pd.to_numeric(big_df['成交额'], errors="coerce")
     return big_df
 
 
@@ -141,7 +150,7 @@ def stock_zh_index_daily(symbol: str = "sh000922") -> pd.DataFrame:
     return temp_df
 
 
-def _get_tx_start_year(symbol: str = "sh000919") -> pd.DataFrame:
+def get_tx_start_year(symbol: str = "sh000919") -> pd.DataFrame:
     """
     腾讯证券-获取所有股票数据的第一天, 注意这个数据是腾讯证券的历史数据第一天
     https://gu.qq.com/sh000919/zs
@@ -187,12 +196,13 @@ def stock_zh_index_daily_tx(symbol: str = "sz980017") -> pd.DataFrame:
     :return: 前复权的股票和指数数据
     :rtype: pandas.DataFrame
     """
-    start_date = _get_tx_start_year(symbol=symbol)
+    start_date = get_tx_start_year(symbol=symbol)
     url = "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get"
     range_start = int(start_date.split("-")[0])
     range_end = datetime.date.today().year + 1
     temp_df = pd.DataFrame()
-    for year in tqdm(range(range_start, range_end)):
+    tqdm = get_tqdm()
+    for year in tqdm(range(range_start, range_end), leave=False):
         params = {
             "_var": "kline_dayqfq",
             "param": f"{symbol},day,{year}-01-01,{year + 1}-12-31,640,qfq",
