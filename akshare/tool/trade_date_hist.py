@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2023/5/29 22:27
+Date: 2024/3/25 16:30
 Desc: 新浪财经-交易日历
 https://finance.sina.com.cn/realstock/company/klc_td_sh.txt
 此处可以用来更新 calendar.json 文件，注意末尾没有 "," 号
 """
+
 import datetime
 
 import pandas as pd
@@ -17,7 +18,7 @@ from akshare.stock.cons import hk_js_decode
 
 def tool_trade_date_hist_sina() -> pd.DataFrame:
     """
-    交易日历-历史数据
+    新浪财经-交易日历-历史数据
     https://finance.sina.com.cn/realstock/company/klc_td_sh.txt
     :return: 交易日历
     :rtype: pandas.DataFrame
@@ -32,7 +33,7 @@ def tool_trade_date_hist_sina() -> pd.DataFrame:
     temp_df["trade_date"] = pd.to_datetime(temp_df["trade_date"]).dt.date
     temp_list = temp_df["trade_date"].to_list()
     # 该日期是交易日，但是在新浪返回的交易日历缺失该日期，这里补充上
-    temp_list.append(datetime.date(1992, 5, 4))
+    temp_list.append(datetime.date(year=1992, month=5, day=4))
     temp_list.sort()
     temp_df = pd.DataFrame(temp_list, columns=["trade_date"])
     return temp_df

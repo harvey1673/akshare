@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2023/4/6 20:20
+Date: 2024/4/25 20:24
 Desc: 市盈率, 市净率和股息率查询
 https://www.legulegu.com/stocklist
 https://www.legulegu.com/s/000001
 """
+
 from datetime import datetime
 from hashlib import md5
 
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+
+from akshare.utils.cons import headers
 
 
 def get_cookie_csrf(url: str = "") -> dict:
@@ -21,11 +24,11 @@ def get_cookie_csrf(url: str = "") -> dict:
     :return: 指定市场的市盈率数据
     :rtype: pandas.DataFrame
     """
-    r = requests.get(url)
-    soup = BeautifulSoup(r.text, "lxml")
-    csrf_tag = soup.find("meta", attrs={"name": "_csrf"})
+    r = requests.get(url, headers=headers)
+    soup = BeautifulSoup(r.text, features="lxml")
+    csrf_tag = soup.find(name="meta", attrs={"name": "_csrf"})
     csrf_token = csrf_tag.attrs["content"]
-    headers = {"X-CSRF-Token": csrf_token}
+    headers.update({"X-CSRF-Token": csrf_token})
     return {"cookies": r.cookies, "headers": headers}
 
 
@@ -43,7 +46,7 @@ def get_token_lg() -> str:
     return token
 
 
-def stock_a_indicator_lg(symbol: str = "002174") -> pd.DataFrame:
+def stock_a_indicator_lg(symbol: str = "000001") -> pd.DataFrame:
     """
     市盈率, 市净率, 股息率数据接口
     https://legulegu.com/stocklist
@@ -54,8 +57,8 @@ def stock_a_indicator_lg(symbol: str = "002174") -> pd.DataFrame:
     """
     if symbol == "all":
         url = "https://legulegu.com/stocklist"
-        r = requests.get(url)
-        soup = BeautifulSoup(r.text, "lxml")
+        r = requests.get(url, headers=headers)
+        soup = BeautifulSoup(r.text, features="lxml")
         node_list = soup.find_all(attrs={"class": "col-xs-6"})
         href_list = [item.find("a")["href"] for item in node_list]
         title_list = [item.find("a")["title"] for item in node_list]
@@ -81,8 +84,8 @@ def stock_a_indicator_lg(symbol: str = "002174") -> pd.DataFrame:
         )
         temp_df["trade_date"] = pd.to_datetime(temp_df["trade_date"]).dt.date
         temp_df[temp_df.columns[1:]] = temp_df[temp_df.columns[1:]].astype(float)
-        temp_df.sort_values(["trade_date"], inplace=True, ignore_index=True)
-        if len(set(temp_df['trade_date'])) < 10:
+        temp_df.sort_values(by=["trade_date"], inplace=True, ignore_index=True)
+        if len(set(temp_df["trade_date"])) <= 0:
             raise ValueError("数据获取失败, 请检查是否输入正确的股票代码")
         return temp_df
 
@@ -102,7 +105,7 @@ def stock_hk_indicator_eniu(
     """
     if indicator == "港股":
         url = "https://eniu.com/static/data/stock_list.json"
-        r = requests.get(url)
+        r = requests.get(url, headers=headers)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json)
         temp_df = temp_df[temp_df["stock_id"].str.contains("hk")]
@@ -116,9 +119,9 @@ def stock_hk_indicator_eniu(
         url = f"https://eniu.com/chart/dvh/{symbol}"
     elif indicator == "ROE":
         url = f"https://eniu.com/chart/roeh/{symbol}"
-    elif indicator == "市值":
+    else:
         url = f"https://eniu.com/chart/marketvalueh/{symbol}"
-    r = requests.get(url)
+    r = requests.get(url, headers=headers)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json)
     return temp_df
@@ -128,7 +131,7 @@ if __name__ == "__main__":
     stock_a_indicator_lg_all_df = stock_a_indicator_lg(symbol="all")
     print(stock_a_indicator_lg_all_df)
 
-    stock_a_indicator_lg_df = stock_a_indicator_lg(symbol="501050")
+    stock_a_indicator_lg_df = stock_a_indicator_lg(symbol="000001")
     print(stock_a_indicator_lg_df)
 
     stock_hk_indicator_eniu_df = stock_hk_indicator_eniu(

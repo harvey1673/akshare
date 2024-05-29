@@ -3,18 +3,16 @@
 ## 重要提示
 
 1. 目前 [AKShare](https://github.com/akfamily/akshare) 仅支持 64 位版本的操作系统安装和使用;
-2. 目前 [AKShare](https://github.com/akfamily/akshare) 仅支持 [Python](https://www.python.org/) 3.8(64 位) 及以上版本, 这里推荐 [Python](https://www.python.org/) 3.10.x(64 位) 版本;
+2. 目前 [AKShare](https://github.com/akfamily/akshare) 仅支持 [Python](https://www.python.org/) 3.8(64 位) 及以上版本, 这里推荐 [Python](https://www.python.org/) 3.11.x(64 位) 版本;
 3. [AKShare](https://github.com/akfamily/akshare) 推荐安装最新版本的 [Anaconda (64 位)](https://www.anaconda.com/), 可以解决大部分环境配置问题;
 4. 对于熟悉容器技术的小伙伴, 可以安装 Docker 使用, 指导教程如下: [AKShare Docker 部署](https://akshare.akfamily.xyz/akdocker/akdocker.html).
 
 ## 安装 [AKShare](https://github.com/akfamily/akshare)
 
-提示：目前已经支持苹果 M1 处理器安装 [AKShare](https://github.com/akfamily/akshare)，请参考[AKShare 文档-苹果 M1 处理器支持](https://akshare.akfamily.xyz/installation.html#m1)
-
 ### 通用安装
 
 ```
-pip install akshare  --upgrade
+pip install akshare --upgrade
 ```
 
 注意：程序运行时，文件名、文件夹名不能是：akshare
@@ -22,13 +20,13 @@ pip install akshare  --upgrade
 ### 国内安装-Python
 
 ```
-pip install akshare -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host=mirrors.aliyun.com  --upgrade
+pip install akshare --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ### 国内安装-Anaconda
 
 ```
-pip install akshare -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host=mirrors.aliyun.com  --user  --upgrade
+pip install akshare --upgrade --user -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ## 升级 [AKShare](https://github.com/akfamily/akshare)
@@ -39,26 +37,20 @@ P.S. **由于目前版本更新迭代频繁, 请在使用 [AKShare](https://gith
 pip install akshare --upgrade -i https://pypi.org/simple
 ```
 
-## 苹果处理器支持
+## M 系列芯片支持
 
-### 缘起
-
-AKShare 由于使用 [PyMiniRacer](https://blog.sqreen.com/embedding-javascript-into-python/) 项目来支持在 Python 中运行 JavaScript
-代码，所以要完整的使用 AKShare 的全部功能需要安装该库。
-
-但是由于苹果的 M 系列芯片采用 ARM 架构，而 [PyMiniRacer](https://blog.sqreen.com/embedding-javascript-into-python/) 并没有编译相对应的
-版本，所以造成在 M 系列芯片的计算机上使用 AKShare 会出问题。
-
-### 解决方案
-
-本次的解决方案是提供编译好的文件供大家下载使用：[libmini_racer.dylib](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/software/pyminiracer/libmini_racer.dylib) ，
-只需要把该文件下载到本地，然后存放在报错提示的路径即可，如果你使用的是 macOS 系统自带的 Python，则这个路径一般是 `/Users/<username>/Library/Python/<python_version>/lib/python/site-packages/py_mini_racer`，
-具体可以找到自己机器 Python 第三方包的下载路径。
-
-### 扩展阅读
-
-1. 如果上述文档未能解决您的问题；可以观看《AKShare-初阶-使用教学》课程，里面手把手带您进行环境配置
+1. AKShare 目前已经默认适合苹果 M 系列芯片，直接通过 `pip install akshare --upgrade` 即可使用
 2. 如果需要编译，请参考该文章：[Building V8 on an M1 MacBook](https://joyeecheung.github.io/blog/2021/08/27/binding-v8-on-an-m1-macbook/)
+
+## 树莓派支持
+
+目前 AKShare 已支持在树莓派 4B 上安装和使用，具体安装方法如下：
+
+1. 安装 [Raspberry Pi OS (64-bit)](https://www.raspberrypi.com/software/operating-systems/) 操作系统，目前支持树莓派于 20231010 发布的 64 位版本
+2. 通过 `sudo apt-get install python3-venv` 安装虚拟环境支持
+3. 通过 `python3 -m venv myenv` 创建名为 `myenv` 的虚拟环境
+4. 通过 `source myenv/bin/activate` 来激活创建好的虚拟环境
+5. 通过 `pip install akshare --upgrade` 来安装和升级 AKShare 到最新版本
 
 ## R 语言调用支持
 
@@ -121,13 +113,13 @@ head(stock_df)  # 查看数据
 ```
 
 ```
-        日期  开盘   收盘  最高   最低     成交量 成交额  振幅  涨跌幅 涨跌额 换手率    
-1 1991-04-03 49.00 49.00 49.00 49.00      1   5000    0  22.50   9.00  0  
-2 1991-04-04 48.76 48.76 48.76 48.76      3  15000    0  -0.49  -0.24  0  
-3 1991-04-05 48.52 48.52 48.52 48.52      2  10000    0  -0.49  -0.24  0  
-4 1991-04-06 48.28 48.28 48.28 48.28      7  34000    0  -0.49  -0.24  0  
-5 1991-04-08 48.04 48.04 48.04 48.04      2  10000    0  -0.50  -0.24  0  
-6 1991-04-09 47.80 47.80 47.80 47.80      4  19000    0  -0.50  -0.24  0  
+        日期  开盘   收盘  最高   最低     成交量 成交额  振幅  涨跌幅 涨跌额 换手率
+1 1991-04-03 49.00 49.00 49.00 49.00      1   5000    0  22.50   9.00  0
+2 1991-04-04 48.76 48.76 48.76 48.76      3  15000    0  -0.49  -0.24  0
+3 1991-04-05 48.52 48.52 48.52 48.52      2  10000    0  -0.49  -0.24  0
+4 1991-04-06 48.28 48.28 48.28 48.28      7  34000    0  -0.49  -0.24  0
+5 1991-04-08 48.04 48.04 48.04 48.04      2  10000    0  -0.50  -0.24  0
+6 1991-04-09 47.80 47.80 47.80 47.80      4  19000    0  -0.50  -0.24  0
 ```
 
 ## MATLAB 调用支持
@@ -136,56 +128,63 @@ head(stock_df)  # 查看数据
 
 ### 安装 Anaconda
 
-[下载 Windows 64 位 Python 3.8 的 Anaconda](https://repo.anaconda.com/archive/Anaconda3-2020.07-Windows-x86_64.exe)
+[下载 Windows 平台带 64 位 Python 的 Anaconda](https://repo.anaconda.com/archive/)，其需要符合
+[Matlab 各版本对 Python 的支持](https://www.mathworks.com/support/requirements/python-compatibility.html?s_tid=srchtitle_site_search_1_python%20compatibility)
+，比如 `Matlab R2023b` 目前支持 `Python` 的 `3.9, 3.10, 3.11` 版本。
 
-[安装教程参见 AKShare 文档的环境配置专栏](https://akshare.akfamily.xyz/anaconda.html)
+[Anaconda 安装教程参见 AKShare 文档的环境配置专栏](https://akshare.akfamily.xyz/anaconda.html)
 
 ### 安装 MATLAB
 
-[下载 64位 MATLAB R2021b](https://ww2.mathworks.cn/downloads/message/error_page/unlicensed?release=R2021b)
+通过 [下载 64 位 MATLAB R2023b](https://ww2.mathworks.cn/downloads/message/error_page/unlicensed?release=R2023b) 页面
+来登录后下载激活。
 
-[安装 64位 MATLAB](https://ww2.mathworks.cn/help/install/ug/install-products-on-client-machines.html)
+通过官方安装文档 [安装 64 位 MATLAB](https://ww2.mathworks.cn/help/install/ug/install-products-on-client-machines.html) 来
+进行安装配置。
 
 ### 配置环境
 
-[配置您的系统使用 Python](https://ww2.mathworks.cn/help/matlab/matlab_external/install-supported-python-implementation.html)
+1. Matlab 官方文档：[配置您的系统使用 Python](https://ww2.mathworks.cn/help/matlab/matlab_external/install-supported-python-implementation.html)
+2. 帮助社区解答：[Python virtual environments with MATLAB](https://www.mathworks.com/support/search.html/answers/1750425-python-virtual-environments-with-python-interface.html?fq%5B%5D=asset_type_name:answer&page=1)
+
+如果使用虚拟环境，则 `pyenv(Version="C:\Users\albert\.conda\envs\matlab\python.exe");` 即可激活相关环境，
+此处 `C:\Users\albert\.conda\envs\matlab\python.exe` 为本地虚拟环境的路径。
 
 #### 测试环境配置
 
-在 MATLAB 命令行窗口输入
+在 MATLAB 命令行窗口输入：
 
 ```
 pyenv
 ```
 
-如返回
+如返回：
 
 ```
-pe =
+ans =
 
   PythonEnvironment - 属性:
 
-          Version: "3.8"
-       Executable: "C:\Anaconda3\envs\ak_test\python.exe"
-          Library: "C:\Anaconda3\envs\ak_test\python38.dll"
-             Home: "C:\Anaconda3\envs\ak_test"
-           Status: Loaded
+          Version: "3.10"
+       Executable: "C:\Users\albert\.conda\envs\matlab\python.EXE"
+          Library: "C:\Users\albert\.conda\envs\matlab\python310.dll"
+             Home: "C:\Users\albert\.conda\envs\matlab"
+           Status: NotLoaded
     ExecutionMode: InProcess
-        ProcessID: "26560"
-      ProcessName: "MATLAB"
 ```
 
-则表示可以正常使用 `C:\Anaconda3\envs\ak_test\python.exe` 环境的 Python，同时确保在该环境中已经安装最新版的 AKShare。
+则表示可以正常使用 `C:\Users\albert\.conda\envs\matlab\python` 虚拟环境中的 Python，
+同时确保在该环境中已经安装最新版的 AKShare（可以在本地 conda 中名为 `matlab` 的虚拟环境中查看）。
 
 #### 测试调用 AKShare 接口
 
-在 MATLAB 命令行窗口输入
+在 MATLAB 命令行窗口输入：
 
 ```
 py.akshare.stock_zh_a_hist
 ```
 
-如返回
+如返回：
 
 ```
 ans =
@@ -199,14 +198,14 @@ ans =
     columns: [1×1 py.pandas.core.indexes.base.Index]
      dtypes: [1×1 py.pandas.core.series.Series]
       empty: 0
+      flags: [1×1 py.pandas.core.flags.Flags]
         iat: [1×1 py.pandas.core.indexing._iAtIndexer]
        iloc: [1×1 py.pandas.core.indexing._iLocIndexer]
       index: [1×1 py.pandas.core.indexes.range.RangeIndex]
         loc: [1×1 py.pandas.core.indexing._LocIndexer]
        ndim: [1×1 py.int]
       shape: [1×2 py.tuple]
-       size: [1×1 py.numpy.int32]
-      style: [1×1 py.pandas.io.formats.style.Styler]
+       size: [1×1 py.int]
      values: [1×1 py.numpy.ndarray]
 
                   日期     开盘     收盘     最高  ...    振幅    涨跌幅   涨跌额   换手率
@@ -216,13 +215,13 @@ ans =
     3     1991-04-06  48.28  48.28  48.28  ...  0.00  -0.49 -0.24  0.00
     4     1991-04-08  48.04  48.04  48.04  ...  0.00  -0.50 -0.24  0.00
     ...          ...    ...    ...    ...  ...   ...    ...   ...   ...
-    7298  2021-11-04  18.08  17.87  18.10  ...  1.66  -0.89 -0.16  0.51
-    7299  2021-11-05  17.85  17.64  18.00  ...  2.41  -1.29 -0.23  0.56
-    7300  2021-11-08  17.62  17.42  17.81  ...  2.55  -1.25 -0.22  0.71
-    7301  2021-11-09  17.48  17.53  17.65  ...  2.24   0.63  0.11  0.64
-    7302  2021-11-10  17.46  17.40  17.47  ...  1.77  -0.74 -0.13  0.63
+    7867  2024-03-11  10.38  10.47  10.47  ...  1.25   0.87  0.09  0.62
+    7868  2024-03-12  10.48  10.56  10.59  ...  1.72   0.86  0.09  0.85
+    7869  2024-03-13  10.53  10.33  10.55  ...  2.37  -2.18 -0.23  0.91
+    7870  2024-03-14  10.30  10.23  10.38  ...  1.74  -0.97 -0.10  0.73
+    7871  2024-03-15  10.55  10.60  10.75  ...  2.44   3.62  0.37  1.93
 
-    [7303 rows x 11 columns]
+    [7872 rows x 11 columns]
 ```
 
 则表示可以在 MATLAB 中调用 AKShare 的数据接口。
@@ -231,13 +230,13 @@ ans =
 
 #### 不带参数接口调用
 
-在 MATLAB 命令行窗口输入
+在 MATLAB 命令行窗口输入：
 
 ```
 py.akshare.macro_cnbs
 ```
 
-如返回
+如返回：
 
 ```
 ans =
@@ -281,14 +280,14 @@ ans =
 
 #### 带参数接口调用
 
-在 MATLAB 命令行窗口输入
+在 MATLAB 命令行窗口输入：
 
 ```
 % 注意其中的传参方式，从左到右，依次传递参数，形参（及其‘=’）都不需要，参数必须按顺序传递
 py.akshare.stock_zh_a_hist("000001", "daily", "20170301", '20210907', "")
 ```
 
-如返回
+如返回：
 
 ```
 ans =

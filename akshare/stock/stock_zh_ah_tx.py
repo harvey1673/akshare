@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2023/4/5 22:10
+Date: 2024/2/26 15:10
 Desc: 腾讯财经-A+H股数据, 实时行情数据和历史行情数据(后复权)
 https://stockapp.finance.qq.com/mstats/#mod=list&id=hk_ah&module=HK&type=AH&sort=3&page=3&max=20
 """
 import random
 
-import requests
 import pandas as pd
-from akshare.utils import demjson
-from tqdm import tqdm
+import requests
 
 from akshare.stock.cons import (
     hk_url,
@@ -19,6 +17,8 @@ from akshare.stock.cons import (
     hk_stock_headers,
     hk_stock_payload,
 )
+from akshare.utils import demjson
+from akshare.utils.tqdm import get_tqdm
 
 
 def _get_zh_stock_ah_page_count() -> int:
@@ -46,15 +46,16 @@ def stock_zh_ah_spot() -> pd.DataFrame:
     :rtype: pandas.DataFrame
     """
     big_df = pd.DataFrame()
-    page_count = _get_zh_stock_ah_page_count() + 1
-    for i in tqdm(range(1, page_count), leave=False):
+    page_count = _get_zh_stock_ah_page_count()
+    tqdm = get_tqdm()
+    for i in tqdm(range(0, page_count), leave=False):
         hk_payload.update({"reqPage": i})
         r = requests.get(hk_url, params=hk_payload, headers=hk_headers)
         data_json = demjson.decode(
-            r.text[r.text.find("{") : r.text.rfind("}") + 1]
+            r.text[r.text.find("{"): r.text.rfind("}") + 1]
         )
         big_df = pd.concat(
-            [
+            objs=[
                 big_df,
                 pd.DataFrame(data_json["data"]["page_data"])
                 .iloc[:, 0]
@@ -109,22 +110,24 @@ def stock_zh_ah_spot() -> pd.DataFrame:
     return big_df
 
 
-def stock_zh_ah_name() -> dict:
+def stock_zh_ah_name() -> pd.DataFrame:
     """
     腾讯财经-港股-AH-股票名称
+    https://stockapp.finance.qq.com/mstats/#mod=list&id=hk_ah&module=HK&type=AH
     :return: 股票代码和股票名称的字典
-    :rtype: dict
+    :rtype: pandas.DataFrame
     """
     big_df = pd.DataFrame()
-    page_count = _get_zh_stock_ah_page_count() + 1
-    for i in tqdm(range(1, page_count), leave=False):
+    page_count = _get_zh_stock_ah_page_count()
+    tqdm = get_tqdm()
+    for i in tqdm(range(0, page_count), leave=False):
         hk_payload.update({"reqPage": i})
         r = requests.get(hk_url, params=hk_payload, headers=hk_headers)
         data_json = demjson.decode(
-            r.text[r.text.find("{") : r.text.rfind("}") + 1]
+            r.text[r.text.find("{"): r.text.rfind("}") + 1]
         )
         big_df = pd.concat(
-            [
+            objs=[
                 big_df,
                 pd.DataFrame(data_json["data"]["page_data"])
                 .iloc[:, 0]
@@ -157,10 +160,10 @@ def stock_zh_ah_name() -> dict:
 
 
 def stock_zh_ah_daily(
-    symbol: str = "02318",
-    start_year: str = "2000",
-    end_year: str = "2019",
-    adjust: str = "",
+        symbol: str = "02318",
+        start_year: str = "2000",
+        end_year: str = "2019",
+        adjust: str = "",
 ) -> pd.DataFrame:
     """
     腾讯财经-港股-AH-股票历史行情
@@ -177,6 +180,7 @@ def stock_zh_ah_daily(
     :rtype: pandas.DataFrame
     """
     big_df = pd.DataFrame()
+    tqdm = get_tqdm()
     for year in tqdm(range(int(start_year), int(end_year)), leave=False):
         # year = "2003"
         hk_stock_payload_copy = hk_stock_payload.copy()
@@ -207,18 +211,18 @@ def stock_zh_ah_daily(
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
             }
             r = requests.get(
-                "http://web.ifzq.gtimg.cn/appstock/app/kline/kline",
+                url="http://web.ifzq.gtimg.cn/appstock/app/kline/kline",
                 params=hk_stock_payload_copy,
                 headers=headers,
             )
         else:
             r = requests.get(
-                "https://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get",
+                url="https://web.ifzq.gtimg.cn/appstock/app/hkfqkline/get",
                 params=hk_stock_payload_copy,
                 headers=hk_stock_headers,
             )
         data_json = demjson.decode(
-            r.text[r.text.find("{") : r.text.rfind("}") + 1]
+            r.text[r.text.find("{"): r.text.rfind("}") + 1]
         )
         try:
             if adjust == "":
@@ -248,13 +252,13 @@ def stock_zh_ah_daily(
             except:
                 temp_df.columns = ["日期", "开盘", "收盘", "最高", "最低", "成交量"]
             temp_df = temp_df[["日期", "开盘", "收盘", "最高", "最低", "成交量"]]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
-    big_df["日期"] = pd.to_datetime(big_df["日期"]).dt.date
-    big_df["开盘"] = pd.to_numeric(big_df["开盘"])
-    big_df["收盘"] = pd.to_numeric(big_df["收盘"])
-    big_df["最高"] = pd.to_numeric(big_df["最高"])
-    big_df["最低"] = pd.to_numeric(big_df["最低"])
-    big_df["成交量"] = pd.to_numeric(big_df["成交量"])
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
+    big_df["日期"] = pd.to_datetime(big_df["日期"], errors="coerce").dt.date
+    big_df["开盘"] = pd.to_numeric(big_df["开盘"], errors="coerce")
+    big_df["收盘"] = pd.to_numeric(big_df["收盘"], errors="coerce")
+    big_df["最高"] = pd.to_numeric(big_df["最高"], errors="coerce")
+    big_df["最低"] = pd.to_numeric(big_df["最低"], errors="coerce")
+    big_df["成交量"] = pd.to_numeric(big_df["成交量"], errors="coerce")
     return big_df
 
 
@@ -266,6 +270,6 @@ if __name__ == "__main__":
     print(stock_zh_ah_name_df)
 
     stock_zh_ah_daily_df = stock_zh_ah_daily(
-        symbol="00241", start_year="2000", end_year="2022", adjust="qfq"
+        symbol="02318", start_year="2022", end_year="2024", adjust=""
     )
     print(stock_zh_ah_daily_df)

@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2023/7/25 15:30
-Desc: 东方财富网-行情首页-沪深京A股
+Date: 2024/5/28 15:00
+Desc: 东方财富网-行情首页-沪深京 A 股
 https://quote.eastmoney.com/
 """
+
 from functools import lru_cache
 
 import pandas as pd
@@ -18,7 +19,7 @@ def stock_zh_a_spot_em() -> pd.DataFrame:
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://82.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://82.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -29,10 +30,11 @@ def stock_zh_a_spot_em() -> pd.DataFrame:
         "invt": "2",
         "fid": "f3",
         "fs": "m:0 t:6,m:0 t:80,m:1 t:2,m:1 t:23,m:0 t:81 s:2048",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,"
+        "f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return pd.DataFrame()
@@ -119,18 +121,20 @@ def stock_zh_a_spot_em() -> pd.DataFrame:
     temp_df["涨速"] = pd.to_numeric(temp_df["涨速"], errors="coerce")
     temp_df["5分钟涨跌"] = pd.to_numeric(temp_df["5分钟涨跌"], errors="coerce")
     temp_df["60日涨跌幅"] = pd.to_numeric(temp_df["60日涨跌幅"], errors="coerce")
-    temp_df["年初至今涨跌幅"] = pd.to_numeric(temp_df["年初至今涨跌幅"], errors="coerce")
+    temp_df["年初至今涨跌幅"] = pd.to_numeric(
+        temp_df["年初至今涨跌幅"], errors="coerce"
+    )
     return temp_df
 
 
 def stock_sh_a_spot_em() -> pd.DataFrame:
     """
     东方财富网-沪 A 股-实时行情
-    http://quote.eastmoney.com/center/gridlist.html#hs_a_board
+    https://quote.eastmoney.com/center/gridlist.html#hs_a_board
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://82.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://82.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -141,10 +145,11 @@ def stock_sh_a_spot_em() -> pd.DataFrame:
         "invt": "2",
         "fid": "f3",
         "fs": "m:1 t:2,m:1 t:23",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,"
+        "f24,f25,f22,f11,f62,f128,f136,f115,f152",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return pd.DataFrame()
@@ -231,18 +236,20 @@ def stock_sh_a_spot_em() -> pd.DataFrame:
     temp_df["涨速"] = pd.to_numeric(temp_df["涨速"], errors="coerce")
     temp_df["5分钟涨跌"] = pd.to_numeric(temp_df["5分钟涨跌"], errors="coerce")
     temp_df["60日涨跌幅"] = pd.to_numeric(temp_df["60日涨跌幅"], errors="coerce")
-    temp_df["年初至今涨跌幅"] = pd.to_numeric(temp_df["年初至今涨跌幅"], errors="coerce")
+    temp_df["年初至今涨跌幅"] = pd.to_numeric(
+        temp_df["年初至今涨跌幅"], errors="coerce"
+    )
     return temp_df
 
 
 def stock_sz_a_spot_em() -> pd.DataFrame:
     """
     东方财富网-深 A 股-实时行情
-    http://quote.eastmoney.com/center/gridlist.html#hs_a_board
+    https://quote.eastmoney.com/center/gridlist.html#hs_a_board
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://82.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://82.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -253,10 +260,11 @@ def stock_sz_a_spot_em() -> pd.DataFrame:
         "invt": "2",
         "fid": "f3",
         "fs": "m:0 t:6,m:0 t:80",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,"
+        "f25,f22,f11,f62,f128,f136,f115,f152",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return pd.DataFrame()
@@ -343,18 +351,20 @@ def stock_sz_a_spot_em() -> pd.DataFrame:
     temp_df["涨速"] = pd.to_numeric(temp_df["涨速"], errors="coerce")
     temp_df["5分钟涨跌"] = pd.to_numeric(temp_df["5分钟涨跌"], errors="coerce")
     temp_df["60日涨跌幅"] = pd.to_numeric(temp_df["60日涨跌幅"], errors="coerce")
-    temp_df["年初至今涨跌幅"] = pd.to_numeric(temp_df["年初至今涨跌幅"], errors="coerce")
+    temp_df["年初至今涨跌幅"] = pd.to_numeric(
+        temp_df["年初至今涨跌幅"], errors="coerce"
+    )
     return temp_df
 
 
 def stock_bj_a_spot_em() -> pd.DataFrame:
     """
     东方财富网-京 A 股-实时行情
-    http://quote.eastmoney.com/center/gridlist.html#hs_a_board
+    https://quote.eastmoney.com/center/gridlist.html#hs_a_board
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://82.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://82.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -365,10 +375,11 @@ def stock_bj_a_spot_em() -> pd.DataFrame:
         "invt": "2",
         "fid": "f3",
         "fs": "m:0 t:81 s:2048",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24"
+        ",f25,f22,f11,f62,f128,f136,f115,f152",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return pd.DataFrame()
@@ -455,7 +466,9 @@ def stock_bj_a_spot_em() -> pd.DataFrame:
     temp_df["涨速"] = pd.to_numeric(temp_df["涨速"], errors="coerce")
     temp_df["5分钟涨跌"] = pd.to_numeric(temp_df["5分钟涨跌"], errors="coerce")
     temp_df["60日涨跌幅"] = pd.to_numeric(temp_df["60日涨跌幅"], errors="coerce")
-    temp_df["年初至今涨跌幅"] = pd.to_numeric(temp_df["年初至今涨跌幅"], errors="coerce")
+    temp_df["年初至今涨跌幅"] = pd.to_numeric(
+        temp_df["年初至今涨跌幅"], errors="coerce"
+    )
     return temp_df
 
 
@@ -466,7 +479,7 @@ def stock_new_a_spot_em() -> pd.DataFrame:
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://82.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://82.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -478,10 +491,11 @@ def stock_new_a_spot_em() -> pd.DataFrame:
         "wbp2u": "|0|0|0|web",
         "fid": "f26",
         "fs": "m:0 f:8,m:1 f:8",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,"
+        "f25,f26,f22,f11,f62,f128,f136,f115,f152",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return pd.DataFrame()
@@ -570,7 +584,9 @@ def stock_new_a_spot_em() -> pd.DataFrame:
     temp_df["涨速"] = pd.to_numeric(temp_df["涨速"], errors="coerce")
     temp_df["5分钟涨跌"] = pd.to_numeric(temp_df["5分钟涨跌"], errors="coerce")
     temp_df["60日涨跌幅"] = pd.to_numeric(temp_df["60日涨跌幅"], errors="coerce")
-    temp_df["年初至今涨跌幅"] = pd.to_numeric(temp_df["年初至今涨跌幅"], errors="coerce")
+    temp_df["年初至今涨跌幅"] = pd.to_numeric(
+        temp_df["年初至今涨跌幅"], errors="coerce"
+    )
 
     temp_df["上市日期"] = pd.to_datetime(temp_df["上市日期"], format="%Y%m%d").dt.date
     return temp_df
@@ -583,7 +599,7 @@ def stock_cy_a_spot_em() -> pd.DataFrame:
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://7.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://7.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -595,10 +611,11 @@ def stock_cy_a_spot_em() -> pd.DataFrame:
         "wbp2u": "|0|0|0|web",
         "fid": "f3",
         "fs": "m:0 t:80",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,"
+        "f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return pd.DataFrame()
@@ -685,7 +702,9 @@ def stock_cy_a_spot_em() -> pd.DataFrame:
     temp_df["涨速"] = pd.to_numeric(temp_df["涨速"], errors="coerce")
     temp_df["5分钟涨跌"] = pd.to_numeric(temp_df["5分钟涨跌"], errors="coerce")
     temp_df["60日涨跌幅"] = pd.to_numeric(temp_df["60日涨跌幅"], errors="coerce")
-    temp_df["年初至今涨跌幅"] = pd.to_numeric(temp_df["年初至今涨跌幅"], errors="coerce")
+    temp_df["年初至今涨跌幅"] = pd.to_numeric(
+        temp_df["年初至今涨跌幅"], errors="coerce"
+    )
     return temp_df
 
 
@@ -696,7 +715,7 @@ def stock_kc_a_spot_em() -> pd.DataFrame:
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://7.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://7.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -708,10 +727,11 @@ def stock_kc_a_spot_em() -> pd.DataFrame:
         "wbp2u": "|0|0|0|web",
         "fid": "f3",
         "fs": "m:1 t:23",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,"
+        "f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return pd.DataFrame()
@@ -798,18 +818,20 @@ def stock_kc_a_spot_em() -> pd.DataFrame:
     temp_df["涨速"] = pd.to_numeric(temp_df["涨速"], errors="coerce")
     temp_df["5分钟涨跌"] = pd.to_numeric(temp_df["5分钟涨跌"], errors="coerce")
     temp_df["60日涨跌幅"] = pd.to_numeric(temp_df["60日涨跌幅"], errors="coerce")
-    temp_df["年初至今涨跌幅"] = pd.to_numeric(temp_df["年初至今涨跌幅"], errors="coerce")
+    temp_df["年初至今涨跌幅"] = pd.to_numeric(
+        temp_df["年初至今涨跌幅"], errors="coerce"
+    )
     return temp_df
 
 
 def stock_zh_b_spot_em() -> pd.DataFrame:
     """
     东方财富网- B 股-实时行情
-    http://quote.eastmoney.com/center/gridlist.html#hs_a_board
+    https://quote.eastmoney.com/center/gridlist.html#hs_a_board
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://28.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://28.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -820,10 +842,11 @@ def stock_zh_b_spot_em() -> pd.DataFrame:
         "invt": "2",
         "fid": "f3",
         "fs": "m:0 t:7,m:1 t:3",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20"
+        ",f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return pd.DataFrame()
@@ -910,7 +933,9 @@ def stock_zh_b_spot_em() -> pd.DataFrame:
     temp_df["涨速"] = pd.to_numeric(temp_df["涨速"], errors="coerce")
     temp_df["5分钟涨跌"] = pd.to_numeric(temp_df["5分钟涨跌"], errors="coerce")
     temp_df["60日涨跌幅"] = pd.to_numeric(temp_df["60日涨跌幅"], errors="coerce")
-    temp_df["年初至今涨跌幅"] = pd.to_numeric(temp_df["年初至今涨跌幅"], errors="coerce")
+    temp_df["年初至今涨跌幅"] = pd.to_numeric(
+        temp_df["年初至今涨跌幅"], errors="coerce"
+    )
     return temp_df
 
 
@@ -922,7 +947,7 @@ def code_id_map_em() -> dict:
     :return: 股票和市场代码
     :rtype: dict
     """
-    url = "http://80.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://80.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -936,7 +961,7 @@ def code_id_map_em() -> dict:
         "fields": "f12",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return dict()
@@ -957,7 +982,7 @@ def code_id_map_em() -> dict:
         "fields": "f12",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return dict()
@@ -977,7 +1002,7 @@ def code_id_map_em() -> dict:
         "fields": "f12",
         "_": "1623833739532",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["diff"]:
         return dict()
@@ -1016,7 +1041,7 @@ def stock_zh_a_hist(
     code_id_dict = code_id_map_em()
     adjust_dict = {"qfq": "1", "hfq": "2", "": "0"}
     period_dict = {"daily": "101", "weekly": "102", "monthly": "103"}
-    url = "http://push2his.eastmoney.com/api/qt/stock/kline/get"
+    url = "https://push2his.eastmoney.com/api/qt/stock/kline/get"
     params = {
         "fields1": "f1,f2,f3,f4,f5,f6",
         "fields2": "f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61,f116",
@@ -1033,6 +1058,7 @@ def stock_zh_a_hist(
     if not (data_json["data"] and data_json["data"]["klines"]):
         return pd.DataFrame()
     temp_df = pd.DataFrame([item.split(",") for item in data_json["data"]["klines"]])
+    temp_df["股票代码"] = symbol
     temp_df.columns = [
         "日期",
         "开盘",
@@ -1045,8 +1071,9 @@ def stock_zh_a_hist(
         "涨跌幅",
         "涨跌额",
         "换手率",
+        "股票代码",
     ]
-    temp_df["日期"] = pd.to_datetime(temp_df["日期"]).dt.date
+    temp_df["日期"] = pd.to_datetime(temp_df["日期"], errors="coerce").dt.date
     temp_df["开盘"] = pd.to_numeric(temp_df["开盘"], errors="coerce")
     temp_df["收盘"] = pd.to_numeric(temp_df["收盘"], errors="coerce")
     temp_df["最高"] = pd.to_numeric(temp_df["最高"], errors="coerce")
@@ -1057,6 +1084,22 @@ def stock_zh_a_hist(
     temp_df["涨跌幅"] = pd.to_numeric(temp_df["涨跌幅"], errors="coerce")
     temp_df["涨跌额"] = pd.to_numeric(temp_df["涨跌额"], errors="coerce")
     temp_df["换手率"] = pd.to_numeric(temp_df["换手率"], errors="coerce")
+    temp_df = temp_df[
+        [
+            "日期",
+            "股票代码",
+            "开盘",
+            "收盘",
+            "最高",
+            "最低",
+            "成交量",
+            "成交额",
+            "振幅",
+            "涨跌幅",
+            "涨跌额",
+            "换手率",
+        ]
+    ]
     return temp_df
 
 
@@ -1100,7 +1143,7 @@ def stock_zh_a_hist_min_em(
             "secid": f"{code_id_dict[symbol]}.{symbol}",
             "_": "1623766962675",
         }
-        r = requests.get(url, params=params)
+        r = requests.get(url, timeout=15, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(
             [item.split(",") for item in data_json["data"]["trends"]]
@@ -1113,7 +1156,7 @@ def stock_zh_a_hist_min_em(
             "最低",
             "成交量",
             "成交额",
-            "最新价",
+            "均价",
         ]
         temp_df.index = pd.to_datetime(temp_df["时间"])
         temp_df = temp_df[start_date:end_date]
@@ -1124,11 +1167,11 @@ def stock_zh_a_hist_min_em(
         temp_df["最低"] = pd.to_numeric(temp_df["最低"], errors="coerce")
         temp_df["成交量"] = pd.to_numeric(temp_df["成交量"], errors="coerce")
         temp_df["成交额"] = pd.to_numeric(temp_df["成交额"], errors="coerce")
-        temp_df["最新价"] = pd.to_numeric(temp_df["最新价"], errors="coerce")
+        temp_df["均价"] = pd.to_numeric(temp_df["均价"], errors="coerce")
         temp_df["时间"] = pd.to_datetime(temp_df["时间"]).astype(str)
         return temp_df
     else:
-        url = "http://push2his.eastmoney.com/api/qt/stock/kline/get"
+        url = "https://push2his.eastmoney.com/api/qt/stock/kline/get"
         params = {
             "fields1": "f1,f2,f3,f4,f5,f6",
             "fields2": "f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61",
@@ -1140,7 +1183,7 @@ def stock_zh_a_hist_min_em(
             "end": "20500000",
             "_": "1630930917857",
         }
-        r = requests.get(url, params=params)
+        r = requests.get(url, timeout=15, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(
             [item.split(",") for item in data_json["data"]["klines"]]
@@ -1219,7 +1262,7 @@ def stock_zh_a_hist_pre_min_em(
         "secid": f"{code_id_dict[symbol]}.{symbol}",
         "_": "1623766962675",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     temp_df = pd.DataFrame([item.split(",") for item in data_json["data"]["trends"]])
     temp_df.columns = [
@@ -1254,7 +1297,7 @@ def stock_hk_spot_em() -> pd.DataFrame:
     :return: 港股-实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://72.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://72.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -1265,10 +1308,11 @@ def stock_hk_spot_em() -> pd.DataFrame:
         "invt": "2",
         "fid": "f3",
         "fs": "m:128 t:3,m:128 t:4,m:128 t:1,m:128 t:2",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,"
+        "f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
         "_": "1624010056945",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"]["diff"])
     temp_df.columns = [
@@ -1323,7 +1367,7 @@ def stock_hk_spot_em() -> pd.DataFrame:
             "成交额",
         ]
     ]
-    temp_df["序号"] = pd.to_numeric(temp_df["序号"])
+    temp_df["序号"] = pd.to_numeric(temp_df["序号"], errors="coerce")
     temp_df["最新价"] = pd.to_numeric(temp_df["最新价"], errors="coerce")
     temp_df["涨跌额"] = pd.to_numeric(temp_df["涨跌额"], errors="coerce")
     temp_df["涨跌幅"] = pd.to_numeric(temp_df["涨跌幅"], errors="coerce")
@@ -1343,7 +1387,7 @@ def stock_hk_main_board_spot_em() -> pd.DataFrame:
     :return: 港股-主板-实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://81.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://81.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "50000",
@@ -1354,10 +1398,11 @@ def stock_hk_main_board_spot_em() -> pd.DataFrame:
         "invt": "2",
         "fid": "f3",
         "fs": "m:128 t:3",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,"
+        "f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152",
         "_": "1624010056945",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"]["diff"])
     temp_df.columns = [
@@ -1412,7 +1457,7 @@ def stock_hk_main_board_spot_em() -> pd.DataFrame:
             "成交额",
         ]
     ]
-    temp_df["序号"] = pd.to_numeric(temp_df["序号"])
+    temp_df["序号"] = pd.to_numeric(temp_df["序号"], errors="coerce")
     temp_df["最新价"] = pd.to_numeric(temp_df["最新价"], errors="coerce")
     temp_df["涨跌额"] = pd.to_numeric(temp_df["涨跌额"], errors="coerce")
     temp_df["涨跌幅"] = pd.to_numeric(temp_df["涨跌幅"], errors="coerce")
@@ -1426,7 +1471,7 @@ def stock_hk_main_board_spot_em() -> pd.DataFrame:
 
 
 def stock_hk_hist(
-    symbol: str = "40224",
+    symbol: str = "00593",
     period: str = "daily",
     start_date: str = "19700101",
     end_date: str = "22220101",
@@ -1434,7 +1479,7 @@ def stock_hk_hist(
 ) -> pd.DataFrame:
     """
     东方财富网-行情-港股-每日行情
-    http://quote.eastmoney.com/hk/08367.html
+    https://quote.eastmoney.com/hk/08367.html
     :param symbol: 港股-每日行情
     :type symbol: str
     :param period: choice of {'daily', 'weekly', 'monthly'}
@@ -1450,7 +1495,7 @@ def stock_hk_hist(
     """
     adjust_dict = {"qfq": "1", "hfq": "2", "": "0"}
     period_dict = {"daily": "101", "weekly": "102", "monthly": "103"}
-    url = "http://33.push2his.eastmoney.com/api/qt/stock/kline/get"
+    url = "https://33.push2his.eastmoney.com/api/qt/stock/kline/get"
     params = {
         "secid": f"116.{symbol}",
         "ut": "fa5fd1943c7b386f172d6893dbfba10b",
@@ -1462,7 +1507,7 @@ def stock_hk_hist(
         "lmt": "1000000",
         "_": "1623766962675",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     temp_df = pd.DataFrame([item.split(",") for item in data_json["data"]["klines"]])
     if temp_df.empty:
@@ -1480,7 +1525,7 @@ def stock_hk_hist(
         "涨跌额",
         "换手率",
     ]
-    temp_df.index = pd.to_datetime(temp_df["日期"])
+    temp_df.index = pd.to_datetime(temp_df["日期"], errors="coerce")
     temp_df = temp_df[start_date:end_date]
     if temp_df.empty:
         return pd.DataFrame()
@@ -1495,6 +1540,7 @@ def stock_hk_hist(
     temp_df["涨跌幅"] = pd.to_numeric(temp_df["涨跌幅"], errors="coerce")
     temp_df["涨跌额"] = pd.to_numeric(temp_df["涨跌额"], errors="coerce")
     temp_df["换手率"] = pd.to_numeric(temp_df["换手率"], errors="coerce")
+    temp_df["日期"] = pd.to_datetime(temp_df["日期"], errors="coerce").dt.date
     return temp_df
 
 
@@ -1507,7 +1553,7 @@ def stock_hk_hist_min_em(
 ) -> pd.DataFrame:
     """
     东方财富网-行情-港股-每日分时行情
-    http://quote.eastmoney.com/hk/00948.html
+    https://quote.eastmoney.com/hk/00948.html
     :param symbol: 股票代码
     :type symbol: str
     :param period: choice of {'1', '5', '15', '30', '60'}
@@ -1527,7 +1573,7 @@ def stock_hk_hist_min_em(
         "hfq": "2",
     }
     if period == "1":
-        url = "http://push2his.eastmoney.com/api/qt/stock/trends2/get"
+        url = "https://push2his.eastmoney.com/api/qt/stock/trends2/get"
         params = {
             "fields1": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13",
             "fields2": "f51,f52,f53,f54,f55,f56,f57,f58",
@@ -1537,7 +1583,7 @@ def stock_hk_hist_min_em(
             "secid": f"116.{symbol}",
             "_": "1623766962675",
         }
-        r = requests.get(url, params=params)
+        r = requests.get(url, timeout=15, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(
             [item.split(",") for item in data_json["data"]["trends"]]
@@ -1565,7 +1611,7 @@ def stock_hk_hist_min_em(
         temp_df["时间"] = pd.to_datetime(temp_df["时间"]).astype(str)
         return temp_df
     else:
-        url = "http://push2his.eastmoney.com/api/qt/stock/kline/get"
+        url = "https://push2his.eastmoney.com/api/qt/stock/kline/get"
         params = {
             "fields1": "f1,f2,f3,f4,f5,f6",
             "fields2": "f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61",
@@ -1577,7 +1623,7 @@ def stock_hk_hist_min_em(
             "end": "20500000",
             "_": "1630930917857",
         }
-        r = requests.get(url, params=params)
+        r = requests.get(url, timeout=15, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(
             [item.split(",") for item in data_json["data"]["klines"]]
@@ -1629,12 +1675,12 @@ def stock_hk_hist_min_em(
 
 def stock_us_spot_em() -> pd.DataFrame:
     """
-    东方财富-美股-实时行情
-    http://quote.eastmoney.com/center/gridlist.html#us_stocks
+    东方财富网-美股-实时行情
+    https://quote.eastmoney.com/center/gridlist.html#us_stocks
     :return: 美股-实时行情; 延迟 15 min
     :rtype: pandas.DataFrame
     """
-    url = "http://72.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://72.push2.eastmoney.com/api/qt/clist/get"
     params = {
         "pn": "1",
         "pz": "20000",
@@ -1645,10 +1691,11 @@ def stock_us_spot_em() -> pd.DataFrame:
         "invt": "2",
         "fid": "f3",
         "fs": "m:105,m:106,m:107",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,"
+        "f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152",
         "_": "1624010056945",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"]["diff"])
     temp_df.columns = [
@@ -1751,7 +1798,7 @@ def stock_us_hist(
     """
     period_dict = {"daily": "101", "weekly": "102", "monthly": "103"}
     adjust_dict = {"qfq": "1", "hfq": "2", "": "0"}
-    url = "http://63.push2his.eastmoney.com/api/qt/stock/kline/get"
+    url = "https://63.push2his.eastmoney.com/api/qt/stock/kline/get"
     params = {
         "secid": f"{symbol}",
         "ut": "fa5fd1943c7b386f172d6893dbfba10b",
@@ -1763,7 +1810,7 @@ def stock_us_hist(
         "lmt": "1000000",
         "_": "1623766962675",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["klines"]:
         return pd.DataFrame()
@@ -1781,7 +1828,7 @@ def stock_us_hist(
         "涨跌额",
         "换手率",
     ]
-    temp_df.index = pd.to_datetime(temp_df["日期"])
+    temp_df.index = pd.to_datetime(temp_df["日期"], errors="coerce")
     temp_df = temp_df[start_date:end_date]
     temp_df.reset_index(inplace=True, drop=True)
     temp_df["开盘"] = pd.to_numeric(temp_df["开盘"], errors="coerce")
@@ -1794,7 +1841,7 @@ def stock_us_hist(
     temp_df["涨跌幅"] = pd.to_numeric(temp_df["涨跌幅"], errors="coerce")
     temp_df["涨跌额"] = pd.to_numeric(temp_df["涨跌额"], errors="coerce")
     temp_df["换手率"] = pd.to_numeric(temp_df["换手率"], errors="coerce")
-    temp_df.sort_values(["日期"], inplace=True)
+    temp_df.sort_values(["日期"], inplace=True, ignore_index=True)
     return temp_df
 
 
@@ -1805,7 +1852,7 @@ def stock_us_hist_min_em(
 ) -> pd.DataFrame:
     """
     东方财富网-行情首页-美股-每日分时行情
-    http://quote.eastmoney.com/us/ATER.html
+    https://quote.eastmoney.com/us/ATER.html
     :param symbol: 股票代码
     :type symbol: str
     :param start_date: 开始日期
@@ -1815,7 +1862,7 @@ def stock_us_hist_min_em(
     :return: 每日分时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://push2his.eastmoney.com/api/qt/stock/trends2/get"
+    url = "https://push2his.eastmoney.com/api/qt/stock/trends2/get"
     params = {
         "fields1": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13",
         "fields2": "f51,f52,f53,f54,f55,f56,f57,f58",
@@ -1825,7 +1872,7 @@ def stock_us_hist_min_em(
         "secid": f"{symbol.split('.')[0]}.{symbol.split('.')[1]}",
         "_": "1623766962675",
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, timeout=15, params=params)
     data_json = r.json()
     if not data_json["data"]["trends"]:
         return pd.DataFrame()
@@ -1840,7 +1887,7 @@ def stock_us_hist_min_em(
         "成交额",
         "最新价",
     ]
-    temp_df.index = pd.to_datetime(temp_df["时间"])
+    temp_df.index = pd.to_datetime(temp_df["时间"], errors="coerce")
     temp_df = temp_df[start_date:end_date]
     temp_df.reset_index(drop=True, inplace=True)
     temp_df["开盘"] = pd.to_numeric(temp_df["开盘"], errors="coerce")
@@ -1892,19 +1939,19 @@ if __name__ == "__main__":
         symbol="000001",
         period="daily",
         start_date="20170301",
-        end_date="20220722",
+        end_date="20240528",
         adjust="hfq",
     )
     print(stock_zh_a_hist_df)
 
-    stock_zh_a_hist_min_em_df = stock_zh_a_hist_min_em(symbol="833454", period="1")
+    stock_zh_a_hist_min_em_df = stock_zh_a_hist_min_em(symbol="603777", period="1")
     print(stock_zh_a_hist_min_em_df)
 
-    stock_zh_a_hist_pre_min_em_df = stock_zh_a_hist_pre_min_em(symbol="833454")
+    stock_zh_a_hist_pre_min_em_df = stock_zh_a_hist_pre_min_em(symbol="000001")
     print(stock_zh_a_hist_pre_min_em_df)
 
     stock_hk_hist_df = stock_hk_hist(
-        symbol="01246",
+        symbol="00593",
         period="daily",
         start_date="19700101",
         end_date="22220101",
@@ -1914,7 +1961,7 @@ if __name__ == "__main__":
 
     stock_hk_hist_qfq_df = stock_hk_hist(
         symbol="00593",
-        period="weekly",
+        period="daily",
         start_date="19700101",
         end_date="22220101",
         adjust="qfq",
@@ -1922,7 +1969,8 @@ if __name__ == "__main__":
     print(stock_hk_hist_qfq_df)
 
     stock_hk_hist_hfq_df = stock_hk_hist(
-        symbol="00326",
+        symbol="00593",
+        period="daily",
         start_date="19700101",
         end_date="22220101",
         adjust="hfq",
@@ -1933,10 +1981,10 @@ if __name__ == "__main__":
     print(stock_us_spot_em_df)
 
     stock_us_hist_df = stock_us_hist(
-        symbol="105.TKNO",
-        period="weekly",
-        start_date="19700101",
-        end_date="22220101",
+        symbol="106.TTE",
+        period="daily",
+        start_date="20200101",
+        end_date="20240414",
         adjust="qfq",
     )
     print(stock_us_hist_df)
@@ -1953,8 +2001,15 @@ if __name__ == "__main__":
     stock_us_hist_min_em_df = stock_us_hist_min_em(symbol="106.TTE")
     print(stock_us_hist_min_em_df)
 
+    stock_us_hist_min_em_df = stock_us_hist_min_em(symbol="105.ATER")
+    print(stock_us_hist_min_em_df)
+
     stock_zh_a_hist_min_em_df = stock_zh_a_hist_min_em(
-        symbol="000001", period="5", adjust="qfq"
+        symbol="000001",
+        start_date="2024-03-20 09:30:00",
+        end_date="2024-03-20 15:00:00",
+        period="5",
+        adjust="hfq",
     )
     print(stock_zh_a_hist_min_em_df)
 
@@ -1971,8 +2026,8 @@ if __name__ == "__main__":
         symbol="01611",
         period="1",
         adjust="",
-        start_date="2022-10-02 09:30:00",
-        end_date="2022-10-29 18:32:00",
+        start_date="2024-04-12 09:30:00",
+        end_date="2024-04-12 18:32:00",
     )
     print(stock_hk_hist_min_em_df)
 
