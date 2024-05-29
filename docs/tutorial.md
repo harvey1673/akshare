@@ -33,6 +33,7 @@
  "futures_czce_warehouse_receipt"  # 郑州商品交易所-交易数据-仓单日报
  "futures_shfe_warehouse_receipt"  # 上海期货交易所-交易数据-仓单日报
  "futures_dce_warehouse_receipt"  # 大连商品交易所-交易数据-仓单日报
+ "futures_gfex_warehouse_receipt"  # 广州期货交易所-行情数据-仓单日报
  "futures_rule"  # 国泰君安-交易日历
  # 奇货可查数据
  "get_qhkc_index"  # 获取奇货可查-指数-数值数据
@@ -43,11 +44,10 @@
  "get_qhkc_fund_position_change"  # 获取奇货可查-资金-净持仓变化分布数据
  "get_qhkc_tool_foreign"  # 获取奇货可查-工具-外盘比价数据
  "get_qhkc_tool_gdp"  # 获取奇货可查-工具-各地区经济数据
- # 中国银行间市场交易所数据
- "get_bond_bank"  # 获取中国银行间市场交易商协会-债券数据
+ # 中国银行间市场交易商协会-非金融企业债务融资工具注册信息系统
+ "bond_debt_nafmii"  # 中国银行间市场交易商协会-非金融企业债务融资工具注册信息系统
  # 提供英为财情数据接口
  "index_investing_global"  # 提供英为财情-股票指数-全球股指与期货指数数据
- "index_investing_global_from_url"  # 提供英为财情-股票指数-全球股指与期货指数数据-URL版本
  "bond_investing_global"  # 提供英为财情-债券数据-全球政府债券行情与收益率数据
  # 交易所商品期权数据
  "option_dce_daily"  # 提供大连商品交易所商品期权数据
@@ -73,12 +73,12 @@
  # 期货-仓单有效期
  "get_receipt_date"  # 期货仓单有效期数据
  # 新浪财经-期货
- "futures_zh_spot"  # 获取新浪-国内期货实时行情数据
- "futures_zh_realtime"  # 获取新浪-国内期货实时行情数据(品种)
- "futures_foreign_commodity_realtime"  # 获取新浪-外盘期货实时行情数据
- "futures_foreign_hist"  # 获取新浪-外盘期货历史行情数据
- "futures_foreign_detail"  # 获取新浪-外盘期货合约详情
- "futures_zh_minute_sina"  # 获取新浪-内盘分时数据
+ "futures_zh_spot"  # 国内期货实时行情数据
+ "futures_zh_realtime"  # 国内期货实时行情数据(品种)
+ "futures_foreign_commodity_realtime"  # 外盘期货实时行情数据
+ "futures_foreign_hist"  # 外盘期货历史行情数据
+ "futures_foreign_detail"  # 外盘期货合约详情
+ "futures_zh_minute_sina"  # 内盘分时数据
  # 交易所金融期权数据
  "get_finance_option"  # 提供上海证券交易所期权数据
  # 加密货币行情
@@ -123,7 +123,8 @@
  "stock_zh_index_daily"  # 股票指数历史行情数据
  "stock_zh_index_daily_tx"  # 股票指数历史行情数据-腾讯
  "stock_zh_index_daily_em"  # 股票指数历史行情数据-东方财富
- "stock_zh_index_spot"  # 股票指数实时行情数据
+ "stock_zh_index_spot_sina"  # 股票指数实时行情数据-新浪
+ "stock_zh_index_spot_em"  # 股票指数实时行情数据-东财
  # 股票分笔数据
  "stock_zh_a_tick_tx_js"  # A 股票分笔行情数据-腾讯-当日数据
  # 世界各地区日出和日落数据-日
@@ -140,14 +141,6 @@
  "futures_return_index_nh"  # 收益率指数
  # 经济政策不确定性(EPU)指数
  "article_epu_index"  # 主要国家和地区的经济政策不确定性(EPU)指数
- # 微博指数
- "index_weibo_sina"  # 获取3个月内的微博指数
- # 百度指数
- "baidu_search_index"  # 获取百度搜索指数
- "baidu_info_index"  # 获取百度资讯指数
- "baidu_media_index"  # 获取百度媒体指数
- # 谷歌指数
- "google_index"  # 获取谷歌趋势指数
  # 申万行业指数
  "sw_index_third_info"  # 申万三级信息
  "sw_index_third_cons"  # 申万三级信息成份
@@ -418,12 +411,6 @@
  "stock_comment_detail_scrd_cost_em"  # 市场热度-市场成本
  # 沪深港通
  "stock_hk_ggt_components_em"  # 港股通成份股
- "stock_hsgt_north_net_flow_in_em"  # 沪深港通北向-净流入
- "stock_hsgt_north_cash_em"  # 沪深港通北向-资金余额
- "stock_hsgt_north_acc_flow_in_em"  # 沪深港通北向-累计净流入
- "stock_hsgt_south_net_flow_in_em"  # 沪深港通南向-净流入
- "stock_hsgt_south_cash_em"  # 沪深港通南向-资金余额
- "stock_hsgt_south_acc_flow_in_em"  # 沪深港通南向-累计净流入
  "stock_hsgt_hold_stock_em"  # 沪深港通持股-个股排行
  "stock_hsgt_stock_statistics_em"  # 沪深港通持股-每日个股统计
  "stock_hsgt_institution_statistics_em"  # 沪深港通持股-每日机构统计
@@ -458,6 +445,7 @@
  "stock_sector_fund_flow_summary"  # xx行业个股资金流
  "stock_sector_fund_flow_hist"  # 行业历史资金流
  "stock_concept_fund_flow_hist"  # 概念历史资金流
+ "stock_main_fund_flow"  # 主力净流入排名
  # 股票基本面数据
  "stock_financial_abstract"  # 财务摘要
  "stock_financial_report_sina"  # 三大财务报表
@@ -532,11 +520,11 @@
  "stock_zh_index_hist_csindex"  # 中证指数
  "stock_zh_index_value_csindex"  # 中证指数-指数估值
  # A股龙虎榜
- "stock_sina_lhb_detail_daily"  # 龙虎榜-每日详情
- "stock_sina_lhb_ggtj"  # 龙虎榜-个股上榜统计
- "stock_sina_lhb_yytj"  # 龙虎榜-营业上榜统计
- "stock_sina_lhb_jgzz"  # 龙虎榜-机构席位追踪
- "stock_sina_lhb_jgmx"  # 龙虎榜-机构席位成交明细
+ "stock_lhb_detail_daily_sina"  # 龙虎榜-每日详情
+ "stock_lhb_ggtj_sina"  # 龙虎榜-个股上榜统计
+ "stock_lhb_yytj_sina"  # 龙虎榜-营业上榜统计
+ "stock_lhb_jgzz_sina"  # 龙虎榜-机构席位追踪
+ "stock_lhb_jgmx_sina"  # 龙虎榜-机构席位成交明细
  # 注册制审核
  "stock_register_kcb"  # 注册制审核-科创板
  "stock_register_cyb"  # 注册制审核-创业板
@@ -712,18 +700,21 @@
  # 赚钱效应分析
  "stock_market_activity_legu"  # 赚钱效应分析
  # 中国公路物流运价指数
- "index_cflp_price"  # 中国公路物流运价指数
+ "index_price_cflp"  # 中国公路物流运价指数
  # 中国公路物流运量指数
- "index_cflp_volume"  # 中国公路物流运量指数
+ "index_volume_cflp"  # 中国公路物流运量指数
  # 汽车销量
- "car_gasgoo_sale_rank"  # 盖世汽车-汽车行业制造企业数据库-销量数据
- "car_energy_sale_cpca"  # 乘联会-新能源细分市场-整体市场
- # 平均持仓
- "stock_average_position_legu"  # 平均持仓
+ "car_sale_rank_gasgoo"  # 盖世汽车-汽车行业制造企业数据库-销量数据
+ "car_market_total_cpca"  # 乘联会-统计数据-总体市场
+ "car_market_man_rank_cpca"  # 乘联会-统计数据-厂商排名
+ "car_market_cate_cpca"  # 乘联会-统计数据-车型大类
+ "car_market_country_cpca"  # 乘联会-统计数据-国别细分市场
+ "car_market_segment_cpca"  # 乘联会-统计数据-级别细分市场
+ "car_market_fuel_cpca"  # 乘联会-统计数据-新能源细分市场
  # 增发
- "stock_em_qbzf"  # 增发
+ "stock_qbzf_em"  # 增发
  # 配股
- "stock_em_pg"  # 配股
+ "stock_pg_em"  # 配股
  # 中国-香港-宏观经济指标
  "macro_china_hk_cpi"  # 中国-香港-消费者物价指数
  "macro_china_hk_cpi_ratio"  # 中国-香港-消费者物价指数年率
@@ -822,8 +813,9 @@
  "macro_australia_ppi_quarterly"  # 生产者物价指数季率
  "macro_australia_retail_rate_monthly"  # 零售销售月率
  # 养猪数据中心
- "futures_hog_info"  # 生猪信息
- "futures_hog_rank"  # 生猪价格排行
+ "futures_hog_core"  # 生猪信息-核心数据
+ "futures_hog_cost"  # 生猪信息-成本维度
+ "futures_hog_supply"  # 生猪信息-供应维度
  # 宏观-加拿大
  "macro_canada_new_house_rate"  # 新屋开工
  "macro_canada_unemployment_rate"  # 失业率
@@ -876,6 +868,7 @@
  "stock_hold_management_detail_cninfo"  # 高管持股变动明细
  # 期货手续费
  "futures_comm_info"  # 期货手续费
+ "futures_fees_info"  # 期货交易费用参照表
  # B 股实时行情数据和历史行情数据
  "stock_zh_b_spot"  # B 股实时行情数据
  "stock_zh_b_daily"  # B 股历史行情数据(日频)
@@ -1092,8 +1085,6 @@
  "stock_industry_change_cninfo"  # 巨潮资讯-上市公司行业归属的变动情况
  # 公司股本变动
  "stock_share_change_cninfo"  # 巨潮资讯-公司股本变动
- # 资讯-财联社-电报
- "stock_telegraph_cls"  # 资讯-财联社-电报
  # 上海金属网
  "futures_news_shmet"  # 上海金属网-快讯
  # 分红配股
@@ -1149,6 +1140,8 @@
  "index_analysis_weekly_sw"  # 申万宏源研究-指数分析-周报表
  "index_analysis_monthly_sw"  # 申万宏源研究-指数分析-月报表
  "index_analysis_week_month_sw"  # 申万宏源研究-指数分析-周/月-日期序列
+ "index_realtime_fund_sw"  # 申万宏源研究-申万指数-指数发布-基金指数-实时行情
+ "index_hist_fund_sw"  # 申万宏源研究-申万指数-指数发布-基金指数-历史行情
  # 债券-信息查询结果
  "bond_info_cm"  # 中国外汇交易中心暨全国银行间同业拆借中心-债券-信息查询结果
  "bond_info_detail_cm"  # 中国外汇交易中心暨全国银行间同业拆借中心-债券-债券详情
@@ -1183,7 +1176,10 @@
  "fund_lof_spot_em"  # 东方财富-LOF 实时行情
  "fund_lof_hist_min_em"  # 东方财富-LOF 分时行情
  # 新浪财经-ESG评级中心
+ "stock_esg_msci_sina"  # 新浪财经-ESG评级中心-ESG评级-MSCI
+ "stock_esg_rft_sina"  # 新浪财经-ESG评级中心-ESG评级-路孚特
  "stock_esg_rate_sina"  # 新浪财经-ESG评级中心-ESG评级-ESG评级数据
+ "stock_esg_zd_sina"  # 新浪财经-ESG评级中心-ESG评级-秩鼎
  "stock_esg_hz_sina"  # 新浪财经-ESG评级中心-ESG评级-华证指数
  # 基金公告
  "fund_announcement_personnel_em"  # 东方财富网站-天天基金网-基金档案-基金公告-人事调整
@@ -1227,6 +1223,48 @@
  "index_fear_greed_funddb"  # 恐惧贪婪指数
  # 筹码分布
  "stock_cyq_em"  # 筹码分布
+ # 雪球基金-基金详情
+ "fund_individual_basic_info_xq"  # 雪球基金-基金详情
+ "fund_individual_achievement_xq"  # 雪球基金-基金业绩
+ "fund_individual_analysis_xq"  # 雪球基金-基金数据分析
+ "fund_individual_profit_probability_xq"  # 雪球基金-盈利概率
+ "fund_individual_detail_info_xq"  # 雪球基金-交易规则
+ "fund_individual_detail_hold_xq"  # 雪球基金-持仓详情
+ # 港股盈利预测
+ "stock_hk_profit_forecast_et"  # 港股盈利预测
+ # 雪球-行情中心-个股
+ "stock_individual_spot_xq"  # 雪球-行情中心-个股
+ # 东方财富网-行情中心-期货市场-国际期货
+ "futures_global_em"  # 东方财富网-行情中心-期货市场-国际期货
+ # 东方财富-数据中心-沪深港通-市场概括-分时数据
+ "stock_hsgt_fund_min_em"  # 东方财富-数据中心-沪深港通-市场概括-分时数据
+ # 新浪财经-商品期货-成交持仓
+ "futures_hold_pos_sina"  # 新浪财经-商品期货-成交持仓
+ # 生意社-商品与期货-现期图
+ "futures_spot_sys"  # 生意社-商品与期货-现期图
+ # 上海期货交易所指定交割仓库库存周报
+ "futures_stock_shfe_js"  # 上海期货交易所指定交割仓库库存周报
+ # 期货合约信息
+ "futures_contract_info_shfe"  # 上海期货交易所-期货合约信息
+ "futures_contract_info_ine"  # 上海国际能源交易中心-期货合约信息
+ "futures_contract_info_dce"  # 大连商品交易所-期货合约信息
+ "futures_contract_info_czce"  # 郑州商品交易所-期货合约信息
+ "futures_contract_info_gfex"  # 广州期货交易所-期货合约信息
+ "futures_contract_info_cffex"  # 中国金融期货交易所-期货合约信息
+ # 资讯数据
+ "stock_info_cjzc_em"  # 资讯数据-财经早餐-东方财富
+ "stock_info_global_em"  # 资讯数据-东方财富
+ "stock_info_global_sina"  # 资讯数据-新浪财经
+ "stock_info_global_futu"  # 资讯数据-富途牛牛
+ "stock_info_global_ths"  # 资讯数据-同花顺
+ "stock_info_global_cls"  # 资讯数据-财联社
+ "stock_info_broker_sina"  # 新浪财经-证券-证券原创
+ # 数库-A股新闻情绪指数
+ "index_news_sentiment_scope"  # 数库-A股新闻情绪指数
+ # 华尔街见闻-日历-宏观
+ "macro_info_ws"  # 华尔街见闻-日历-宏观
+ # 现货走势
+ "spot_price_qh"  # 现货走势
 ```
 
 ## 案例演示

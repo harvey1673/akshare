@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2023/12/20 17:20
+Date: 2024/5/28 15:30
 Desc: 股票指数数据-新浪-东财-腾讯
 所有指数-实时行情数据和历史行情数据
 https://finance.sina.com.cn/realstock/company/sz399552/nc.shtml
 """
+
 import datetime
 import re
 
@@ -53,7 +54,7 @@ def get_zh_index_page_count() -> int:
         return int(page_count) + 1
 
 
-def stock_zh_index_spot() -> pd.DataFrame:
+def stock_zh_index_spot_sina() -> pd.DataFrame:
     """
     新浪财经-行情中心首页-A股-分类-所有指数
     大量采集会被目标网站服务器封禁 IP, 如果被封禁 IP, 请 10 分钟后再试
@@ -69,7 +70,7 @@ def stock_zh_index_spot() -> pd.DataFrame:
         zh_sina_stock_payload_copy.update({"page": page})
         res = requests.get(zh_sina_index_stock_url, params=zh_sina_stock_payload_copy)
         data_json = demjson.decode(res.text)
-        big_df = pd.concat([big_df, pd.DataFrame(data_json)], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, pd.DataFrame(data_json)], ignore_index=True)
     big_df = big_df.map(_replace_comma)
     big_df["trade"] = pd.to_numeric(big_df["trade"], errors="coerce")
     big_df["pricechange"] = pd.to_numeric(big_df["pricechange"], errors="coerce")
@@ -112,16 +113,103 @@ def stock_zh_index_spot() -> pd.DataFrame:
             "成交额",
         ]
     ]
-    big_df['最新价'] = pd.to_numeric(big_df['最新价'], errors="coerce")
-    big_df['涨跌额'] = pd.to_numeric(big_df['涨跌额'], errors="coerce")
-    big_df['涨跌幅'] = pd.to_numeric(big_df['涨跌幅'], errors="coerce")
-    big_df['昨收'] = pd.to_numeric(big_df['昨收'], errors="coerce")
-    big_df['今开'] = pd.to_numeric(big_df['今开'], errors="coerce")
-    big_df['最高'] = pd.to_numeric(big_df['最高'], errors="coerce")
-    big_df['最低'] = pd.to_numeric(big_df['最低'], errors="coerce")
-    big_df['成交量'] = pd.to_numeric(big_df['成交量'], errors="coerce")
-    big_df['成交额'] = pd.to_numeric(big_df['成交额'], errors="coerce")
+    big_df["最新价"] = pd.to_numeric(big_df["最新价"], errors="coerce")
+    big_df["涨跌额"] = pd.to_numeric(big_df["涨跌额"], errors="coerce")
+    big_df["涨跌幅"] = pd.to_numeric(big_df["涨跌幅"], errors="coerce")
+    big_df["昨收"] = pd.to_numeric(big_df["昨收"], errors="coerce")
+    big_df["今开"] = pd.to_numeric(big_df["今开"], errors="coerce")
+    big_df["最高"] = pd.to_numeric(big_df["最高"], errors="coerce")
+    big_df["最低"] = pd.to_numeric(big_df["最低"], errors="coerce")
+    big_df["成交量"] = pd.to_numeric(big_df["成交量"], errors="coerce")
+    big_df["成交额"] = pd.to_numeric(big_df["成交额"], errors="coerce")
     return big_df
+
+
+def stock_zh_index_spot_em(symbol: str = "上证系列指数") -> pd.DataFrame:
+    """
+    东方财富网-行情中心-沪深京指数
+    https://quote.eastmoney.com/center/gridlist.html#index_sz
+    :param symbol: "上证系列指数"; choice of {"上证系列指数", "深证系列指数", "指数成份", "中证系列指数"}
+    :type symbol: str
+    :return: 指数的实时行情数据
+    :rtype: pandas.DataFrame
+    """
+    url = "https://48.push2.eastmoney.com/api/qt/clist/get"
+    symbol_map = {
+        "上证系列指数": "m:1 s:2",
+        "深证系列指数": "m:0 t:5",
+        "指数成份": "m:1 s:3,m:0 t:5",
+        "中证系列指数": "m:2",
+    }
+    params = {
+        "pn": "1",
+        "pz": "5000",
+        "po": "1",
+        "np": "1",
+        "ut": "bd1d9ddb04089700cf9c27f6f7426281",
+        "fltt": "2",
+        "invt": "2",
+        "wbp2u": "|0|0|0|web",
+        "fid": "f3",
+        "fs": symbol_map[symbol],
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,"
+        "f26,f22,f33,f11,f62,f128,f136,f115,f152",
+        "_": "1704327268532",
+    }
+    r = requests.get(url, params=params)
+    data_json = r.json()
+    temp_df = pd.DataFrame(data_json["data"]["diff"])
+    temp_df.reset_index(inplace=True)
+    temp_df["index"] = temp_df["index"] + 1
+    temp_df.rename(
+        columns={
+            "index": "序号",
+            "f2": "最新价",
+            "f3": "涨跌幅",
+            "f4": "涨跌额",
+            "f5": "成交量",
+            "f6": "成交额",
+            "f7": "振幅",
+            "f10": "量比",
+            "f12": "代码",
+            "f14": "名称",
+            "f15": "最高",
+            "f16": "最低",
+            "f17": "今开",
+            "f18": "昨收",
+        },
+        inplace=True,
+    )
+    temp_df = temp_df[
+        [
+            "序号",
+            "代码",
+            "名称",
+            "最新价",
+            "涨跌幅",
+            "涨跌额",
+            "成交量",
+            "成交额",
+            "振幅",
+            "最高",
+            "最低",
+            "今开",
+            "昨收",
+            "量比",
+        ]
+    ]
+    temp_df["最新价"] = pd.to_numeric(temp_df["最新价"], errors="coerce")
+    temp_df["涨跌幅"] = pd.to_numeric(temp_df["涨跌幅"], errors="coerce")
+    temp_df["涨跌额"] = pd.to_numeric(temp_df["涨跌额"], errors="coerce")
+    temp_df["成交量"] = pd.to_numeric(temp_df["成交量"], errors="coerce")
+    temp_df["成交额"] = pd.to_numeric(temp_df["成交额"], errors="coerce")
+    temp_df["振幅"] = pd.to_numeric(temp_df["振幅"], errors="coerce")
+    temp_df["最高"] = pd.to_numeric(temp_df["最高"], errors="coerce")
+    temp_df["最低"] = pd.to_numeric(temp_df["最低"], errors="coerce")
+    temp_df["今开"] = pd.to_numeric(temp_df["今开"], errors="coerce")
+    temp_df["昨收"] = pd.to_numeric(temp_df["昨收"], errors="coerce")
+    temp_df["量比"] = pd.to_numeric(temp_df["量比"], errors="coerce")
+    return temp_df
 
 
 def stock_zh_index_daily(symbol: str = "sh000922") -> pd.DataFrame:
@@ -159,7 +247,7 @@ def get_tx_start_year(symbol: str = "sh000919") -> pd.DataFrame:
     :return: 开始日期
     :rtype: pandas.DataFrame
     """
-    url = "http://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends"
+    url = "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends"
     params = {
         "code": symbol,
         "type": "qfq",
@@ -168,7 +256,7 @@ def get_tx_start_year(symbol: str = "sh000919") -> pd.DataFrame:
     }
     r = requests.get(url, params=params)
     data_text = r.text
-    if not demjson.decode(data_text[data_text.find("={") + 1:])["data"]:
+    if not demjson.decode(data_text[data_text.find("={") + 1 :])["data"]:
         url = "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get"
         params = {
             "_var": "kline_dayqfq",
@@ -177,18 +265,18 @@ def get_tx_start_year(symbol: str = "sh000919") -> pd.DataFrame:
         }
         r = requests.get(url, params=params)
         data_text = r.text
-        start_date = demjson.decode(data_text[data_text.find("={") + 1:])["data"][
+        start_date = demjson.decode(data_text[data_text.find("={") + 1 :])["data"][
             symbol
         ]["day"][0][0]
         return start_date
-    start_date = demjson.decode(data_text[data_text.find("={") + 1:])["data"][0][0]
+    start_date = demjson.decode(data_text[data_text.find("={") + 1 :])["data"][0][0]
     return start_date
 
 
 def stock_zh_index_daily_tx(symbol: str = "sz980017") -> pd.DataFrame:
     """
     腾讯证券-日频-股票或者指数历史数据
-    作为 stock_zh_index_daily 的补充, 因为在新浪中有部分指数数据缺失
+    作为 ak.stock_zh_index_daily() 的补充, 因为在新浪中有部分指数数据缺失
     注意都是: 前复权, 不同网站复权方式不同, 不可混用数据
     https://gu.qq.com/sh000919/zs
     :param symbol: 带市场标识的股票或者指数代码
@@ -212,13 +300,13 @@ def stock_zh_index_daily_tx(symbol: str = "sz980017") -> pd.DataFrame:
         text = res.text
         try:
             inner_temp_df = pd.DataFrame(
-                demjson.decode(text[text.find("={") + 1:])["data"][symbol]["day"]
+                demjson.decode(text[text.find("={") + 1 :])["data"][symbol]["day"]
             )
-        except:
+        except:  # noqa: E722
             inner_temp_df = pd.DataFrame(
-                demjson.decode(text[text.find("={") + 1:])["data"][symbol]["qfqday"]
+                demjson.decode(text[text.find("={") + 1 :])["data"][symbol]["qfqday"]
             )
-        temp_df = pd.concat([temp_df, inner_temp_df], ignore_index=True)
+        temp_df = pd.concat(objs=[temp_df, inner_temp_df], ignore_index=True)
     if temp_df.shape[1] == 6:
         temp_df.columns = ["date", "open", "close", "high", "low", "amount"]
     else:
@@ -235,9 +323,9 @@ def stock_zh_index_daily_tx(symbol: str = "sz980017") -> pd.DataFrame:
 
 
 def stock_zh_index_daily_em(
-        symbol: str = "csi931151",
-        start_date: str = "19900101",
-        end_date: str = "20500101",
+    symbol: str = "csi931151",
+    start_date: str = "19900101",
+    end_date: str = "20500101",
 ) -> pd.DataFrame:
     """
     东方财富网-股票指数数据
@@ -252,7 +340,7 @@ def stock_zh_index_daily_em(
     :rtype: pandas.DataFrame
     """
     market_map = {"sz": "0", "sh": "1", "csi": "2"}
-    url = "http://push2his.eastmoney.com/api/qt/stock/kline/get"
+    url = "https://push2his.eastmoney.com/api/qt/stock/kline/get"
     if symbol.find("sz") != -1:
         secid = "{}.{}".format(market_map["sz"], symbol.replace("sz", ""))
     elif symbol.find("sh") != -1:
@@ -275,8 +363,11 @@ def stock_zh_index_daily_em(
     }
     r = requests.get(url, params=params)
     data_text = r.text
-    data_json = demjson.decode(data_text[data_text.find("{"): -2])
+    data_json = demjson.decode(data_text[data_text.find("{") : -2])
     temp_df = pd.DataFrame([item.split(",") for item in data_json["data"]["klines"]])
+    # check temp_df data availability before further transformations which may raise errors
+    if temp_df.empty:
+        return pd.DataFrame()
     temp_df.columns = ["date", "open", "close", "high", "low", "volume", "amount", "_"]
     temp_df = temp_df[["date", "open", "close", "high", "low", "volume", "amount"]]
     temp_df["open"] = pd.to_numeric(temp_df["open"], errors="coerce")
@@ -292,13 +383,14 @@ if __name__ == "__main__":
     stock_zh_index_daily_df = stock_zh_index_daily(symbol="sz399905")
     print(stock_zh_index_daily_df)
 
-    stock_zh_index_spot_df = stock_zh_index_spot()
-    print(stock_zh_index_spot_df)
+    stock_zh_index_spot_sina_df = stock_zh_index_spot_sina()
+    print(stock_zh_index_spot_sina_df)
+
+    stock_zh_index_spot_em_df = stock_zh_index_spot_em(symbol="上证系列指数")
+    print(stock_zh_index_spot_em_df)
 
     stock_zh_index_daily_tx_df = stock_zh_index_daily_tx(symbol="sh000919")
     print(stock_zh_index_daily_tx_df)
 
-    stock_zh_index_daily_em_df = stock_zh_index_daily_em(
-        symbol="sz399812"
-    )
+    stock_zh_index_daily_em_df = stock_zh_index_daily_em(symbol="sz399812")
     print(stock_zh_index_daily_em_df)

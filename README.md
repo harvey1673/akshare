@@ -1,21 +1,23 @@
-**AKShare VIP 交流群欢迎大家的加入，加群方式请点击[【加群】](https://zmj.xet.tech/s/28gOeh)**
+**欢迎加入专注于财经数据和量化投资的知识社区，请点击[了解更多](https://akshare.akfamily.xyz/learn.html)**
 
 **相关视频教程已经发布：《AKShare-初阶-使用教学》、《AKShare-初阶-实战应用》、《AKShare-源码解析》、《开源项目巡礼》**，详情请访问[课程](https://app3rqjh1z21630.h5.xiaoeknow.com)查看更多课程信息！
 
 **AKQuant 量化教程请访问：[利用 PyBroker 进行量化投资](https://akquant.akfamily.xyz/)**
 
-**本次发布 [AKTools](https://github.com/akfamily/aktools) 作为 AKShare 的 HTTP API 版本，突破 Python 语言的限制，欢迎各位小伙伴试用并提出更好的意见或建议！ 点击 [AKTools](https://github.com/akfamily/aktools) 查看使用指南。另外提供 [awesome-data](https://github.com/akfamily/awesome-data) 方便各位小伙伴查询各种数据源。**
+**本次发布 [AKTools](https://github.com/akfamily/aktools) 作为 AKShare 的 HTTP API 版本，
+突破 Python 语言的限制，欢迎各位小伙伴试用并提出更好的意见或建议！
+点击 [AKTools](https://github.com/akfamily/aktools) 查看使用指南。另外提供 [awesome-data](https://github.com/akfamily/awesome-data) 方便各位小伙伴查询各种数据源。**
 
-![](https://github.com/akfamily/akshare/blob/master/example/images/AKShare_logo.jpg)
+![AKShare Logo](https://github.com/akfamily/akshare/blob/main/assets/images/akshare_logo.jpg)
 
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/akshare.svg)](https://pypi.org/project/akshare/)
 [![PyPI](https://img.shields.io/pypi/v/akshare.svg)](https://pypi.org/project/akshare/)
 [![Downloads](https://pepy.tech/badge/akshare)](https://pepy.tech/project/akshare)
 [![Documentation Status](https://readthedocs.org/projects/akshare/badge/?version=latest)](https://akshare.readthedocs.io/?badge=latest)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![akshare](https://img.shields.io/badge/Data%20Science-AKShare-green)](https://github.com/akfamily/akshare)
 [![Actions Status](https://github.com/akfamily/akshare/actions/workflows/release_and_deploy.yml/badge.svg)](https://github.com/akfamily/akshare/actions)
-[![MIT Licence](https://camo.githubusercontent.com/14a9abb7e83098f2949f26d2190e04fb1bd52c06/68747470733a2f2f626c61636b2e72656164746865646f63732e696f2f656e2f737461626c652f5f7374617469632f6c6963656e73652e737667)](https://github.com/akfamily/akshare/blob/master/LICENSE)
+[![MIT Licence](https://img.shields.io/badge/license-MIT-blue)](https://github.com/akfamily/akshare/blob/main/LICENSE)
 [![](https://img.shields.io/github/forks/jindaxiang/akshare)](https://github.com/akfamily/akshare)
 [![](https://img.shields.io/github/stars/jindaxiang/akshare)](https://github.com/akfamily/akshare)
 [![](https://img.shields.io/github/issues/jindaxiang/akshare)](https://github.com/akfamily/akshare)
@@ -23,13 +25,12 @@
 
 ## Overview
 
-[AKShare](https://github.com/akfamily/akshare) requires Python(64 bit) 3.8 or greater, aims to make fetch financial data as convenient as possible.
+[AKShare](https://github.com/akfamily/akshare) requires Python(64 bit) 3.8 or higher and
+aims to simplify the process of fetching financial data.
 
 **Write less, get more!**
 
 - Documentation: [中文文档](https://akshare.akfamily.xyz/)
-
-![](https://github.com/akfamily/akshare/blob/master/example/images/AKShare.svg)
 
 ## Installation
 
@@ -47,7 +48,8 @@ pip install akshare -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host=mir
 
 ### PR
 
-Please check out [documentation](https://akshare.akfamily.xyz/contributor.html) if you want to contribute to AKShare
+Please check out [Documentation](https://akshare.akfamily.xyz/contributing.html) if you
+want to contribute to AKShare
 
 ### Docker
 
@@ -75,7 +77,7 @@ print(ak.__version__)
 
 ### Data
 
-Code
+Code:
 
 ```python
 import akshare as ak
@@ -84,7 +86,7 @@ stock_zh_a_hist_df = ak.stock_zh_a_hist(symbol="000001", period="daily", start_d
 print(stock_zh_a_hist_df)
 ```
 
-Output
+Output:
 
 ```
       日期          开盘   收盘    最高  ...  振幅   涨跌幅  涨跌额  换手率
@@ -104,7 +106,7 @@ Output
 
 ### Plot
 
-Code
+Code:
 
 ```python
 import akshare as ak
@@ -118,13 +120,14 @@ stock_us_daily_df = stock_us_daily_df["2020-04-01": "2020-04-29"]
 mpf.plot(stock_us_daily_df, type='candle', mav=(3, 6, 9), volume=True, show_nontrading=False)
 ```
 
-Output
+Output:
 
-![](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/home/AAPL_candle.png)
+![KLine](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/home/AAPL_candle.png)
 
 ## Communication
 
-Pay attention to **数据科学实战** Official Accounts to get more information about Quant, ML, DS and so on, please visit [数据科学实战](https://akshare.akfamily.xyz/introduction.html) for more information:
+Welcome to join the **数据科学实战** knowledge planet to learn more about quantitative investment,
+please visit [数据科学实战](https://akshare.akfamily.xyz/learn.html) for more information:
 
 <div>
     <img alt="data science" src="https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/data_scientist.png">
@@ -133,11 +136,8 @@ Pay attention to **数据科学实战** Official Accounts to get more informatio
 Pay attention to **数据科学实战** WeChat Official Accounts to get the [AKShare](https://github.com/akfamily/akshare) updated info:
 
 <div>
-    <img alt="ds" src="https://github.com/akfamily/akshare/blob/master/example/images/ds.png">
+    <img alt="ds" src="https://github.com/akfamily/akshare/blob/main/assets/images/ds.png">
 </div>
-
-Application to add **AKShare-VIP QQ group** and talk about [AKShare](https://github.com/akfamily/akshare) issues, please contact **AKShare-小助手 QQ**: 1254836886
-![](https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/akshare/readme/qrcode/qr_code_1254836886.jpg)
 
 ## Features
 
@@ -162,7 +162,7 @@ Application to add **AKShare-VIP QQ group** and talk about [AKShare](https://git
 - Write or fix documentation
 - Add test cases
 
-> Notice: We use [Black](https://black.readthedocs.io/en/stable/) to format the code
+> Notice: We use [Ruff](https://github.com/astral-sh/ruff) to format the code
 
 ## Statement
 
@@ -288,19 +288,7 @@ Thanks for the data provided by [义乌小商品指数网站](http://www.ywindex
 
 Thanks for the data provided by [中国国家发展和改革委员会网站](http://jgjc.ndrc.gov.cn/dmzs.aspx?clmId=741);
 
-Thanks for the data provided by [163网站](https://news.163.com/special/epidemic/);
-
-Thanks for the data provided by [丁香园网站](http://3g.dxy.cn/newh5/view/pneumonia?scene=2&clicktime=1579615030&enterid=1579615030&from=groupmessage&isappinstalled=0);
-
-Thanks for the data provided by [百度新型肺炎网站](https://voice.baidu.com/act/newpneumonia/newpneumonia/?from=osari_pc_1);
-
 Thanks for the data provided by [百度迁徙网站](https://qianxi.baidu.com/?from=shoubai#city=0);
-
-Thanks for the data provided by [新型肺炎-相同行程查询工具网站](https://rl.inews.qq.com/h5/trip?from=newsapp&ADTAG=tgi.wx.share.message);
-
-Thanks for the data provided by [新型肺炎-小区查询网站](https://ncov.html5.qq.com/community?channelid=1&from=singlemessage&isappinstalled=0);
-
-Thanks for the data provided by [商业特许经营信息管理网站](http://txjy.syggs.mofcom.gov.cn/);
 
 Thanks for the data provided by [慈善中国网站](http://cishan.chinanpo.gov.cn/platform/login.html);
 
@@ -315,5 +303,5 @@ Thanks for the tutorials provided by [微信公众号: Python大咖谈](https://
 ## Backer and Sponsor
 
 <a href="https://www.jetbrains.com/?from=jindaxiang/akshare" target="_blank">
-<img alt="jetbrains" src="https://github.com/akfamily/akshare/blob/master/example/images/jetbrains.svg" width="100px" height="100px">
+<img alt="jetbrains" src="https://github.com/akfamily/akshare/blob/main/assets/images/jetbrains.svg" width="100px" height="100px">
 </a>

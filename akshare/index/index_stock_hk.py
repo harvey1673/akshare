@@ -1,22 +1,25 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2023/5/11 18:00
+Date: 2024/4/14 16:00
 Desc: 港股股票指数数据-新浪-东财
 所有指数-实时行情数据和历史行情数据
 https://finance.sina.com.cn/realstock/company/sz399552/nc.shtml
 https://quote.eastmoney.com/gb/zsHSTECF2L.html
 """
+
 import re
 
 import pandas as pd
 import requests
 from py_mini_racer import py_mini_racer
 
+from functools import lru_cache
+
 from akshare.stock.cons import hk_js_decode
 
 
-def _replace_comma(x):
+def _replace_comma(x) -> str:
     """
     去除单元格中的 ","
     :param x: 单元格元素
@@ -55,7 +58,12 @@ def stock_hk_index_spot_sina() -> pd.DataFrame:
     :return: 所有指数的实时行情数据
     :rtype: pandas.DataFrame
     """
-    url = "https://hq.sinajs.cn/rn=mtf2t&list=hkCES100,hkCES120,hkCES280,hkCES300,hkCESA80,hkCESG10,hkCESHKM,hkCSCMC,hkCSHK100,hkCSHKDIV,hkCSHKLC,hkCSHKLRE,hkCSHKMCS,hkCSHKME,hkCSHKPE,hkCSHKSE,hkCSI300,hkCSRHK50,hkGEM,hkHKL,hkHSCCI,hkHSCEI,hkHSI,hkHSMBI,hkHSMOGI,hkHSMPI,hkHSTECH,hkSSE180,hkSSE180GV,hkSSE380,hkSSE50,hkSSECEQT,hkSSECOMP,hkSSEDIV,hkSSEITOP,hkSSEMCAP,hkSSEMEGA,hkVHSI"
+    url = (
+        "https://hq.sinajs.cn/rn=mtf2t&list=hkCES100,hkCES120,hkCES280,hkCES300,hkCESA80,hkCESG10,"
+        "hkCESHKM,hkCSCMC,hkCSHK100,hkCSHKDIV,hkCSHKLC,hkCSHKLRE,hkCSHKMCS,hkCSHKME,hkCSHKPE,hkCSHKSE,"
+        "hkCSI300,hkCSRHK50,hkGEM,hkHKL,hkHSCCI,hkHSCEI,hkHSI,hkHSMBI,hkHSMOGI,hkHSMPI,hkHSTECH,hkSSE180,"
+        "hkSSE180GV,hkSSE380,hkSSE50,hkSSECEQT,hkSSECOMP,hkSSEDIV,hkSSEITOP,hkSSEMCAP,hkSSEMEGA,hkVHSI"
+    )
     headers = {"Referer": "https://vip.stock.finance.sina.com.cn/"}
     r = requests.get(url, headers=headers)
     data_text = r.text
@@ -112,7 +120,7 @@ def stock_hk_index_spot_sina() -> pd.DataFrame:
 def stock_hk_index_daily_sina(symbol: str = "CES100") -> pd.DataFrame:
     """
     新浪财经-港股指数-历史行情数据
-    http://stock.finance.sina.com.cn/hkstock/quotes/CES100.html
+    https://stock.finance.sina.com.cn/hkstock/quotes/CES100.html
     :param symbol: CES100, 港股指数代码
     :type symbol: str
     :return: 历史行情数据
@@ -127,8 +135,7 @@ def stock_hk_index_daily_sina(symbol: str = "CES100") -> pd.DataFrame:
         "d", res.text.split("=")[1].split(";")[0].replace('"', "")
     )  # 执行js解密代码
     temp_df = pd.DataFrame(dict_list)
-    temp_df["date"] = pd.to_datetime(temp_df["date"]).dt.date
-
+    temp_df["date"] = pd.to_datetime(temp_df["date"], errors="coerce").dt.date
     temp_df["open"] = pd.to_numeric(temp_df["open"], errors="coerce")
     temp_df["close"] = pd.to_numeric(temp_df["close"], errors="coerce")
     temp_df["high"] = pd.to_numeric(temp_df["high"], errors="coerce")
@@ -156,7 +163,8 @@ def stock_hk_index_spot_em() -> pd.DataFrame:
         "wbp2u": "|0|0|0|web",
         "fid": "f3",
         "fs": "m:124,m:125,m:305",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f26,f22,f33,f11,f62,f128,f136,f115,f152",
+        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,"
+        "f26,f22,f33,f11,f62,f128,f136,f115,f152",
         "_": "1683800547682",
     }
     r = requests.get(url, params=params)
@@ -211,6 +219,23 @@ def stock_hk_index_spot_em() -> pd.DataFrame:
     return temp_df
 
 
+@lru_cache()
+def _symbol_code_dict() -> dict:
+    """
+    缓存 ak.stock_hk_index_spot_em() 接口中的代码与内部编号
+    https://quote.eastmoney.com/center/gridlist.html#hk_index
+    :return: 代码与内部编号
+    :rtype: dict
+    """
+    __stock_hk_index_spot_em_df = stock_hk_index_spot_em()
+    symbol_code_dict = dict(
+        zip(
+            __stock_hk_index_spot_em_df["代码"], __stock_hk_index_spot_em_df["内部编号"]
+        )
+    )
+    return symbol_code_dict
+
+
 def stock_hk_index_daily_em(symbol: str = "HSTECF2L") -> pd.DataFrame:
     """
     东方财富网-港股-股票指数数据
@@ -220,18 +245,16 @@ def stock_hk_index_daily_em(symbol: str = "HSTECF2L") -> pd.DataFrame:
     :return: 指数数据
     :rtype: pandas.DataFrame
     """
-    stock_hk_index_spot_em_df = stock_hk_index_spot_em()
-    stock_hk_index_spot_em_df = stock_hk_index_spot_em_df[
-        stock_hk_index_spot_em_df["代码"] == symbol
-    ]
-    market_map = (
-        stock_hk_index_spot_em_df["内部编号"].astype(str)
-        + "."
-        + stock_hk_index_spot_em_df["代码"]
+    symbol_code_dict = _symbol_code_dict()
+    symbol_code_dict.update(
+        {
+            "HSAHP": "100",
+        }
     )
-    url = "http://push2his.eastmoney.com/api/qt/stock/kline/get"
+    symbol_str = f"{symbol_code_dict[symbol]}.{symbol}"
+    url = "https://push2his.eastmoney.com/api/qt/stock/kline/get"
     params = {
-        "secid": market_map.values[0],
+        "secid": symbol_str,
         "klt": "101",  # 日频率
         "fqt": "1",
         "lmt": "10000",
@@ -279,5 +302,5 @@ if __name__ == "__main__":
     stock_hk_index_spot_em_df = stock_hk_index_spot_em()
     print(stock_hk_index_spot_em_df)
 
-    stock_zh_index_daily_em_df = stock_hk_index_daily_em(symbol="HSTECF2L")
-    print(stock_zh_index_daily_em_df)
+    stock_hk_index_daily_em_df = stock_hk_index_daily_em(symbol="HSAHP")
+    print(stock_hk_index_daily_em_df)

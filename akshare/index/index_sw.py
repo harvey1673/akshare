@@ -1,14 +1,19 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2023/7/25 16:10
+Date: 2024/1/24 15:00
 Desc: 申万宏源研究-申万指数-指数发布
 乐咕乐股网
 https://legulegu.com/stockdata/index-composition?industryCode=851921.SI
 """
+
+from io import StringIO
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+
+from akshare.utils.cons import headers
 
 
 def sw_index_first_info() -> pd.DataFrame:
@@ -19,16 +24,16 @@ def sw_index_first_info() -> pd.DataFrame:
     :rtype: pandas.DataFrame
     """
     url = "https://legulegu.com/stockdata/sw-industry-overview"
-    r = requests.get(url)
-    soup = BeautifulSoup(r.text, "lxml")
-    code_raw = soup.find("div", attrs={"id": "level1Items"}).find_all(
-        "div", attrs={"class": "lg-industries-item-chinese-title"}
+    r = requests.get(url, headers=headers)
+    soup = BeautifulSoup(r.text, features="lxml")
+    code_raw = soup.find(name="div", attrs={"id": "level1Items"}).find_all(
+        name="div", attrs={"class": "lg-industries-item-chinese-title"}
     )
-    name_raw = soup.find("div", attrs={"id": "level1Items"}).find_all(
-        "div", attrs={"class": "lg-industries-item-number"}
+    name_raw = soup.find(name="div", attrs={"id": "level1Items"}).find_all(
+        name="div", attrs={"class": "lg-industries-item-number"}
     )
-    value_raw = soup.find("div", attrs={"id": "level1Items"}).find_all(
-        "div", attrs={"class": "lg-sw-industries-item-value"}
+    value_raw = soup.find(name="div", attrs={"id": "level1Items"}).find_all(
+        name="div", attrs={"class": "lg-sw-industries-item-value"}
     )
     code = [item.get_text() for item in code_raw]
     name = [item.get_text().split("(")[0] for item in name_raw]
@@ -59,11 +64,13 @@ def sw_index_first_info() -> pd.DataFrame:
         "市净率",
         "静态股息率",
     ]
-    temp_df["成份个数"] = pd.to_numeric(temp_df["成份个数"])
-    temp_df["静态市盈率"] = pd.to_numeric(temp_df["静态市盈率"])
-    temp_df["TTM(滚动)市盈率"] = pd.to_numeric(temp_df["TTM(滚动)市盈率"])
-    temp_df["市净率"] = pd.to_numeric(temp_df["市净率"])
-    temp_df["静态股息率"] = pd.to_numeric(temp_df["静态股息率"])
+    temp_df["成份个数"] = pd.to_numeric(temp_df["成份个数"], errors="coerce")
+    temp_df["静态市盈率"] = pd.to_numeric(temp_df["静态市盈率"], errors="coerce")
+    temp_df["TTM(滚动)市盈率"] = pd.to_numeric(
+        temp_df["TTM(滚动)市盈率"], errors="coerce"
+    )
+    temp_df["市净率"] = pd.to_numeric(temp_df["市净率"], errors="coerce")
+    temp_df["静态股息率"] = pd.to_numeric(temp_df["静态股息率"], errors="coerce")
     return temp_df
 
 
@@ -75,16 +82,16 @@ def sw_index_second_info() -> pd.DataFrame:
     :rtype: pandas.DataFrame
     """
     url = "https://legulegu.com/stockdata/sw-industry-overview"
-    r = requests.get(url)
-    soup = BeautifulSoup(r.text, "lxml")
-    code_raw = soup.find("div", attrs={"id": "level2Items"}).find_all(
-        "div", attrs={"class": "lg-industries-item-chinese-title"}
+    r = requests.get(url, headers=headers)
+    soup = BeautifulSoup(r.text, features="lxml")
+    code_raw = soup.find(name="div", attrs={"id": "level2Items"}).find_all(
+        name="div", attrs={"class": "lg-industries-item-chinese-title"}
     )
-    name_raw = soup.find("div", attrs={"id": "level2Items"}).find_all(
-        "div", attrs={"class": "lg-industries-item-number"}
+    name_raw = soup.find(name="div", attrs={"id": "level2Items"}).find_all(
+        name="div", attrs={"class": "lg-industries-item-number"}
     )
-    value_raw = soup.find("div", attrs={"id": "level2Items"}).find_all(
-        "div", attrs={"class": "lg-sw-industries-item-value"}
+    value_raw = soup.find(name="div", attrs={"id": "level2Items"}).find_all(
+        name="div", attrs={"class": "lg-sw-industries-item-value"}
     )
     code = [item.get_text() for item in code_raw]
     name = [item.get_text().split("(")[0] for item in name_raw]
@@ -115,12 +122,13 @@ def sw_index_second_info() -> pd.DataFrame:
         "市净率",
         "静态股息率",
     ]
-    temp_df["成份个数"] = pd.to_numeric(temp_df["成份个数"])
-    temp_df["静态市盈率"] = pd.to_numeric(temp_df["静态市盈率"])
-    temp_df["TTM(滚动)市盈率"] = pd.to_numeric(temp_df["TTM(滚动)市盈率"])
-    temp_df["市净率"] = pd.to_numeric(temp_df["市净率"])
-    temp_df["静态股息率"] = pd.to_numeric(temp_df["静态股息率"])
-
+    temp_df["成份个数"] = pd.to_numeric(temp_df["成份个数"], errors="coerce")
+    temp_df["静态市盈率"] = pd.to_numeric(temp_df["静态市盈率"], errors="coerce")
+    temp_df["TTM(滚动)市盈率"] = pd.to_numeric(
+        temp_df["TTM(滚动)市盈率"], errors="coerce"
+    )
+    temp_df["市净率"] = pd.to_numeric(temp_df["市净率"], errors="coerce")
+    temp_df["静态股息率"] = pd.to_numeric(temp_df["静态股息率"], errors="coerce")
     return temp_df
 
 
@@ -132,16 +140,16 @@ def sw_index_third_info() -> pd.DataFrame:
     :rtype: pandas.DataFrame
     """
     url = "https://legulegu.com/stockdata/sw-industry-overview"
-    r = requests.get(url)
-    soup = BeautifulSoup(r.text, "lxml")
-    code_raw = soup.find("div", attrs={"id": "level3Items"}).find_all(
-        "div", attrs={"class": "lg-industries-item-chinese-title"}
+    r = requests.get(url, headers=headers)
+    soup = BeautifulSoup(r.text, features="lxml")
+    code_raw = soup.find(name="div", attrs={"id": "level3Items"}).find_all(
+        name="div", attrs={"class": "lg-industries-item-chinese-title"}
     )
-    name_raw = soup.find("div", attrs={"id": "level3Items"}).find_all(
-        "div", attrs={"class": "lg-industries-item-number"}
+    name_raw = soup.find(name="div", attrs={"id": "level3Items"}).find_all(
+        name="div", attrs={"class": "lg-industries-item-number"}
     )
-    value_raw = soup.find("div", attrs={"id": "level3Items"}).find_all(
-        "div", attrs={"class": "lg-sw-industries-item-value"}
+    value_raw = soup.find(name="div", attrs={"id": "level3Items"}).find_all(
+        name="div", attrs={"class": "lg-sw-industries-item-value"}
     )
     code = [item.get_text() for item in code_raw]
     name = [item.get_text().split("(")[0] for item in name_raw]
@@ -172,11 +180,13 @@ def sw_index_third_info() -> pd.DataFrame:
         "市净率",
         "静态股息率",
     ]
-    temp_df["成份个数"] = pd.to_numeric(temp_df["成份个数"])
-    temp_df["静态市盈率"] = pd.to_numeric(temp_df["静态市盈率"])
-    temp_df["TTM(滚动)市盈率"] = pd.to_numeric(temp_df["TTM(滚动)市盈率"])
-    temp_df["市净率"] = pd.to_numeric(temp_df["市净率"])
-    temp_df["静态股息率"] = pd.to_numeric(temp_df["静态股息率"])
+    temp_df["成份个数"] = pd.to_numeric(temp_df["成份个数"], errors="coerce")
+    temp_df["静态市盈率"] = pd.to_numeric(temp_df["静态市盈率"], errors="coerce")
+    temp_df["TTM(滚动)市盈率"] = pd.to_numeric(
+        temp_df["TTM(滚动)市盈率"], errors="coerce"
+    )
+    temp_df["市净率"] = pd.to_numeric(temp_df["市净率"], errors="coerce")
+    temp_df["静态股息率"] = pd.to_numeric(temp_df["静态股息率"], errors="coerce")
     return temp_df
 
 
@@ -190,7 +200,8 @@ def sw_index_third_cons(symbol: str = "801120.SI") -> pd.DataFrame:
     :rtype: pandas.DataFrame
     """
     url = f"https://legulegu.com/stockdata/index-composition?industryCode={symbol}"
-    temp_df = pd.read_html(url)[0]
+    r = requests.get(url, headers=headers)
+    temp_df = pd.read_html(StringIO(r.text))[0]
     temp_df.columns = [
         "序号",
         "股票代码",
@@ -217,10 +228,18 @@ def sw_index_third_cons(symbol: str = "801120.SI") -> pd.DataFrame:
     temp_df["股息率"] = pd.to_numeric(temp_df["股息率"].str.strip("%"), errors="coerce")
     temp_df["市值"] = pd.to_numeric(temp_df["市值"], errors="coerce")
 
-    temp_df["归母净利润同比增长(09-30)"] = temp_df["归母净利润同比增长(09-30)"].str.strip("%")
-    temp_df["归母净利润同比增长(06-30)"] = temp_df["归母净利润同比增长(06-30)"].str.strip("%")
-    temp_df["营业收入同比增长(09-30)"] = temp_df["营业收入同比增长(09-30)"].str.strip("%")
-    temp_df["营业收入同比增长(06-30)"] = temp_df["营业收入同比增长(06-30)"].str.strip("%")
+    temp_df["归母净利润同比增长(09-30)"] = temp_df[
+        "归母净利润同比增长(09-30)"
+    ].str.strip("%")
+    temp_df["归母净利润同比增长(06-30)"] = temp_df[
+        "归母净利润同比增长(06-30)"
+    ].str.strip("%")
+    temp_df["营业收入同比增长(09-30)"] = temp_df["营业收入同比增长(09-30)"].str.strip(
+        "%"
+    )
+    temp_df["营业收入同比增长(06-30)"] = temp_df["营业收入同比增长(06-30)"].str.strip(
+        "%"
+    )
 
     temp_df["归母净利润同比增长(09-30)"] = pd.to_numeric(
         temp_df["归母净利润同比增长(09-30)"], errors="coerce"

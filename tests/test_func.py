@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2022/5/9 18:16
+Date: 2024/3/14 18:00
 Desc: To test intention, just write test code here!
 """
+
+import pathlib
+
 from akshare.cost.cost_living import cost_living
 from akshare.datasets import get_ths_js, get_crypto_info_csv
-import pathlib
 
 
 def test_cost_living():
