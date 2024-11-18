@@ -1,6 +1,9 @@
 **欢迎加入专注于财经数据和量化投资的知识社区，请点击[了解更多](https://akshare.akfamily.xyz/learn.html)**
 
-**相关视频教程已经发布：《AKShare-初阶-使用教学》、《AKShare-初阶-实战应用》、《AKShare-源码解析》、《开源项目巡礼》**，详情请访问[课程](https://app3rqjh1z21630.h5.xiaoeknow.com)查看更多课程信息！
+**首门量化投资教程：《PyBroker-入门及实战》已经录制完成，目前已经上架！**
+
+**更多视频教程已经发布：《AKShare-初阶-使用教学》、《AKShare-初阶-实战应用》、《AKShare-源码解析》、《开源项目巡礼》**，
+详情请关注【数据科学实战】公众号，查看更多课程信息！
 
 **AKQuant 量化教程请访问：[利用 PyBroker 进行量化投资](https://akquant.akfamily.xyz/)**
 
@@ -113,11 +116,9 @@ import akshare as ak
 import mplfinance as mpf  # Please install mplfinance as follows: pip install mplfinance
 
 stock_us_daily_df = ak.stock_us_daily(symbol="AAPL", adjust="qfq")
-stock_us_daily_df = stock_us_daily_df[["open", "high", "low", "close", "volume"]]
-stock_us_daily_df.columns = ["Open", "High", "Low", "Close", "Volume"]
-stock_us_daily_df.index.name = "Date"
+stock_us_daily_df = stock_us_daily_df.set_index(["date"])
 stock_us_daily_df = stock_us_daily_df["2020-04-01": "2020-04-29"]
-mpf.plot(stock_us_daily_df, type='candle', mav=(3, 6, 9), volume=True, show_nontrading=False)
+mpf.plot(stock_us_daily_df, type="candle", mav=(3, 6, 9), volume=True, show_nontrading=False)
 ```
 
 Output:
@@ -302,6 +303,6 @@ Thanks for the tutorials provided by [微信公众号: Python大咖谈](https://
 
 ## Backer and Sponsor
 
-<a href="https://www.jetbrains.com/?from=jindaxiang/akshare" target="_blank">
-<img alt="jetbrains" src="https://github.com/akfamily/akshare/blob/main/assets/images/jetbrains.svg" width="100px" height="100px">
+<a href="https://www.jetbrains.com/?from=albertandking/akshare" target="_blank">
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.png" alt="JetBrains logo.">
 </a>

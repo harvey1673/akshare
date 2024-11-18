@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/3/26 17:30
+Date: 2024/10/8 17:00
 Desc: AKShare's PYPI info file
 """
 
@@ -51,8 +51,9 @@ setuptools.setup(
         "jsonpath>=0.82",
         "tabulate>=0.8.6",
         "decorator>=4.4.2",
-        "py-mini-racer>=0.6.0",
-        "akracer>=0.0.11",
+        "mini-racer>=0.12.4;platform_system!='Linux'",
+        "py-mini-racer>=0.6.0;platform_system=='Linux'",
+        "akracer[py-mini-racer]>=0.0.13;platform_system=='Linux'",
     ],
     extras_require={
         # 这些是额外的依赖集合，可以通过 'pip install akshare[full]' 安装
@@ -88,6 +89,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],

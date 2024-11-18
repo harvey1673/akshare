@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/4/7 20:28
+Date: 2024/7/15 16:30
 Desc: 新浪财经-ESG评级中心
 https://finance.sina.com.cn/esg/
 """
@@ -64,8 +64,8 @@ def stock_esg_msci_sina() -> pd.DataFrame:
             "factset_sector_name": "-",
             "factset_industry_code": "-",
             "factset_industry_name": "-",
-            "date": "评级日期",
-            "quarter": "评级季度",
+            "date": "-",
+            "quarter_date": "评级日期",
             "grade": "ESG等级",
             "score": "-",
             "env_score": "环境总评",
@@ -83,17 +83,13 @@ def stock_esg_msci_sina() -> pd.DataFrame:
     )
     big_df = big_df[
         [
-            "股票名称",
             "股票代码",
             "ESG评分",
             "环境总评",
             "社会责任总评",
             "治理总评",
             "评级日期",
-            "评级机构",
             "交易市场",
-            "行业名称",
-            "评级季度",
         ]
     ]
     big_df["评级日期"] = pd.to_datetime(big_df["评级日期"], errors="coerce").dt.date
@@ -177,7 +173,7 @@ def stock_esg_rate_sina() -> pd.DataFrame:
     url = "https://global.finance.sina.com.cn/api/openapi.php/EsgService.getEsgStocks?page=1&num=200"
     r = requests.get(url)
     data_json = r.json()
-    page_num = math.ceil(data_json["result"]["data"]["info"]["total"] / 200)
+    page_num = math.ceil(int(data_json["result"]["data"]["info"]["total"]) / 200)
     big_df = pd.DataFrame()
     for page in tqdm(range(1, page_num + 1), leave=False):
         url = f"https://global.finance.sina.com.cn/api/openapi.php/EsgService.getEsgStocks?page={page}&num=200"
@@ -263,10 +259,19 @@ def stock_esg_hz_sina() -> pd.DataFrame:
     :return: 华证指数
     :rtype: pandas.DataFrame
     """
-    url = "https://global.finance.sina.com.cn/api/openapi.php/EsgService.getHzEsgStocks?p=1&num=20000"
-    r = requests.get(url)
+    url = "https://global.finance.sina.com.cn/api/openapi.php/EsgService.getHzEsgStocks"
+    params = {"p": 1, "num": "100"}
+    r = requests.get(url, params=params)
     data_json = r.json()
-    big_df = pd.DataFrame(data_json["result"]["data"]["data"])
+    total_page = math.ceil(int(data_json["result"]["data"]["total"]) / 100)
+    big_df = pd.DataFrame()
+    for page in tqdm(range(1, total_page + 1), leave=False):
+        params = {"p": str(page), "num": "100"}
+        r = requests.get(url, params=params)
+        data_json = r.json()
+        temp_df = pd.DataFrame(data_json["result"]["data"]["data"])
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
+
     big_df.rename(
         columns={
             "date": "日期",

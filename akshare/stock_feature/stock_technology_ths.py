@@ -1,16 +1,17 @@
 # -*- coding:utf-8 -*-
 # !/usr/bin/env python
 """
-Date: 2024/2/7 23:00
+Date: 2024/9/21 19:00
 Desc: 同花顺-数据中心-技术选股
 https://data.10jqka.com.cn/rank/cxg/
 """
+
 from io import StringIO
 
 import pandas as pd
+import py_mini_racer
 import requests
 from bs4 import BeautifulSoup
-from py_mini_racer import py_mini_racer
 
 from akshare.datasets import get_ths_js
 from akshare.utils.tqdm import get_tqdm
@@ -25,7 +26,7 @@ def _get_file_content_ths(file: str = "ths.js") -> str:
     :rtype: str
     """
     setting_file_path = get_ths_js(file)
-    with open(setting_file_path) as f:
+    with open(setting_file_path, encoding="utf-8") as f:
         file_data = f.read()
     return file_data
 
@@ -50,30 +51,38 @@ def stock_rank_cxg_ths(symbol: str = "创月新高") -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
-    url = f"http://data.10jqka.com.cn/rank/cxg/board/{symbol_map[symbol]}/field/stockcode/order/asc/page/1/ajax/1/free/1/"
+    url = (
+        f"http://data.10jqka.com.cn/rank/cxg/board/{symbol_map[symbol]}/field/"
+        f"stockcode/order/asc/page/1/ajax/1/free/1/"
+    )
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
-        url = f"http://data.10jqka.com.cn/rank/cxg/board/{symbol_map[symbol]}/field/stockcode/order/asc/page/{page}/ajax/1/free/1/"
+        url = (
+            f"http://data.10jqka.com.cn/rank/cxg/board/{symbol_map[symbol]}/field/stockcode/"
+            f"order/asc/page/{page}/ajax/1/free/1/"
+        )
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text))[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -87,7 +96,9 @@ def stock_rank_cxg_ths(symbol: str = "创月新高") -> pd.DataFrame:
     big_df["股票代码"] = big_df["股票代码"].astype(str).str.zfill(6)
     big_df["涨跌幅"] = big_df["涨跌幅"].str.strip("%")
     big_df["换手率"] = big_df["换手率"].str.strip("%")
-    big_df["前期高点日期"] = pd.to_datetime(big_df["前期高点日期"], errors="coerce").dt.date
+    big_df["前期高点日期"] = pd.to_datetime(
+        big_df["前期高点日期"], errors="coerce"
+    ).dt.date
     big_df["涨跌幅"] = pd.to_numeric(big_df["涨跌幅"], errors="coerce")
     big_df["换手率"] = pd.to_numeric(big_df["换手率"], errors="coerce")
     big_df["最新价"] = pd.to_numeric(big_df["最新价"], errors="coerce")
@@ -115,30 +126,38 @@ def stock_rank_cxd_ths(symbol: str = "创月新低") -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
-    url = f"http://data.10jqka.com.cn/rank/cxd/board/{symbol_map[symbol]}/field/stockcode/order/asc/page/1/ajax/1/free/1/"
+    url = (
+        f"http://data.10jqka.com.cn/rank/cxd/board/{symbol_map[symbol]}/field/"
+        f"stockcode/order/asc/page/1/ajax/1/free/1/"
+    )
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
-        url = f"http://data.10jqka.com.cn/rank/cxd/board/{symbol_map[symbol]}/field/stockcode/order/asc/page/{page}/ajax/1/free/1/"
+        url = (
+            f"http://data.10jqka.com.cn/rank/cxd/board/{symbol_map[symbol]}/field/"
+            f"stockcode/order/asc/page/{page}/ajax/1/free/1/"
+        )
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text))[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -152,7 +171,9 @@ def stock_rank_cxd_ths(symbol: str = "创月新低") -> pd.DataFrame:
     big_df["股票代码"] = big_df["股票代码"].astype(str).str.zfill(6)
     big_df["涨跌幅"] = big_df["涨跌幅"].str.strip("%")
     big_df["换手率"] = big_df["换手率"].str.strip("%")
-    big_df["前期低点日期"] = pd.to_datetime(big_df["前期低点日期"], errors="coerce").dt.date
+    big_df["前期低点日期"] = pd.to_datetime(
+        big_df["前期低点日期"], errors="coerce"
+    ).dt.date
     big_df["涨跌幅"] = pd.to_numeric(big_df["涨跌幅"], errors="coerce")
     big_df["换手率"] = pd.to_numeric(big_df["换手率"], errors="coerce")
     big_df["最新价"] = pd.to_numeric(big_df["最新价"], errors="coerce")
@@ -172,30 +193,32 @@ def stock_rank_lxsz_ths() -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
-    url = f"http://data.10jqka.com.cn/rank/lxsz/field/lxts/order/desc/page/1/ajax/1/free/1/"
+    url = "http://data.10jqka.com.cn/rank/lxsz/field/lxts/order/desc/page/1/ajax/1/free/1/"
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
         url = f"http://data.10jqka.com.cn/rank/lxsz/field/lxts/order/desc/page/{page}/ajax/1/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -231,30 +254,32 @@ def stock_rank_lxxd_ths() -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
-    url = f"http://data.10jqka.com.cn/rank/lxxd/field/lxts/order/desc/page/1/ajax/1/free/1/"
+    url = "http://data.10jqka.com.cn/rank/lxxd/field/lxts/order/desc/page/1/ajax/1/free/1/"
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
         url = f"http://data.10jqka.com.cn/rank/lxxd/field/lxts/order/desc/page/{page}/ajax/1/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -290,30 +315,32 @@ def stock_rank_cxfl_ths() -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
-    url = f"http://data.10jqka.com.cn/rank/cxfl/field/count/order/desc/ajax/1/free/1/page/1/free/1/"
+    url = "http://data.10jqka.com.cn/rank/cxfl/field/count/order/desc/ajax/1/free/1/page/1/free/1/"
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
         url = f"http://data.10jqka.com.cn/rank/cxfl/field/count/order/desc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -348,30 +375,32 @@ def stock_rank_cxsl_ths() -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
-    url = f"http://data.10jqka.com.cn/rank/cxsl/field/count/order/desc/ajax/1/free/1/page/1/free/1/"
+    url = "http://data.10jqka.com.cn/rank/cxsl/field/count/order/desc/ajax/1/free/1/page/1/free/1/"
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
         url = f"http://data.10jqka.com.cn/rank/cxsl/field/count/order/desc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -418,30 +447,35 @@ def stock_rank_xstp_ths(symbol: str = "500日均线") -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
     url = f"http://data.10jqka.com.cn/rank/xstp/board/{symbol_map[symbol]}/order/asc/ajax/1/free/1/page/1/free/1/"
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
-        url = f"http://data.10jqka.com.cn/rank/xstp/board/{symbol_map[symbol]}/order/asc/ajax/1/free/1/page/{page}/free/1/"
+        url = (
+            f"http://data.10jqka.com.cn/rank/xstp/board/{symbol_map[symbol]}/order/"
+            f"asc/ajax/1/free/1/page/{page}/free/1/"
+        )
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -485,30 +519,35 @@ def stock_rank_xxtp_ths(symbol: str = "500日均线") -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
     url = f"http://data.10jqka.com.cn/rank/xxtp/board/{symbol_map[symbol]}/order/asc/ajax/1/free/1/page/1/free/1/"
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
-        url = f"http://data.10jqka.com.cn/rank/xxtp/board/{symbol_map[symbol]}/order/asc/ajax/1/free/1/page/{page}/free/1/"
+        url = (
+            f"http://data.10jqka.com.cn/rank/xxtp/board/{symbol_map[symbol]}/order/"
+            f"asc/ajax/1/free/1/page/{page}/free/1/"
+        )
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -540,30 +579,32 @@ def stock_rank_ljqs_ths() -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
-    url = f"http://data.10jqka.com.cn/rank/ljqs/field/count/order/desc/ajax/1/free/1/page/1/free/1/"
+    url = "http://data.10jqka.com.cn/rank/ljqs/field/count/order/desc/ajax/1/free/1/page/1/free/1/"
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
         url = f"http://data.10jqka.com.cn/rank/ljqs/field/count/order/desc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -596,30 +637,32 @@ def stock_rank_ljqd_ths() -> pd.DataFrame:
     js_code.eval(js_content)
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
-    url = f"http://data.10jqka.com.cn/rank/ljqd/field/count/order/desc/ajax/1/free/1/page/1/free/1/"
+    url = "http://data.10jqka.com.cn/rank/ljqd/field/count/order/desc/ajax/1/free/1/page/1/free/1/"
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
+        total_page = soup.find(name="span", attrs={"class": "page_info"}).text.split(
+            "/"
+        )[1]
+    except AttributeError:
         total_page = 1
     big_df = pd.DataFrame()
     tqdm = get_tqdm()
     for page in tqdm(range(1, int(total_page) + 1), leave=False):
         v_code = js_code.call("v")
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
             "Cookie": f"v={v_code}",
         }
         url = f"http://data.10jqka.com.cn/rank/ljqd/field/count/order/desc/ajax/1/free/1/page/{page}/free/1/"
         r = requests.get(url, headers=headers)
         temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "股票代码",
@@ -650,32 +693,17 @@ def stock_rank_xzjp_ths() -> pd.DataFrame:
     js_code = py_mini_racer.MiniRacer()
     js_content = _get_file_content_ths("ths.js")
     js_code.eval(js_content)
+    big_df = pd.DataFrame()
     v_code = js_code.call("v")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
         "Cookie": f"v={v_code}",
     }
-    url = f"http://data.10jqka.com.cn/ajax/xzjp/field/DECLAREDATE/order/desc/ajax/1/free/1/"
+    url = "http://data.10jqka.com.cn/ajax/xzjp/field/DECLAREDATE/order/desc/ajax/1/free/1/"
     r = requests.get(url, headers=headers)
-    soup = BeautifulSoup(r.text, "lxml")
-    try:
-        total_page = soup.find(
-            "span", attrs={"class": "page_info"}
-        ).text.split("/")[1]
-    except AttributeError as e:
-        total_page = 1
-    big_df = pd.DataFrame()
-    tqdm = get_tqdm()
-    for page in tqdm(range(1, int(total_page) + 1), leave=False):
-        v_code = js_code.call("v")
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
-            "Cookie": f"v={v_code}",
-        }
-        url = f"http://data.10jqka.com.cn/ajax/xzjp/field/DECLAREDATE/order/desc/ajax/1/free/1/"
-        r = requests.get(url, headers=headers)
-        temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+    temp_df = pd.read_html(StringIO(r.text), converters={"股票代码": str})[0]
+    big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.columns = [
         "序号",
         "举牌公告日",
@@ -692,10 +720,14 @@ def stock_rank_xzjp_ths() -> pd.DataFrame:
         "历史数据",
     ]
     big_df["涨跌幅"] = big_df["涨跌幅"].astype(str).str.zfill(6)
-    big_df["增持数量占总股本比例"] = big_df["增持数量占总股本比例"].astype(str).str.strip("%")
+    big_df["增持数量占总股本比例"] = (
+        big_df["增持数量占总股本比例"].astype(str).str.strip("%")
+    )
     big_df["变动后持股比例"] = big_df["变动后持股比例"].astype(str).str.strip("%")
     big_df["涨跌幅"] = pd.to_numeric(big_df["涨跌幅"], errors="coerce")
-    big_df["增持数量占总股本比例"] = pd.to_numeric(big_df["增持数量占总股本比例"], errors="coerce")
+    big_df["增持数量占总股本比例"] = pd.to_numeric(
+        big_df["增持数量占总股本比例"], errors="coerce"
+    )
     big_df["变动后持股比例"] = pd.to_numeric(big_df["变动后持股比例"], errors="coerce")
     big_df["举牌公告日"] = pd.to_datetime(big_df["举牌公告日"], errors="coerce").dt.date
     big_df["股票代码"] = big_df["股票代码"].astype(str).str.zfill(6)

@@ -565,7 +565,6 @@ def get_dce_daily(date: str = "20220308") -> pd.DataFrame:
     }
     r = requests.post(url, data=params, headers=headers)
     data_df = pd.read_excel(BytesIO(r.content), header=1)
-
     data_df = data_df[~data_df["商品名称"].str.contains("小计")]
     data_df = data_df[~data_df["商品名称"].str.contains("总计")]
     data_df["variety"] = data_df["商品名称"].map(lambda x: cons.DCE_MAP[x])
@@ -605,12 +604,7 @@ def get_dce_daily(date: str = "20220308") -> pd.DataFrame:
             "variety",
         ]
     ]
-    # TODO pandas 2.1.0 change
-    try:
-        data_df = data_df.map(lambda x: x.replace(",", ""))
-    except:  # noqa: E722
-        data_df = data_df.applymap(lambda x: x.replace(",", ""))
-
+    data_df = data_df.map(lambda x: x.replace(",", ""))
     data_df = data_df.astype(
         {
             "open": "float",
@@ -674,11 +668,13 @@ def get_futures_daily(
     df_list = list()
     while start_date <= end_date:
         df = f(date=str(start_date).replace("-", ""))
-        if df is not None:
+        if not df.empty:
             df_list.append(df)
         start_date += datetime.timedelta(days=1)
 
-    if len(df_list) > 0:
+    if len(df_list) == 0:
+        return pd.DataFrame()
+    elif len(df_list) > 0:
         temp_df = pd.concat(df_list).reset_index(drop=True)
         temp_df = temp_df[~temp_df["symbol"].str.contains("efp")]
         return temp_df
@@ -686,11 +682,11 @@ def get_futures_daily(
 
 if __name__ == "__main__":
     get_futures_daily_df = get_futures_daily(
-        start_date="20240506", end_date="20240510", market="SHFE"
+        start_date="20240101", end_date="20240101", market="DCE"
     )
     print(get_futures_daily_df)
 
-    get_dce_daily_df = get_dce_daily(date="20230810")
+    get_dce_daily_df = get_dce_daily(date="20241118")
     print(get_dce_daily_df)
 
     get_cffex_daily_df = get_cffex_daily(date="20230810")

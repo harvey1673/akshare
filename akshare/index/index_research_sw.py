@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/5/22 15:00
+Date: 2024/10/23 13:00
 Desc: 申万宏源研究-指数系列
-https://www.swhyresearch.com/institute_sw/allIndex/releasedIndex
+https://www.swsresearch.com/institute_sw/allIndex/releasedIndex
 """
 
 import math
@@ -17,7 +17,7 @@ from akshare.utils.tqdm import get_tqdm
 def index_hist_sw(symbol: str = "801030", period: str = "day") -> pd.DataFrame:
     """
     申万宏源研究-指数发布-指数详情-指数历史数据
-    https://www.swhyresearch.com/institute_sw/allIndex/releasedIndex/releasedetail?code=801001&name=%E7%94%B3%E4%B8%8750
+    https://www.swsresearch.com/institute_sw/allIndex/releasedIndex/releasedetail?code=801001&name=%E7%94%B3%E4%B8%8750
     :param symbol: 指数代码
     :type symbol: str
     :param period: choice of {"day", "week", "month"}
@@ -30,16 +30,16 @@ def index_hist_sw(symbol: str = "801030", period: str = "day") -> pd.DataFrame:
         "week": "WEEK",
         "month": "MONTH",
     }
-    url = "http://www.swhyresearch.com/institute-sw/api/index_publish/trend/"
+    url = "https://www.swsresearch.com/institute-sw/api/index_publish/trend/"
     params = {
         "swindexcode": symbol,
         "period": period_map[period],
     }
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/114.0.0.0 Safari/537.36"
+        "Chrome/114.0.0.0 Safari/537.36",
     }
-    r = requests.get(url, params=params, headers=headers)
+    r = requests.get(url, params=params, headers=headers, verify=False)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"])
     temp_df.rename(
@@ -81,14 +81,14 @@ def index_hist_sw(symbol: str = "801030", period: str = "day") -> pd.DataFrame:
 def index_min_sw(symbol: str = "801001") -> pd.DataFrame:
     """
     申万宏源研究-指数发布-指数详情-指数分时数据
-    https://www.swhyresearch.com/institute_sw/allIndex/releasedIndex/releasedetail?code=801001&name=%E7%94%B3%E4%B8%8750
+    https://www.swsresearch.com/institute_sw/allIndex/releasedIndex/releasedetail?code=801001&name=%E7%94%B3%E4%B8%8750
     :param symbol: 指数代码
     :type symbol: str
     :return: 指数分时数据
     :rtype: pandas.DataFrame
     """
     url = (
-        "http://www.swhyresearch.com/institute-sw/api/index_publish/details/timelines/"
+        "https://www.swsresearch.com/institute-sw/api/index_publish/details/timelines/"
     )
     params = {
         "swindexcode": symbol,
@@ -97,7 +97,7 @@ def index_min_sw(symbol: str = "801001") -> pd.DataFrame:
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/114.0.0.0 Safari/537.36"
     }
-    r = requests.get(url, params=params, headers=headers)
+    r = requests.get(url, params=params, headers=headers, verify=False)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"])
     temp_df.rename(
@@ -127,19 +127,19 @@ def index_min_sw(symbol: str = "801001") -> pd.DataFrame:
 def index_component_sw(symbol: str = "801001") -> pd.DataFrame:
     """
     申万宏源研究-指数发布-指数详情-成分股
-    https://www.swhyresearch.com/institute_sw/allIndex/releasedIndex/releasedetail?code=801001&name=%E7%94%B3%E4%B8%8750
+    https://www.swsresearch.com/institute_sw/allIndex/releasedIndex/releasedetail?code=801001&name=%E7%94%B3%E4%B8%8750
     :param symbol: 指数代码
     :type symbol: str
     :return: 成分股
     :rtype: pandas.DataFrame
     """
-    url = "http://www.swhyresearch.com/institute-sw/api/index_publish/details/component_stocks/"
+    url = "https://www.swsresearch.com/institute-sw/api/index_publish/details/component_stocks/"
     params = {"swindexcode": symbol, "page": "1", "page_size": "10000"}
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/114.0.0.0 Safari/537.36"
     }
-    r = requests.get(url, params=params, headers=headers)
+    r = requests.get(url, params=params, headers=headers, verify=False)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"]["results"])
     temp_df.reset_index(inplace=True)
@@ -177,7 +177,7 @@ def __index_realtime_sw(symbol: str = "大类风格指数") -> pd.DataFrame:
     :return: 指数系列实时行情数据
     :rtype: pandas.DataFrame
     """
-    url = "http://www.swsresearch.com/insWechatSw/dflgOrJcIndex/pageList"
+    url = "https://www.swsresearch.com/insWechatSw/dflgOrJcIndex/pageList"
     payload = {
         "pageNo": 1,
         "pageSize": 10,
@@ -190,7 +190,7 @@ def __index_realtime_sw(symbol: str = "大类风格指数") -> pd.DataFrame:
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/114.0.0.0 Safari/537.36"
     }
-    r = requests.post(url, json=payload, headers=headers)
+    r = requests.post(url, json=payload, headers=headers, verify=False)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"]["list"])
     temp_df.rename(
@@ -221,7 +221,7 @@ def __index_realtime_sw(symbol: str = "大类风格指数") -> pd.DataFrame:
 def index_realtime_sw(symbol: str = "二级行业") -> pd.DataFrame:
     """
     申万宏源研究-指数系列
-    https://www.swhyresearch.com/institute_sw/allIndex/releasedIndex
+    https://www.swsresearch.com/institute_sw/allIndex/releasedIndex
     :param symbol: choice of {"市场表征", "一级行业", "二级行业", "风格指数", "大类风格指数", "金创指数"}
     :type symbol: str
     :return: 指数系列实时行情数据
@@ -230,13 +230,13 @@ def index_realtime_sw(symbol: str = "二级行业") -> pd.DataFrame:
     if symbol in {"大类风格指数", "金创指数"}:
         temp_df = __index_realtime_sw(symbol)
         return temp_df
-    url = "http://www.swhyresearch.com/institute-sw/api/index_publish/current/"
+    url = "https://www.swsresearch.com/institute-sw/api/index_publish/current/"
     params = {"page": "1", "page_size": "50", "indextype": symbol}
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/114.0.0.0 Safari/537.36"
     }
-    r = requests.get(url, params=params, headers=headers)
+    r = requests.get(url, params=params, headers=headers, verify=False)
     data_json = r.json()
     total_num = data_json["data"]["count"]
     total_page = math.ceil(total_num / 50)
@@ -244,7 +244,7 @@ def index_realtime_sw(symbol: str = "二级行业") -> pd.DataFrame:
     tqdm = get_tqdm()
     for page in tqdm(range(1, total_page + 1), leave=False):
         params.update({"page": page})
-        r = requests.get(url, params=params, headers=headers)
+        r = requests.get(url, params=params, headers=headers, verify=False)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["data"]["results"])
         big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
@@ -289,7 +289,7 @@ def index_analysis_daily_sw(
 ) -> pd.DataFrame:
     """
     申万宏源研究-指数分析
-    https://www.swhyresearch.com/institute_sw/allIndex/analysisIndex
+    https://www.swsresearch.com/institute_sw/allIndex/analysisIndex
     :param symbol: choice of {"市场表征", "一级行业", "二级行业", "风格指数"}
     :type symbol: str
     :param start_date: 开始日期
@@ -299,7 +299,7 @@ def index_analysis_daily_sw(
     :return: 指数分析
     :rtype: pandas.DataFrame
     """
-    url = "http://www.swhyresearch.com/institute-sw/api/index_analysis/index_analysis_report/"
+    url = "https://www.swsresearch.com/institute-sw/api/index_analysis/index_analysis_report/"
     params = {
         "page": "1",
         "page_size": "50",
@@ -313,7 +313,7 @@ def index_analysis_daily_sw(
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/114.0.0.0 Safari/537.36"
     }
-    r = requests.get(url, params=params, headers=headers)
+    r = requests.get(url, params=params, headers=headers, verify=False)
     data_json = r.json()
     total_num = data_json["data"]["count"]
     total_page = math.ceil(total_num / 50)
@@ -321,10 +321,10 @@ def index_analysis_daily_sw(
     tqdm = get_tqdm()
     for page in tqdm(range(1, total_page + 1), leave=False):
         params.update({"page": page})
-        r = requests.get(url, params=params, headers=headers)
+        r = requests.get(url, params=params, headers=headers, verify=False)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["data"]["results"])
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.rename(
         columns={
             "swindexcode": "指数代码",
@@ -363,19 +363,19 @@ def index_analysis_daily_sw(
 def index_analysis_week_month_sw(symbol: str = "month") -> pd.DataFrame:
     """
     申万宏源研究-周/月报表-日期序列
-    https://www.swhyresearch.com/institute_sw/allIndex/analysisIndex
+    https://www.swsresearch.com/institute_sw/allIndex/analysisIndex
     :param symbol: choice of {"week", "month"}
     :type symbol: str
     :return: 日期序列
     :rtype: pandas.DataFrame
     """
-    url = "http://www.swhyresearch.com/institute-sw/api/index_analysis/week_month_datetime/"
+    url = "https://www.swsresearch.com/institute-sw/api/index_analysis/week_month_datetime/"
     params = {"type": symbol.upper()}
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/114.0.0.0 Safari/537.36"
     }
-    r = requests.get(url, params=params, headers=headers)
+    r = requests.get(url, params=params, headers=headers, verify=False)
     data_json = r.json()
     temp_df = pd.DataFrame(data_json["data"])
     temp_df["bargaindate"] = pd.to_datetime(
@@ -392,7 +392,7 @@ def index_analysis_weekly_sw(
 ) -> pd.DataFrame:
     """
     申万宏源研究-指数分析-周报告
-    https://www.swhyresearch.com/institute_sw/allIndex/analysisIndex
+    https://www.swsresearch.com/institute_sw/allIndex/analysisIndex
     :param symbol: choice of {"市场表征", "一级行业", "二级行业", "风格指数"}
     :type symbol: str
     :param date: 查询日期; 通过调用 ak.index_analysis_week_month_sw(date="20221104") 接口获取
@@ -400,7 +400,7 @@ def index_analysis_weekly_sw(
     :return: 指数分析
     :rtype: pandas.DataFrame
     """
-    url = "http://www.swhyresearch.com/institute-sw/api/index_analysis/index_analysis_reports/"
+    url = "https://www.swsresearch.com/institute-sw/api/index_analysis/index_analysis_reports/"
     params = {
         "page": "1",
         "page_size": "50",
@@ -413,7 +413,7 @@ def index_analysis_weekly_sw(
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/114.0.0.0 Safari/537.36"
     }
-    r = requests.get(url, params=params, headers=headers)
+    r = requests.get(url, params=params, headers=headers, verify=False)
     data_json = r.json()
     total_num = data_json["data"]["count"]
     total_page = math.ceil(total_num / 50)
@@ -421,10 +421,10 @@ def index_analysis_weekly_sw(
     tqdm = get_tqdm()
     for page in tqdm(range(1, total_page + 1), leave=False):
         params.update({"page": page})
-        r = requests.get(url, params=params, headers=headers)
+        r = requests.get(url, params=params, headers=headers, verify=False)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["data"]["results"])
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.rename(
         columns={
             "swindexcode": "指数代码",
@@ -467,7 +467,7 @@ def index_analysis_monthly_sw(
 ) -> pd.DataFrame:
     """
     申万宏源研究-指数分析-月报告
-    https://www.swhyresearch.com/institute_sw/allIndex/analysisIndex
+    https://www.swsresearch.com/institute_sw/allIndex/analysisIndex
     :param symbol: choice of {"市场表征", "一级行业", "二级行业", "风格指数"}
     :type symbol: str
     :param date: 查询日期; 通过调用 ak.index_analysis_week_month_sw() 接口获取
@@ -475,7 +475,7 @@ def index_analysis_monthly_sw(
     :return: 指数分析
     :rtype: pandas.DataFrame
     """
-    url = "http://www.swhyresearch.com/institute-sw/api/index_analysis/index_analysis_reports/"
+    url = "https://www.swsresearch.com/institute-sw/api/index_analysis/index_analysis_reports/"
     params = {
         "page": "1",
         "page_size": "50",
@@ -488,7 +488,7 @@ def index_analysis_monthly_sw(
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/114.0.0.0 Safari/537.36"
     }
-    r = requests.get(url, params=params, headers=headers)
+    r = requests.get(url, params=params, headers=headers, verify=False)
     data_json = r.json()
     total_num = data_json["data"]["count"]
     total_page = math.ceil(total_num / 50)
@@ -496,10 +496,10 @@ def index_analysis_monthly_sw(
     tqdm = get_tqdm()
     for page in tqdm(range(1, total_page + 1), leave=False):
         params.update({"page": page})
-        r = requests.get(url, params=params, headers=headers)
+        r = requests.get(url, params=params, headers=headers, verify=False)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["data"]["results"])
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.rename(
         columns={
             "swindexcode": "指数代码",
@@ -549,7 +549,7 @@ if __name__ == "__main__":
     print(index_realtime_sw_df)
 
     index_analysis_daily_sw_df = index_analysis_daily_sw(
-        symbol="市场表征", start_date="20240521", end_date="20240521"
+        symbol="市场表征", start_date="20241025", end_date="20241025"
     )
     print(index_analysis_daily_sw_df)
 
@@ -557,11 +557,11 @@ if __name__ == "__main__":
     print(index_analysis_week_month_sw_df)
 
     index_analysis_weekly_sw_df = index_analysis_weekly_sw(
-        symbol="市场表征", date="20240329"
+        symbol="市场表征", date="20241025"
     )
     print(index_analysis_weekly_sw_df)
 
     index_analysis_monthly_sw_df = index_analysis_monthly_sw(
-        symbol="市场表征", date="20240329"
+        symbol="市场表征", date="20240930"
     )
     print(index_analysis_monthly_sw_df)

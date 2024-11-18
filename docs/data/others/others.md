@@ -86,67 +86,13 @@ print(sport_olympic_hist_df)
 271115                      Bobsleigh Men's Four    NaN
 ```
 
-### 冬奥会历届奖牌榜
-
-接口: sport_olympic_winter_hist
-
-目标地址: https://m.sports.qq.com/g/sv3/winter-oly22/winter-olympic-rank.htm?type=0
-
-描述: 腾讯运动-冬奥会-历届奖牌榜
-
-限量: 单次返回 1924-2018 年度的冬奥会历届奖牌榜数据
-
-输入参数
-
-| 名称  | 类型  | 描述  |
-|-----|-----|-----|
-| -   | -   | -   |
-
-输出参数-品牌
-
-| 名称    | 类型     | 描述  |
-|-------|--------|-----|
-| 序号    | int64  | -   |
-| 举办年份  | object | -   |
-| 届数    | object | -   |
-| 举办地点  | object | -   |
-| 国家及地区 | object | -   |
-| 金牌数   | int64  | -   |
-| 总奖牌数  | int64  | -   |
-
-接口示例
-
-```python
-import akshare as ak
-
-sport_olympic_winter_hist_df = ak.sport_olympic_winter_hist()
-print(sport_olympic_winter_hist_df)
-```
-
-数据示例
-
-```
-      序号  举办年份  届数 举办地点 国家及地区  金牌数  总奖牌数
-0      1  2018  23   平昌    挪威   14    39
-1      2  2018  23   平昌    德国   14    31
-2      3  2018  23   平昌   加拿大   11    29
-3      4  2018  23   平昌    美国    9    23
-4      5  2018  23   平昌    荷兰    8    20
-..   ...   ...  ..  ...   ...  ...   ...
-404  405  1924   1  霞慕尼    英国    1     4
-405  406  1924   1  霞慕尼    瑞典    1     2
-406  407  1924   1  霞慕尼   加拿大    1     1
-407  408  1924   1  霞慕尼    法国    0     3
-408  409  1924   1  霞慕尼   比利时    0     1
-```
-
 ### 汽车销量排行
 
 #### 乘联会-统计数据-总体市场
 
 接口: car_market_total_cpca
 
-目标地址: http://data.cpcaauto.com/TotalMarket
+目标地址: http://data.cpcadata.com/TotalMarket
 
 描述: 乘联会-统计数据-总体市场
 
@@ -198,7 +144,7 @@ print(car_market_total_cpca_df)
 
 接口: car_market_man_rank_cpca
 
-目标地址: http://data.cpcaauto.com/ManRank
+目标地址: http://data.cpcadata.com/ManRank
 
 描述: 乘联会-统计数据-厂商排名
 
@@ -248,7 +194,7 @@ print(car_market_man_rank_cpca_df)
 
 接口: car_market_cate_cpca
 
-目标地址: http://data.cpcaauto.com/CategoryMarket
+目标地址: http://data.cpcadata.com/CategoryMarket
 
 描述: 乘联会-统计数据-车型大类
 
@@ -300,7 +246,7 @@ print(car_market_cate_cpca_df)
 
 接口: car_market_country_cpca
 
-目标地址: http://data.cpcaauto.com/CountryMarket
+目标地址: http://data.cpcadata.com/CountryMarket
 
 描述: 乘联会-统计数据-国别细分市场
 
@@ -357,7 +303,7 @@ print(car_market_country_cpca_df)
 
 接口: car_market_segment_cpca
 
-目标地址: http://data.cpcaauto.com/SegmentMarket
+目标地址: http://data.cpcadata.com/SegmentMarket
 
 描述: 乘联会-统计数据-级别细分市场
 
@@ -411,7 +357,7 @@ print(car_market_segment_cpca_df)
 
 接口: car_market_fuel_cpca
 
-目标地址: http://data.cpcaauto.com/FuelMarket
+目标地址: http://data.cpcadata.com/FuelMarket
 
 描述: 乘联会-统计数据-车型大类
 
@@ -901,67 +847,71 @@ print(sunrise_monthly_df)
 
 接口: air_quality_hebei
 
-目标地址: https://110.249.223.67/publish/
+目标地址: http://218.11.10.130:8080/#/application/home
 
-描述: 河北省指定 symbol 的最近 6 天空气质量数据
+描述: 河北省实时空气质量数据
 
-注释:
-
-注释-等级划分
-
-1. 空气污染指数为0－50，空气质量级别为一级，空气质量状况属于优。此时，空气质量令人满意，基本无空气污染，各类人群可正常活动。
-2. 空气污染指数为51－100，空气质量级别为二级，空气质量状况属于良。此时空气质量可接受，但某些污染物可能对极少数异常敏感人群健康有较弱影响，建议极少数异常敏感人群应减少户外活动。
-3. 空气污染指数为101－150，空气质量级别为三级，空气质量状况属于轻度污染。此时，易感人群症状有轻度加剧，健康人群出现刺激症状。建议儿童、老年人及心脏病、呼吸系统疾病患者应减少长时间、高强度的户外锻炼。
-4. 空气污染指数为151－200，空气质量级别为四级，空气质量状况属于中度污染。此时，进一步加剧易感人群症状，可能对健康人群心脏、呼吸系统有影响，建议疾病患者避免长时间、高强度的户外锻练，一般人群适量减少户外运动。
-5. 空气污染指数为201－300，空气质量级别为五级，空气质量状况属于重度污染。此时，心脏病和肺病患者症状显著加剧，运动耐受力降低，健康人群普遍出现症状，建议儿童、老年人和心脏病、肺病患者应停留在室内，停止户外运动，一般人群减少户外运动。
-6. 空气污染指数大于300，空气质量级别为六级，空气质量状况属于严重污染。此时，健康人群运动耐受力降低，有明显强烈症状，提前出现某些疾病，建议儿童、老年人和病人应当留在室内，避免体力消耗，一般人群应避免户外活动。
-
-注释-发布单位
-
-河北省环境应急与重污染天气预警中心
-
-注释-技术支持
-
-中国科学院大气物理研究所, 中科三清科技有限公司
-
-限量: 单次指定 symbol 的最近 6 天的数据
+限量: 单次返回所有城市数据
 
 输入参数
 
-| 名称     | 类型  | 描述                                           |
-|--------|-----|----------------------------------------------|
-| symbol | str | symbol="定州市", 返回具体市的数据; symbol="", 则返回所有城市数据 |
+| 名称 | 类型 | 描述 |
+|----|----|----|
+| -  | -  | -  |
 
 输出参数
 
-| 名称        | 类型     | 描述    |
-|-----------|--------|-------|
-| city      | object | 城市-索引 |
-| date      | object | 日期    |
-| pollutant | object | 污染物   |
-| minaqi    | int64  | 最小    |
-| maxaqi    | int64  | 最大    |
-| level     | object | 程度    |
+| 名称         | 类型      | 描述            |
+|------------|---------|---------------|
+| 城市         | object  | 城市名称          |
+| 区域         | object  | 城市下属行政区域      |
+| 监测点        | object  | 监测站点名称        |
+| 时间         | object  | 监测时间          |
+| AQI        | float64 | 空气质量指数        |
+| 空气质量等级     | object  | 空气质量级别(优、良等)  |
+| 首要污染物      | object  | 主要污染物         |
+| 经度         | float64 | 监测站点经度        |
+| 纬度         | float64 | 监测站点纬度        |
+| PM10_IAQI  | float64 | PM10空气质量分指数   |
+| PM10_浓度    | float64 | PM10浓度值       |
+| PM2.5_IAQI | float64 | PM2.5空气质量分指数  |
+| PM2.5_浓度   | float64 | PM2.5浓度值      |
+| 一氧化碳_IAQI  | float64 | CO空气质量分指数     |
+| 一氧化碳_浓度    | float64 | CO浓度值         |
+| 二氧化氮_IAQI  | float64 | NO2空气质量分指数    |
+| 二氧化氮_浓度    | float64 | NO2浓度值        |
+| 二氧化硫_IAQI  | float64 | SO2空气质量分指数    |
+| 二氧化硫_浓度    | float64 | SO2浓度值        |
+| 臭氧1小时_IAQI | float64 | O3 1小时空气质量分指数 |
+| 臭氧1小时_浓度   | float64 | O3 1小时浓度值     |
+| 臭氧8小时_IAQI | float64 | O3 8小时空气质量分指数 |
+| 臭氧8小时_浓度   | float64 | O3 8小时浓度值     |
 
 接口示例
 
 ```python
 import akshare as ak
 
-air_quality_hebei_df = ak.air_quality_hebei(symbol="定州市")
+air_quality_hebei_df = ak.air_quality_hebei()
 print(air_quality_hebei_df)
 ```
 
 数据示例
 
 ```
-   city        date    pollutant  minaqi  maxaqi  level
-0  定州市  2021-12-11      PM2.5     150     180  轻度-中度
-1  定州市  2021-12-12   PM10,NO2      45      75    优-良
-2  定州市  2021-12-13  PM2.5,NO2      80     110   良-轻度
-3  定州市  2021-12-14  PM2.5,NO2      95     125   良-轻度
-4  定州市  2021-12-15      PM2.5     110     140     轻度
-5  定州市  2021-12-16   PM10,NO2      60      90      良
+       城市   区域         监测点  ... 臭氧1小时_浓度  臭氧8小时_IAQI 臭氧8小时_浓度
+0    石家庄市  长安区    市区22中南校区  ...     15.0         0.0     40.0
+1    石家庄市  栾城区      栾城区星河路  ...      8.0         0.0     40.0
+2    石家庄市  鹿泉区    鹿泉住建局(*)  ...     29.0         0.0     41.0
+3    石家庄市  藁城区     藁城九中(*)  ...     16.0         0.0     43.0
+4    石家庄市  桥西区      市区西南高教  ...      7.0         0.0     41.0
+..    ...  ...         ...  ...      ...         ...      ...
+359   衡水市  武强县   武强实验学校(*)  ...     11.0         0.0     38.0
+360   衡水市   景县    景县交通局(*)  ...     28.0         0.0     48.0
+361   衡水市  武邑县   武邑县委党校(*)  ...     16.0         0.0     36.0
+362   衡水市   景县  景县市场监管局(*)  ...     33.0         0.0     58.0
+363   衡水市  阜城县    阜城交通局(*)  ...     30.0         0.0     48.0
+[364 rows x 23 columns]
 ```
 
 ### 空气质量-全国
@@ -1399,54 +1349,6 @@ print(fortune_rank_df)
 498  499         日本三菱重工业股份有限公司（MITSUBISHI HEAVY INDUSTRIES)  ...     日本     +
 499  500  新疆广汇实业投资（集团）有限责任公司（XINJIANG GUANGHUI INDUSTRY ...  ...     中国     +
 [500 rows x 6 columns]
-```
-
-### 财富排行榜-英文
-
-接口: fortune_rank_eng
-
-目标地址: https://fortune.com/global500/
-
-描述: 指定年份财富世界 500 强公司排行榜-英文版本, 从 1995 年开始, 数据和格式较中文版本完整
-
-限量: 单次返回某一个年份的所有历史数据, 早期数据可能不足 500 家公司
-
-输入参数
-
-| 名称   | 类型  | 描述                |
-|------|-----|-------------------|
-| year | str | year="2022"; 指定年份 |
-
-输出参数
-
-| 名称  | 类型  | 描述                |
-|-----|-----|-------------------|
-| -   | -   | 以当年的数据为准, 输出的字段不一 |
-
-接口示例
-
-```python
-import akshare as ak
-
-fortune_rank_eng_df = ak.fortune_rank_eng(year="2022")
-print(fortune_rank_eng_df)
-```
-
-数据示例
-
-```
-     rank fg500_revenues  ... non-us-cos-y-n                     title
-0       1         572754  ...             no                   Walmart
-1       2         469822  ...             no                    Amazon
-2       3       460616.9  ...            yes                State Grid
-3       4       411692.9  ...            yes  China National Petroleum
-4       5       401313.5  ...            yes             Sinopec Group
-..    ...            ...  ...            ...                       ...
-495   496        28987.6  ...            yes                       DSV
-496   497          28945  ...            yes                       ABB
-497   498          28720  ...             no    Mondelez International
-498   499        28708.2  ...            yes                    Danone
-499   500        28649.5  ...            yes                   Umicore
 ```
 
 ### 福布斯中国榜单
@@ -2590,165 +2492,6 @@ print(cost_living_df)
 194  195th                     Pune (India)     46
 195  196th           Yogyakarta (Indonesia)     37
 [196 rows x 3 columns]
-```
-
-### 新经济公司
-
-#### 倒闭公司
-
-接口: death_company
-
-目标地址: https://www.itjuzi.com/deathCompany
-
-描述: 新经济死亡公司数据库, 该数据未更新
-
-限量: 返回所有历史数据, 该数据未更新
-
-输入参数
-
-| 名称  | 类型  | 描述  |
-|-----|-----|-----|
-| -   | -   | -   |
-
-输出参数
-
-| 名称   | 类型      | 描述       |
-|------|---------|----------|
-| 公司简称 | object  | -        |
-| 成立时间 | object  | -        |
-| 关闭时间 | object  | -        |
-| 存活天数 | int64   | -        |
-| 融资规模 | float64 | 注意单位: 万元 |
-| 行业   | object  | -        |
-| 地点   | object  | -        |
-
-接口示例
-
-```python
-import akshare as ak
-
-death_company_df = ak.death_company()
-print(death_company_df)
-```
-
-数据示例
-
-```
-          公司简称     成立时间    关闭时间  存活天数   融资规模    行业  地点
-0            有赚投  2016-08-01  2019-03-25   966    NaN    金融  上海
-1           京宁征信  2015-11-01  2019-03-25  1240    NaN    金融  北京
-2          闪修360  2014-08-01  2019-03-25  1697    NaN  本地生活  北京
-3           傲世之剑  2014-03-01  2019-03-25  1850  300.0    游戏  广东
-4       DuckChat  2018-01-01  2019-03-25   448    NaN  工具软件  北京
-          ...         ...         ...   ...    ...   ...  ..
-19232        爱创意  2013-11-01  2019-03-26  1971    NaN  企业服务  北京
-19233  CallChain  2018-04-01  2019-03-26   359    NaN   区块链  北京
-19234        小书包  2016-02-01  2019-03-26  1149    NaN    教育  北京
-19235  利物盛LEVSON  2011-11-01  2019-03-25  2701    NaN  工具软件  上海
-19236        洋糖铺  2015-04-01  2019-03-25  1454    NaN  电子商务  北京
-```
-
-#### 独角兽公司
-
-接口: nicorn_company
-
-目标地址: https://www.itjuzi.com/unicorn
-
-描述: 获取独角兽公司数据库, 该数据未更新
-
-限量: 返回所有历史数据, 该数据未更新
-
-输入参数
-
-| 名称  | 类型  | 描述  |
-|-----|-----|-----|
-| -   | -   | -   |
-
-输出参数
-
-| 名称  | 类型     | 描述  |
-|-----|--------|-----|
-| 序号  | int32  | -   |
-| 公司  | object | -   |
-| 地区  | object | -   |
-| 行业  | object | -   |
-| 子行业 | object | -   |
-
-接口示例
-
-```python
-import akshare as ak
-
-nicorn_company_df = ak.nicorn_company()
-print(nicorn_company_df)
-```
-
-数据示例
-
-```
-      序号    公司  地区    行业     子行业
-0      1  蚂蚁金服  浙江    金融  金融综合服务
-1      2  字节跳动  北京  文娱传媒   媒体及阅读
-2      3   阿里云  浙江  企业服务  IT基础设施
-3      4    滴滴  北京  汽车交通    交通出行
-4      5   陆金所  上海    金融      理财
-..   ...   ...  ..   ...     ...
-235  236    听云  北京  企业服务     NaN
-236  237  能力风暴  上海  智能硬件     NaN
-237  238  极飞科技  广东  智能硬件     NaN
-238  239  上海细胞  上海  医疗健康     NaN
-239  240   编程猫  广东    教育     NaN
-```
-
-#### 千里马公司
-
-接口: maxima_company
-
-目标地址: https://www.itjuzi.com/chollima
-
-描述: 获取千里马公司数据库, 该数据未更新
-
-限量: 返回所有历史数据, 该数据未更新
-
-输入参数
-
-| 名称  | 类型  | 描述      |
-|-----|-----|---------|
-| -   | -   | -     - |
-
-输出参数
-
-| 名称  | 类型     | 描述  |
-|-----|--------|-----|
-| 序号  | int32  | -   |
-| 公司  | object | -   |
-| 行业  | object | -   |
-| 地区  | object | -   |
-
-接口示例
-
-```python
-import akshare as ak
-
-maxima_company_df = ak.maxima_company()
-print(maxima_company_df)
-```
-
-数据示例
-
-```
-      序号       公司    行业  地区
-0      1  震坤行工业超市  电子商务  上海
-1      2     能力风暴    硬件  上海
-2      3       达令  电子商务  北京
-3      4     奈雪的茶  本地生活  广东
-4      5      车置宝  汽车交通  江苏
-..   ...      ...   ...  ..
-657  658       听云  企业服务  北京
-658  659     能力风暴  智能硬件  上海
-659  660     极飞科技  智能硬件  广东
-660  661     上海细胞  医疗健康  上海
-661  662      编程猫    教育  广东
 ```
 
 ### 微博舆情报告
