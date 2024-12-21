@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/5/10 00:00
+Date: 2024/10/2 9:00
 Desc: 股票基本面数据
 新浪财经-财务报表-财务摘要
 https://vip.stock.finance.sina.com.cn/corp/go.php/vFD_FinanceSummary/stockid/600004.phtml
@@ -17,6 +17,7 @@ from io import StringIO
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+
 from akshare.utils.tqdm import get_tqdm
 
 
@@ -190,9 +191,12 @@ def stock_financial_analysis_indicator(
     :return: 新浪财经-财务分析-财务指标
     :rtype: pandas.DataFrame
     """
-    url = f"https://money.finance.sina.com.cn/corp/go.php/vFD_FinancialGuideLine/stockid/{symbol}/ctrl/2020/displaytype/4.phtml"
+    url = (
+        f"https://money.finance.sina.com.cn/corp/go.php/vFD_FinancialGuideLine/"
+        f"stockid/{symbol}/ctrl/2020/displaytype/4.phtml"
+    )
     r = requests.get(url)
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, features="lxml")
     year_context = soup.find(attrs={"id": "con02-1"}).find("table").find_all("a")
     year_list = [item.text for item in year_context]
     if start_year in year_list:
@@ -200,7 +204,10 @@ def stock_financial_analysis_indicator(
     out_df = pd.DataFrame()
     tqdm = get_tqdm()
     for year_item in tqdm(year_list, leave=False):
-        url = f"https://money.finance.sina.com.cn/corp/go.php/vFD_FinancialGuideLine/stockid/{symbol}/ctrl/{year_item}/displaytype/4.phtml"
+        url = (
+            f"https://money.finance.sina.com.cn/corp/go.php/vFD_FinancialGuideLine/"
+            f"stockid/{symbol}/ctrl/{year_item}/displaytype/4.phtml"
+        )
         r = requests.get(url)
         temp_df = pd.read_html(StringIO(r.text))[12].iloc[:, :-1]
         temp_df.columns = temp_df.iloc[0, :]
@@ -236,23 +243,27 @@ def stock_financial_analysis_indicator(
         big_df.columns = big_df.iloc[0, :].tolist()
         big_df = big_df.iloc[1:, :]
         big_df.index = temp_df.columns.tolist()[1:]
-        out_df = pd.concat([out_df, big_df])
+        out_df = pd.concat(objs=[out_df, big_df])
 
     out_df.dropna(inplace=True)
     out_df.reset_index(inplace=True)
     out_df.rename(columns={"index": "日期"}, inplace=True)
+    out_df.sort_values(by=["日期"], ignore_index=True, inplace=True)
+    out_df["日期"] = pd.to_datetime(out_df["日期"], errors="coerce").dt.date
+    for item in out_df.columns[1:]:
+        out_df[item] = pd.to_numeric(out_df[item], errors="coerce")
     return out_df
 
 
 def stock_history_dividend() -> pd.DataFrame:
     """
     新浪财经-发行与分配-历史分红
-    https://vip.stock.finance.sina.com.cn/q/go.php/vInvestConsult/kind/lsfh/index.phtml?p=1&num=5000
+    https://vip.stock.finance.sina.com.cn/q/go.php/vInvestConsult/kind/lsfh/index.phtml
     :return: 所有股票的历史分红数据
     :rtype: pandas.DataFrame
     """
     url = "https://vip.stock.finance.sina.com.cn/q/go.php/vInvestConsult/kind/lsfh/index.phtml"
-    params = {"p": "1", "num": "5000"}
+    params = {"p": "1", "num": "50000"}
     r = requests.get(url, params=params)
     temp_df = pd.read_html(StringIO(r.text))[0]
     temp_df["代码"] = temp_df["代码"].astype(str).str.zfill(6)
@@ -515,7 +526,7 @@ def stock_circulate_stock_holder(symbol: str = "600000") -> pd.DataFrame:
             # try for pandas >= 2.1.0
             concat_df["截止日期"] = concat_df["截止日期"].ffill()
             concat_df["公告日期"] = concat_df["公告日期"].ffill()
-        except Exception:
+        except:  # noqa: E722
             try:
                 # try for pandas < 2.1.0
                 concat_df["截止日期"] = concat_df["截止日期"].fillna(method="ffill")

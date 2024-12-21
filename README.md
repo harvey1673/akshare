@@ -1,6 +1,9 @@
 **欢迎加入专注于财经数据和量化投资的知识社区，请点击[了解更多](https://akshare.akfamily.xyz/learn.html)**
 
-**相关视频教程已经发布：《AKShare-初阶-使用教学》、《AKShare-初阶-实战应用》、《AKShare-源码解析》、《开源项目巡礼》**，详情请访问[课程](https://app3rqjh1z21630.h5.xiaoeknow.com)查看更多课程信息！
+**量化投研视频课程：《PyBroker-入门及实战》已经上架！《PyBroker-进阶及实战》正在更新！**
+
+**更多视频教程已经发布：《AKShare-初阶-使用教学》、《AKShare-初阶-实战应用》、《AKShare-源码解析》、《开源项目巡礼》**，
+详情请关注【数据科学实战】公众号，查看更多课程信息！
 
 **AKQuant 量化教程请访问：[利用 PyBroker 进行量化投资](https://akquant.akfamily.xyz/)**
 
@@ -113,11 +116,9 @@ import akshare as ak
 import mplfinance as mpf  # Please install mplfinance as follows: pip install mplfinance
 
 stock_us_daily_df = ak.stock_us_daily(symbol="AAPL", adjust="qfq")
-stock_us_daily_df = stock_us_daily_df[["open", "high", "low", "close", "volume"]]
-stock_us_daily_df.columns = ["Open", "High", "Low", "Close", "Volume"]
-stock_us_daily_df.index.name = "Date"
+stock_us_daily_df = stock_us_daily_df.set_index(["date"])
 stock_us_daily_df = stock_us_daily_df["2020-04-01": "2020-04-29"]
-mpf.plot(stock_us_daily_df, type='candle', mav=(3, 6, 9), volume=True, show_nontrading=False)
+mpf.plot(stock_us_daily_df, type="candle", mav=(3, 6, 9), volume=True, show_nontrading=False)
 ```
 
 Output:
@@ -216,13 +217,9 @@ Special thanks [TuShare](https://github.com/waditu/tushare) for the opportunity 
 
 Thanks for the data provided by [生意社网站](http://www.100ppi.com/);
 
-Thanks for the data provided by [奇货可查网站](https://qhkch.com/);
-
 Thanks for the data provided by [中国银行间市场交易商协会网站](http://www.nafmii.org.cn/);
 
 Thanks for the data provided by [99期货网站](http://www.99qh.com/);
-
-Thanks for the data provided by [英为财情网站](https://cn.investing.com/);
 
 Thanks for the data provided by [中国外汇交易中心暨全国银行间同业拆借中心网站](http://www.chinamoney.com.cn/chinese/);
 
@@ -231,8 +228,6 @@ Thanks for the data provided by [金十数据网站](https://www.jin10.com/);
 Thanks for the data provided by [和讯财经网站](http://www.hexun.com/);
 
 Thanks for the data provided by [新浪财经网站](https://finance.sina.com.cn/);
-
-Thanks for the data provided by [Oxford-Man Institute 网站](https://realized.oxford-man.ox.ac.uk/);
 
 Thanks for the data provided by [DACHENG-XIU 网站](https://dachxiu.chicagobooth.edu/);
 
@@ -260,12 +255,6 @@ Thanks for the data provided by [南华期货网站](http://www.nanhua.net/nhzc/
 
 Thanks for the data provided by [Economic Policy Uncertainty 网站](http://www.nanhua.net/nhzc/varietytrend.html);
 
-Thanks for the data provided by [微博指数网站](https://data.weibo.com/index/newindex);
-
-Thanks for the data provided by [百度指数网站](http://index.baidu.com/v2/main/index.html);
-
-Thanks for the data provided by [谷歌指数网站](https://trends.google.com/trends/?geo=US);
-
 Thanks for the data provided by [申万指数网站](http://www.swsindex.com/idx0120.aspx?columnid=8832);
 
 Thanks for the data provided by [真气网网站](https://www.zq12369.com/);
@@ -280,17 +269,11 @@ Thanks for the data provided by [北京市碳排放权电子交易平台网站](
 
 Thanks for the data provided by [国家金融与发展实验室网站](http://www.nifd.cn/);
 
-Thanks for the data provided by [IT桔子网站](https://www.itjuzi.com);
-
 Thanks for the data provided by [东方财富网站](http://data.eastmoney.com/jgdy/);
 
 Thanks for the data provided by [义乌小商品指数网站](http://www.ywindex.com/Home/Product/index/);
 
-Thanks for the data provided by [中国国家发展和改革委员会网站](http://jgjc.ndrc.gov.cn/dmzs.aspx?clmId=741);
-
 Thanks for the data provided by [百度迁徙网站](https://qianxi.baidu.com/?from=shoubai#city=0);
-
-Thanks for the data provided by [慈善中国网站](http://cishan.chinanpo.gov.cn/platform/login.html);
 
 Thanks for the data provided by [思知网站](https://www.ownthink.com/);
 
@@ -302,6 +285,6 @@ Thanks for the tutorials provided by [微信公众号: Python大咖谈](https://
 
 ## Backer and Sponsor
 
-<a href="https://www.jetbrains.com/?from=jindaxiang/akshare" target="_blank">
-<img alt="jetbrains" src="https://github.com/akfamily/akshare/blob/main/assets/images/jetbrains.svg" width="100px" height="100px">
+<a href="https://www.jetbrains.com/?from=albertandking/akshare" target="_blank">
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.png" alt="JetBrains logo.">
 </a>

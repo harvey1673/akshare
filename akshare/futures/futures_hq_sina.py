@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/3/10 17:00
+Date: 2024/8/31 17:30
 Desc: 新浪财经-外盘期货
 https://finance.sina.com.cn/money/future/hf.html
 """
@@ -63,9 +63,10 @@ def futures_hq_subscribe_exchange_symbol() -> pd.DataFrame:
     :rtype: pandas.DataFrame
     """
     inner_dict = {
-        "新交所 TSI CFR 中国铁矿石（62%铁粉）指数": "FEF",
+        "新加坡铁矿石": "FEF",
         "马棕油": "FCPO",
         "日橡胶": "RSS3",
+        "美国原糖": "RS",
         "CME比特币期货": "BTC",
         "NYBOT-棉花": "CT",
         "LME镍3个月": "NID",
@@ -129,7 +130,8 @@ def futures_foreign_commodity_realtime(symbol: Union[str, List[str]]) -> pd.Data
         "Sec-Fetch-Dest": "script",
         "Sec-Fetch-Mode": "no-cors",
         "Sec-Fetch-Site": "cross-site",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/97.0.4692.71 Safari/537.36",
     }
     r = requests.get(url, headers=headers)
     data_text = r.text

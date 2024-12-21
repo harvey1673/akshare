@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/4/21 17:30
+Date: 2024/9/15 15:30
 Desc: 东方财富网-数据中心-特色数据-商誉
 东方财富网-数据中心-特色数据-商誉-A股商誉市场概况: https://data.eastmoney.com/sy/scgk.html
 东方财富网-数据中心-特色数据-商誉-商誉减值预期明细: https://data.eastmoney.com/sy/yqlist.html
@@ -12,7 +12,8 @@ Desc: 东方财富网-数据中心-特色数据-商誉
 
 import pandas as pd
 import requests
-from tqdm import tqdm
+
+from akshare.utils.tqdm import get_tqdm
 
 
 def stock_sy_profile_em() -> pd.DataFrame:
@@ -80,7 +81,7 @@ def stock_sy_profile_em() -> pd.DataFrame:
     return data_df
 
 
-def stock_sy_yq_em(date: str = "20221231") -> pd.DataFrame:
+def stock_sy_yq_em(date: str = "20240630") -> pd.DataFrame:
     """
     东方财富网-数据中心-特色数据-商誉-商誉减值预期明细
     https://data.eastmoney.com/sy/yqlist.html
@@ -104,12 +105,13 @@ def stock_sy_yq_em(date: str = "20221231") -> pd.DataFrame:
     data_json = r.json()
     big_df = pd.DataFrame()
     total_page = int(data_json["result"]["pages"])
+    tqdm = get_tqdm()
     for page in tqdm(range(1, total_page + 1), leave=False):
         params.update({"pageNumber": page})
         r = requests.get(url, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["result"]["data"])
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.reset_index(inplace=True)
     big_df["index"] = big_df["index"] + 1
     big_df.rename(
@@ -188,7 +190,7 @@ def stock_sy_yq_em(date: str = "20221231") -> pd.DataFrame:
     return big_df
 
 
-def stock_sy_jz_em(date: str = "20230331") -> pd.DataFrame:
+def stock_sy_jz_em(date: str = "20240630") -> pd.DataFrame:
     """
     东方财富网-数据中心-特色数据-商誉-个股商誉减值明细
     https://data.eastmoney.com/sy/jzlist.html
@@ -212,12 +214,13 @@ def stock_sy_jz_em(date: str = "20230331") -> pd.DataFrame:
     data_json = r.json()
     big_df = pd.DataFrame()
     total_page = int(data_json["result"]["pages"])
+    tqdm = get_tqdm()
     for page in tqdm(range(1, total_page + 1), leave=False):
         params.update({"pageNumber": page})
         r = requests.get(url, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["result"]["data"])
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.reset_index(inplace=True)
     big_df["index"] = big_df["index"] + 1
     big_df.rename(
@@ -312,12 +315,13 @@ def stock_sy_em(date: str = "20231231") -> pd.DataFrame:
     data_json = r.json()
     big_df = pd.DataFrame()
     total_page = int(data_json["result"]["pages"])
+    tqdm = get_tqdm()
     for page in tqdm(range(1, total_page + 1), leave=False):
         params.update({"pageNumber": page})
         r = requests.get(url, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["result"]["data"])
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.reset_index(inplace=True)
     big_df["index"] = big_df["index"] + 1
     big_df.rename(
@@ -403,12 +407,13 @@ def stock_sy_hy_em(date: str = "20231231") -> pd.DataFrame:
     data_json = r.json()
     big_df = pd.DataFrame()
     total_page = int(data_json["result"]["pages"])
+    tqdm = get_tqdm()
     for page in tqdm(range(1, total_page + 1), leave=False):
         params.update({"pageNumber": page})
         r = requests.get(url, params=params)
         data_json = r.json()
         temp_df = pd.DataFrame(data_json["result"]["data"])
-        big_df = pd.concat([big_df, temp_df], ignore_index=True)
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
     big_df.reset_index(inplace=True, drop=True)
     big_df.rename(
         columns={
@@ -450,13 +455,13 @@ if __name__ == "__main__":
     stock_em_sy_profile_df = stock_sy_profile_em()
     print(stock_em_sy_profile_df)
 
-    stock_sy_yq_em_df = stock_sy_yq_em(date="20221231")
+    stock_sy_yq_em_df = stock_sy_yq_em(date="20240630")
     print(stock_sy_yq_em_df)
 
-    stock_sy_jz_em_df = stock_sy_jz_em(date="20230630")
+    stock_sy_jz_em_df = stock_sy_jz_em(date="20240630")
     print(stock_sy_jz_em_df)
 
-    stock_sy_em_df = stock_sy_em(date="20231231")
+    stock_sy_em_df = stock_sy_em(date="20240630")
     print(stock_sy_em_df)
 
     stock_sy_hy_em_df = stock_sy_hy_em(date="20231231")

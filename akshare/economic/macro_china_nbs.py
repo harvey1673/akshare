@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2023/9/14 18:00
+Date: 2024/6/30 22:00
 Desc: 中国-国家统计局-宏观数据
 https://data.stats.gov.cn/easyquery.htm
 """
+
 import time
 from functools import lru_cache
 from typing import Union, Literal, List, Dict
@@ -54,7 +55,8 @@ def _get_nbs_wds_tree(idcode: str, dbcode: str, rowcode: str) -> List[Dict]:
         "k1": str(time.time_ns())[:13],
     }
     r = requests.post(url, params=params, verify=False, allow_redirects=True)
-    data_json = r.json()["returndata"][0]["nodes"]
+    data_json = r.json()
+    data_json = data_json["returndata"][0]["nodes"]
     return data_json
 
 
@@ -78,7 +80,7 @@ def macro_china_nbs_nation(
 ) -> pd.DataFrame:
     """
     国家统计局全国数据通用接口
-    http://data.stats.gov.cn/easyquery.htm
+    https://data.stats.gov.cn/easyquery.htm
     :param kind: 数据类别
     :param path: 数据路径
     :param period: 时间区间，例如'LAST10', '2016-2023', '2016-'等
@@ -146,7 +148,13 @@ def macro_china_nbs_nation(
 
 def macro_china_nbs_region(
     kind: Literal[
-        "分省月度数据", "分省季度数据", "分省年度数据", "主要城市月度价格", "主要城市年度数据", "港澳台月度数据", "港澳台年度数据"
+        "分省月度数据",
+        "分省季度数据",
+        "分省年度数据",
+        "主要城市月度价格",
+        "主要城市年度数据",
+        "港澳台月度数据",
+        "港澳台年度数据",
     ],
     path: str,
     indicator: Union[str, None],
@@ -261,16 +269,25 @@ def macro_china_nbs_region(
 
 if __name__ == "__main__":
     macro_china_nbs_nation_df = macro_china_nbs_nation(
-        kind="月度数据", path="工业 > 工业企业主要经济指标", period="LAST13"
+        kind="月度数据",
+        path="工业 > 工业分大类行业出口交货值(2018-至今) > 废弃资源综合利用业",
+        period="LAST5",
     )
     print(macro_china_nbs_nation_df)
 
     macro_china_nbs_region_df = macro_china_nbs_region(
-        "分省季度数据", "人民生活 > 居民人均可支配收入", period="2018-2022", indicator=None, region="北京市"
+        kind="分省季度数据",
+        path="人民生活 > 居民人均可支配收入",
+        period="2018-2022",
+        indicator=None,
+        region="北京市",
     )
     print(macro_china_nbs_region_df)
 
     macro_china_nbs_region_df = macro_china_nbs_region(
-        "分省季度数据", "国民经济核算 > 地区生产总值", period="2018-", indicator="地区生产总值_累计值(亿元)"
+        kind="分省季度数据",
+        path="国民经济核算 > 地区生产总值",
+        period="2018-",
+        indicator="地区生产总值_累计值(亿元)",
     )
     print(macro_china_nbs_region_df)

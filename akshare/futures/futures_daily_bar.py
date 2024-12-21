@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/5/11 22:00
+Date: 2024/11/30 18:00
 Desc: 期货日线行情
 """
 
@@ -272,12 +272,12 @@ def get_gfex_daily(date: str = "20221223") -> pd.DataFrame:
     return result_df
 
 
-def get_ine_daily(date: str = "20220208") -> pd.DataFrame:
+def get_ine_daily(date: str = "20241129") -> pd.DataFrame:
     """
     上海国际能源交易中心-日频率-量价数据
     上海国际能源交易中心: 原油期货(上市时间: 20180326); 20号胶期货(上市时间: 20190812)
-    trade_price: http://www.ine.cn/statements/daily/?paramid=kx
-    trade_note: http://www.ine.cn/data/datanote.dat
+    trade_price: https://www.ine.cn/statements/daily/?paramid=kx
+    trade_note: https://www.ine.cn/data/datanote.dat
     :param date: 日期 format：YYYY-MM-DD 或 YYYYMMDD 或 datetime.date对象，默认为当前交易日
     :type date: str or datetime.date
     :return: 上海国际能源交易中心-日频率-量价数据
@@ -287,7 +287,7 @@ def get_ine_daily(date: str = "20220208") -> pd.DataFrame:
     if day.strftime("%Y%m%d") not in calendar:
         # warnings.warn(f"{day.strftime('%Y%m%d')}非交易日")
         return pd.DataFrame()
-    url = f"http://www.ine.cn/data/dailydata/kx/kx{day.strftime('%Y%m%d')}.dat"
+    url = f"https://www.ine.cn/data/tradedata/future/dailydata/kx{day.strftime('%Y%m%d')}.dat"
     r = requests.get(url, headers=cons.shfe_headers)
     result_df = pd.DataFrame()
     try:
@@ -565,7 +565,6 @@ def get_dce_daily(date: str = "20220308") -> pd.DataFrame:
     }
     r = requests.post(url, data=params, headers=headers)
     data_df = pd.read_excel(BytesIO(r.content), header=1)
-
     data_df = data_df[~data_df["商品名称"].str.contains("小计")]
     data_df = data_df[~data_df["商品名称"].str.contains("总计")]
     data_df["variety"] = data_df["商品名称"].map(lambda x: cons.DCE_MAP[x])
@@ -605,12 +604,7 @@ def get_dce_daily(date: str = "20220308") -> pd.DataFrame:
             "variety",
         ]
     ]
-    # TODO pandas 2.1.0 change
-    try:
-        data_df = data_df.map(lambda x: x.replace(",", ""))
-    except:  # noqa: E722
-        data_df = data_df.applymap(lambda x: x.replace(",", ""))
-
+    data_df = data_df.map(lambda x: x.replace(",", ""))
     data_df = data_df.astype(
         {
             "open": "float",
@@ -674,11 +668,13 @@ def get_futures_daily(
     df_list = list()
     while start_date <= end_date:
         df = f(date=str(start_date).replace("-", ""))
-        if df is not None:
+        if not df.empty:
             df_list.append(df)
         start_date += datetime.timedelta(days=1)
 
-    if len(df_list) > 0:
+    if len(df_list) == 0:
+        return pd.DataFrame()
+    elif len(df_list) > 0:
         temp_df = pd.concat(df_list).reset_index(drop=True)
         temp_df = temp_df[~temp_df["symbol"].str.contains("efp")]
         return temp_df
@@ -686,11 +682,11 @@ def get_futures_daily(
 
 if __name__ == "__main__":
     get_futures_daily_df = get_futures_daily(
-        start_date="20240506", end_date="20240510", market="SHFE"
+        start_date="20180326", end_date="20180331", market="INE"
     )
     print(get_futures_daily_df)
 
-    get_dce_daily_df = get_dce_daily(date="20230810")
+    get_dce_daily_df = get_dce_daily(date="20241118")
     print(get_dce_daily_df)
 
     get_cffex_daily_df = get_cffex_daily(date="20230810")

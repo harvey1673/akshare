@@ -1,13 +1,15 @@
 # -*- coding:utf-8 -*-
 # !/usr/bin/env python
 """
-Date: 2023/6/8 16:44
+Date: 2024/10/21 22:20
 Desc: 巨潮资讯-股本股东-公司股本变动
-http://webapi.cninfo.com.cn/api/stock/p_stock2215
+https://webapi.cninfo.com.cn/api/stock/p_stock2215
 """
+
+import numpy as np
 import pandas as pd
+import py_mini_racer
 import requests
-from py_mini_racer import py_mini_racer
 
 from akshare.datasets import get_ths_js
 
@@ -21,7 +23,7 @@ def _get_file_content_cninfo(file: str = "cninfo.js") -> str:
     :rtype: str
     """
     setting_file_path = get_ths_js(file)
-    with open(setting_file_path) as f:
+    with open(setting_file_path, encoding="utf-8") as f:
         file_data = f.read()
     return file_data
 
@@ -29,11 +31,11 @@ def _get_file_content_cninfo(file: str = "cninfo.js") -> str:
 def stock_share_change_cninfo(
     symbol: str = "002594",
     start_date: str = "20091227",
-    end_date: str = "20220713",
+    end_date: str = "20241021",
 ) -> pd.DataFrame:
     """
     巨潮资讯-股本股东-公司股本变动
-    http://webapi.cninfo.com.cn/#/apiDoc
+    https://webapi.cninfo.com.cn/#/apiDoc
     查询 p_stock2215 接口
     :param symbol: 股票代码
     :type symbol: str
@@ -44,7 +46,7 @@ def stock_share_change_cninfo(
     :return: 公司股本变动
     :rtype: pandas.DataFrame
     """
-    url = "http://webapi.cninfo.com.cn/api/stock/p_stock2215"
+    url = "https://webapi.cninfo.com.cn/api/stock/p_stock2215"
     params = {
         "scode": symbol,
         "sdate": "-".join([start_date[:4], start_date[4:6], start_date[6:]]),
@@ -62,11 +64,12 @@ def stock_share_change_cninfo(
         "Cache-Control": "no-cache",
         "Content-Length": "0",
         "Host": "webapi.cninfo.com.cn",
-        "Origin": "http://webapi.cninfo.com.cn",
+        "Origin": "https://webapi.cninfo.com.cn",
         "Pragma": "no-cache",
         "Proxy-Connection": "keep-alive",
-        "Referer": "http://webapi.cninfo.com.cn/",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36",
+        "Referer": "https://webapi.cninfo.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/93.0.4577.63 Safari/537.36",
         "X-Requested-With": "XMLHttpRequest",
     }
     r = requests.post(url, params=params, headers=headers)
@@ -122,9 +125,10 @@ def stock_share_change_cninfo(
     }
     ignore_cols = ["最新记录标识", "其他"]
     temp_df.rename(columns=cols_map, inplace=True)
-    temp_df.fillna(pd.NA, inplace=True)
-    temp_df["公告日期"] = pd.to_datetime(temp_df["公告日期"]).dt.date
-    temp_df["变动日期"] = pd.to_datetime(temp_df["变动日期"]).dt.date
+    pd.set_option("future.no_silent_downcasting", True)
+    temp_df.fillna(np.nan, inplace=True)
+    temp_df["公告日期"] = pd.to_datetime(temp_df["公告日期"], errors="coerce").dt.date
+    temp_df["变动日期"] = pd.to_datetime(temp_df["变动日期"], errors="coerce").dt.date
     data_df = temp_df[[c for c in temp_df.columns if c not in ignore_cols]]
     return data_df
 
@@ -133,6 +137,6 @@ if __name__ == "__main__":
     stock_share_change_cninfo_df = stock_share_change_cninfo(
         symbol="002594",
         start_date="20091227",
-        end_date="20220713",
+        end_date="20241021",
     )
     print(stock_share_change_cninfo_df)

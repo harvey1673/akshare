@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/1/22 18:30
+Date: 2024/6/27 16:00
 Desc: 收盘收益率曲线历史数据
 https://www.chinamoney.com.cn/chinese/bkcurvclosedyhis/?bondType=CYCC000&reference=1
 """
@@ -10,6 +10,7 @@ from functools import lru_cache
 
 import pandas as pd
 import requests
+from akshare.utils.tqdm import get_tqdm
 
 
 def __bond_register_service() -> requests.Session:
@@ -21,7 +22,8 @@ def __bond_register_service() -> requests.Session:
     """
     session = requests.Session()
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/108.0.0.0 Safari/537.36",
     }
     session.get(
         url="https://www.chinamoney.com.cn/chinese/bkcurvclosedyhis/?bondType=CYCC000&reference=1",
@@ -29,7 +31,10 @@ def __bond_register_service() -> requests.Session:
     )
     cookies_dict = session.cookies.get_dict()
     cookies_str = "; ".join(f"{k}={v}" for k, v in cookies_dict.items())
-    data = {"key": "c3pTblpsYU5UMFg="}
+    # 此处需要通过未访问的游览器，首次打开
+    # https://www.chinamoney.com.cn/chinese/bkcurvclosedyhis/?bondType=CYCC000&reference=1
+    # 页面进行人工获取
+    data = {"key": "TThwSjc2NWkzV0VSOVRzOA=="}
     headers = {
         "Accept": "application/json, text/javascript, */*; q=0.01",
         "Accept-Encoding": "gzip, deflate, br",
@@ -46,7 +51,8 @@ def __bond_register_service() -> requests.Session:
         "Sec-Fetch-Dest": "empty",
         "Sec-Fetch-Mode": "cors",
         "Sec-Fetch-Site": "same-origin",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/108.0.0.0 Safari/537.36",
         "X-Requested-With": "XMLHttpRequest",
     }
     session.post(
@@ -72,7 +78,8 @@ def __bond_register_service() -> requests.Session:
         "Sec-Fetch-Dest": "empty",
         "Sec-Fetch-Mode": "cors",
         "Sec-Fetch-Site": "same-origin",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/108.0.0.0 Safari/537.36",
         "X-Requested-With": "XMLHttpRequest",
     }
     session.post(
@@ -152,7 +159,7 @@ def bond_china_close_return(
         "endDate": "-".join([end_date[:4], end_date[4:6], end_date[6:]]),
         "termId": period,
         "pageNum": "1",
-        "pageSize": "15",
+        "pageSize": "50",
     }
     r = requests.get(url, params=params, headers=headers)
     data_json = r.json()
@@ -299,6 +306,7 @@ def macro_china_swap_rate(
     big_df["5Y"] = pd.to_numeric(big_df["5Y"], errors="coerce")
     big_df["7Y"] = pd.to_numeric(big_df["7Y"], errors="coerce")
     big_df["10Y"] = pd.to_numeric(big_df["10Y"], errors="coerce")
+    big_df.sort_values(["日期"], inplace=True, ignore_index=True)
     return big_df
 
 
@@ -313,7 +321,7 @@ def macro_china_bond_public() -> pd.DataFrame:
     url = "https://www.chinamoney.com.cn/ags/ms/cm-u-bond-an/bnBondEmit"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/81.0.4044.138 Safari/537.36",
+        "Chrome/107.0.0.0 Safari/537.36",
     }
     payload = {
         "enty": "",
@@ -321,13 +329,21 @@ def macro_china_bond_public() -> pd.DataFrame:
         "bondNameCode": "",
         "leadUnderwriter": "",
         "pageNo": "1",
-        "pageSize": "1000",
+        "pageSize": "10",
         "limit": "1",
     }
     r = requests.post(url, data=payload, headers=headers)
     data_json = r.json()
-    temp_df = pd.DataFrame(data_json["records"])
-    temp_df.columns = [
+    total_page = int(data_json["data"]["pageTotalSize"]) + 1
+    big_df = pd.DataFrame()
+    tqdm = get_tqdm()
+    for page in tqdm(range(1, total_page), leave=False):
+        payload.update({"pageNo": page})
+        r = requests.post(url, data=payload, headers=headers)
+        data_json = r.json()
+        temp_df = pd.DataFrame(data_json["records"])
+        big_df = pd.concat(objs=[big_df, temp_df], ignore_index=True)
+    big_df.columns = [
         "债券全称",
         "债券类型",
         "-",
@@ -342,7 +358,7 @@ def macro_china_bond_public() -> pd.DataFrame:
         "价格",
         "计划发行量",
     ]
-    temp_df = temp_df[
+    big_df = big_df[
         [
             "债券全称",
             "债券类型",
@@ -354,19 +370,19 @@ def macro_china_bond_public() -> pd.DataFrame:
             "债券评级",
         ]
     ]
-    temp_df["价格"] = pd.to_numeric(temp_df["价格"], errors="coerce")
-    temp_df["计划发行量"] = pd.to_numeric(temp_df["计划发行量"], errors="coerce")
-    return temp_df
+    big_df["价格"] = pd.to_numeric(big_df["价格"], errors="coerce")
+    big_df["计划发行量"] = pd.to_numeric(big_df["计划发行量"], errors="coerce")
+    return big_df
 
 
 if __name__ == "__main__":
     bond_china_close_return_df = bond_china_close_return(
-        symbol="国债", period="1", start_date="20240501", end_date="20240511"
+        symbol="同业存单(AAA)", period="1", start_date="20240607", end_date="20240607"
     )
     print(bond_china_close_return_df)
 
     macro_china_swap_rate_df = macro_china_swap_rate(
-        start_date="20240501", end_date="20240511"
+        start_date="20240501", end_date="20240531"
     )
     print(macro_china_swap_rate_df)
 

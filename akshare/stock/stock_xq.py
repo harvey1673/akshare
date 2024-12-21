@@ -1,20 +1,35 @@
 # !/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/4/9 16:30
+Date: 2024/12/18 17:50
 Desc: 雪球-行情中心-个股
 https://xueqiu.com/S/SH513520
 """
 
 import re
+from datetime import datetime
 
 import pandas as pd
 import requests
 
 
+def _convert_timestamp(timestamp_ms: int) -> str:
+    """
+    时间戳转换为字符串时间
+    :param timestamp_ms: 时间戳
+    :type timestamp_ms: int
+    :return: 字符串
+    :rtype: str
+    """
+    timestamp_s = timestamp_ms / 1000
+    datetime_obj = datetime.fromtimestamp(timestamp_s)
+    return datetime_obj.strftime("%Y-%m-%d %H:%M:%S")
+
+
 def stock_individual_spot_xq(
     symbol: str = "SH600000",
     timeout: float = None,
+    token: str = None,
 ) -> pd.DataFrame:
     """
     雪球-行情中心-个股
@@ -23,13 +38,17 @@ def stock_individual_spot_xq(
     :type symbol: str
     :param timeout: choice of None or a positive float number
     :type timeout: float
+    :param token: set xueqiu token
+    :type token: str
     :return: 证券最新行情
     :rtype: pandas.DataFrame
     """
     session = requests.Session()
+    xq_a_token = token or "cccb558956c11f5aaf8b9a30bcf1f214117e8d67"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/78.0.3904.108 Safari/537.36"
+        "cookie": f"xq_a_token={xq_a_token};",
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 "
+        "(KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
     }
     session.get(url="https://xueqiu.com", headers=headers)
     url = f"https://stock.xueqiu.com/v5/stock/quote.json?symbol={symbol}&extend=detail"
@@ -78,9 +97,10 @@ def stock_individual_spot_xq(
         "turnover_rate": "周转率",
         "unit_nav": "单位净值",
         "volume": "成交量",
+        "time": "时间",
     }
-    json_data = r.json()["data"]["quote"]
-    temp_df = pd.json_normalize(json_data)
+    json_data = r.json()
+    temp_df = pd.json_normalize(json_data["data"]["quote"])
     temp_df.columns = [
         *map(
             lambda x: column_name_map[x] if x in column_name_map.keys() else x,
@@ -97,11 +117,14 @@ def stock_individual_spot_xq(
     ]
     temp_df = temp_df.T.reset_index()
     temp_df.columns = ["item", "value"]
+    temp_df.loc[temp_df["item"] == "时间", "value"] = temp_df.loc[
+        temp_df["item"] == "时间", "value"
+    ].apply(lambda x: _convert_timestamp(int(x)))
     return temp_df
 
 
 if __name__ == "__main__":
-    stock_individual_spot_xq_df = stock_individual_spot_xq(symbol="SH600000")
+    stock_individual_spot_xq_df = stock_individual_spot_xq(symbol="BJ430139")
     print(stock_individual_spot_xq_df)
 
     stock_individual_spot_xq_df = stock_individual_spot_xq(symbol="SH000001")

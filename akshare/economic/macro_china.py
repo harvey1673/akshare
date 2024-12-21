@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-Date: 2024/5/17 16:20
+Date: 2024/12/2 15:20
 Desc: 宏观数据-中国
 """
 
@@ -230,6 +230,7 @@ def macro_china_fdi() -> pd.DataFrame:
     temp_df["当月-环比增长"] = pd.to_numeric(temp_df["当月-环比增长"], errors="coerce")
     temp_df["累计"] = pd.to_numeric(temp_df["累计"], errors="coerce")
     temp_df["累计-同比增长"] = pd.to_numeric(temp_df["累计-同比增长"], errors="coerce")
+    temp_df.sort_values(["月份"], ignore_index=True, inplace=True)
     return temp_df
 
 
@@ -237,7 +238,7 @@ def macro_china_fdi() -> pd.DataFrame:
 def macro_china_shrzgm() -> pd.DataFrame:
     """
     商务数据中心-国内贸易-社会融资规模增量统计
-    http://data.mofcom.gov.cn/gnmy/shrzgm.shtml
+    https://data.mofcom.gov.cn/gnmy/shrzgm.shtml
     :return: 社会融资规模增量统计
     :rtype: pandas.DataFrame
     """
@@ -326,6 +327,7 @@ def macro_china_urban_unemployment() -> pd.DataFrame:
     temp_df.columns = ["date", "item", "value"]
     temp_df["item"] = temp_df["item"].map(code_item_map)
     temp_df["value"] = pd.to_numeric(temp_df["value"], errors="coerce")
+    temp_df.sort_values(by=["date"], ignore_index=True, inplace=True)
     return temp_df
 
 
@@ -1046,8 +1048,8 @@ def macro_china_new_house_price(
         "新建商品住宅价格指数-同比",
         "新建商品住宅价格指数-环比",
         "新建商品住宅价格指数-定基",
-        "二手住宅价格指数-环比",
         "二手住宅价格指数-同比",
+        "二手住宅价格指数-环比",
         "二手住宅价格指数-定基",
         "-",
     ]
@@ -1058,8 +1060,8 @@ def macro_china_new_house_price(
             "新建商品住宅价格指数-同比",
             "新建商品住宅价格指数-环比",
             "新建商品住宅价格指数-定基",
-            "二手住宅价格指数-环比",
             "二手住宅价格指数-同比",
+            "二手住宅价格指数-环比",
             "二手住宅价格指数-定基",
         ]
     ]
@@ -1082,6 +1084,7 @@ def macro_china_new_house_price(
     temp_df["二手住宅价格指数-定基"] = pd.to_numeric(
         temp_df["二手住宅价格指数-定基"], errors="coerce"
     )
+    temp_df.sort_values(["日期"], ignore_index=True, inplace=True)
     return temp_df
 
 
